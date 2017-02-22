@@ -7,6 +7,7 @@ gem 'puma', '~> 3.0'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '>= 3.2'
 gem 'devise'
+gem "react_on_rails", "~> 6"
 
 group :development, :test do
   gem 'byebug', platform: :mri
