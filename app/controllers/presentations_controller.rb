@@ -19,9 +19,10 @@ class PresentationsController < ApplicationController
     end
   end
 
-
 private
+
   def presentation_params
     params.require(:presentation).permit(:title, :location, :date, :description, :is_published)
   end
+
 end
