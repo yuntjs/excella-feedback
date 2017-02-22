@@ -1,6 +1,12 @@
+<h1>Presentations</h1>
+<h2><%= current_user.is_admin %></h2>
+<div>
 <% @presentations.each do |pre| %>
-<p>
-  <%= pre.location %>
-</p>
-
+  <div>
+    <h3><%= pre.title %></h3>
+    <p><%= pre.date %></p>
+    <p><%= pre.location %></p>
+    <p><%= pre.description %></p>
+  </div>
 <% end %>
+</div>
