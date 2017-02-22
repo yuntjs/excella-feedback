@@ -1,5 +1,6 @@
 
 class PresentationsController < ApplicationController
+  before_action :authenticate_user!
   before_action :authenticate_admin, only: [:new, :create]
 
   def index
@@ -17,6 +18,10 @@ class PresentationsController < ApplicationController
     elsif
       render :new
     end
+  end
+
+  def edit
+    
   end
 
 private
