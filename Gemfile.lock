@@ -169,7 +169,7 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.0.5)
   mini_racer
-  minitest-rails (~> 3.0)
+  minitest-rails
   pg
   puma (~> 3.0)
   rails (~> 5.0.1)
