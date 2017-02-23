@@ -2,11 +2,13 @@ require "test_helper"
 
 describe User do
   before do
-    @user = User.new(email: "nicholas.oki@excella.com",
-                    password: "testing",
-                    password_confirmation: "testing",
-                    first_name: "Nick",
-                    last_name: "Oki")
+    @user = User.create(
+      email: "nicholas.oki@excella.com",
+      password: "testing",
+      password_confirmation: "testing",
+      first_name: "Nick",
+      last_name: "Oki"
+    )
   end
 
   # Happy Path
