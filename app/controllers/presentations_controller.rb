@@ -4,7 +4,12 @@ class PresentationsController < ApplicationController
   before_action :authenticate_admin, only: [:new, :create]
 
   def index
-    @presentations = Presentation.all
+    @user = current_user
+    if @user.is_admin
+      @presentations = Presentation.all
+    else
+      @presentations = current_user.presentations
+    end
   end
 
   def new
@@ -21,7 +26,7 @@ class PresentationsController < ApplicationController
   end
 
   def edit
-    
+
   end
 
 private
