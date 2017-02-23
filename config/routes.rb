@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  # devise_for :users
-  devise_for :users, :controllers => { registrations: 'registrations' }
+  # Root path
   root 'static#home'
+
+  # Devise routes, controller override
+  devise_for :users, :controllers => { registrations: 'registrations' }
+
+  # Routes for presentations
   resources :presentations
 end
