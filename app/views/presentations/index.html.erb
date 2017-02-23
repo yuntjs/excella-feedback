@@ -1,4 +1,4 @@
-<h1>Presentations</h1> 
+<h1>Presentations</h1>
 <h2><%= current_user.is_admin %></h2>
 <div>
 <% @presentations.each do |pre| %>
@@ -7,6 +7,26 @@
     <p><%= pre.date %></p>
     <p><%= pre.location %></p>
     <p><%= pre.description %></p>
+    <p><%= pre.id %></p>
+
+    <% participant = Participation.where(user_id: current_user.id, presentation_id: pre.id) %>
+
+    <% if participant.first.is_presenter == nil  %>
+    <p>big ol button</p>
+    <% else  %>
+    <p>no button for you</p>
+    <%end  %>
+
+
+
   </div>
+
+  <!-- <% pre.participations.each do |par| %>
+     <% if par.is_presenter === true %>
+      <p> <%=`#{par.is_presenter} presenter `%> </p>
+      <% else %>
+      <p> <%=`#{par.is_presenter} Not working `%> </p>
+      <% end %>
+    <% end %> -->
 <% end %>
 </div>

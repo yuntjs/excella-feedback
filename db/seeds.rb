@@ -7,8 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-User.destroy_all
 Presentation.destroy_all
+User.destroy_all
 
 User.create!(email: "nick@nick.nick", password:"testing", first_name: "nick", last_name: "oki", is_admin: true)
 khoi = User.create!(email: "khoi@khoi.khoi", password:"testing", first_name: "khoi", last_name: "le", is_admin: false)
@@ -19,5 +19,9 @@ git = Presentation.create!(title: "Git", date: DateTime.new(2017, 2, 24), locati
 
 dev_ops = Presentation.create!(title: "DevOps", date: DateTime.new(2017, 2, 23), location: "ATX", description: "Lorem Ipsum", is_published: true)
 
-khoi.presentations.push(git)
+# khoi_git = khoi.presentations.push(git)
+
+
+Participation.create!(user_id: khoi.id, presentation_id: git.id, is_presenter: true)
+
 khoi.presentations.push(dev_ops)

@@ -10,6 +10,19 @@ class PresentationsController < ApplicationController
     else
       @presentations = current_user.presentations
     end
+
+
+    # @presentations.each do |presentation|
+    #   presenting = current_user.participations.map do |participation|
+    #
+    #     if participation.is_presenter === true
+    #       puts "YES: #{participation.presentation_id}"
+    #     else
+    #       puts "NO: #{participation.presentation_id}"
+    #     end
+    #   end
+    # end
+
   end
 
   def new
