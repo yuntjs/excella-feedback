@@ -10,7 +10,9 @@ gem 'devise'
 
 group :development, :test do
   gem 'byebug', platform: :mri
-  gem 'rspec-rails', '~> 3.5'
+  gem 'minitest'
+  gem 'minitest-rails'
+  gem 'minitest-spec-rails'
 end
 
 group :development do
