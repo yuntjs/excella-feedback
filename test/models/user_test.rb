@@ -28,4 +28,5 @@ describe User do
     # Assert
     refute result, "first_name cannot be nil"
   end
+
 end

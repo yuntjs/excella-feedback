@@ -21,7 +21,7 @@ class PresentationsController < ApplicationController
   end
 
   def edit
-    
+
   end
 
 private
