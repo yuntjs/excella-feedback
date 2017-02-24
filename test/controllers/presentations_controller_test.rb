@@ -1,10 +1,10 @@
 require "test_helper"
 
 class PresentationsControllerTest < ActionController::TestCase
-include Devise::Test::ControllerHelpers
-include FactoryGirl::Syntax::Methods
+  include Devise::Test::ControllerHelpers
+  include FactoryGirl::Syntax::Methods
 
-# describe PresentationsController, type: :controller do
+  # Before actions
   before do
     @params = {
       title: "Test Presentation",
@@ -15,19 +15,44 @@ include FactoryGirl::Syntax::Methods
     }
   end
 
+
+
+  # Index tests
   describe "#index" do
+
     it "gets all presentations if you are an admin" do
       # Arrange
       admin = create :user, :admin
       presentation = create :presentation
       sign_in admin
+
       # Act
       get :index
+
       # Assert
       assert_equal Presentation.all, [presentation], "Did not return presentations"
     end
+
+    it "gets only presentations for which a non-admin user is a participant" do
+      # Arrange
+      u = create :user
+      pres1 = create :presentation
+      pres2 = create :presentation
+      # Add a join bw user and presentation
+      part = create :participation, user: u, presentation: pres1
+      sign_in u
+
+      # Act
+      get :index
+
+      # Assert
+      assert_equal u.presentations, [pres1], "Returned presentation for which the user is not a participant"
+    end
   end
 
+
+
+  # Create tests
   describe "#create" do
     it "redirects to index page if logged in" do
       # Arrange
