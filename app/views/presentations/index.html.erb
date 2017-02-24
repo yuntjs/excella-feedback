@@ -14,7 +14,7 @@
   </tr>
 <% @presentations.each do |pre| %>
   <tr>
-    <td><%= pre.title %></td>
+    <td><%= link_to pre.title, pre %></td>
     <td><%= pre.date.strftime("%a - %-m/%d/%y @ %l:%M %P") %></td>
     <td><%= pre.location %></td>
     <td>
@@ -25,7 +25,10 @@
       <% end %>
     </td>
     <% if current_user.is_admin %>
-      <td class="admin-link"><%= link_to "Edit", edit_presentation_path(pre) %></td>
+      <td class="admin-link">
+        <%= link_to "Edit", edit_presentation_path(pre) %>
+        <%= link_to "Delete", presentation_path(pre), method: :delete %>
+      </td>
     <% end %>
   </tr>
 <% end %>
