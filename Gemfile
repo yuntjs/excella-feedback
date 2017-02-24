@@ -13,6 +13,7 @@ group :development, :test do
   gem 'minitest'
   gem 'minitest-rails'
   gem 'minitest-spec-rails'
+  gem 'factory_girl_rails'
 end
 
 group :development do
