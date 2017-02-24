@@ -54,6 +54,7 @@ class PresentationsControllerTest < ActionController::TestCase
 
   # Create tests
   describe "#create" do
+
     it "redirects to index page if logged in" do
       # Arrange
       user = User.create(
@@ -64,8 +65,10 @@ class PresentationsControllerTest < ActionController::TestCase
         last_name: "Oki"
       )
       sign_in user
+
       # Act
       post :create, params: @params
+
       # Assert
       assert_redirected_to presentations_path, "Create method unsuccessful, no redirect to presentations_path"
     end
@@ -75,10 +78,9 @@ class PresentationsControllerTest < ActionController::TestCase
 
       # Act
       post :create, params: @params
+
       # Assert
       assert_redirected_to new_user_session_path
-
     end
   end
-
 end
