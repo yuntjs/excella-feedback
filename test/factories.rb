@@ -7,7 +7,7 @@ FactoryGirl.define do
     first_name "Ex"
     last_name  "Cella"
     is_admin false
-    # If admin
+
     trait :admin do
       is_admin true
     end
@@ -18,16 +18,16 @@ FactoryGirl.define do
     date DateTime.now
     location "ATX"
     description "This is a description of our presentation"
-    # association :user
   end
 
   factory :participation do
     user
     presentation
     is_presenter false
-    # If presenter
+
     trait :presenter do
       is_presenter true
     end
   end
+  
 end
