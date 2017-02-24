@@ -1,32 +1,32 @@
 <h1>Presentations</h1>
-<h2><%= current_user.is_admin %></h2>
-<div>
-<% @presentations.each do |pre| %>
-  <div>
-    <h3><%= pre.title %></h3>
-    <p><%= pre.date %></p>
-    <p><%= pre.location %></p>
-    <p><%= pre.description %></p>
-    <p><%= pre.id %></p>
-
-    <% participant = Participation.where(user_id: current_user.id, presentation_id: pre.id) %>
-
-    <% if participant.first.is_presenter == nil  %>
-    <p>big ol button</p>
-    <% else  %>
-    <p>no button for you</p>
-    <%end  %>
-
-
-
-  </div>
-
-  <!-- <% pre.participations.each do |par| %>
-     <% if par.is_presenter === true %>
-      <p> <%=`#{par.is_presenter} presenter `%> </p>
-      <% else %>
-      <p> <%=`#{par.is_presenter} Not working `%> </p>
-      <% end %>
-    <% end %> -->
+<% if current_user.is_admin %>
+<p><%= "#{current_user.first_name} #{current_user.last_name} is an admin"%></p>
 <% end %>
-</div>
+<table class="table table-striped">
+  <tr>
+    <th>Title</th>
+    <th>Date</th>
+    <th>Location</th>
+    <th>Description</th>
+    <% if current_user.is_admin %>
+      <th>Admin</th>
+    <% end %>
+  </tr>
+<% @presentations.each do |pre| %>
+  <tr>
+    <td><%= pre.title %></td>
+    <td><%= pre.date.strftime("%a - %-m/%d/%y @ %l:%M %P") %></td>
+    <td><%= pre.location %></td>
+    <td>
+      <% if pre.description.length > 30 %>
+        <a tabindex="0" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="<%= pre.description %>"><%= pre.description[0..30].gsub(/\s\w+\s*$/, '...') %></a>
+      <% else %>
+        <%= pre.description %>
+      <% end %>
+    </td>
+    <% if current_user.is_admin %>
+      <td class="admin-link"><%= link_to "Edit", edit_presentation_path(pre) %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>

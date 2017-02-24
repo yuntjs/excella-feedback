@@ -1,3 +1,59 @@
+// Variables
+$light-blue: #5C86C0;
+$orange: #DC5C29;
+
+// General
 body {
   padding-top: 70px;
+  font-family: "Lato","Helvetica Neue", sans-serif;
+}
+
+
+// Navigation
+.navbar {
+  border: 0;
+  padding-top: 1em;
+  background: #ffffff;
+
+  .navbar-brand {
+    padding: 0 15px;
+
+    img {
+      height: 50px;
+    }
+  }
+
+  a {
+    color: #404040;
+    transition: 0.25s;
+  }
+
+  .button {
+    border-radius: 3px;
+    padding: 1em;
+    background: $light-blue;
+    color: #fafafa;
+
+    &:hover {
+      background: darken($light-blue, 12%);
+      color: #fafafa;
+    }
+  }
+
+  li {
+    a:hover {
+      background: none;
+      color: $light-blue;
+    }
+  }
+}
+
+// Presentations
+.admin-link a {
+  text-decoration: none;
+  color: $orange;
+
+  &:hover {
+    color: lighten($orange, 12%);
+  }
 }
