@@ -29,4 +29,5 @@ FactoryGirl.define do
       is_presenter true
     end
   end
+  
 end

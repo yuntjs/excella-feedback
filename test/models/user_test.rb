@@ -39,5 +39,4 @@ describe User do
     refute result, "Accepted user with invalid last name"
   end
 
-
 end
