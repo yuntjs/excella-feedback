@@ -1,3 +1,42 @@
 body {
   padding-top: 70px;
+  font-family: "Lato","Helvetica Neue", sans-serif;
+}
+
+.navbar {
+  margin-top: 1em;
+  border: 0;
+  background: #ffffff;
+
+  .navbar-brand {
+    padding: 0 15px;
+
+    img {
+      height: 50px;
+    }
+  }
+
+  a {
+    color: #404040;
+    transition: 0.25s;
+  }
+
+  .button {
+    border-radius: 3px;
+    padding: 1em;
+    background: #5C86C0;
+    color: #fafafa;
+
+    &:hover {
+      background: darken(#5C86C0, 12%);
+      color: #fafafa;
+    }
+  }
+
+  li {
+    a:hover {
+      background: none;
+      color: #5C86C0;
+    }
+  }
 }
