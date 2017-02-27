@@ -2,7 +2,6 @@ require "test_helper"
 
 class PresentationsControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers
-  include FactoryGirl::Syntax::Methods
 
   # Before actions
   before do
@@ -14,8 +13,6 @@ class PresentationsControllerTest < ActionController::TestCase
       is_published: true,
     }
   end
-
-
 
   # Index tests
   describe "#index" do
@@ -48,9 +45,8 @@ class PresentationsControllerTest < ActionController::TestCase
       # Assert
       assert_equal u.presentations, [pres1], "Returned presentation for which the user is not a participant"
     end
+
   end
-
-
 
   # Create tests
   describe "#create" do
@@ -83,4 +79,5 @@ class PresentationsControllerTest < ActionController::TestCase
       assert_redirected_to new_user_session_path
     end
   end
+
 end
