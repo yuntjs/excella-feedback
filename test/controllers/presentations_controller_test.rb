@@ -40,22 +40,17 @@ class PresentationsControllerTest < ActionController::TestCase
   describe "#create" do
 
     it "redirects to index page if logged in" do
-      user = User.create(
-        email: "nicholas.oki@excella.com",
-        password: "testing",
-        password_confirmation: "testing",
-        first_name: "Nick",
-        last_name: "Oki"
-      )
+      user = create :user
       sign_in user
       post :create, params: @params
       assert_redirected_to presentations_path, "Create method unsuccessful, no redirect to presentations_path"
     end
 
-    it "redirects to sign in if no current_user" do
+    it "redirects to sign-in page if a user is not signed in" do
       post :create, params: @params
       assert_redirected_to new_user_session_path
     end
+
   end
 
   # Edit tests
