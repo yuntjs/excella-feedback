@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ShowPresentationsTest < Capybara::Rails::TestCase
+class PresentationsListTest < Capybara::Rails::TestCase
   include Warden::Test::Helpers
   Warden.test_mode!
 
