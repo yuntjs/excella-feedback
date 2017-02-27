@@ -9,6 +9,7 @@ body {
 }
 
 
+
 // Navigation
 .navbar {
   border: 0;
@@ -45,6 +46,14 @@ body {
       background: none;
       color: $light-blue;
     }
+  }
+
+  .dropdown-menu {
+    border-radius: 0;
+  }
+
+  .icon-bar {
+    background: $light-blue;
   }
 }
 
