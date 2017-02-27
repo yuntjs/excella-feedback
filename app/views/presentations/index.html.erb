@@ -1,7 +1,4 @@
 <h1>Presentations</h1>
-<% if current_user.is_admin %>
-<p><%= "#{current_user.first_name} #{current_user.last_name} is an admin"%></p>
-<% end %>
 <table class="table table-striped">
   <tr>
     <th>Title</th>
@@ -28,7 +25,16 @@
       <td class="admin-link">
         <%= link_to "Edit", edit_presentation_path(pre), class: "btn btn-default" %>
         <%= link_to "Delete", presentation_path(pre), class: "btn btn-default", method: :delete %>
+        <% if pre.surveys.length == 0%>
+          <%= link_to "Create Survey", new_presentation_survey_path(pre) %>
+        <% else %>
+          <%= link_to "See Surveys", presentation_surveys_path(pre) %>
+        <% end %>
       </td>
+    <% else %>
+    <td class="user-link">
+      <%= link_to "Provide Feedback" %>
+    </td>
     <% end %>
   </tr>
 <% end %>

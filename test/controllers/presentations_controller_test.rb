@@ -26,15 +26,14 @@ class PresentationsControllerTest < ActionController::TestCase
     end
 
     it "gets only presentations for which a non-admin user is a participant" do
-      user = create :user
+      u = create :user
       pres1 = create :presentation
       pres2 = create :presentation
-      part = create :participation, user: user, presentation: pres1
-      sign_in user
+      part = create :participation, user: u, presentation: pres1
+      sign_in u
       get :index
-      assert_equal user.presentations, [pres1], "Returned presentation for which the user is not a participant"
+      assert_equal u.presentations, [pres1], "Returned presentation for which the user is not a participant"
     end
-
   end
 
   # Create tests
@@ -53,5 +52,9 @@ class PresentationsControllerTest < ActionController::TestCase
     end
 
   end
+
+  # Edit tests
+
+  # Delete tests
 
 end

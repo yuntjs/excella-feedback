@@ -9,6 +9,7 @@ body {
 }
 
 
+
 // Navigation
 .navbar {
   border: 0;
@@ -46,9 +47,22 @@ body {
       color: $light-blue;
     }
   }
+
+  .dropdown-menu {
+    border-radius: 0;
+  }
+
+  .icon-bar {
+    background: $light-blue;
+  }
 }
 
 // Presentations
+form {
+  textarea {
+    resize: vertical;
+  }
+}
 .admin-link a {
   text-decoration: none;
   color: $orange;
