@@ -34,7 +34,6 @@ class PresentationsControllerTest < ActionController::TestCase
       get :index
       assert_equal u.presentations, [pres1], "Returned presentation for which the user is not a participant"
     end
-
   end
 
   # Create tests
@@ -58,5 +57,9 @@ class PresentationsControllerTest < ActionController::TestCase
       assert_redirected_to new_user_session_path
     end
   end
+
+  # Edit tests
+
+  # Delete tests
 
 end
