@@ -1,1 +1,16 @@
-<h1>Create a form for the Surveys</h1>
+<%= form_for :survey do |f| %>
+  <p>
+    <%= f.label :order %>
+    <%= f.text_field :order %>
+  </p>
+
+  <p>
+    <%= f.label :subject %>
+    <%= f.text_area :subject %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+
+<% end %>
