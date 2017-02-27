@@ -10,8 +10,8 @@ class SignOutTest < Capybara::Rails::TestCase
 
   feature "Sign Out" do
     scenario "visits sign out path" do
-      u = create :user
-      login_as(u, scope: :user)
+      user = create :user
+      login_as(user, scope: :user)
       # Must refresh page for login_as to take effect
       visit root_path
       click_on "Log Out"
