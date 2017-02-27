@@ -1,0 +1,24 @@
+<%= form_for ([@presentation, @survey, @question]) do |f| %>
+  <p>
+    <%= f.label :order %>
+    <%= f.text_field :order %>
+  </p>
+
+  <p>
+    <%= f.label :prompt %>
+    <%= f.text_area :prompt %>
+  </p>
+
+  <p>
+    <%= f.label :response_type %>:
+      <%= f.label :response_type, "Text" %>
+      <%= f.radio_button(:response_type, "text") %>
+      <%= f.label :response_type, "Number" %>
+      <%= f.radio_button(:response_type, "number") %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+
+<% end %>
