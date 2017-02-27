@@ -8,10 +8,10 @@ Rails.application.routes.draw do
   # Routes for Presentation
   resources :presentations do
     # Routes for Participation
-    post 'add_participation'
+    post 'create_participation'
     get 'edit_participation'
     put 'update_participation'
-    delete 'remove_participation'
+    delete 'destroy_participation'
 
     # Routes for Survey and Question
     resources :surveys do
