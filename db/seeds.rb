@@ -10,18 +10,15 @@
 Presentation.destroy_all
 User.destroy_all
 
-User.create!(email: "nick@nick.nick", password:"testing", first_name: "nick", last_name: "oki", is_admin: true)
-khoi = User.create!(email: "khoi@khoi.khoi", password:"testing", first_name: "khoi", last_name: "le", is_admin: false)
 
-dev_env = Presentation.create!(title: "Dev Env", date: DateTime.new(2017, 2, 22), location: "ATX", description: "Lorem Ipsum", is_published: true)
+admin = User.create!(email: "nick@nick.nick", password:"testing", first_name: "nick", last_name: "oki", is_admin: true)
+basic_user = User.create!(email: "khoi@khoi.khoi", password:"testing", first_name: "khoi", last_name: "le", is_admin: false)
 
-git = Presentation.create!(title: "Git", date: DateTime.new(2017, 2, 24), location: "ATX", description: "Lorem Gitsum", is_published: false)
+pres1 = Presentation.create!(title: "Dev Env", date: DateTime.new(2017, 2, 21), location: "ATX", description: "Lorem Ipsum", is_published: true)
+pres2 = Presentation.create!(title: "Git", date: DateTime.new(2017, 2, 22), location: "Octohub", description: "Lorem Gitsum", is_published: true)
+pres3 = Presentation.create!(title: "DevOps", date: DateTime.new(2017, 2, 23), location: "Mordor", description: "Frodo will be taking us through the long path to working together as a team", is_published: true)
+pres3 = Presentation.create!(title: "SCRUM", date: DateTime.new(2017, 2, 24), location: "Bikini Bottom", description: "Hey now, you're an all star, get your game on, go play. Hey now, you're a rock star, get your show on, get paid.", is_published: true)
 
-dev_ops = Presentation.create!(title: "DevOps", date: DateTime.new(2017, 2, 23), location: "ATX", description: "Lorem Ipsum", is_published: true)
-
-# khoi_git = khoi.presentations.push(git)
-
-
-Participation.create!(user_id: khoi.id, presentation_id: git.id, is_presenter: true)
-
-khoi.presentations.push(dev_ops)
+Participation.create!(user_id: basic_user.id, presentation_id: pres1.id)
+Participation.create!(user_id: basic_user.id, presentation_id: pres2.id)
+Participation.create!(user_id: basic_user.id, presentation_id: pres3.id, is_presenter: true)

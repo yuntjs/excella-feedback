@@ -1,0 +1,8 @@
+<%= link_to 'Back', presentations_url %>
+
+<h1><%= @presentation.title %></h1>
+
+<% if current_user.is_admin %>
+<%= link_to 'Edit', edit_presentation_path(@presentation) %>
+
+<% end %>
