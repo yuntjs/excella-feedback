@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
+Survey.destroy_all
 Participation.destroy_all
 Presentation.destroy_all
 User.destroy_all
@@ -23,3 +23,6 @@ pres3 = Presentation.create!(title: "SCRUM", date: DateTime.new(2017, 2, 24), lo
 Participation.create!(user_id: basic_user.id, presentation_id: pres1.id)
 Participation.create!(user_id: basic_user.id, presentation_id: pres2.id)
 Participation.create!(user_id: basic_user.id, presentation_id: pres3.id, is_presenter: true)
+
+
+survey1 = Survey.create!(presentation_id: pres1.id, order: 1, subject: "Dev Env")
