@@ -29,5 +29,10 @@ FactoryGirl.define do
       is_presenter true
     end
   end
-  
+
+  factory :survey do
+    order 1
+    subject "Git"
+    presentation
+  end
 end
