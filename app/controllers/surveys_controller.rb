@@ -1,6 +1,7 @@
 class SurveysController < ApplicationController
 
   def index
+    @presentation = Presentation.find(params[:presentation_id])
   end
 
   def new

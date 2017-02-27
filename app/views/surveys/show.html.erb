@@ -1,10 +1,12 @@
 <h1>Showing Specific Survey</h1>
 
-<p>
+<p> INFO:
   <%= @survey.order %>
   <%= @survey.subject %>
 </p>
 
+<h3>QUESTIONS</h3>
+<p><%= link_to "Create a New Question", new_presentation_survey_question_path(@survey.presentation_id, @survey.id) %></p>
   <% @survey.questions.each do |q| %>
     <ul>
       <li><%= q.order %>
