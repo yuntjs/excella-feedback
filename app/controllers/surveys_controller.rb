@@ -10,10 +10,10 @@ class SurveysController < ApplicationController
 
   def create
     @presentation = Presentation.find(params[:presentation_id])
-    @survey = @presentation.surveys.new
+    @survey = @presentation.surveys.new(surveys_params)
 
     if @survey.save
-    redirect_to presentation_survey_path(@survey)
+      redirect_to presentation_survey_path(@presentation.id, @survey.id)
     elsif
       render :new
     end
