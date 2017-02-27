@@ -1,16 +1,16 @@
 class SurveysController < ApplicationController
-  
+
   def index
   end
 
   def new
     @presentation = Presentation.find(params[:presentation_id])
-    @survey = Presentation.surveys.new
+    @survey = @presentation.surveys.new
   end
 
   def create
     @presentation = Presentation.find(params[:presentation_id])
-    @survey = Presentation.surveys.create(surveys_params)
+    @survey = @presentation.surveys.create(surveys_params)
     redirect_to presentation_survey(@survey)
   end
 
