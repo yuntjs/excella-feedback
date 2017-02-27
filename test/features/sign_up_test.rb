@@ -32,8 +32,4 @@ class SignUpTest < Capybara::Rails::TestCase
       page.must_have_content "Password confirmation doesn't match Password"
     end
   end
-  #
-  # feature "Sign In" do
-  #
-  # end
 end
