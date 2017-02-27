@@ -10,7 +10,7 @@ Survey.destroy_all
 Participation.destroy_all
 Presentation.destroy_all
 User.destroy_all
-
+Question.destroy_all
 
 admin = User.create!(email: "nick@nick.nick", password:"testing", first_name: "nick", last_name: "oki", is_admin: true)
 basic_user = User.create!(email: "khoi@khoi.khoi", password:"testing", first_name: "khoi", last_name: "le", is_admin: false)
@@ -25,4 +25,16 @@ Participation.create!(user_id: basic_user.id, presentation_id: pres2.id)
 Participation.create!(user_id: basic_user.id, presentation_id: pres3.id, is_presenter: true)
 
 
-survey1 = Survey.create!(presentation_id: pres1.id, order: 1, subject: "Dev Env")
+survey1 = Survey.create!(presentation_id: pres1.id, order: 1, subject: "Presenter")
+Question.create!(survey_id: survey1.id, prompt: "Presenter was super rad", order: 1, response_type: "scale")
+Question.create!(survey_id: survey1.id, prompt: "I wish I could be more like them", order: 2, response_type:"scale")
+Question.create!(survey_id: survey1.id, prompt: "What about them made them rad?", order: 3, response_type:"text")
+
+survey2 = Survey.create!(presentation_id: pres1.id, order: 2, subject: "Slides")
+Question.create!(survey_id: survey2.id, prompt: "Slides were mindblowingly slick", order: 1, response_type:"scale")
+Question.create!(survey_id: survey2.id, prompt: "How big was your mind explosion?", order: 2, response_type:"text")
+
+# t.integer  "survey_id"
+# t.string   "prompt"
+# t.integer  "order"
+# t.string   "response_type"
