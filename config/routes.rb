@@ -7,7 +7,9 @@ Rails.application.routes.draw do
 
   # Routes for presentations
   resources :presentations do
-    resources :surveys
+    resources :surveys do
+      resources :questions
+    end
   end
 
 end
