@@ -1,6 +1,7 @@
 require "test_helper"
 
 class SignUpTest < Capybara::Rails::TestCase
+
   feature "Sign Up" do
     scenario "has valid content" do
       visit root_path
@@ -15,7 +16,7 @@ class SignUpTest < Capybara::Rails::TestCase
         click_button "Sign Up"
       end
 
-      current_path.should eq(root_path)
+      assert_equal current_path, root_path
     end
   end
 end
