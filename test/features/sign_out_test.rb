@@ -1,7 +1,6 @@
 require "test_helper"
 
 class SignOutTest < Capybara::Rails::TestCase
-  include FactoryGirl::Syntax::Methods
   include Warden::Test::Helpers
   Warden.test_mode!
 

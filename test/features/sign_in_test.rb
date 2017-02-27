@@ -1,8 +1,6 @@
 require "test_helper"
 
 class SignInTest < Capybara::Rails::TestCase
-  include FactoryGirl::Syntax::Methods
-
   feature "Sign In" do
     before do
       visit root_path

@@ -1,7 +1,6 @@
 require "test_helper"
 
 class SignUpTest < Capybara::Rails::TestCase
-
   feature "Sign Up" do
     before do
       visit root_path
