@@ -5,8 +5,16 @@
   </p>
 
   <p>
-    <%= f.label :subject %>
-    <%= f.text_area :subject %>
+    <%= f.label :prompt %>
+    <%= f.text_area :prompt %>
+  </p>
+
+  <p>
+    <%= f.label :response_type %>:
+      <%= f.label :response_type, "Text" %>
+      <%= f.radio_button(:response_type, "text") %>
+      <%= f.label :response_type, "Number" %>
+      <%= f.radio_button(:response_type, "number") %>
   </p>
 
   <p>

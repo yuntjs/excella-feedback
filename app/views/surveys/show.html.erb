@@ -4,3 +4,12 @@
   <%= @survey.order %>
   <%= @survey.subject %>
 </p>
+
+  <% @survey.questions.each do |q| %>
+    <ul>
+      <li><%= q.order %>
+      <%= q.prompt %>
+      <%= q.response_type %></li>
+    </ul>
+
+  <% end %>
