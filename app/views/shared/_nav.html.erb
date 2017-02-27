@@ -17,7 +17,9 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><%= link_to "View Presentations", presentations_path %></li>
+        <% if current_user %>
         <li><%= link_to "Provide Feedback", new_presentation_survey_path(@presentation) %></li>
+        <% end %>
         <li><a href="#">Admin</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
