@@ -2,9 +2,14 @@
 class PresentationsController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_admin, only: [:new, :create]
+  before_action :set_presentation, only: [:show, :edit, :update, :destroy]
 
   def index
     @presentations = presentations
+  end
+
+  def show
+    @presentation = Presentation.find(params[:id])
   end
 
   def new
@@ -21,8 +26,21 @@ class PresentationsController < ApplicationController
   end
 
   def edit
-
   end
+
+  def update
+    if @presentation.update(presentation_params)
+      redirect_to @presentation, notice: 'Post was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @presentation.destroy
+      redirect_to presentations_url, notice: 'Post was successfully destroyed.'
+  end
+
 
 private
 
@@ -36,6 +54,10 @@ private
     else
       current_user.presentations
     end
- end
+  end
+
+  def set_presentation
+    @presentation = Presentation.find(params[:id])
+  end
 
 end
