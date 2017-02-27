@@ -1,5 +1,5 @@
 class SurveysController < ApplicationController
-  
+
   def index
   end
 
@@ -10,8 +10,13 @@ class SurveysController < ApplicationController
 
   def create
     @presentation = Presentation.find(params[:presentation_id])
-    @survey = @presentation.surveys.create(surveys_params)
-    redirect_to presentation_survey(@survey)
+    @survey = @presentation.surveys.new
+
+    if @survey.save
+    redirect_to presentation_survey_path(@survey)
+    elsif
+      render :new
+    end
   end
 
   def show
