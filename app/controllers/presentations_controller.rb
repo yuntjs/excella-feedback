@@ -1,4 +1,3 @@
-
 class PresentationsController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_admin, only: [:new, :create]
@@ -10,6 +9,8 @@ class PresentationsController < ApplicationController
 
   def show
     @presentation = Presentation.find(params[:id])
+    @users = User.all
+    @participations = Participation.where(presentation_id: @presentation)
   end
 
   def new
@@ -40,7 +41,6 @@ class PresentationsController < ApplicationController
     @presentation.destroy
       redirect_to presentations_url, notice: 'Post was successfully destroyed.'
   end
-
 
 private
 

@@ -2,7 +2,18 @@
 
 <h1><%= @presentation.title %></h1>
 
-<% if current_user.is_admin %>
-<%= link_to 'Edit', edit_presentation_path(@presentation) %>
+<h3>All Users</h3>
+<% @users.each do |user| %>
+  <p><%= user.email %> <%= link_to "Add User", '#', onclick: add_participation(user) %></p>
+<% end %>
 
+<hr/>
+
+<h3>Participants</h3>
+<% @participations.each do |participant| %>
+  <p><%= User.find(participant.user_id).email %></p>
+<% end %>
+
+<% if current_user.is_admin %>
+  <%= link_to 'Edit', edit_presentation_path(@presentation) %>
 <% end %>
