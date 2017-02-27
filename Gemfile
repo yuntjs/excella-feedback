@@ -14,6 +14,8 @@ group :development, :test do
   gem 'minitest-rails'
   gem 'minitest-spec-rails'
   gem 'factory_girl_rails'
+  gem 'minitest-rails-capybara'
+  gem 'minitest-reporters'
 end
 
 group :development do
@@ -24,7 +26,3 @@ group :development do
 end
 
 gem 'mini_racer', platforms: :ruby
-
-group :test do
-  gem 'shoulda-matchers', '~> 3.1'
-end
