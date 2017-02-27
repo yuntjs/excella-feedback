@@ -4,7 +4,7 @@
 
 <h3>All Users</h3>
 <% @users.each do |user| %>
-  <p><%= user.email %> <%= link_to "Add User", '#', onclick: add_participation(user) %></p>
+  <p><%= user.email %> <%= link_to "Add User", participations_path(presentation_id: @presentation.id, user_id: user.id), method: :post %></p>
 <% end %>
 
 <hr/>
