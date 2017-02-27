@@ -6,5 +6,8 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { registrations: 'registrations' }
 
   # Routes for presentations
-  resources :presentations
+  resources :presentations do
+    resources :surveys
+  end
+
 end
