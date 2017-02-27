@@ -28,7 +28,12 @@
       <td class="admin-link">
         <%= link_to "Edit", edit_presentation_path(pre) %>
         <%= link_to "Delete", presentation_path(pre), method: :delete %>
+        <%= link_to "Create Survey", new_presentation_survey_path(pre) %>
       </td>
+    <% else %>
+    <td class="user-link">
+
+    </td>
     <% end %>
   </tr>
 <% end %>
