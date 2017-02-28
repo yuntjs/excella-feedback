@@ -17,8 +17,8 @@ Response.destroy_all
 puts "Creating basic users..."
 NUM_USERS.times do |n|
   u = User.new(
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
+    first_name: "Foo#{n}",
+    last_name: "Bar#{n}",
     password: PASSWORD,
     is_admin: false
   )
