@@ -7,6 +7,8 @@
     <th>Description</th>
     <% if current_user.is_admin %>
       <th>Admin</th>
+    <% else %>
+      <th>Feedback</th>
     <% end %>
   </tr>
 <% @presentations.each do |pre| %>
