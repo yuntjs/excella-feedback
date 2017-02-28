@@ -32,7 +32,6 @@ class PresentationsListTest < Capybara::Rails::TestCase
       pres = create(:presentation)
       create(:participation, user: @user, presentation: pres)
       visit(presentations_path)
-      save_and_open_page
       within('table') do
         refute page.has_content? "Admin"
       end

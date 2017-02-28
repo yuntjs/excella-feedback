@@ -14,9 +14,10 @@ class User < ApplicationRecord
   validates :last_name, presence: true
 
   def presentations_as(role)
-    if role == :presenter
+    case role
+    when :presenter
       presentations.where('is_presenter IS true')
-    elsif role == :attendee
+    when :attendee
       presentations.where('is_presenter IS NOT true')
     else
       User.none # empty ActiveRecord relation
