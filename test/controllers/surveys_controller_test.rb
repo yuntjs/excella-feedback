@@ -27,11 +27,12 @@ class SurveysControllerTest < ActionController::TestCase
 
         sign_in admin
 
-        patch :update, params: {presentation_id: presentation.id, id: presentation.surveys.first.id, survey:{order: survey.order, subject: survey.subject}}
-        survey.update(order: updated_order, subject: updated_subject)
-        assert_equal updated_order, survey.order, "Update method unsucessful, attributes are not equal"
-        assert_redirected_to presentation_survey_path(presentation.id, presentation.surveys.first.id)
+        patch :update, params: {presentation_id: presentation.id, id: survey.id, survey:{order: updated_order, subject: updated_subject}}
 
+        survey.reload
+
+        assert_equal [updated_subject, updated_order], [survey.subject, survey.order], "Update method unsuccessful, attributes are not equal"
+        assert_redirected_to presentation_survey_path(presentation.id, survey.id)
       end
     end
   end
