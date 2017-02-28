@@ -1,25 +1,17 @@
 <h1>Feedback for <%= @presentation.title %></h1>
 
-<% @presentation.surveys.each do |survey|  %>
-  <%= form_tag do |f|%>
-    <h3><%= survey.subject %></h3>
-    <% survey.questions.each do |q| %>
-      <%= label_tag(:q, "#{q.prompt}") %>
-      <% if q.response_type == "text" %>
-        <%= text_area_tag(:q, "Type something") %><br>
-      <% else %>
-        <%= radio_button_tag(:value, "5") %>
-        <%= label_tag(:strongly_agree, "Strongly Agree")%>
-        <%= radio_button_tag(:value, "4") %>
-        <%= label_tag(:strongly_agree, "Somewhat Agree")%>
-        <%= radio_button_tag(:value, "3") %>
-        <%= label_tag(:strongly_agree, "Neutral")%>
-        <%= radio_button_tag(:value, "2") %>
-        <%= label_tag(:strongly_agree, "Somewhat Disagree")%>
-        <%= radio_button_tag(:value, "1") %>
-        <%= label_tag(:strongly_agree, "Strongly Disagree")%><br>
+<%= form_tag(presentation_responses_path(@presentation), method: 'post') do |f|%>
+  <% @presentation.surveys.each do |survey|  %>
+    <h3>SUBJECT: <%= survey.subject %></h3>
+
+      <% survey.questions.each do |q| %>
+          <% if q.response_type == "text" %>
+            <%= render 'text_form_partial', question: q %>
+          <% else %>
+            <%= render 'scale_form_partial', question: q %><br>
+          <% end %>
       <% end %>
-    <% end %>
-    <%= submit_tag("Submit")  %>
+
   <% end %>
+  <%= submit_tag("Submit") %>
 <% end %>
