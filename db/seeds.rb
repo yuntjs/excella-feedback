@@ -7,7 +7,7 @@ QUESTIONS_PER_SURVEY = 5
 RESPONSE_NUM_MAX = 5
 PASSWORD = "testing"
 
-unless Rails.env.prod?
+unless Rails.env.production?
   puts "Destroying everything..."
   User.destroy_all
   Presentation.destroy_all
