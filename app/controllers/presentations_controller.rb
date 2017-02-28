@@ -9,11 +9,7 @@ class PresentationsController < ApplicationController
 
   def show
     @presentation = Presentation.find(params[:id])
-    @users = User.all
-    @participations = Participation.where(presentation_id: @presentation)
-
-    # TODO How is Participation form submit getting to Particiation Controller???
-    # TODO How are they being deleted
+    @participations = Participation.where(presentation_id: @presentation).order(updated_at: :desc)
   end
 
   def new

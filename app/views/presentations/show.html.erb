@@ -7,15 +7,11 @@
 
 <h3>Participants</h3>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Edit Participants</button>
-
+<ol>
 <% @participations.each do |participant| %>
-<p><%= User.find(participant.user_id).email %></p>
+  <li><%= User.where(id: participant.user_id).first.email %></li>
 <% end %>
-
-<hr/>
-
-<h3>All Users</h3>
-
+</ol>
 <div class="modal fade bs-example-modal-sm" tabindex="-1">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -24,17 +20,15 @@
         <h4 class="modal-title">Edit Participation</h4>
       </div>
       <div class="modal-body">
-
         <%= form_for(@presentation) do |f| %>
-          <%# @users.each do |user| %>
-
-          <!-- participations_path(user: :user, presentation: @presentation, is_presenter: false) -->
-            <%= f.collection_check_boxes(:user_ids, User.all, :id, :email) %>
-
-          <%# end %>
-          <%= params.inspect %>
-          <%= f.submit "Add Selected" %>
-
+          <%= f.collection_check_boxes(:user_ids, User.all.order(:email), :id, :email) do |c| %>
+          <div class="checkbox">
+            <label>
+              <%= c.check_box %> <%= c.text %>
+            </label>
+          </div>
+          <% end %>
+          <%= f.submit "Add Selected", class: "btn btn-default" %>
         <% end %>
       </div>
       <div class="modal-footer">
