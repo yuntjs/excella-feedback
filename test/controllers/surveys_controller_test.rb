@@ -20,4 +20,25 @@ class SurveysControllerTest < ActionController::TestCase
 
       end
     end
+    describe '#update' do
+      it "Should allow Admin user to Update surveys" do
+        #Arrange
+          admin = create :user, :admin
+          presentation = create :presentation
+          survey1 = presentation.surveys.create(order: 1, subject: "Git")
+
+          updated_subject = "Git 2"
+          updated_order = 2
+
+          sign_in admin
+
+        #Act
+
+        patch :update, params: {presentation_id: presentation.id, id: presentation.surveys.first.id, survey:{order: updated_order, subject: updated_subject}}
+
+        #Assert
+        assert_redirected_to presentation_survey_path(presentation.id, presentation.surveys.first.id)
+
+      end
+    end
   end
