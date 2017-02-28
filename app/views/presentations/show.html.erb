@@ -20,6 +20,7 @@
         <h4 class="modal-title">Edit Participation</h4>
       </div>
       <div class="modal-body">
+        <p>Select users you wish to add to/remove from <strong>&quot;<%= @presentation.title %>&quot;</strong>&hellip;</p>
         <%= form_for(@presentation, html: { id: "participation-form" }) do |f| %>
           <%= f.collection_check_boxes(:user_ids, User.all.order(:email), :id, :email) do |c| %>
           <div class="checkbox">
@@ -28,12 +29,11 @@
             </label>
           </div>
           <% end %>
-          <%# f.submit "Update Participants", class: "btn btn-default" %>
         <% end %>
       </div>
       <div class="modal-footer">
-        <button id="participation-form-submit" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="participation-form-submit" type="button" class="btn btn-primary" data-dismiss="modal">Submit Changes</button>
       </div>
     </div>
   </div>
