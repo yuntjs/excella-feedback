@@ -24,7 +24,6 @@ class QuestionsControllerTest < ActionController::TestCase
       presentation = create :presentation
       survey = create :survey, order: 1, subject: "Git", presentation_id: presentation.id
       question = create :question, survey_id: survey.id
-
       updated_prompt = "Feedback is an internal application that allows?"
 
       sign_in admin
@@ -34,7 +33,6 @@ class QuestionsControllerTest < ActionController::TestCase
 
       assert_equal question.prompt, updated_prompt, "Update unsuccessful, values do not match"
       assert_redirected_to presentation_survey_path(presentation.id, survey.id)
-
     end
   end
 end
