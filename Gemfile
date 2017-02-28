@@ -16,6 +16,8 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
+  gem 'jazz_fingers'
+  gem 'pry-rails'
 end
 
 group :development do
@@ -23,6 +25,7 @@ group :development do
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'faker'
 end
 
 gem 'mini_racer', platforms: :ruby
