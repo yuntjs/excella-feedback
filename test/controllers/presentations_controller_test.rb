@@ -46,7 +46,6 @@ class PresentationsControllerTest < ActionController::TestCase
     end
   end
 
-  # Edit tests
   describe 'update' do
     it "Should allow admins to update presentations" do
       admin = create :user, :admin
@@ -61,10 +60,18 @@ class PresentationsControllerTest < ActionController::TestCase
 
       assert_equal [updated_location, updated_description], [presentation.location, presentation.description], "Update method unsuccessful. Values do not match"
       assert_redirected_to presentation_path(presentation.id), "Redirect failed."
-
     end
   end
 
-  # Delete tests
+  describe "#destroy" do
+    it "Should allow admins to delete presentations" do
+      admin = create :user, :admin
+      presentation = create :presentation
 
+      sign_in admin
+
+      delete :destroy, params:{id: presentation.id}
+      assert_equal Presentation.count, 0, "Delete method unsucessful. Presentation still exists."
+      end
+    end
 end
