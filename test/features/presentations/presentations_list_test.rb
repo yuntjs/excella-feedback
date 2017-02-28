@@ -29,6 +29,10 @@ class PresentationsListTest < Capybara::Rails::TestCase
     end
 
     scenario "a general user cannot see the admin column" do
+      pres = create(:presentation)
+      create(:participation, user: @user, presentation: pres)
+      visit(presentations_path)
+      save_and_open_page
       within('table') do
         refute page.has_content? "Admin"
       end
