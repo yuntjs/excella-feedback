@@ -2,6 +2,8 @@ NUM_USERS = 40
 NUM_ADMINS = 5
 NUM_PRESENTATIONS = 8
 NUM_PARTICIPATIONS = 100
+SURVEYS_PER_PRESENTATION = 3
+QUESTIONS_PER_SURVEY = 5
 PASSWORD = "testing"
 
 puts "Destroying everything..."
@@ -9,6 +11,8 @@ User.destroy_all
 Presentation.destroy_all
 Participation.destroy_all
 Survey.destroy_all
+Question.destroy_all
+Response.destroy_all
 
 puts "Creating basic users..."
 NUM_USERS.times do |n|
@@ -51,15 +55,30 @@ admin = User.create(
   is_admin: true
 )
 
-puts "Creating presentations..."
+puts "Creating presentations, surveys, and questions..."
 NUM_PRESENTATIONS.times do
-  Presentation.create(
+  pres = Presentation.create(
     title: Faker::Hipster.words(3).join(' '),
     date: Faker::Time.between(6.months.ago, Date.today),
     location: Faker::GameOfThrones.city,
     description: Faker::Hacker.say_something_smart,
     is_published: true
   )
+  SURVEYS_PER_PRESENTATION.times do |survey_num|
+    survey = pres.surveys.create(
+      order: survey_num,
+      subject: Faker::Book.title
+    )
+    QUESTIONS_PER_SURVEY.times do |ques_num|
+      ques = survey.questions.create(
+        order: ques_num,
+        prompt: Faker::Hipster.sentence,
+        response_type: rand(2) == 0 ? 'text' : 'number'
+      )
+      ques.prompt[-1] = '?'
+      ques.save
+    end
+  end
 end
 
 puts "Creating participations..."
@@ -83,5 +102,3 @@ end
 
 puts "Done!"
 puts "Note: all users have the password \"#{PASSWORD}\""
-
-# survey1 = Survey.create!(presentation_id: pres1.id, order: 1, subject: "Dev Env")
