@@ -1,11 +1,19 @@
 <h1>Presentations</h1>
 
-<% if current_user.presentations_as_presenter.any? %>
-<h2>As Presenter</h2>
-<%= render partial: 'presentations/table', locals: { presentations: current_user.presentations_as_presenter, feedback_message: "See Feedback" } %>
-<% end %>
+<% if current_user.is_admin? %>
 
-<% if current_user.presentations_as_attendee.any? %>
-<h2>As Attendee</h2>
-<%= render partial: 'presentations/table', locals: { presentations: current_user.presentations_as_attendee, feedback_message: "Provide Feedback" } %>
+  <%= render partial: 'presentations/table', locals: { presentations: @presentations } %>
+
+<% else %>
+
+  <% if current_user.presentations_as_presenter.any? %>
+    <h2>As Presenter</h2>
+    <%= render partial: 'presentations/table', locals: { presentations: current_user.presentations_as_presenter, feedback_message: "See Feedback" } %>
+  <% end %>
+
+  <% if current_user.presentations_as_attendee.any? %>
+    <h2>As Attendee</h2>
+    <%= render partial: 'presentations/table', locals: { presentations: current_user.presentations_as_attendee, feedback_message: "Provide Feedback" } %>
+  <% end %>
+
 <% end %>
