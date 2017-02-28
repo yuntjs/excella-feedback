@@ -1,40 +1,121 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+NUM_USERS = 40
+NUM_ADMINS = 5
+NUM_PRESENTATIONS = 8
+PARTICIPATIONS_PER_PRESENTATION = 10
+SURVEYS_PER_PRESENTATION = 3
+QUESTIONS_PER_SURVEY = 5
+RESPONSE_NUM_MAX = 5
+PASSWORD = "testing"
 
-Survey.destroy_all
-Participation.destroy_all
-Presentation.destroy_all
-User.destroy_all
-Question.destroy_all
+unless Rails.env.production?
+  puts "Destroying everything..."
+  User.destroy_all
+  Presentation.destroy_all
+  Participation.destroy_all
+  Survey.destroy_all
+  Question.destroy_all
+  Response.destroy_all
+end
 
-admin = User.create!(email: "nick@nick.nick", password:"testing", first_name: "nick", last_name: "oki", is_admin: true)
-basic_user = User.create!(email: "khoi@khoi.khoi", password:"testing", first_name: "khoi", last_name: "le", is_admin: false)
+puts "Creating basic users..."
+NUM_USERS.times do |n|
+  u = User.new(
+    first_name: "Foo#{n}",
+    last_name: "Bar#{n}",
+    password: PASSWORD,
+    is_admin: false
+  )
+  u.email = "#{u.first_name}#{u.last_name}@example.com"
+  u.save
+end
 
-pres1 = Presentation.create!(title: "Dev Env", date: DateTime.new(2017, 2, 21), location: "ATX", description: "Lorem Ipsum", is_published: true)
-pres2 = Presentation.create!(title: "Git", date: DateTime.new(2017, 2, 22), location: "Octohub", description: "Lorem Gitsum", is_published: true)
-pres3 = Presentation.create!(title: "DevOps", date: DateTime.new(2017, 2, 23), location: "Mordor", description: "Frodo will be taking us through the long path to working together as a team", is_published: true)
-pres3 = Presentation.create!(title: "SCRUM", date: DateTime.new(2017, 2, 24), location: "Bikini Bottom", description: "Hey now, you're an all star, get your game on, go play. Hey now, you're a rock star, get your show on, get paid.", is_published: true)
+puts "Creating #{NUM_ADMINS} admins..."
+NUM_ADMINS.times do |n|
+  u = User.new(
+    first_name: "Admin",
+    last_name: "#{n}",
+    password: PASSWORD,
+    is_admin: true
+  )
+  u.email = "admin#{n}@example.com"
+  u.save
+end
 
-Participation.create!(user_id: basic_user.id, presentation_id: pres1.id)
-Participation.create!(user_id: basic_user.id, presentation_id: pres2.id)
-Participation.create!(user_id: basic_user.id, presentation_id: pres3.id, is_presenter: true)
+puts "Creating non-admin Khoi..."
+basic_user = User.create(
+  email: "khoi@khoi.khoi",
+  password: PASSWORD,
+  first_name: "Khoi",
+  last_name: "Le",
+  is_admin: false
+)
 
+puts "Creating admin Nick..."
+admin = User.create(
+  email: "nick@nick.nick",
+  password: PASSWORD,
+  first_name: "Nick",
+  last_name: "Oki",
+  is_admin: true
+)
 
-survey1 = Survey.create!(presentation_id: pres1.id, order: 1, subject: "Presenter")
-Question.create!(survey_id: survey1.id, prompt: "Presenter was super rad", order: 1, response_type: "scale")
-Question.create!(survey_id: survey1.id, prompt: "I wish I could be more like them", order: 2, response_type:"scale")
-Question.create!(survey_id: survey1.id, prompt: "What about them made them rad?", order: 3, response_type:"text")
+puts "Creating presentations, surveys, and questions..."
+NUM_PRESENTATIONS.times do
+  pres = Presentation.create(
+    title: Faker::Hipster.words(3).join(' '),
+    date: Faker::Time.between(6.months.ago, Date.today),
+    location: Faker::GameOfThrones.city,
+    description: Faker::Hacker.say_something_smart,
+    is_published: true
+  )
+  SURVEYS_PER_PRESENTATION.times do |survey_num|
+    survey = pres.surveys.create(
+      order: survey_num,
+      subject: Faker::Book.title
+    )
+    QUESTIONS_PER_SURVEY.times do |ques_num|
+      ques = survey.questions.create(
+        order: ques_num,
+        prompt: Faker::Hipster.words(5).join(' ') + '?',
+        response_type: ['text', 'number'].sample
+      )
+      ques.save
+    end
+  end
+end
 
-survey2 = Survey.create!(presentation_id: pres1.id, order: 2, subject: "Slides")
-Question.create!(survey_id: survey2.id, prompt: "Slides were mindblowingly slick", order: 1, response_type:"scale")
-Question.create!(survey_id: survey2.id, prompt: "How big was your mind explosion?", order: 2, response_type:"text")
+puts "Creating participations..."
+Presentation.all.each do |pres|
+  PARTICIPATIONS_PER_PRESENTATION.times do
+    u = User.all.sample
+    part = Participation.find_by(user_id: u.id, presentation_id: pres.id)
+    if part.nil?
+      new_part = Participation.create(
+        user_id: u.id,
+        presentation_id: pres.id
+      )
+      # Set first user as presenter
+      if pres.users.count == 1
+        new_part.is_presenter = true
+        new_part.save
+      end
+    end
+  end
+end
 
-# t.integer  "survey_id"
-# t.string   "prompt"
-# t.integer  "order"
-# t.string   "response_type"
+puts "Creating responses..."
+Question.all.each do |ques|
+  pres = ques.survey.presentation
+  pres.users.each do |user|
+    part = Participation.find_by(user_id: user.id, presentation_id: pres.id)
+    next if part.is_presenter
+    Response.create(
+      question_id: ques.id,
+      user_id: user.id,
+      value: ques.response_type == 'text' ? Faker::Hipster.words(2).join(' ') : rand(1..RESPONSE_NUM_MAX).to_s
+    )
+  end
+end
+
+puts "Done!"
+puts "Note: all users have the password \"#{PASSWORD}\""

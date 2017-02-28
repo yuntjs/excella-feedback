@@ -2,10 +2,10 @@
 FactoryGirl.define do
 
   factory :user do
-    email "test@excella.com"
-    password "testing"
-    first_name "Ex"
-    last_name  "Cella"
+    email "email@example.com"
+    password "password"
+    first_name "First"
+    last_name  "Last"
     is_admin false
 
     trait :admin do
@@ -14,10 +14,10 @@ FactoryGirl.define do
   end
 
   factory :presentation do
-    title "Factory Girl"
+    sequence(:title) { |n| "presentation#{n}"}
     date DateTime.now
-    location "ATX"
-    description "This is a description of our presentation"
+    location "location"
+    description "description"
   end
 
   factory :participation do
@@ -35,4 +35,5 @@ FactoryGirl.define do
     subject "Git"
     presentation
   end
+
 end
