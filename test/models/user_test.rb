@@ -9,18 +9,21 @@ describe User do
 
   it "requires a user to be valid" do
     result = @user.valid?
+
     assert result, "Valid user was considered invalid"
   end
 
   it "rejects a user without a first name" do
     @user.first_name = nil
     result = @user.valid?
+
     refute result, "Accepted user with invalid first name"
   end
 
   it "rejects a user without a last name" do
     @user.last_name = nil
     result = @user.valid?
+
     refute result, "Accepted user with invalid last name"
   end
 
@@ -30,11 +33,13 @@ describe User do
 
     it "gets all of a user's presentations where they are the presenter" do
       create(:participation, user: @user, presentation: pres, is_presenter: true)
+
       assert_equal @user.presentations_as(:presenter), [pres]
     end
 
     it "gets all of user's presentations where they are the attendee" do
       create(:participation, user: @user, presentation: pres, is_presenter: false)
+
       assert_equal @user.presentations_as(:attendee), [pres]
     end
 
@@ -42,6 +47,7 @@ describe User do
       pres_2 = create(:presentation)
       create(:participation, user: @user, presentation: pres, is_presenter: true)
       create(:participation, user: @user, presentation: pres_2, is_presenter: false)
+
       assert_equal @user.presentations_as(:presenter), [pres]
     end
 
@@ -49,6 +55,7 @@ describe User do
       pres_2 = create(:presentation)
       create(:participation, user: @user, presentation: pres, is_presenter: true)
       create(:participation, user: @user, presentation: pres_2, is_presenter: false)
+      
       assert_equal @user.presentations_as(:attendee), [pres_2]
     end
 

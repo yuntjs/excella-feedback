@@ -21,17 +21,21 @@ class PresentationsControllerTest < ActionController::TestCase
       admin = create :user, :admin
       presentation = create :presentation
       sign_in admin
+
       get :index
+
       assert_equal Presentation.all, [presentation], "Did not return presentations"
     end
 
     it "gets only presentations for which a non-admin user is a participant" do
-      u = create :user
+      user = create :user
       pres1 = create :presentation
       pres2 = create :presentation
-      part = create :participation, user: u, presentation: pres1
-      sign_in u
+      part = create :participation, user: user, presentation: pres1
+      sign_in user
+
       get :index
+
       assert_equal u.presentations, [pres1], "Returned presentation for which the user is not a participant"
     end
   end
@@ -42,12 +46,15 @@ class PresentationsControllerTest < ActionController::TestCase
     it "redirects to index page if logged in" do
       user = create :user
       sign_in user
+
       post :create, params: @params
+
       assert_redirected_to presentations_path, "Create method unsuccessful, no redirect to presentations_path"
     end
 
     it "redirects to sign-in page if a user is not signed in" do
       post :create, params: @params
+      
       assert_redirected_to new_user_session_path
     end
 
