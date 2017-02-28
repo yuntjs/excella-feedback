@@ -71,3 +71,8 @@ form {
     color: lighten($orange, 12%);
   }
 }
+
+.modal-body {
+  max-height: 80vh;
+  overflow: scroll;
+}
