@@ -33,6 +33,8 @@ class QuestionsControllerTest < ActionController::TestCase
       question.reload
 
       assert_equal question.prompt, updated_prompt, "Update unsuccessful, values do not match"
+      assert_redirected_to presentation_survey_path(presentation.id, survey.id)
+
     end
   end
 end
