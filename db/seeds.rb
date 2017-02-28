@@ -1,16 +1,7 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
-NUM_USERS = 10
+NUM_USERS = 80
 NUM_ADMINS = 2
-NUM_PRESENTATIONS = 10
-NUM_PARTICIPATIONS = 100
-NUM_SURVEYS = 5
+NUM_PRESENTATIONS = 8
+PEOPLE_PER_PRESENTATION = NUM_USERS/NUM_PRESENTATIONS
 PASSWORD = "testing"
 
 puts "Destroying everything..."
@@ -27,35 +18,33 @@ NUM_USERS.times do |n|
     password: PASSWORD,
     is_admin: false
   )
-  u.email = "#{first_name}#{last_name}@example.com"
+  u.email = "#{u.first_name}#{u.last_name}@example.com"
   u.save
 end
 
-puts "Creating admins..."
-NUM_ADMINS.times do
-  u = User.new(
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    password: PASSWORD,
-    is_admin: true
-  )
-  u.email = "#{first_name}#{last_name}@example.com"
-  u.save
+puts "Setting #{NUM_ADMINS} users as admins..."
+admin_count = 0
+while admin_count != NUM_ADMINS
+  u = User.all.sample
+  unless u.is_admin
+    u.is_admin = true
+    admin_count += 1
+  end
 end
 
-puts "Creating non-admin (Khoi)..."
-basic_user = User.create!(
+puts "Creating non-admin Khoi..."
+basic_user = User.create(
   email: "khoi@khoi.khoi",
-  password:"testing",
+  password: PASSWORD,
   first_name: "Khoi",
   last_name: "Le",
   is_admin: false
 )
 
-puts "Creating admin (Nick)..."
-admin = User.create!(
+puts "Creating admin Nick..."
+admin = User.create(
   email: "nick@nick.nick",
-  password:"testing",
+  password: PASSWORD,
   first_name: "Nick",
   last_name: "Oki",
   is_admin: true
@@ -73,15 +62,12 @@ NUM_PRESENTATIONS.times do
 end
 
 puts "Creating participations..."
-NUM_PARTICIPATIONS.times do
-  part = Participation.create(
-    
-  )
+Presentation.all.each do |pres|
+
+
 end
 
-Participation.create!(user_id: basic_user.id, presentation_id: pres1.id)
-Participation.create!(user_id: basic_user.id, presentation_id: pres2.id)
-Participation.create!(user_id: basic_user.id, presentation_id: pres3.id, is_presenter: true)
+puts "Done!"
+puts "Note: all users have the password \"#{PASSWORD}\""
 
-
-survey1 = Survey.create!(presentation_id: pres1.id, order: 1, subject: "Dev Env")
+# survey1 = Survey.create!(presentation_id: pres1.id, order: 1, subject: "Dev Env")
