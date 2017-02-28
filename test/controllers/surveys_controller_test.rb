@@ -4,7 +4,7 @@ class SurveysControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers
   include FactoryGirl::Syntax::Methods
 
-    describe '#create' do
+    describe "#create" do
       it "Should create a new survey if User is an Admin" do
         admin = create :user, :admin
         presentation = create :presentation
@@ -16,7 +16,7 @@ class SurveysControllerTest < ActionController::TestCase
       end
     end
 
-    describe '#update' do
+    describe "#update" do
       it "Should allow Admin user to Update surveys" do
         admin = create :user, :admin
         presentation = create :presentation
@@ -33,6 +33,20 @@ class SurveysControllerTest < ActionController::TestCase
 
         assert_equal [updated_subject, updated_order], [survey.subject, survey.order], "Update method unsuccessful, attributes are not equal"
         assert_redirected_to presentation_survey_path(presentation.id, survey.id)
+      end
+    end
+
+    describe "#destroy" do
+      it "Should allow Admin user to Delete surveys" do
+        admin = create :user, :admin
+        presentation = create :presentation
+        survey = create :survey, presentation_id: presentation.id
+
+        sign_in admin
+
+        delete :destroy, params: {presentation_id: presentation.id, id: survey.id}
+
+        assert_equal Survey.count, 0, "Delete method unsuccessful. Survey still exists."
       end
     end
   end

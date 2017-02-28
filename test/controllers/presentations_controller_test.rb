@@ -46,7 +46,7 @@ class PresentationsControllerTest < ActionController::TestCase
     end
   end
 
-  describe 'update' do
+  describe "#update" do
     it "Should allow admins to update presentations" do
       admin = create :user, :admin
       presentation = create :presentation
