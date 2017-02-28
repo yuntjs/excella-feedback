@@ -28,6 +28,17 @@ class PresentationsListTest < Capybara::Rails::TestCase
       assert page.has_selector?('table tr', count: 2) # 1 presentation + 1 header row
     end
 
+    scenario "a general user sees separate tables for sessions where they are presenting and attending" do
+      pres_1 = create(:presentation, title: "user's presentation")
+      create(:participation, user: @user, presentation: pres_1, is_presenter: true)
+      pres_2 = create(:presentation, title: "another presentation")
+      create(:participation, user: @user, presentation: pres_2, is_presenter: false)
+      visit(presentations_path)
+      assert page.has_selector?('table', count: 2), "Two tables are not present on the page"
+      assert page.has_content?('As Presenter'), "Presenter header does not show up on page"
+      assert page.has_content?('As Attendee'), "Attendee header does not show up on page"
+    end
+
     scenario "a general user cannot see the admin column" do
       pres = create(:presentation)
       create(:participation, user: @user, presentation: pres)
