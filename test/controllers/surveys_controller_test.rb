@@ -20,17 +20,18 @@ class SurveysControllerTest < ActionController::TestCase
 
       end
     end
+
     describe '#update' do
       it "Should allow Admin user to Update surveys" do
         #Arrange
-          admin = create :user, :admin
-          presentation = create :presentation
-          survey1 = presentation.surveys.create(order: 1, subject: "Git")
+        admin = create :user, :admin
+        presentation = create :presentation
+        survey1 = presentation.surveys.create(order: 1, subject: "Git")
 
-          updated_subject = "Git 2"
-          updated_order = 2
+        updated_subject = "Git 2"
+        updated_order = 2
 
-          sign_in admin
+        sign_in admin
 
         #Act
 
