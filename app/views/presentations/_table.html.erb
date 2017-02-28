@@ -1,0 +1,42 @@
+<table class="table table-striped">
+  <tr>
+    <th>Title</th>
+    <th>Date</th>
+    <th>Location</th>
+    <th>Description</th>
+    <% if current_user.is_admin %>
+      <th>Admin</th>
+    <% else %>
+      <th>Feedback</th>
+    <% end %>
+  </tr>
+<% presentations.each do |pre| %>
+  <tr>
+    <td><%= link_to pre.title, pre %></td>
+    <td><%= pre.date.strftime("%a - %-m/%d/%y @ %l:%M %P") %></td>
+    <td><%= pre.location %></td>
+    <td>
+      <% if pre.description.length > 30 %>
+        <%= pre.description[0..30].gsub(/\s\w+\s*$/, '... ') %><a tabindex="0" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="<%= pre.description %>">(more)</a>
+      <% else %>
+        <%= pre.description %>
+      <% end %>
+    </td>
+    <% if current_user.is_admin %>
+      <td class="admin-link">
+        <%= link_to "Edit", edit_presentation_path(pre), class: "btn btn-default" %>
+        <%= link_to "Delete", presentation_path(pre), class: "btn btn-default", method: :delete %>
+        <% if pre.surveys.length == 0%>
+          <%= link_to "Create Survey", new_presentation_survey_path(pre) %>
+        <% else %>
+          <%= link_to "See Surveys", presentation_surveys_path(pre) %>
+        <% end %>
+      </td>
+    <% else %>
+    <td class="user-link">
+      <%= link_to feedback_message %>
+    </td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
