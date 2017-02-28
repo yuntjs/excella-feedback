@@ -1,7 +1,7 @@
 NUM_USERS = 40
 NUM_ADMINS = 5
 NUM_PRESENTATIONS = 8
-NUM_PARTICIPATIONS = 100
+PARTICIPATIONS_PER_PRESENTATION = 10
 SURVEYS_PER_PRESENTATION = 3
 QUESTIONS_PER_SURVEY = 5
 PASSWORD = "testing"
@@ -83,7 +83,7 @@ end
 
 puts "Creating participations..."
 Presentation.all.each do |pres|
-  10.times do
+  PARTICIPATIONS_PER_PRESENTATION.times do
     u = User.all.sample
     part = Participation.find_by(user_id: u.id, presentation_id: pres.id)
     if part.nil?
@@ -97,6 +97,20 @@ Presentation.all.each do |pres|
         new_part.save
       end
     end
+  end
+end
+
+puts "Creating responses..."
+Question.all.each do |ques|
+  pres = ques.survey.presentation
+  pres.users.each do |user|
+    part = Participation.find_by(user_id: user.id, presentation_id: pres.id)
+    next if part.is_presenter
+    Response.create(
+      question_id: ques.id,
+      user_id: user.id,
+      value: ques.response_type == 'text' ? Faker::Hipster.words(2).join(' ') : rand(1..5).to_s
+    )
   end
 end
 
