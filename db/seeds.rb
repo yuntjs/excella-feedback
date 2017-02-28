@@ -1,7 +1,7 @@
-NUM_USERS = 80
-NUM_ADMINS = 2
+NUM_USERS = 40
+NUM_ADMINS = 5
 NUM_PRESENTATIONS = 8
-PEOPLE_PER_PRESENTATION = NUM_USERS/NUM_PRESENTATIONS
+NUM_PARTICIPATIONS = 100
 PASSWORD = "testing"
 
 puts "Destroying everything..."
@@ -28,6 +28,7 @@ while admin_count != NUM_ADMINS
   u = User.all.sample
   unless u.is_admin
     u.is_admin = true
+    u.save
     admin_count += 1
   end
 end
@@ -63,8 +64,21 @@ end
 
 puts "Creating participations..."
 Presentation.all.each do |pres|
-
-
+  10.times do
+    u = User.all.sample
+    part = Participation.find_by(user_id: u.id, presentation_id: pres.id)
+    if part.nil?
+      new_part = Participation.create(
+        user_id: u.id,
+        presentation_id: pres.id
+      )
+      # Set first user as presenter
+      if pres.users.count == 1
+        new_part.is_presenter = true
+        new_part.save
+      end
+    end
+  end
 end
 
 puts "Done!"
