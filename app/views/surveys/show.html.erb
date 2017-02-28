@@ -13,6 +13,7 @@
       <%= q.prompt %>
       <%= q.response_type %>
       <%= link_to "Edit", edit_presentation_survey_question_path(@presentation.id, @survey.id, q.id) %>
+      <%= link_to "Delete", presentation_survey_question_path(@presentation.id, @survey.id, q.id), method: :delete, data: { confirm: 'Are you sure?' } %>
       </li>
     </ul>
 

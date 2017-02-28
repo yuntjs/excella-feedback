@@ -25,23 +25,29 @@ class QuestionsController < ApplicationController
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:survey_id])
     @question = @survey.questions.find(params[:id])
-
   end
 
   def update
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:survey_id])
     @question = @survey.questions.find(params[:id])
-    
+
     if @question.update(question_params)
       redirect_to presentation_survey_path(@presentation.id, @survey.id)
     else
       render :edit
     end
-
   end
 
+  def destroy
+    @presentation = Presentation.find(params[:presentation_id])
+    @survey = Survey.find(params[:survey_id])
+    @question = @survey.questions.find(params[:id])
 
+    @question.destroy
+    redirect_to presentation_survey_path(@presentation.id, @survey.id)
+
+  end
 
   private
   def question_params
