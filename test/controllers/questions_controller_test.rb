@@ -17,4 +17,22 @@ class QuestionsControllerTest < ActionController::TestCase
       assert_redirected_to presentation_survey_path(presentation.id, survey.id), "Create method unsuccessful, no redirect to presentation_survey_path"
     end
   end
+
+  describe '#update' do
+    it "Should allow admin to update questions" do
+      admin = create :user, :admin
+      presentation = create :presentation
+      survey = create :survey, order: 1, subject: "Git", presentation_id: presentation.id
+      question = create :question, survey_id: survey.id
+
+      updated_prompt = "Feedback is an internal application that allows?"
+
+      sign_in admin
+
+      patch :update, params: {presentation_id: presentation.id, survey_id: survey.id, id: question.id, question:{prompt: updated_prompt}}
+      question.reload
+
+      assert_equal question.prompt, updated_prompt, "Update unsuccessful, values do not match"
+    end
+  end
 end
