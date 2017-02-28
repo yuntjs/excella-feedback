@@ -2,8 +2,6 @@ require "test_helper"
 
 class PresentationsControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers
-
-  # Before actions
   before do
     @params = {
       title: "Test Presentation",
@@ -62,7 +60,7 @@ class PresentationsControllerTest < ActionController::TestCase
       presentation.reload
 
       assert_equal [updated_location, updated_description], [presentation.location, presentation.description], "Update method unsuccessful. Values do not match"
-    
+      assert_redirected_to presentation_path(presentation.id), "Redirect failed."
 
     end
   end
