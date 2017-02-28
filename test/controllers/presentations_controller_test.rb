@@ -14,9 +14,7 @@ class PresentationsControllerTest < ActionController::TestCase
     }
   end
 
-  # Index tests
   describe "#index" do
-
     it "gets all presentations if you are an admin" do
       admin = create :user, :admin
       presentation = create :presentation
@@ -36,9 +34,7 @@ class PresentationsControllerTest < ActionController::TestCase
     end
   end
 
-  # Create tests
   describe "#create" do
-
     it "redirects to index page if logged in" do
       user = create :user
       sign_in user
@@ -50,10 +46,26 @@ class PresentationsControllerTest < ActionController::TestCase
       post :create, params: @params
       assert_redirected_to new_user_session_path
     end
-
   end
 
   # Edit tests
+  describe 'update' do
+    it "Should allow admins to update presentations" do
+      admin = create :user, :admin
+      presentation = create :presentation
+      updated_location = "Kitchen"
+      updated_description = "Free food"
+
+      sign_in admin
+
+      patch :update, params:{id: presentation.id, presentation:{location: updated_location, description: updated_description}}
+      presentation.reload
+
+      assert_equal [updated_location, updated_description], [presentation.location, presentation.description], "Update method unsuccessful. Values do not match"
+    
+
+    end
+  end
 
   # Delete tests
 
