@@ -56,6 +56,10 @@ describe User do
       assert_equal @user.presentations_as(:guest), []
     end
 
+    it "returns an empty relation if nil is passed in" do
+      assert_equal @user.presentations_as(nil), []
+    end
+
   end
 
 end
