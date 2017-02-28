@@ -16,4 +16,8 @@ class User < ApplicationRecord
   def presentations_as_presenter
     presentations.where('is_presenter IS true')
   end
+
+  def presentations_as_attendee
+    presentations.where('is_presenter IS NOT true')
+  end
 end
