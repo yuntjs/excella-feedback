@@ -14,7 +14,6 @@ class QuestionsControllerTest < ActionController::TestCase
       sign_in admin
 
       post :create, params: {presentation_id: presentation.id, survey_id: survey.id, question:{order: question.order, prompt: question.prompt, response_type: question.response_type}}
-
       assert_redirected_to presentation_survey_path(presentation.id, survey.id), "Create method unsuccessful, no redirect to presentation_survey_path"
     end
   end

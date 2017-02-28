@@ -21,6 +21,28 @@ class QuestionsController < ApplicationController
 
   end
 
+  def edit
+    @presentation = Presentation.find(params[:presentation_id])
+    @survey = Survey.find(params[:survey_id])
+    @question = @survey.questions.find(params[:id])
+
+  end
+
+  def update
+    @presentation = Presentation.find(params[:presentation_id])
+    @survey = Survey.find(params[:survey_id])
+    @question = @survey.questions.find(params[:id])
+    
+    if @question.update(question_params)
+      redirect_to presentation_survey_path(@presentation.id, @survey.id)
+    else
+      render :edit
+    end
+
+  end
+
+
+
   private
   def question_params
     params.require(:question).permit(:order, :prompt, :response_type)
