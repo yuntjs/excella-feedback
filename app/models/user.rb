@@ -12,4 +12,8 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
   validates :last_name, presence: true
+
+  def presentations_as_presenter
+    presentations.where('is_presenter IS true')
+  end
 end
