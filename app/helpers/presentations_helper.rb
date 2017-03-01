@@ -4,6 +4,10 @@ module PresentationsHelper
     current_user.is_admin ? 'Admin' : 'Feedback'
   end
 
+  def display_date(date)
+    date.strftime("%a - %-m/%d/%y @ %l:%M %P")
+  end
+
   def display_description(presentation)
     if presentation.description.length > 30
       description = content_tag(:span, presentation.description_short(30))

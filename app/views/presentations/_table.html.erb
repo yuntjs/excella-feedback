@@ -9,7 +9,7 @@
   <% presentations.each do |pre| %>
   <tr>
     <td><%= link_to pre.title, pre %></td>
-    <td><%= pre.date.strftime("%a - %-m/%d/%y @ %l:%M %P") %></td>
+    <td><%= display_date(pre.date) %></td>
     <td><%= pre.location %></td>
     <td><%= display_description(pre) %></td>
     <td><%= feedback_content(pre, feedback_message) %></td>
