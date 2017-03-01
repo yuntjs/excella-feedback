@@ -30,4 +30,20 @@ describe Presentation do
     refute result, "Accepted presentation with invalid location"
   end
 
+  describe ".order_surveys" do
+    before do
+      @presentation2 = create(:presentation)
+    end
+    
+    it "Orders a presentation's surveys from 0 to n" do
+      survey3 = create(:survey, presentation_id: @presentation2.id, order:2)
+      survey1 = create(:survey, presentation_id: @presentation2.id, order:0)
+      survey2 = create(:survey, presentation_id: @presentation2.id, order:1)
+
+      expected_order = [survey1, survey2, survey3]
+      actual_order = @presentation2.order_surveys
+      assert_equal expected_order, actual_order, "Array not ordered correctly"
+    end
+  end
+
 end
