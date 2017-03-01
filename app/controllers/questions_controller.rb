@@ -1,4 +1,10 @@
+require 'concern'
+
 class QuestionsController < ApplicationController
+  include Questionable
+
+  helper_method :question
+
   def new
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:survey_id])
@@ -30,9 +36,9 @@ class QuestionsController < ApplicationController
   def update
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:survey_id])
-    @question = @survey.questions.find(params[:id])
+    # @question = @survey.questions.find(params[:id])
 
-    if @question.update(question_params)
+    if question.update(question_params)
       redirect_to presentation_survey_path(@presentation.id, @survey.id)
     else
       render :edit
@@ -49,8 +55,5 @@ class QuestionsController < ApplicationController
 
   end
 
-  private
-  def question_params
-    params.require(:question).permit(:order, :prompt, :response_type)
-  end
+
 end
