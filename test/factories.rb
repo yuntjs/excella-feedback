@@ -36,4 +36,11 @@ FactoryGirl.define do
     presentation
   end
 
+  factory :question do
+    order 1
+    survey
+    prompt "The presentation was great"
+    response_type "text"
+  end
+
 end
