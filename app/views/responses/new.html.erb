@@ -2,7 +2,7 @@
 
 <%= form_tag(presentation_responses_path(@presentation), method: 'post') do |f|%>
   <% @surveys.each do |survey|  %>
-    <h3>SUBJECT: <%= survey.subject %></h3>
+    <h3><%= survey.subject %></h3>
 
       <% survey.order_questions.each do |q| %>
           <% if q.response_type == "text" %>

@@ -43,4 +43,10 @@ FactoryGirl.define do
     response_type "text"
   end
 
+  factory :response do
+    question
+    user
+    value "I responded to this question!"
+  end
+
 end
