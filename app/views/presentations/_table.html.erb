@@ -4,7 +4,7 @@
     <th>Date</th>
     <th>Location</th>
     <th>Description</th>
-    <th><%= feedback_header(current_user.is_admin) %></th>
+    <th><%= feedback_header %></th>
   </tr>
   <% presentations.each do |pre| %>
   <tr>
@@ -12,7 +12,7 @@
     <td><%= pre.date.strftime("%a - %-m/%d/%y @ %l:%M %P") %></td>
     <td><%= pre.location %></td>
     <td><%= display_description(pre) %></td>
-    <td><%= feedback_content(current_user.is_admin, pre, feedback_message) %></td>
+    <td><%= feedback_content(pre, feedback_message) %></td>
   </tr>
   <% end %>
 </table>

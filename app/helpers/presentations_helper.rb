@@ -1,7 +1,7 @@
 module PresentationsHelper
 
-  def feedback_header(is_admin)
-    is_admin ? 'Admin' : 'Feedback'
+  def feedback_header
+    current_user.is_admin ? 'Admin' : 'Feedback'
   end
 
   def display_description(presentation)
@@ -21,8 +21,8 @@ module PresentationsHelper
     end
   end
 
-  def feedback_content(is_admin, presentation, feedback_message)
-    if is_admin
+  def feedback_content(presentation, feedback_message)
+    if current_user.is_admin
       edit_link = link_to "Edit", edit_presentation_path(presentation), class: 'btn btn-default'
       delete_link = link_to "Delete", presentation_path(presentation), class: "btn btn-default", method: :delete
       survey_link = survey_link_for(presentation)
