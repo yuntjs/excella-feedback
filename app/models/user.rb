@@ -20,7 +20,7 @@ class User < ApplicationRecord
     when :attendee
       presentations.where('is_presenter IS NOT true')
     else
-      User.none # empty ActiveRecord relation
+      Presentation.none # empty ActiveRecord relation
     end
   end
 end
