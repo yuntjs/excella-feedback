@@ -2,7 +2,7 @@
 
 <% if current_user.is_admin? %>
 
-  <%= render partial: 'presentations/table', locals: { presentations: @presentations } %>
+  <%= render partial: 'presentations/table', locals: { presentations: @presentations, feedback_message: nil } %>
 
 <% else %>
 
