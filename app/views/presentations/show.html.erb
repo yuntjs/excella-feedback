@@ -1,8 +1,45 @@
 <%= link_to 'Back', presentations_url %>
 
 <h1><%= @presentation.title %></h1>
-
-<% if current_user.is_admin %>
+<% if current_user && current_user.is_admin %>
 <%= link_to 'Edit', edit_presentation_path(@presentation) %>
+<% end %>
 
+<h3>Participants</h3>
+<% if current_user && current_user.is_admin %>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Edit Participants</button>
+<% end %>
+<ol class="attendees">
+<% @participations.each do |participant| %>
+  <li><%= User.where(id: participant.user_id).first.email %></li>
+<% end %>
+</ol>
+<% if current_user && current_user.is_admin %>
+<div id="participation-form-modal" class="modal fade bs-example-modal-sm" tabindex="-1">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Participation</h4>
+      </div>
+      <div class="modal-body">
+        <p>Select users you wish to add to/remove from <strong>&quot;<%= @presentation.title %>&quot;</strong>&hellip;</p>
+        <%= form_for(@presentation, html: { id: "participation-form" }) do |f| %>
+          <%= f.collection_check_boxes(:user_ids, User.all.order(:email), :id, :email) do |c| %>
+          <div class="checkbox">
+            <label>
+              <%= c.check_box %> <%= c.text %>
+            </label>
+          </div>
+          <% end %>
+          <%= f.submit "Submit", style: "display: none", id: "submit-capybara" %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="participation-form-submit" type="button" class="btn btn-primary" data-dismiss="modal">Submit Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 <% end %>
