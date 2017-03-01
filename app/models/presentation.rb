@@ -9,8 +9,10 @@ class Presentation < ApplicationRecord
   validates :location, presence: true
 
   def description_short(length)
-    raise ArgumentError if length < 1
-
-    description[0..length].gsub(/\s\w+\s*$/, '...')
+    if length < 1
+      raise ArgumentError
+    else
+      description[0..length].gsub(/\s\w+\s*$/, '...')
+    end
   end
 end

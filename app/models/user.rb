@@ -13,14 +13,14 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  def presentations_as(role)
-    case role
-    when :presenter
-      presentations.where('is_presenter IS true')
-    when :attendee
-      presentations.where('is_presenter IS NOT true')
-    else
-      Presentation.none # empty ActiveRecord relation
-    end
-  end
+  # def presentations_as(role)
+  #   case role
+  #   when :presenter
+  #     presentations.where('is_presenter IS true')
+  #   when :attendee
+  #     presentations.where('is_presenter IS NOT true')
+  #   else
+  #     Presentation.none # empty ActiveRecord relation
+  #   end
+  # end
 end
