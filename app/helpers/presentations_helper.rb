@@ -1,11 +1,19 @@
 module PresentationsHelper
 
-  def feedback_header
-    current_user.is_admin ? 'Admin' : 'Feedback'
+  def admin_table
+    if current_user.is_admin
+      render partial: 'presentations/table', locals: { title: "As Admin", presentations: @presentations, feedback_message: nil }
+    end
   end
 
-  def display_date(date)
-    date.strftime("%a - %-m/%d/%y @ %l:%M %P")
+  def general_user_table(role:, title:, feedback_message:)
+    if !current_user.is_admin && current_user.presentations_as(role).any?
+      render partial: 'presentations/table', locals: { title: title, presentations: current_user.presentations_as(role), feedback_message: feedback_message }
+    end
+  end
+
+  def feedback_header
+    current_user.is_admin ? 'Admin' : 'Feedback'
   end
 
   def display_description(presentation)

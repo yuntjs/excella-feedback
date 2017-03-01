@@ -1,19 +1,7 @@
 <h1>Presentations</h1>
 
-<% if current_user.is_admin? %>
+<%= admin_table %>
 
-  <%= render partial: 'presentations/table', locals: { presentations: @presentations, feedback_message: nil } %>
+<%= general_user_table(role: :presenter, title: "As Presenter", feedback_message: "See Feedback") %>
 
-<% else %>
-
-  <% if current_user.presentations_as(:presenter).any? %>
-    <h2>As Presenter</h2>
-    <%= render partial: 'presentations/table', locals: { presentations: current_user.presentations_as(:presenter), feedback_message: "See Feedback" } %>
-  <% end %>
-
-  <% if current_user.presentations_as(:attendee).any? %>
-    <h2>As Attendee</h2>
-    <%= render partial: 'presentations/table', locals: { presentations: current_user.presentations_as(:attendee), feedback_message: "Provide Feedback" } %>
-  <% end %>
-
-<% end %>
+<%= general_user_table(role: :attendee, title: "As Attendee", feedback_message: "Provide Feedback") %>
