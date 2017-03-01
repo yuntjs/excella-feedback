@@ -10,12 +10,10 @@ module PresentationsHelper
       return Presentation.none
     end
 
-    presentation_ids = Participation.where(
-      user_id: current_user.id,
-      is_presenter: is_presenter
-    ).pluck(:presentation_id)
-
-    Presentation.find(presentation_ids)
+    Presentation.joins(:users, :participations).where(
+      users: { id: current_user.id },
+      participations: { is_presenter: is_presenter }
+    ).distinct
   end
 
   def admin_table
