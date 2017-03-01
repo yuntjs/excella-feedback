@@ -7,4 +7,8 @@ class Presentation < ApplicationRecord
   validates :title, presence: true
   validates :date, presence: true
   validates :location, presence: true
+
+  def description_short(length)
+    description[0..length].gsub(/\s\w+\s*$/, '...')
+  end
 end

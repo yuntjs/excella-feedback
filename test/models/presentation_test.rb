@@ -30,8 +30,16 @@ describe Presentation do
   it 'rejects a presentation without a location' do
     @presentation.location = nil
     result = @presentation.valid?
-    
+
     refute result, "Accepted presentation with invalid location"
+  end
+
+  describe '#description_short' do
+
+    it 'returns a shortened version of the description with ellipses at the end' do
+      
+    end
+
   end
 
 end
