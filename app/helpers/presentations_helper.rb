@@ -26,7 +26,6 @@ module PresentationsHelper
 
   def general_user_table(role:, title:, feedback_message:)
     if !current_user.is_admin && presentations_as(role).any?
-      # render partial: 'presentations/table', locals: { title: title, presentations: current_user.presentations_as(role), feedback_message: feedback_message }
       render partial: 'presentations/table', locals: { title: title, presentations: presentations_as(role), feedback_message: feedback_message }
     end
   end
