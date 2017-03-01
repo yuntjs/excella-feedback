@@ -1,10 +1,12 @@
 <h1>Feedback for <%= @presentation.title %></h1>
 
 <%= form_tag(presentation_responses_path(@presentation), method: 'post') do |f|%>
-  <% @presentation.surveys.each do |survey|  %>
+  <% @surveys.each do |survey|  %>
     <h3>SUBJECT: <%= survey.subject %></h3>
+    <h4>ORDER:<%= survey.order  %></h4>
 
-      <% survey.questions.each do |q| %>
+      <% survey.order_questions.each do |q| %>
+        <p>ORDER #: <%= q.order %></p>
           <% if q.response_type == "text" %>
             <%= render 'text_form_partial', question: q %>
           <% else %>
