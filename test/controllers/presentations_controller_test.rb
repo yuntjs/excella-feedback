@@ -36,7 +36,7 @@ class PresentationsControllerTest < ActionController::TestCase
 
       get :index
 
-      assert_equal u.presentations, [pres1], "Returned presentation for which the user is not a participant"
+      assert_equal user.presentations, [pres1], "Returned presentation for which the user is not a participant"
     end
   end
 
@@ -54,7 +54,7 @@ class PresentationsControllerTest < ActionController::TestCase
 
     it "redirects to sign-in page if a user is not signed in" do
       post :create, params: @params
-      
+
       assert_redirected_to new_user_session_path
     end
 
