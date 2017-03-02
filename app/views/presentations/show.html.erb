@@ -28,7 +28,6 @@
   <li><%= User.where(id: participant.user_id).first.email %>
   <% if current_user && current_user.is_admin %>
     <%= link_to "Add Presenter", presentation_participation_path(@presentation, participant, participation: { is_presenter: true }), method: :put %>
-    <%# link_to "Add Presenter", { controller: "participations", action: "update", is_presenter: true }, method: :put %>
   <% end %>
   </li>
 <% end %>
@@ -44,7 +43,7 @@
       <div class="modal-body">
         <p>Select users you wish to add to/remove from <strong>&quot;<%= @presentation.title %>&quot;</strong>&hellip;</p>
         <%= form_for(@presentation, html: { id: "participation-form" }) do |f| %>
-          <%= f.collection_check_boxes(:user_ids, User.all.order(:email), :id, :email) do |c| %>
+          <%= f.collection_check_boxes(:user_ids, User.all.order(:email), :id, :full_name) do |c| %>
           <div class="checkbox">
             <label>
               <%= c.check_box %> <%= c.text %>
