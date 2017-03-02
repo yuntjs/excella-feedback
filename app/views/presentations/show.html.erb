@@ -1,38 +1,108 @@
-<%= link_to 'Back', presentations_url %>
-
-<h1><%= @presentation.title %></h1>
-<% if current_user && current_user.is_admin %>
-  <%= link_to 'Edit Details', edit_presentation_path(@presentation), class: "btn btn-primary" %>
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Edit Participants</button>
-  <%= link_to "Delete", presentation_path(@presentation), class: "btn btn-danger", method: :delete, data: { confirm: "Are you sure?" } %>
-<% end %>
-
-<% if @presenters.length > 1 %>
-  <h3>Presenters</h3>
-<% else %>
-  <h3>Presenter</h3>
-<% end %>
-<ol class="presenters">
-  <% @presenters.each do |presenter| %>
-  <%# There must be a better way to do this %>
-  <li><%= "#{User.where(id: presenter.user_id).first.first_name.capitalize} #{User.where(id: presenter.user_id).first.last_name.capitalize} (#{User.where(id: presenter.user_id).first.email})" %>
-  <% if current_user && current_user.is_admin %>
-    <%= link_to "Remove Presenter", presentation_participation_path(@presentation, presenter, participation: { is_presenter: false }), method: :put %>
+<div class="container">
+  <%= link_to presentations_url, class: "btn btn-default" do %>
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
   <% end %>
-  </li>
-  <% end %>
-</ol>
 
-<h3>Participants</h3>
-<ol class="attendees">
-<% @participations.where(is_presenter: false).each do |participant| %>
-  <li><%= "#{User.where(id: participant.user_id).first.first_name.capitalize} #{User.where(id: participant.user_id).first.last_name.capitalize} (#{User.where(id: participant.user_id).first.email})" %>
-  <% if current_user && current_user.is_admin %>
-    <%= link_to "Add Presenter", presentation_participation_path(@presentation, participant, participation: { is_presenter: true }), method: :put %>
-  <% end %>
-  </li>
-<% end %>
-</ol>
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3 text-center">
+      <h1><%= @presentation.title.capitalize %></h1>
+      <h4><strong>Location:&nbsp;</strong><%= @presentation.location %></h4>
+      <h4><strong>Date &amp; Time:&nbsp;</strong><%= display_date(@presentation.date) %></h4>
+      <div class="well">
+        <%= @presentation.description %>
+      </div>
+      <% if current_user && current_user.is_admin %>
+        <%= link_to 'Edit Details', edit_presentation_path(@presentation), class: "btn btn-primary" %>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Edit Participants</button>
+        <%= link_to "Delete", presentation_path(@presentation), class: "btn btn-danger", method: :delete, data: { confirm: "Are you sure?" } %>
+
+      <% end %>
+      <hr />
+    </div>
+    <!-- /.col -->
+
+  </div>
+  <!-- /.row -->
+
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <% if @presenters.length > 1 %>
+            <h4>Presenters</h4>
+          <% else %>
+            <h4>Presenter</h4>
+          <% end %>
+        </div>
+        <table class="table">
+          <tr>
+            <th>First</th>
+            <th>Last</th>
+            <th>Email</th>
+            <% if current_user.is_admin %>
+            <th></th>
+            <% end %>
+          </tr>
+          <% @presenters.each do |presenter| %>
+          <tr>
+            <td class="col-md-3"><%= User.where(id: presenter.user_id).first.first_name.capitalize %></td>
+            <td class="col-md-3"><%= User.where(id: presenter.user_id).first.last_name.capitalize %></td>
+            <td><%= User.where(id: presenter.user_id).first.email %></td>
+            <% if current_user.is_admin %>
+            <td>
+              <%= link_to "Change to Attendee", presentation_participation_path(@presentation, presenter, participation: { is_presenter: false }), method: :put %>
+            </td>
+            <% end %>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+    <!-- /.col -->
+  </div>
+    <div class="row">
+
+    <div class="col-lg-8 col-lg-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <% if @participations.length > 1 %>
+            <h4>Attendees</h4>
+          <% else %>
+            <h4>Attendee</h4>
+          <% end %>
+        </div>
+        <table class="table">
+          <tr>
+            <th>First</th>
+            <th>Last</th>
+            <th>Email</th>
+            <% if current_user.is_admin %>
+            <th></th>
+            <% end %>
+          </tr>
+          <% @attendees.each do |attendee| %>
+          <tr>
+            <td class="col-md-2"><%= User.where(id: attendee.user_id).first.first_name.capitalize %></td>
+            <td class="col-md-2"><%= User.where(id: attendee.user_id).first.last_name.capitalize %></td>
+            <td><%= User.where(id: attendee.user_id).first.email %></td>
+            <% if current_user.is_admin %>
+            <td>
+              <%= link_to "Change to Presenter", presentation_participation_path(@presentation, attendee, participation: { is_presenter: true }), method: :put %>
+            </td>
+            <% end %>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+    <!-- /.col -->
+
+  </div>
+  <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
 <% if current_user && current_user.is_admin %>
 <div id="participation-form-modal" class="modal fade bs-example-modal-sm" tabindex="-1">
   <div class="modal-dialog modal-sm" role="document">
