@@ -19,10 +19,10 @@ class PresentationsController < ApplicationController
   def create
     @presentation = Presentation.new(presentation_params)
     if @presentation.save
-      flash[:notice] = "Presentation has been successfully created."
+      flash[:notice] = success_message(@presentation, :create)
       redirect_to presentations_path
     else
-      flash.now[:error] = "We ran into some errors while trying to create this presentation."
+      flash.now[:notice] = error_message(@presentation, :create)
       render :new
     end
   end
@@ -32,17 +32,22 @@ class PresentationsController < ApplicationController
 
   def update
     if @presentation.update(presentation_params)
-      flash[:notice] = "Presentation has been successfully update."
+      flash[:notice] = success_message(@presentation, :update)
       redirect_to @presentation, notice: 'Post was successfully updated.'
     else
-      flash.now[:error] = "We ran into some errors while trying to update this presentation."
+      flash.now[:notice] = error_message(@presentation, :update)
       render :edit
     end
   end
 
   def destroy
-    @presentation.destroy
-    redirect_to presentations_url, notice: 'Post was successfully destroyed.'
+    if @presentation.destroy
+      flash[:notice] = success_message(@presentation, :delete)
+      redirect_to presentations_url, notice: 'Post was successfully destroyed.'
+    else
+      flash.now[:notice] = error_message(@presentation, :delete)
+      redirect_back fallback_location: presentations_path
+    end
   end
 
 private
