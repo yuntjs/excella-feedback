@@ -7,11 +7,11 @@ Rails.application.routes.draw do
 
   # Routes for Presentation, Survey, and Question
   resources :presentations do
+    resources :participations
     resources :surveys do
       resources :questions
     end
   end
 
-  resources :participations
 
 end
