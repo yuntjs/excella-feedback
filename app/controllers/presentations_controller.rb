@@ -19,8 +19,10 @@ class PresentationsController < ApplicationController
   def create
     @presentation = Presentation.new(presentation_params)
     if @presentation.save
+      flash[:notice] = "Presentation has been successfully created."
       redirect_to presentations_path
-    elsif
+    else
+      flash.now[:error] = "We ran into some errors while trying to create this presentation."
       render :new
     end
   end
@@ -30,15 +32,17 @@ class PresentationsController < ApplicationController
 
   def update
     if @presentation.update(presentation_params)
+      flash[:notice] = "Presentation has been successfully update."
       redirect_to @presentation, notice: 'Post was successfully updated.'
     else
+      flash.now[:error] = "We ran into some errors while trying to update this presentation."
       render :edit
     end
   end
 
   def destroy
     @presentation.destroy
-      redirect_to presentations_url, notice: 'Post was successfully destroyed.'
+    redirect_to presentations_url, notice: 'Post was successfully destroyed.'
   end
 
 private
@@ -48,11 +52,7 @@ private
   end
 
   def presentations
-    if current_user.is_admin
-      Presentation.all
-    else
-      current_user.presentations
-    end
+    current_user.is_admin ? Presentation.all : current_user.presentations
   end
 
   def set_presentation

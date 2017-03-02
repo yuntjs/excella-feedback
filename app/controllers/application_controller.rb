@@ -6,5 +6,4 @@ class ApplicationController < ActionController::Base
       redirect_to presentations_path
     end
   end
-
 end
