@@ -10,10 +10,10 @@ class Response < ApplicationRecord
   def unique_response
     response = Response.where(question_id: question.id, user_id: user.id)
     if response.length > 0
-      print "✘ USER HAS ALREADY SUBMITTED A RESPONSE FOR THIS QUESTION"
+      # print "✘ USER HAS ALREADY SUBMITTED A RESPONSE FOR THIS QUESTION"
       errors.add(:unique_response, "USER HAS ALREADY SUBMITTED A RESPONSE FOR THIS QUESTION")
     else
-      print "✔ UNIQUE RESPONSE"
+      # print "✔ UNIQUE RESPONSE"
     end
   end
 end
