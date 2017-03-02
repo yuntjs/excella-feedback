@@ -1,6 +1,6 @@
 module PresentationsHelper
 
-  def presentations_as(role)
+  def presentations_as(role, user)
     case role
     when :presenter
       is_presenter = true
@@ -11,7 +11,7 @@ module PresentationsHelper
     end
 
     Presentation.joins(:users, :participations).where(
-      users: { id: current_user.id },
+      users: { id: user.id },
       participations: { is_presenter: is_presenter }
     ).distinct
   end
@@ -23,8 +23,8 @@ module PresentationsHelper
   end
 
   def general_user_table(role:, title:, feedback_message:)
-    if !current_user.is_admin && presentations_as(role).any?
-      render partial: 'presentations/table', locals: { title: title, presentations: presentations_as(role), feedback_message: feedback_message }
+    if !current_user.is_admin && presentations_as(role, current_user).any?
+      render partial: 'presentations/table', locals: { title: title, presentations: presentations_as(role, current_user), feedback_message: feedback_message }
     end
   end
 
