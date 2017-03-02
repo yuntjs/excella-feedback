@@ -40,4 +40,11 @@ FactoryGirl.define do
     presentation
   end
 
+  factory :question do
+    order 1
+    prompt "Vinegar pug small batch meditation next level fingerstache flannel messenger bag?"
+    response_type "text"
+    survey
+  end
+
 end
