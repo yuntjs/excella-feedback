@@ -23,7 +23,7 @@ class CreateParticipationTest < Capybara::Rails::TestCase
 
       find("#submit-capybara", visible: false).click
 
-      within "ol" do
+      within ".attendees" do
         page.must_have_content u.email
       end
     end

@@ -10,7 +10,7 @@
 <% else %>
   <h3>Presenter</h3>
 <% end %>
-<ol class="attendees">
+<ol class="presenters">
   <% @presenters.each do |presenter| %>
   <li><%= User.where(id: presenter.user_id).first.email %>
   <% if current_user && current_user.is_admin %>

@@ -1,4 +1,5 @@
 class ParticipationsController < ApplicationController
+  before_action :authenticate_admin, only: [:update]
   before_action :set_participation, only: [:update]
 
   def update
