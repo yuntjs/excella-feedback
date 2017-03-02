@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class PresentationsHelperTest < ActionView::TestCase
+  include Devise::Test::ControllerHelpers
+
   before do
     @user = create(:user)
 
@@ -22,11 +24,13 @@ class PresentationsHelperTest < ActionView::TestCase
   describe '#presentations_as' do
     it 'gets correct presentations when current user is presenter' do
       presentations = presentations_as(:presenter, @user)
+
       assert_equal presentations, [@presentation_as_presenter]
     end
 
     it 'gets correct presentations where current user is attendee' do
       presentations = presentations_as(:attendee, @user)
+
       assert_equal presentations, [@presentation_as_attendee]
     end
 

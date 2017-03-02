@@ -16,20 +16,20 @@ module PresentationsHelper
     ).distinct
   end
 
-  def admin_table
-    if current_user.is_admin
+  def admin_table(user)
+    if user.is_admin
       render partial: 'presentations/table', locals: { title: "As Admin", presentations: @presentations, feedback_message: nil }
     end
   end
 
-  def general_user_table(role:, title:, feedback_message:)
-    if !current_user.is_admin && presentations_as(role, current_user).any?
-      render partial: 'presentations/table', locals: { title: title, presentations: presentations_as(role, current_user), feedback_message: feedback_message }
+  def general_user_table(user:, role:, title:, feedback_message:)
+    if !user.is_admin && presentations_as(role, user).any?
+      render partial: 'presentations/table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message }
     end
   end
 
-  def feedback_header
-    current_user.is_admin ? 'Admin' : 'Feedback'
+  def feedback_header(user)
+    user.is_admin ? 'Admin' : 'Feedback'
   end
 
   def display_description(presentation)
@@ -49,8 +49,8 @@ module PresentationsHelper
     end
   end
 
-  def feedback_content(presentation, feedback_message)
-    if current_user.is_admin
+  def feedback_content(user, presentation, feedback_message)
+    if user.is_admin
       edit_link = link_to "Edit", edit_presentation_path(presentation), class: 'btn btn-default'
       delete_link = link_to "Delete", presentation_path(presentation), class: "btn btn-default", method: :delete
       survey_link = survey_link_for(presentation)

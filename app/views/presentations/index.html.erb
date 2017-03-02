@@ -1,7 +1,17 @@
 <h1>Presentations</h1>
 
-<%= admin_table %>
+<%= admin_table(current_user) %>
 
-<%= general_user_table(role: :presenter, title: "As Presenter", feedback_message: "See Feedback") %>
+<%= general_user_table(
+  user: current_user,
+  role: :presenter,
+  title: "As Presenter",
+  feedback_message: "See Feedback"
+) %>
 
-<%= general_user_table(role: :attendee, title: "As Attendee", feedback_message: "Provide Feedback") %>
+<%= general_user_table(
+  user: current_user,
+  role: :attendee,
+  title: "As Attendee",
+  feedback_message: "Provide Feedback"
+) %>
