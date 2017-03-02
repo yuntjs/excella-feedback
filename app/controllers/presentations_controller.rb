@@ -22,7 +22,7 @@ class PresentationsController < ApplicationController
       flash[:notice] = success_message(@presentation, :create)
       redirect_to presentations_path
     else
-      flash.now[:notice] = error_message(@presentation, :create)
+      flash.now[:error] = error_message(@presentation, :create)
       render :new
     end
   end
@@ -35,7 +35,7 @@ class PresentationsController < ApplicationController
       flash[:notice] = success_message(@presentation, :update)
       redirect_to @presentation, notice: 'Post was successfully updated.'
     else
-      flash.now[:notice] = error_message(@presentation, :update)
+      flash.now[:error] = error_message(@presentation, :update)
       render :edit
     end
   end
@@ -45,7 +45,7 @@ class PresentationsController < ApplicationController
       flash[:notice] = success_message(@presentation, :delete)
       redirect_to presentations_url, notice: 'Post was successfully destroyed.'
     else
-      flash.now[:notice] = error_message(@presentation, :delete)
+      flash.now[:error] = error_message(@presentation, :delete)
       redirect_back fallback_location: presentations_path
     end
   end
