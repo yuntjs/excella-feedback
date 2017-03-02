@@ -5,11 +5,15 @@ Rails.application.routes.draw do
   # Devise routes, controller override
   devise_for :users, :controllers => { registrations: 'registrations' }
 
-  # Routes for presentations
+  # Routes for Presentation, Survey, and Question
   resources :presentations do
     resources :surveys do
       resources :questions
     end
+
+    resources :responses
   end
+
+  resources :participations
 
 end

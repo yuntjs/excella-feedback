@@ -42,9 +42,15 @@ FactoryGirl.define do
 
   factory :question do
     order 1
-    prompt "Vinegar pug small batch meditation next level fingerstache flannel messenger bag?"
-    response_type "text"
     survey
+    prompt "The presentation was great"
+    response_type "text"
+  end
+
+  factory :response do
+    question
+    user
+    value "I responded to this question!"
   end
 
 end

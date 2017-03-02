@@ -2,5 +2,8 @@
 // All this logic will automatically be available in application.js.
 
 $(function () {
-  $('[data-toggle="popover"]').popover()
+  // Event listener for participation form submit
+  $('#participation-form-submit').on('click', function() {
+    $('#participation-form').submit()
+  })
 })

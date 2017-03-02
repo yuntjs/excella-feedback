@@ -10,13 +10,13 @@ gem 'devise'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'factory_girl_rails'
+  gem 'jazz_fingers'
   gem 'minitest'
   gem 'minitest-rails'
-  gem 'minitest-spec-rails'
-  gem 'factory_girl_rails'
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
-  gem 'jazz_fingers'
+  gem 'minitest-spec-rails'
   gem 'pry-rails'
 end
 
