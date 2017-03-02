@@ -5,4 +5,8 @@ class Survey < ApplicationRecord
 
   validates :order, presence: true
   validates :subject, presence: true
+
+  def order_questions
+    self.questions.sort_by {|q| q.order}
+  end
 end

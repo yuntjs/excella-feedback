@@ -18,6 +18,10 @@ FactoryGirl.define do
     date DateTime.now
     location "location"
     description "description"
+
+    trait :long_description do
+      description "description description description description description description"
+    end
   end
 
   factory :participation do
@@ -34,6 +38,19 @@ FactoryGirl.define do
     order 1
     subject "Git"
     presentation
+  end
+
+  factory :question do
+    order 1
+    survey
+    prompt "The presentation was great"
+    response_type "text"
+  end
+
+  factory :response do
+    question
+    user
+    value "I responded to this question!"
   end
 
 end

@@ -1,0 +1,19 @@
+<fieldset class="form-group">
+  <h5><%= question.prompt %></h5>
+  <div class="form-control">
+    <%= radio_button_tag("question[#{question.id}]", "1", false) %>
+    <%= label_tag(:question, "Strongly Disagree", for:"question_#{question.id}_1")%>
+
+    <%= radio_button_tag("question[#{question.id}]", "2", false) %>
+    <%= label_tag(:question, "Somewhat Disagree", for:"question_#{question.id}_2")%>
+
+    <%= radio_button_tag("question[#{question.id}]", "3", false) %>
+    <%= label_tag(:question, "Neutral", for:"question_#{question.id}_3")%>
+
+    <%= radio_button_tag("question[#{question.id}]", "4", false) %>
+    <%= label_tag(:question, "Somewhat Agree", for:"question_#{question.id}_4")%>
+
+    <%= radio_button_tag("question[#{question.id}]", "5", false) %>
+    <%= label_tag(:question, "Strongly Agree", for:"question_#{question.id}_5")%>
+  </div>
+</fieldset>
