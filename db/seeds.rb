@@ -103,19 +103,19 @@ Presentation.all.each do |pres|
   end
 end
 
-puts "Creating responses..."
-Question.all.each do |ques|
-  pres = ques.survey.presentation
-  pres.users.each do |user|
-    part = Participation.find_by(user_id: user.id, presentation_id: pres.id)
-    next if part.is_presenter
-    Response.create(
-      question_id: ques.id,
-      user_id: user.id,
-      value: ques.response_type == 'text' ? Faker::Hipster.words(2).join(' ') : rand(1..RESPONSE_NUM_MAX).to_s
-    )
-  end
-end
+# puts "Creating responses..."
+# Question.all.each do |ques|
+#   pres = ques.survey.presentation
+#   pres.users.each do |user|
+#     part = Participation.find_by(user_id: user.id, presentation_id: pres.id)
+#     next if part.is_presenter
+#     Response.create(
+#       question_id: ques.id,
+#       user_id: user.id,
+#       value: ques.response_type == 'text' ? Faker::Hipster.words(2).join(' ') : rand(1..RESPONSE_NUM_MAX).to_s
+#     )
+#   end
+# end
 
 puts "Done!"
 puts "Note: all users have the password \"#{PASSWORD}\""

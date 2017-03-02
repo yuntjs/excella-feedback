@@ -3,7 +3,7 @@ class ResponsesController < ApplicationController
     @presentation = Presentation.find(params[:presentation_id])
     @surveys = @presentation.order_surveys
   end
-  
+
   def create
     all_responses = params[:question]
     all_responses.each do |question_id, answer|
