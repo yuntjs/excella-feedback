@@ -2,7 +2,8 @@
 
 <h1><%= @presentation.title %></h1>
 <% if current_user && current_user.is_admin %>
-<%= link_to 'Edit', edit_presentation_path(@presentation) %>
+  <%= link_to 'Edit Details', edit_presentation_path(@presentation), class: "btn btn-primary" %>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Edit Participants</button>
 <% end %>
 
 <% if @presenters.length > 1 %>
@@ -12,7 +13,8 @@
 <% end %>
 <ol class="presenters">
   <% @presenters.each do |presenter| %>
-  <li><%= User.where(id: presenter.user_id).first.email %>
+  <%# There must be a better way to do this %>
+  <li><%= "#{User.where(id: presenter.user_id).first.first_name.capitalize} #{User.where(id: presenter.user_id).first.last_name.capitalize} (#{User.where(id: presenter.user_id).first.email})" %>
   <% if current_user && current_user.is_admin %>
     <%= link_to "Remove Presenter", presentation_participation_path(@presentation, presenter, participation: { is_presenter: false }), method: :put %>
   <% end %>
@@ -21,11 +23,8 @@
 </ol>
 
 <h3>Participants</h3>
-<% if current_user && current_user.is_admin %>
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Edit Participants</button>
-<% end %>
 <ol class="attendees">
-<% @participations.each do |participant| %>
+<% @participations.where(is_presenter: false).each do |participant| %>
   <li><%= User.where(id: participant.user_id).first.email %>
   <% if current_user && current_user.is_admin %>
     <%= link_to "Add Presenter", presentation_participation_path(@presentation, participant, participation: { is_presenter: true }), method: :put %>
