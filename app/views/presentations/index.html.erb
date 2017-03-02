@@ -24,7 +24,7 @@
     <% if current_user.is_admin %>
       <td class="admin-link">
         <%= link_to "Edit", edit_presentation_path(pre), class: "btn btn-default" %>
-        <%= link_to "Delete", presentation_path(pre), class: "btn btn-default", method: :delete %>
+        <%= link_to "Delete", presentation_path(pre), class: "btn btn-default", method: :delete, data: { confirm: "Are you sure?" } %>
         <% if pre.surveys.length == 0%>
           <%= link_to "Create Survey", new_presentation_survey_path(pre) %>
         <% else %>
