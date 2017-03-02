@@ -12,7 +12,6 @@ class SurveysControllerTest < ActionController::TestCase
         sign_in admin
         post :create, params: {presentation_id: presentation.id, survey:{ order: 1, subject: "Git"}}
         assert_redirected_to presentation_survey_path(presentation.id, presentation.surveys.first.id), "Create method unsuccessful, no redirect to presentations_survey_path"
-
       end
     end
 

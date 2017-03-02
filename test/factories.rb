@@ -18,6 +18,10 @@ FactoryGirl.define do
     date DateTime.now
     location "location"
     description "description"
+
+    trait :long_description do
+      description "description description description description description description"
+    end
   end
 
   factory :participation do
