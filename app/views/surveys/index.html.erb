@@ -14,8 +14,10 @@
     <tr>
       <td><%= link_to "#{survey.subject}", presentation_survey_path(@presentation.id, survey.id) %></td>
       <td><%= survey.order %></td>
-      <td><%= link_to "Edit", edit_presentation_survey_path(@presentation.id, survey.id) %></td>
-      <td><%= link_to "Delete", presentation_survey_path(@presentation.id, survey.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td>
+        <%= link_to "Edit", edit_presentation_survey_path(@presentation.id, survey.id), class: "btn btn-default" %>
+        <%= link_to "Delete", presentation_survey_path(@presentation.id, survey.id), class: "btn btn-default", method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
     </tr>
   <% end %>
 </table>

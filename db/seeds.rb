@@ -92,7 +92,8 @@ Presentation.all.each do |pres|
     if part.nil?
       new_part = Participation.create(
         user_id: u.id,
-        presentation_id: pres.id
+        presentation_id: pres.id,
+        is_presenter: false
       )
       # Set first user as presenter
       if pres.users.count == 1

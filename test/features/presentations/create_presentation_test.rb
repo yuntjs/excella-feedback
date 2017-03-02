@@ -12,9 +12,12 @@ class CreatePresentationTest < Capybara::Rails::TestCase
     scenario "creates a new presentation if admin" do
       u = create :user, :admin
       login_as(u, scope: :user)
+
       # Must refresh page for login_as to take effect
       visit root_path
+
       click_on "Create New Presentation"
+
       within ("form") do
         fill_in "Title", with: "Foo Bar"
         fill_in "Location", with: "Over there"
@@ -22,6 +25,7 @@ class CreatePresentationTest < Capybara::Rails::TestCase
         fill_in "Description", with: "Lorem ipsum"
         click_button "Submit"
       end
+
       # Check for "Foo Bar" listing
       page.must_have_content "Foo Bar"
     end
@@ -29,8 +33,10 @@ class CreatePresentationTest < Capybara::Rails::TestCase
     scenario "redirects to presentation index if non-admin" do
       u = create :user
       login_as(u, scope: :user)
+
       # Must refresh page for login_as to take effect
       visit new_presentation_path
+
       assert_equal current_path, presentations_path
     end
   end

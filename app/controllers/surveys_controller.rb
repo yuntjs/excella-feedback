@@ -48,7 +48,6 @@ class SurveysController < ApplicationController
 
     @survey.destroy
     redirect_to presentation_surveys_path
-
   end
 
   private
