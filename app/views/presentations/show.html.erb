@@ -5,13 +5,32 @@
 <%= link_to 'Edit', edit_presentation_path(@presentation) %>
 <% end %>
 
+<% if @presenters.length > 1 %>
+  <h3>Presenters</h3>
+<% else %>
+  <h3>Presenter</h3>
+<% end %>
+<ol class="attendees">
+  <% @presenters.each do |presenter| %>
+  <li><%= User.where(id: presenter.user_id).first.email %>
+  <% if current_user && current_user.is_admin %>
+    <%= link_to "Remove Presenter", toggle_presenter(presenter.id) %>
+  <% end %>
+  </li>
+  <% end %>
+</ol>
+
 <h3>Participants</h3>
 <% if current_user && current_user.is_admin %>
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Edit Participants</button>
 <% end %>
 <ol class="attendees">
 <% @participations.each do |participant| %>
-  <li><%= User.where(id: participant.user_id).first.email %></li>
+  <li><%= User.where(id: participant.user_id).first.email %>
+  <% if current_user && current_user.is_admin %>
+    <%= link_to "Add Presenter", toggle_presenter(participant.id) %>
+  <% end %>
+  </li>
 <% end %>
 </ol>
 <% if current_user && current_user.is_admin %>

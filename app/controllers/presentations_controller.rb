@@ -8,8 +8,8 @@ class PresentationsController < ApplicationController
   end
 
   def show
-    @presentation = Presentation.find(params[:id])
     @participations = Participation.where(presentation_id: @presentation).order(updated_at: :desc)
+    @presenters = @participations.where(is_presenter: true)
   end
 
   def new
@@ -58,5 +58,13 @@ private
   def set_presentation
     @presentation = Presentation.find(params[:id])
   end
+
+  def toggle_presenter participation_id
+    participation = Participation.find(participation_id)
+    binding.pry
+    participation.is_presenter ^= participation.is_presenter
+    binding.pry
+  end
+  helper_method :toggle_presenter
 
 end
