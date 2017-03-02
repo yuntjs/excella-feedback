@@ -49,7 +49,7 @@ module PresentationsHelper
     end
   end
 
-  def feedback_content(user, presentation, feedback_message)
+  def feedback_content(user:, presentation:, feedback_message:)
     if user.is_admin
       edit_link = link_to "Edit", edit_presentation_path(presentation), class: 'btn btn-default'
       delete_link = link_to "Delete", presentation_path(presentation), class: "btn btn-default", method: :delete
