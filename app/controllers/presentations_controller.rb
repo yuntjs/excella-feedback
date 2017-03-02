@@ -44,7 +44,7 @@ class PresentationsController < ApplicationController
 private
 
   def presentation_params
-    params.require(:presentation).permit(:title, :location, :date, :description, :is_published, { user_ids: [] })
+    params.require(:presentation).permit(:title, :location, :date, :description, :is_published, { user_ids: [] }, :is_presener)
   end
 
   def presentations
@@ -59,12 +59,21 @@ private
     @presentation = Presentation.find(params[:id])
   end
 
-  def toggle_presenter participation_id
-    participation = Participation.find(participation_id)
-    binding.pry
-    participation.is_presenter ^= participation.is_presenter
-    binding.pry
-  end
   helper_method :toggle_presenter
+  def toggle_presenter participation
+    if participation.is_presenter
+      puts "User #{participation.user_id} is a presenter"
+    else
+      puts "User #{participation.user_id} is not a presenter"
+    end
+
+    participation.is_presenter = !participation.is_presenter
+
+    if participation.is_presenter
+      puts "User #{participation.user_id} is now a presenter"
+    else
+      puts "User #{participation.user_id} is no longer a presenter"
+    end
+  end
 
 end

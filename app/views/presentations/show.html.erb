@@ -14,7 +14,7 @@
   <% @presenters.each do |presenter| %>
   <li><%= User.where(id: presenter.user_id).first.email %>
   <% if current_user && current_user.is_admin %>
-    <%= link_to "Remove Presenter", toggle_presenter(presenter.id) %>
+    <%= link_to "Remove Presenter", toggle_presenter(presenter) %>
   <% end %>
   </li>
   <% end %>
@@ -28,7 +28,7 @@
 <% @participations.each do |participant| %>
   <li><%= User.where(id: participant.user_id).first.email %>
   <% if current_user && current_user.is_admin %>
-    <%= link_to "Add Presenter", toggle_presenter(participant.id) %>
+    <%= link_to "Add Presenter", toggle_presenter(participant) %>
   <% end %>
   </li>
 <% end %>
