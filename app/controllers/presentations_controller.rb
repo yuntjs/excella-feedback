@@ -1,4 +1,3 @@
-
 class PresentationsController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_admin, only: [:new, :create]
@@ -10,6 +9,7 @@ class PresentationsController < ApplicationController
 
   def show
     @presentation = Presentation.find(params[:id])
+    @participations = Participation.where(presentation_id: @presentation).order(updated_at: :desc)
   end
 
   def new
@@ -41,11 +41,10 @@ class PresentationsController < ApplicationController
       redirect_to presentations_url, notice: 'Post was successfully destroyed.'
   end
 
-
 private
 
   def presentation_params
-    params.require(:presentation).permit(:title, :location, :date, :description, :is_published)
+    params.require(:presentation).permit(:title, :location, :date, :description, :is_published, { user_ids: [] })
   end
 
   def presentations
