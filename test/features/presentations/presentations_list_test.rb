@@ -19,18 +19,19 @@ class PresentationsListTest < Capybara::Rails::TestCase
     end
 
     scenario "a general user can go to the page with the list of presentations" do
-      assert_equal current_path, presentations_path
+      assert_equal current_path, presentations_path, "Current path is not presentations_path"
     end
 
     scenario "a general user can only see their own presentations" do
       create_list(:presentation, 10)
-
       pres = create(:presentation, title: "user's presentation")
       create(:participation, user: @user, presentation: pres)
 
+      expected_rows = 2 # includes table header row
+
       visit(presentations_path)
 
-      assert page.has_selector?('table tr', count: 2) # 1 presentation + 1 header row
+      assert page.has_selector?('table tr', count: expected_rows), "Correct number of table rows not present"
     end
 
     scenario "a general user sees separate tables for sessions where they are presenting and attending" do
@@ -71,10 +72,11 @@ class PresentationsListTest < Capybara::Rails::TestCase
 
     scenario "an admin can see all of the presentations" do
       create_list(:presentation, 10)
+      expected_rows = 11 # includes table header row
 
       visit(presentations_path)
 
-      assert page.has_selector?('table tr', count: 11) # 10 presentations + 1 header row
+      assert page.has_selector?('table tr', count: expected_rows), "Correct number of table rows not present"
     end
 
     scenario "an admin can see the admin column" do

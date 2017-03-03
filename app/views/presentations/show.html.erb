@@ -1,4 +1,4 @@
-<%= link_to 'Back', presentations_url %>
+<div class="container">
 
 <h1><%= @presentation.title %></h1>
 <% if current_user && current_user.is_admin %>
@@ -7,15 +7,45 @@
 
 <% end %>
 
-<h3>Participants</h3>
-<% if current_user && current_user.is_admin %>
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Edit Participants</button>
-<% end %>
-<ol class="attendees">
-<% @participations.each do |participant| %>
-  <li><%= User.where(id: participant.user_id).first.email %></li>
-<% end %>
-</ol>
+  <%= back_button %>
+
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3 text-center">
+      <%= admin_options(current_user, @presentation) %>
+      <h1><%= @presentation.title.capitalize %></h1>
+      <h4><strong>Location:&nbsp;</strong><%= @presentation.location %></h4>
+      <h4><strong>Date &amp; Time:&nbsp;</strong><%= display_date(@presentation.date) %></h4>
+      <div class="well">
+        <%= @presentation.description %>
+      </div>
+      <%= feedback_button(current_user, @presentation) %>
+      <hr />
+    </div>
+  </div>
+  <!-- /.row -->
+
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+
+      <%= participation_table(
+        user: current_user,
+        role: :presenter,
+        participations: @presenters
+      ) %>
+
+      <%= participation_table(
+        user: current_user,
+        role: :attendee,
+        participations: @attendees
+      ) %>
+    </div>
+  </div>
+  <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+
 <% if current_user && current_user.is_admin %>
 <div id="participation-form-modal" class="modal fade bs-example-modal-sm" tabindex="-1">
   <div class="modal-dialog modal-sm" role="document">
@@ -27,7 +57,7 @@
       <div class="modal-body">
         <p>Select users you wish to add to/remove from <strong>&quot;<%= @presentation.title %>&quot;</strong>&hellip;</p>
         <%= form_for(@presentation, html: { id: "participation-form" }) do |f| %>
-          <%= f.collection_check_boxes(:user_ids, User.all.order(:email), :id, :email) do |c| %>
+          <%= f.collection_check_boxes(:user_ids, User.all.order(:email), :id, :full_name) do |c| %>
           <div class="checkbox">
             <label>
               <%= c.check_box %> <%= c.text %>
@@ -45,3 +75,4 @@
   </div>
 </div>
 <% end %>
+<!-- /.modal -->

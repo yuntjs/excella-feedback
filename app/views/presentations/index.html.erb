@@ -1,17 +1,25 @@
-<h1>Presentations</h1>
+<div class="container">
 
-<%= admin_table(current_user, @presentations) %>
 
-<%= general_user_table(
-  user: current_user,
-  role: :presenter,
-  title: "As Presenter",
-  feedback_message: "See Feedback"
-) %>
 
-<%= general_user_table(
-  user: current_user,
-  role: :attendee,
-  title: "As Attendee",
-  feedback_message: "Provide Feedback"
-) %>
+  <h1 class="text-center">Excella Presentations</h1>
+
+
+    <%= admin_table(current_user, @presentations) %>
+
+    <%= general_user_table(
+      user: current_user,
+      role: :presenter,
+      title: "As Presenter",
+      feedback_message: "See Feedback"
+    ) %>
+
+    <%= general_user_table(
+      user: current_user,
+      role: :attendee,
+      title: "As Attendee",
+      feedback_message: "Provide Feedback"
+    ) %>
+
+</div>
+<!-- /.container -->

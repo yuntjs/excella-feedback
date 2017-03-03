@@ -1,0 +1,25 @@
+<%= content_tag :div, class: "panel #{panel_color} #{role}s" do %>
+  <div class="panel-heading">
+    <h4><%= title.capitalize %></h4>
+  </div>
+  <table class="table">
+    <tr>
+      <th class="col-md-3">First</th>
+      <th class="col-md-3">Last</th>
+      <th>Email</th>
+      <% if current_user.is_admin %>
+      <th></th>
+      <% end %>
+    </tr>
+    <% participations.each do |participation| %>
+    <tr>
+      <td><%= User.where(id: participation.user_id).first.first_name.capitalize %></td>
+      <td><%= User.where(id: participation.user_id).first.last_name.capitalize %></td>
+      <td><%= User.where(id: participation.user_id).first.email %></td>
+      <% if current_user.is_admin %>
+      <td><%= toggle_participation_link(participation) %></td>
+      <% end %>
+    </tr>
+    <% end %>
+  </table>
+<% end %>

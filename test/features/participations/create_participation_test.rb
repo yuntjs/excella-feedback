@@ -11,32 +11,30 @@ class CreateParticipationTest < Capybara::Rails::TestCase
 
   feature "Create" do
     scenario "creates a new participation if admin" do
-      u = create :user, :admin
+      user = create :user, :admin
       pres = create(:presentation, title: "user's presentation")
-      login_as(u, scope: :user)
-      # Must refresh page for login_as to take effect
-      visit presentation_path(pres)
+      login_as(user, scope: :user)
 
+      visit presentation_path(pres)
       within "#participation-form-modal" do
-        page.check u.email
+        page.check user.full_name
       end
 
       find("#submit-capybara", visible: false).click
 
-      within "ol" do
-        page.must_have_content u.email
+      within ".attendees" do
+        page.must_have_content user.email
       end
     end
 
     scenario "unable to create a new participation if non-admin" do
-      u = create :user
+      user = create :user
       pres = create(:presentation, title: "user's presentation")
-      login_as(u, scope: :user)
-      # Must refresh page for login_as to take effect
+      login_as(user, scope: :user)
+
       visit presentation_path(pres)
-      # Check for "Edit Participants" button
+
       refute page.has_content? "Edit Participants"
     end
-
   end
 end
