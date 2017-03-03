@@ -5,6 +5,9 @@ class PresentationsController < ApplicationController
 
   def index
     @presentations = presentations
+    if @presentations.none?
+      redirect_to nopresentations_path
+    end
   end
 
   def show
@@ -57,6 +60,10 @@ private
 
   def set_presentation
     @presentation = Presentation.find(params[:id])
+  end
+
+  def nopresentations
+    
   end
 
 end
