@@ -82,8 +82,8 @@
           </tr>
           <% @attendees.each do |attendee| %>
           <tr>
-            <td class="col-md-2"><%= User.where(id: attendee.user_id).first.first_name.capitalize %></td>
-            <td class="col-md-2"><%= User.where(id: attendee.user_id).first.last_name.capitalize %></td>
+            <td class="col-md-3"><%= User.where(id: attendee.user_id).first.first_name.capitalize %></td>
+            <td class="col-md-3"><%= User.where(id: attendee.user_id).first.last_name.capitalize %></td>
             <td><%= User.where(id: attendee.user_id).first.email %></td>
             <% if current_user.is_admin %>
             <td>

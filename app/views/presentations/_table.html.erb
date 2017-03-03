@@ -1,11 +1,11 @@
 <h2><%= title %></h2>
 <table class="table table-striped">
   <tr>
-    <th>Title</th>
-    <th>Date</th>
-    <th>Location</th>
-    <th>Description</th>
-    <th><%= feedback_header(current_user) %></th>
+    <th class="col-md-3">Title</th>
+    <th class="col-md-2">Date</th>
+    <th class="col-md-1">Location</th>
+    <th class="col-md-3">Description</th>
+    <th class="col-md-3"><%= feedback_header(current_user) %></th>
   </tr>
   <% presentations.each do |pre| %>
   <tr>
