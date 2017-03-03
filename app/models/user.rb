@@ -16,4 +16,12 @@ class User < ApplicationRecord
   def full_name
     full_name = "#{first_name} #{last_name}"
   end
+
+  def is_presenter? presentation
+    participation = Participation.where(presentation_id: presentation.id).where(user_id: self.id)
+    if participation
+      return participation.first.is_presenter
+    end
+    false
+  end
 end

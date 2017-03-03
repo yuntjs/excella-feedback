@@ -18,13 +18,14 @@ module PresentationsHelper
 
   def admin_table(user)
     if user.is_admin
-      render partial: 'presentations/table', locals: { title: "As Admin", presentations: @presentations, feedback_message: nil }
+      render partial: 'presentations/table', locals: { title: "As Admin", presentations: @presentations, feedback_message: nil, panel_color: "panel-warning" }
     end
   end
 
   def general_user_table(user:, role:, title:, feedback_message:)
-    if !user.is_admin && presentations_as(role, user).any?
-      render partial: 'presentations/table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message }
+    panel_color = role == :presenter ? "panel-info" : "panel-default"
+    if presentations_as(role, user).any?
+      render partial: 'presentations/table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message, panel_color: panel_color }
     end
   end
 
@@ -50,17 +51,16 @@ module PresentationsHelper
   end
 
   def feedback_content(user:, presentation:, feedback_message:)
-    participation = Participation.where(presentation_id: presentation.id).where(user_id: user.id).first
     if user.is_admin
       survey_link = survey_link_for(presentation)
       edit_link = link_to "Edit", edit_presentation_path(presentation), class: 'btn btn-primary'
       delete_link = link_to "Delete", presentation_path(presentation), class: 'btn btn-danger', method: :delete
 
       survey_link + edit_link + delete_link
-    # If user is a presenter
-    elsif (participation && participation.is_presenter == true)
+
+    elsif user.is_presenter? presentation
       link_to feedback_message, presentation_responses_path(presentation), class: 'btn btn-default'
-    # If user is an attendee
+
     else
       link_to feedback_message, new_presentation_response_path(presentation), class: 'btn btn-default'
     end
