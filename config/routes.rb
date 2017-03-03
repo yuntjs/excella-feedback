@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # Root path
   root 'static#home'
-  get '/nopresentations', to: 'presentations#nopresentations'
+  get '/nopresentations', to: 'presentations#no_presentations'
   # Devise routes, controller override
   devise_for :users, :controllers => { registrations: 'registrations' }
 

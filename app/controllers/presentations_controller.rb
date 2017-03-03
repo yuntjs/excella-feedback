@@ -44,6 +44,8 @@ class PresentationsController < ApplicationController
       redirect_to presentations_url, notice: 'Post was successfully destroyed.'
   end
 
+
+
 private
 
   def presentation_params
@@ -62,8 +64,9 @@ private
     @presentation = Presentation.find(params[:id])
   end
 
-  def nopresentations
-    
+  def no_presentations
+
   end
+
 
 end
