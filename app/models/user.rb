@@ -14,7 +14,7 @@ class User < ApplicationRecord
   validates :last_name, presence: true
 
   def full_name
-    full_name = "#{first_name} #{last_name}"
+    "#{first_name} #{last_name}"
   end
 
   def is_presenter? presentation

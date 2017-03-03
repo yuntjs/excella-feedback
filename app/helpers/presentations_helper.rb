@@ -1,5 +1,6 @@
 module PresentationsHelper
 
+  # Returns Presentation object based on role of user
   def presentations_as(role, user)
     case role
     when :presenter
@@ -16,12 +17,15 @@ module PresentationsHelper
     ).distinct
   end
 
+  # Renders partial of Presentation table for admin users
   def admin_table(user)
     if user.is_admin
       render partial: 'presentations/table', locals: { title: "As Admin", presentations: @presentations, feedback_message: nil, panel_color: "panel-warning" }
     end
   end
 
+  # Renders partial of Presentation table for non-admin users
+  # Handles difference between presenter and attendee users
   def general_user_table(user:, role:, title:, feedback_message:)
     panel_color = role == :presenter ? "panel-info" : "panel-default"
     if presentations_as(role, user).any?
@@ -29,10 +33,12 @@ module PresentationsHelper
     end
   end
 
+  # Sets value for header of feedback (right-most) column in Presentation index tables
   def feedback_header(user)
     user.is_admin ? 'Admin' : 'Feedback'
   end
 
+  # Sets variables for Presentation description popover
   def display_description(presentation)
     if presentation.description.length > 30
       description = content_tag(:span, presentation.description_short(30))
@@ -50,6 +56,8 @@ module PresentationsHelper
     end
   end
 
+  # Sets variables for Presentation feedback options/links
+  # Handles differences between admin, presenter, and/or attendee users
   def feedback_content(user:, presentation:, feedback_message:)
     if user.is_admin
       survey_link = survey_link_for(presentation)
@@ -66,6 +74,8 @@ module PresentationsHelper
     end
   end
 
+  # Renders proper link to survey and results based on user type (presenter or attendee)
+  # TODO Handle case where attendee has already completed survey
   def survey_link_for(presentation)
     if presentation.surveys.any?
       link_to "See Surveys", presentation_surveys_path(presentation), class: 'btn btn-default'
