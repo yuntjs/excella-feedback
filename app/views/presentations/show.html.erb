@@ -1,26 +1,19 @@
 <div class="container">
-  <%= link_to presentations_url, class: "btn btn-default" do %>
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
-  <% end %>
+
+  <%= back_button %>
 
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3 text-center">
+      <%= admin_options(current_user, @presentation) %>
       <h1><%= @presentation.title.capitalize %></h1>
       <h4><strong>Location:&nbsp;</strong><%= @presentation.location %></h4>
       <h4><strong>Date &amp; Time:&nbsp;</strong><%= display_date(@presentation.date) %></h4>
       <div class="well">
         <%= @presentation.description %>
       </div>
-      <% if current_user && current_user.is_admin %>
-        <%= link_to 'Edit Details', edit_presentation_path(@presentation), class: "btn btn-primary" %>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Edit Participants</button>
-        <%= link_to "Delete", presentation_path(@presentation), class: "btn btn-danger", method: :delete, data: { confirm: "Are you sure?" } %>
-
-      <% end %>
+      <%= feedback_button(current_user, @presentation) %>
       <hr />
     </div>
-    <!-- /.col -->
-
   </div>
   <!-- /.row -->
 

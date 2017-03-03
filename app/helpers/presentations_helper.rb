@@ -66,11 +66,18 @@ module PresentationsHelper
 
       survey_link + edit_link + delete_link
 
-    elsif user.is_presenter? presentation
-      link_to feedback_message, presentation_responses_path(presentation), class: 'btn btn-default'
+    elsif user.has_participation? presentation
+      feedback_button(user, presentation)
+    end
+  end
 
+  # Renders provide feedback button
+  # Handles if user is presenter or attendee
+  def feedback_button(user, presentation)
+    if user.is_presenter? presentation
+      link_to "See Feedback", presentation_responses_path(presentation), class: 'btn btn-success'
     else
-      link_to feedback_message, new_presentation_response_path(presentation), class: 'btn btn-default'
+      link_to "Provide Feedback", new_presentation_response_path(presentation), class: 'btn btn-warning'
     end
   end
 
@@ -83,5 +90,23 @@ module PresentationsHelper
       link_to "Create Survey", new_presentation_survey_path(presentation), class: 'btn btn-default'
     end
   end
+
+  # Renders options/links for Presentation show page
+  def admin_options(user, presentation)
+    if user.is_admin
+      content_tag :div, class: "admin-options" do
+        edit_details_link = link_to 'Edit Details', edit_presentation_path(presentation), class: "btn btn-primary"
+        edit_participants_link = content_tag :button, "Edit Participants", class: "btn btn-primary",
+          data: {
+            toggle: "modal",
+            target: ".bs-example-modal-sm"
+          }
+        delete_link = link_to "Delete", presentation_path(presentation), class: "btn btn-danger", method: :delete, data: { confirm: "Are you sure?" }
+
+        edit_details_link + edit_participants_link + delete_link
+      end
+    end
+  end
+
 
 end

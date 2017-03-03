@@ -86,3 +86,7 @@ form {
   max-height: 80vh;
   overflow: scroll;
 }
+
+.admin-options .btn:not(:last-child) {
+  margin-right: 8px;
+}
