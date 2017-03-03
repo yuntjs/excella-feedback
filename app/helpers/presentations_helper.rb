@@ -1,5 +1,4 @@
 module PresentationsHelper
-
   def presentations_as(role, user)
     case role
     when :presenter
@@ -24,6 +23,9 @@ module PresentationsHelper
 
   def general_user_table(user:, role:, title:, feedback_message:)
     if !user.is_admin && presentations_as(role, user).any?
+      render partial: 'presentations/table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message }
+    end
+    if @presentations.none?
       render partial: 'presentations/table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message }
     end
   end
@@ -68,11 +70,4 @@ module PresentationsHelper
       link_to "Create Survey", new_presentation_survey_path(presentation)
     end
   end
-
-  def no_presentations(presentation)
-    if @presentations.none?
-      render 'no_presentations'
-    end
-  end
-
 end

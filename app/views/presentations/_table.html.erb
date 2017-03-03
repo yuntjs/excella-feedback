@@ -7,7 +7,7 @@
     <th>Description</th>
     <th><%= feedback_header(current_user) %></th>
   </tr>
-  <% if presentations.none? %>
+  <% if @presentations.none? %>
     <tr>
       <td> Not currently signed up for any presentations</td>
       <td> N/A</td>
