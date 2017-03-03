@@ -66,7 +66,7 @@ module PresentationsHelper
 
       survey_link + edit_link + delete_link
 
-    elsif user.has_participation? presentation
+    else
       feedback_button(user, presentation)
     end
   end
@@ -130,21 +130,8 @@ module PresentationsHelper
   end
 
   # Sets title and handles plurality for Participations (presenter, attendee)
-  # TODO Use pluralize method
   def set_participation_title(role, participants)
-    if role == :presenter
-      if participants == 1
-        "presenter"
-      else
-        "presenters"
-      end
-    else
-      if participants == 1
-        "attendee"
-      else
-        "attendees"
-      end
-    end
+      participants == 1 ? role.to_s : role.to_s.pluralize
   end
 
 end
