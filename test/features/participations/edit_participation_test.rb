@@ -19,7 +19,7 @@ class EditParticipationTest < Capybara::Rails::TestCase
       visit presentation_path(pres)
 
       within ".attendees" do
-        click_on "Add Presenter"
+        click_on "Change to Presenter"
       end
 
       within ".presenters" do
@@ -36,7 +36,7 @@ class EditParticipationTest < Capybara::Rails::TestCase
       visit presentation_path(pres)
 
       within ".presenters" do
-        click_on "Remove Presenter"
+        click_on "Change to Attendee"
       end
 
       within ".presenters" do
