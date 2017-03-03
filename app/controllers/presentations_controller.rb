@@ -5,9 +5,9 @@ class PresentationsController < ApplicationController
 
   def index
     @presentations = presentations
-    if @presentations.none?
-      redirect_to nopresentations_path
-    end
+    # if @presentations.none?
+    #   redirect_to nopresentations_path
+    # end
   end
 
   def show
@@ -65,7 +65,6 @@ private
   end
 
   def no_presentations
-
   end
 
 

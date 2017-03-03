@@ -59,30 +59,30 @@ admin = User.create(
   is_admin: true
 )
 
-puts "Creating presentations, surveys, and questions..."
-NUM_PRESENTATIONS.times do
-  pres = Presentation.create(
-    title: Faker::Hipster.words(3).join(' '),
-    date: Faker::Time.between(6.months.ago, Date.today),
-    location: Faker::GameOfThrones.city,
-    description: Faker::Hacker.say_something_smart,
-    is_published: true
-  )
-  SURVEYS_PER_PRESENTATION.times do |survey_num|
-    survey = pres.surveys.create(
-      order: survey_num,
-      subject: Faker::Book.title
-    )
-    QUESTIONS_PER_SURVEY.times do |ques_num|
-      ques = survey.questions.create(
-        order: ques_num,
-        prompt: Faker::Hipster.words(5).join(' ') + '?',
-        response_type: ['text', 'number'].sample
-      )
-      ques.save
-    end
-  end
-end
+# puts "Creating presentations, surveys, and questions..."
+# NUM_PRESENTATIONS.times do
+#   pres = Presentation.create(
+#     title: Faker::Hipster.words(3).join(' '),
+#     date: Faker::Time.between(6.months.ago, Date.today),
+#     location: Faker::GameOfThrones.city,
+#     description: Faker::Hacker.say_something_smart,
+#     is_published: true
+#   )
+#   SURVEYS_PER_PRESENTATION.times do |survey_num|
+#     survey = pres.surveys.create(
+#       order: survey_num,
+#       subject: Faker::Book.title
+#     )
+#     QUESTIONS_PER_SURVEY.times do |ques_num|
+#       ques = survey.questions.create(
+#         order: ques_num,
+#         prompt: Faker::Hipster.words(5).join(' ') + '?',
+#         response_type: ['text', 'number'].sample
+#       )
+#       ques.save
+#     end
+#   end
+# end
 
 puts "Creating participations..."
 Presentation.all.each do |pres|

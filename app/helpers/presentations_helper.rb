@@ -69,4 +69,10 @@ module PresentationsHelper
     end
   end
 
+  def no_presentations(presentation)
+    if @presentations.none?
+      render 'no_presentations'
+    end
+  end
+
 end
