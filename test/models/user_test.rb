@@ -2,7 +2,6 @@ require "test_helper"
 include FactoryGirl::Syntax::Methods
 
 describe User do
-
   before do
     @user = build(:user)
   end
@@ -15,6 +14,7 @@ describe User do
 
   it "rejects a user without a first name" do
     @user.first_name = nil
+
     result = @user.valid?
 
     refute result, "Accepted user with invalid first name"
@@ -22,9 +22,9 @@ describe User do
 
   it "rejects a user without a last name" do
     @user.last_name = nil
+
     result = @user.valid?
 
     refute result, "Accepted user with invalid last name"
   end
-
 end

@@ -16,7 +16,7 @@ class SignOutTest < Capybara::Rails::TestCase
       # Must refresh page for login_as to take effect
       visit root_path
       click_on "Log Out"
-      
+
       # Check for "Log In" option in nav
       page.must_have_content "Log In"
     end

@@ -29,7 +29,7 @@ class SignUpTest < Capybara::Rails::TestCase
         fill_in "Password confirmation", with: "badpassword"
         click_button "Sign Up"
       end
-      
+
       page.must_have_content "Password confirmation doesn't match Password"
     end
   end

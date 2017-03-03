@@ -2,6 +2,7 @@ require "test_helper"
 
 class PresentationsControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers
+
   before do
     @params = {
       title: "Test Presentation",
@@ -27,7 +28,9 @@ class PresentationsControllerTest < ActionController::TestCase
       user = create :user
       pres1 = create :presentation
       pres2 = create :presentation
-      part = create :participation, user: user, presentation: pres1
+
+      create :participation, user: user, presentation: pres1
+
       sign_in user
 
       get :index
@@ -43,20 +46,21 @@ class PresentationsControllerTest < ActionController::TestCase
 
       post :create, params: @params
 
-      assert_redirected_to presentations_path, "Create method unsuccessful, no redirect to presentations_path"
+      assert_redirected_to presentations_path, "No redirect to presentations_path"
     end
 
     it "redirects to sign-in page if a user is not signed in" do
       post :create, params: @params
 
-      assert_redirected_to new_user_session_path
+      assert_redirected_to new_user_session_path, "Did not redirect to sign-in page"
     end
   end
 
   describe "#update" do
-    it "Should allow admins to update presentations" do
+    it "should allow admins to update presentations" do
       admin = create :user, :admin
       presentation = create :presentation
+
       updated_location = "Kitchen"
       updated_description = "Free food"
 
@@ -66,19 +70,19 @@ class PresentationsControllerTest < ActionController::TestCase
       presentation.reload
 
       assert_equal [updated_location, updated_description], [presentation.location, presentation.description], "Update method unsuccessful. Values do not match"
-      assert_redirected_to presentation_path(presentation.id), "Redirect failed."
+      assert_redirected_to presentation_path(presentation.id), "Redirect to presentations_path failed"
     end
   end
 
   describe "#destroy" do
-    it "Should allow admins to delete presentations" do
+    it "should allow admins to delete presentations" do
       admin = create :user, :admin
       presentation = create :presentation
 
       sign_in admin
 
-      delete :destroy, params:{ id: presentation.id} 
-      assert_equal Presentation.count, 0, "Delete method unsucessful. Presentation still exists."
+      delete :destroy, params:{ id: presentation.id}
+      assert_equal Presentation.count, 0, "Presentation was not deleted"
       end
     end
 end

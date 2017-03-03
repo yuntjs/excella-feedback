@@ -1,6 +1,4 @@
-# This will guess the User class
 FactoryGirl.define do
-
   factory :user do
     email "email@example.com"
     password "password"
@@ -51,6 +49,13 @@ FactoryGirl.define do
     question
     user
     value "I responded to this question!"
-  end
 
+    trait :invalid do
+      question nil
+      user nil
+      question_id nil
+      user_id nil
+      value nil
+    end
+  end
 end
