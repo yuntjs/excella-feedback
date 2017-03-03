@@ -17,7 +17,7 @@ class CreateParticipationTest < Capybara::Rails::TestCase
 
       visit presentation_path(pres)
       within "#participation-form-modal" do
-        page.check user.email
+        page.check user.full_name
       end
 
       find("#submit-capybara", visible: false).click
