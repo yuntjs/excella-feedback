@@ -7,17 +7,27 @@
     <th>Description</th>
     <th><%= feedback_header(current_user) %></th>
   </tr>
-  <% presentations.each do |pre| %>
-  <tr>
-    <td><%= link_to pre.title, pre %></td>
-    <td><%= display_date(pre.date) %></td>
-    <td><%= pre.location %></td>
-    <td><%= display_description(pre) %></td>
-    <td><%= feedback_content(
-          user: current_user,
-          presentation: pre,
-          feedback_message: feedback_message
-        ) %></td>
-  </tr>
+  <% if presentations.none? %>
+    <tr>
+      <td> Not currently signed up for any presentations</td>
+      <td> N/A</td>
+      <td> N/A</td>
+      <td> N/A</td>
+      <td> N/A</td>
+    </tr>
+  <% else %>
+    <% presentations.each do |pre| %>
+    <tr>
+      <td><%= link_to pre.title, pre %></td>
+      <td><%= display_date(pre.date) %></td>
+      <td><%= pre.location %></td>
+      <td><%= display_description(pre) %></td>
+      <td><%= feedback_content(
+            user: current_user,
+            presentation: pre,
+            feedback_message: feedback_message
+          ) %></td>
+    </tr>
+    <% end %>
   <% end %>
 </table>

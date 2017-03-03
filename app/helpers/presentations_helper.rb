@@ -16,7 +16,7 @@ module PresentationsHelper
     ).distinct
   end
 
-  def admin_table(user)
+  def admin_table(user, presentations)
     if user.is_admin
       render partial: 'presentations/table', locals: { title: "As Admin", presentations: @presentations, feedback_message: nil }
     end

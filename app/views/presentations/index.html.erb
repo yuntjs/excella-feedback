@@ -1,8 +1,7 @@
 <h1>Presentations</h1>
 
-<%= admin_table(current_user) %>
+<%= admin_table(current_user, @presentations) %>
 
-<%= no_presentations(@presentations)%>
 <%= general_user_table(
   user: current_user,
   role: :presenter,
