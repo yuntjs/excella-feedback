@@ -108,5 +108,43 @@ module PresentationsHelper
     end
   end
 
+  # Renders partial of Participation table
+  # Handles if user is presenter or attendee
+  def participation_table(user:, role:, participations:)
+    panel_color = role == :presenter ? "panel-info" : "panel-default"
+    render partial: 'presentations/participation_table', locals: {
+      title: set_participation_title(role, participations),
+      participations: participations,
+      panel_color: panel_color,
+      role: role
+    }
+  end
+
+  # Renders link to edit Participation based on user type (presenter or attendee)
+  def toggle_participation_link(participation)
+    if participation.is_presenter
+      link_to "Change to Attendee", presentation_participation_path(@presentation, participation, participation: { is_presenter: false }), method: :put
+    else
+      link_to "Change to Presenter", presentation_participation_path(@presentation, participation, participation: { is_presenter: true }), method: :put
+    end
+  end
+
+  # Sets title and handles plurality for Participations (presenter, attendee)
+  # TODO Use pluralize method
+  def set_participation_title(role, participants)
+    if role == :presenter
+      if participants == 1
+        "presenter"
+      else
+        "presenters"
+      end
+    else
+      if participants == 1
+        "attendee"
+      else
+        "attendees"
+      end
+    end
+  end
 
 end

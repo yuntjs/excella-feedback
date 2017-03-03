@@ -19,77 +19,19 @@
 
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2">
-      <div class="panel panel-info presenters">
-        <div class="panel-heading">
-          <% if @presenters.length > 1 %>
-            <h4>Presenters</h4>
-          <% else %>
-            <h4>Presenter</h4>
-          <% end %>
-        </div>
-        <table class="table">
-          <tr>
-            <th>First</th>
-            <th>Last</th>
-            <th>Email</th>
-            <% if current_user.is_admin %>
-            <th></th>
-            <% end %>
-          </tr>
-          <% @presenters.each do |presenter| %>
-          <tr>
-            <td class="col-md-3"><%= User.where(id: presenter.user_id).first.first_name.capitalize %></td>
-            <td class="col-md-3"><%= User.where(id: presenter.user_id).first.last_name.capitalize %></td>
-            <td><%= User.where(id: presenter.user_id).first.email %></td>
-            <% if current_user.is_admin %>
-            <td>
-              <%= link_to "Change to Attendee", presentation_participation_path(@presentation, presenter, participation: { is_presenter: false }), method: :put %>
-            </td>
-            <% end %>
-          </tr>
-          <% end %>
-        </table>
-      </div>
-    </div>
-    <!-- /.col -->
-  </div>
-    <div class="row">
 
-    <div class="col-lg-8 col-lg-offset-2">
-      <div class="panel panel-default attendees">
-        <div class="panel-heading">
-          <% if @participations.length > 1 %>
-            <h4>Attendees</h4>
-          <% else %>
-            <h4>Attendee</h4>
-          <% end %>
-        </div>
-        <table class="table">
-          <tr>
-            <th>First</th>
-            <th>Last</th>
-            <th>Email</th>
-            <% if current_user.is_admin %>
-            <th></th>
-            <% end %>
-          </tr>
-          <% @attendees.each do |attendee| %>
-          <tr>
-            <td class="col-md-3"><%= User.where(id: attendee.user_id).first.first_name.capitalize %></td>
-            <td class="col-md-3"><%= User.where(id: attendee.user_id).first.last_name.capitalize %></td>
-            <td><%= User.where(id: attendee.user_id).first.email %></td>
-            <% if current_user.is_admin %>
-            <td>
-              <%= link_to "Change to Presenter", presentation_participation_path(@presentation, attendee, participation: { is_presenter: true }), method: :put %>
-            </td>
-            <% end %>
-          </tr>
-          <% end %>
-        </table>
-      </div>
-    </div>
-    <!-- /.col -->
+      <%= participation_table(
+        user: current_user,
+        role: :presenter,
+        participations: @presenters
+      ) %>
 
+      <%= participation_table(
+        user: current_user,
+        role: :attendee,
+        participations: @attendees
+      ) %>
+    </div>
   </div>
   <!-- /.row -->
 
@@ -125,3 +67,4 @@
   </div>
 </div>
 <% end %>
+<!-- /.modal -->
