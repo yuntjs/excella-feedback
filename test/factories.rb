@@ -51,6 +51,14 @@ FactoryGirl.define do
     question
     user
     value "I responded to this question!"
+
+    trait :invalid do
+      question nil
+      user nil
+      question_id nil
+      user_id nil
+      value nil
+    end
   end
 
 end
