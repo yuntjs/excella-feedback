@@ -10,29 +10,29 @@ class CreateParticipationTest < Capybara::Rails::TestCase
 
   feature "Destroy" do
     scenario "destroys a participation if admin" do
-      u = create :user, :admin
+      user = create :user, :admin
       pres = create(:presentation, title: "user's presentation")
-      create(:participation, user: u, presentation: pres)
-      login_as(u, scope: :user)
-      # Must refresh page for login_as to take effect
+      create(:participation, user: user, presentation: pres)
+      login_as(user, scope: :user)
+
       visit presentation_path(pres)
 
       within "#participation-form-modal" do
-        page.uncheck u.email
+        page.uncheck user.email
       end
 
       find("#submit-capybara", visible: false).click
 
       within "ol" do
-        refute page.has_content? u.email
+        refute page.has_content? user.email
       end
     end
 
     scenario "unable to destroy a participation if non-admin" do
-      u = create :user
+      user = create :user
       pres = create(:presentation, title: "user's presentation")
-      create(:participation, user: u, presentation: pres)
-      login_as(u, scope: :user)
+      create(:participation, user: user, presentation: pres)
+      login_as(user, scope: :user)
       # Must refresh page for login_as to take effect
       visit presentation_path(pres)
       # Check for "Edit Participants" button
