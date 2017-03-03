@@ -19,7 +19,7 @@ class User < ApplicationRecord
   end
 
   # Returns boolean value is user is a presenter of a given Presentation
-  def is_user_presenter? presentation
+  def is_presenter? presentation
     participation = Participation.where(presentation_id: presentation.id).where(user_id: self.id)
     if participation.first
       return participation.first.is_presenter

@@ -74,7 +74,7 @@ module PresentationsHelper
   # Renders provide feedback button
   # Handles if user is presenter or attendee
   def feedback_button(user, presentation)
-    if user.is_user_presenter? presentation
+    if user.is_presenter? presentation
       link_to "See Feedback", presentation_responses_path(presentation), class: 'btn btn-success'
     else
       link_to "Provide Feedback", new_presentation_response_path(presentation), class: 'btn btn-warning'
