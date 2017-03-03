@@ -20,7 +20,7 @@ module PresentationsHelper
   # Renders partial of Presentation table for admin users
   def admin_table(user)
     if user.is_admin
-      render partial: 'presentations/table', locals: { title: "As Admin", presentations: @presentations, feedback_message: nil, panel_color: "panel-warning" }
+      render partial: 'presentations/presentation_table', locals: { title: "As Admin", presentations: @presentations, feedback_message: nil, panel_color: "panel-warning" }
     end
   end
 
@@ -29,7 +29,7 @@ module PresentationsHelper
   def general_user_table(user:, role:, title:, feedback_message:)
     panel_color = role == :presenter ? "panel-info" : "panel-default"
     if presentations_as(role, user).any?
-      render partial: 'presentations/table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message, panel_color: panel_color }
+      render partial: 'presentations/presentation_table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message, panel_color: panel_color }
     end
   end
 
