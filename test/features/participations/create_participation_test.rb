@@ -14,11 +14,11 @@ class CreateParticipationTest < Capybara::Rails::TestCase
       user = create :user, :admin
       pres = create(:presentation, title: "user's presentation")
       login_as(user, scope: :user)
-      # Must refresh page for login_as to take effect
+
       visit presentation_path(pres)
 
       within "#participation-form-modal" do
-        page.check user.full_name
+        page.check user.email
       end
 
       find("#submit-capybara", visible: false).click
@@ -32,11 +32,10 @@ class CreateParticipationTest < Capybara::Rails::TestCase
       user = create :user
       pres = create(:presentation, title: "user's presentation")
       login_as(user, scope: :user)
-      # Must refresh page for login_as to take effect
+
       visit presentation_path(pres)
-      # Check for "Edit Participants" button
+
       refute page.has_content? "Edit Participants"
     end
-
   end
 end

@@ -1,5 +1,4 @@
 module PresentationsHelper
-
   def presentations_as(role, user)
     case role
     when :presenter
@@ -68,5 +67,4 @@ module PresentationsHelper
       link_to "Create Survey", new_presentation_survey_path(presentation)
     end
   end
-
 end

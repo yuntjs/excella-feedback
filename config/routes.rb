@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
-  # Root path
   root 'static#home'
 
-  # Devise routes, controller override
   devise_for :users, :controllers => { registrations: 'registrations' }
 
-  # Routes for Presentation, Survey, and Question
   resources :presentations do
     resources :participations
     resources :surveys do
@@ -14,6 +11,4 @@ Rails.application.routes.draw do
 
     resources :responses
   end
-
-
 end

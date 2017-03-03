@@ -8,11 +8,11 @@ class SignInTest < Capybara::Rails::TestCase
     end
 
     scenario "has valid content" do
-      u = create :user
+      user = create(:user)
 
       within ("form") do
-        fill_in "Email", with: u.email
-        fill_in "Password", with: u.password
+        fill_in "Email", with: user.email
+        fill_in "Password", with: user.password
         click_button "Log In"
       end
 
@@ -20,14 +20,14 @@ class SignInTest < Capybara::Rails::TestCase
     end
 
     scenario "has invalid password" do
-      u = create :user
+      user = create :user
 
       within ("form") do
-        fill_in "Email", with: u.email
-        fill_in "Password", with: u.password + "_wrong"
+        fill_in "Email", with: user.email
+        fill_in "Password", with: user.password + "_wrong"
         click_button "Log In"
       end
-      
+
       assert_equal current_path, new_user_session_path
     end
   end

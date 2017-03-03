@@ -11,8 +11,10 @@ class QuestionsController < ApplicationController
     @presentation = Presentation.find(params[:presentation_id])
 
     if @question.save
+      flash[:success] = success_message(@question, :create)
       redirect_to presentation_survey_path(@presentation.id, @question.survey_id)
     else
+      flash.now[:error] = error_message(@question, :create)
       render :new
     end
   end
@@ -28,8 +30,10 @@ class QuestionsController < ApplicationController
     set_instance_variables
 
     if @question.update(question_params)
+      flash[:success] = success_message(@question, :update)
       redirect_to presentation_survey_path(@presentation.id, @survey.id)
     else
+      flash.now[:error] = error_message(@question, :update)
       render :edit
     end
   end
@@ -37,8 +41,13 @@ class QuestionsController < ApplicationController
   def destroy
     set_instance_variables
 
-    @question.destroy
-    redirect_to presentation_survey_path(@presentation.id, @survey.id)
+    if @question.destroy
+      flash[:success] = success_message(@question, :delete)
+      redirect_to presentation_survey_path(@presentation.id, @survey.id)
+    else
+      flash[:error] = error_message(@question, :delete)
+      redirect_back fallback_location: presentations_path
+    end
   end
 
 
@@ -53,5 +62,4 @@ private
     @survey = Survey.find(params[:survey_id])
     @question = @survey.questions.find(params[:id])
   end
-
 end
