@@ -50,22 +50,27 @@ module PresentationsHelper
   end
 
   def feedback_content(user:, presentation:, feedback_message:)
+    participation = Participation.where(presentation_id: presentation.id).where(user_id: user.id).first
     if user.is_admin
-      edit_link = link_to "Edit", edit_presentation_path(presentation), class: 'btn btn-default'
-      delete_link = link_to "Delete", presentation_path(presentation), class: "btn btn-default", method: :delete
       survey_link = survey_link_for(presentation)
+      edit_link = link_to "Edit", edit_presentation_path(presentation), class: 'btn btn-primary'
+      delete_link = link_to "Delete", presentation_path(presentation), class: 'btn btn-danger', method: :delete
 
-      edit_link + delete_link + survey_link
+      survey_link + edit_link + delete_link
+    # If user is a presenter
+    elsif (participation && participation.is_presenter == true)
+      link_to feedback_message, presentation_responses_path(presentation), class: 'btn btn-default'
+    # If user is an attendee
     else
-      link_to feedback_message
+      link_to feedback_message, new_presentation_response_path(presentation), class: 'btn btn-default'
     end
   end
 
   def survey_link_for(presentation)
     if presentation.surveys.any?
-      link_to "See Surveys", presentation_surveys_path(presentation)
+      link_to "See Surveys", presentation_surveys_path(presentation), class: 'btn btn-default'
     else
-      link_to "Create Survey", new_presentation_survey_path(presentation)
+      link_to "Create Survey", new_presentation_survey_path(presentation), class: 'btn btn-default'
     end
   end
 
