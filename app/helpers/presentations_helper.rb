@@ -1,5 +1,4 @@
 module PresentationsHelper
-
   # Returns Presentation object based on role of user
   def presentations_as(role, user)
     case role
@@ -131,7 +130,6 @@ module PresentationsHelper
 
   # Sets title and handles plurality for Participations (presenter, attendee)
   def set_participation_title(role, participants)
-      participants == 1 ? role.to_s : role.to_s.pluralize
+    participants == 1 ? role.to_s : role.to_s.pluralize
   end
-
 end

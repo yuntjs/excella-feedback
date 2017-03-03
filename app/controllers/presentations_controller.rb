@@ -20,8 +20,10 @@ class PresentationsController < ApplicationController
   def create
     @presentation = Presentation.new(presentation_params)
     if @presentation.save
+      flash[:success] = success_message(@presentation, :create)
       redirect_to presentations_path
-    elsif
+    else
+      flash.now[:error] = error_message(@presentation, :create)
       render :new
     end
   end
@@ -31,15 +33,22 @@ class PresentationsController < ApplicationController
 
   def update
     if @presentation.update(presentation_params)
+      flash[:success] = success_message(@presentation, :update)
       redirect_to @presentation, notice: 'Post was successfully updated.'
     else
+      flash.now[:error] = error_message(@presentation, :update)
       render :edit
     end
   end
 
   def destroy
-    @presentation.destroy
+    if @presentation.destroy
+      flash[:success] = success_message(@presentation, :delete)
       redirect_to presentations_url, notice: 'Post was successfully destroyed.'
+    else
+      flash[:error] = error_message(@presentation, :delete)
+      redirect_back fallback_location: presentations_path
+    end
   end
 
 private
@@ -49,15 +58,10 @@ private
   end
 
   def presentations
-    if current_user.is_admin
-      Presentation.all
-    else
-      current_user.presentations
-    end
+    current_user.is_admin ? Presentation.all : current_user.presentations
   end
 
   def set_presentation
     @presentation = Presentation.find(params[:id])
   end
-
 end
