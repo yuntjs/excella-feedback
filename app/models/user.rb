@@ -29,7 +29,6 @@ class User < ApplicationRecord
 
   # Returns boolean value if user has a Participation of a given Presentation
   def has_participation? presentation
-    participation = Participation.where(presentation_id: presentation.id).where(user_id: self.id)
-    participation ? true : false
+    Participation.where(presentation_id: presentation.id, user_id: self.id).present?
   end
 end
