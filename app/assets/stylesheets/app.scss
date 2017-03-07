@@ -57,6 +57,16 @@ body {
   }
 }
 
+// Tables
+.table tbody tr td {
+  vertical-align: middle;
+
+  a:not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+
 // Presentations
 form {
   textarea {
@@ -75,4 +85,8 @@ form {
 .modal-body {
   max-height: 80vh;
   overflow: scroll;
+}
+
+.admin-options .btn:not(:last-child) {
+  margin-right: 8px;
 }

@@ -1,24 +1,32 @@
-<h1> ALL Surveys </h1>
+<div class="container">
 
-<h2><%= @presentation.title %></h2>
-<h3><%= @presentation.location %></h3>
-<h3><%= @presentation.date %></h3>
+  <h1 class="text-center">Surveys</h1>
 
-<table class="table table-striped">
-  <tr>
-      <th>Subject</th>
-      <th>Order</th>
-      <th>Actions</th>
-  </tr>
-  <% @presentation.surveys.each do |survey| %>
-    <tr>
-      <td><%= link_to "#{survey.subject}", presentation_survey_path(@presentation.id, survey.id) %></td>
-      <td><%= survey.order %></td>
-      <td><%= link_to "Edit", edit_presentation_survey_path(@presentation.id, survey.id) %> <%= link_to "Delete", presentation_survey_path(@presentation.id, survey.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      <td>
-        <%= link_to "Edit", edit_presentation_survey_path(@presentation.id, survey.id), class: "btn btn-default" %>
-        <%= link_to "Delete", presentation_survey_path(@presentation.id, survey.id), class: "btn btn-default", method: :delete, data: { confirm: 'Are you sure?' } %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+      <%= content_tag :div, class: "panel panel-warning" do %>
+      <div class="panel-heading">
+        <h4><%= @presentation.title %></h4>
+      </div>
+      <table class="table">
+        <tr>
+          <th>Subject</th>
+          <!-- <th>Order</th> -->
+          <th>Actions</th>
+        </tr>
+        <% @presentation.surveys.each do |survey| %>
+        <tr>
+          <td><%= link_to "#{survey.subject}", presentation_survey_path(@presentation.id, survey.id) %></td>
+          <!-- <td><%= survey.order %></td> -->
+          <td>
+            <%= link_to "Edit", edit_presentation_survey_path(@presentation.id, survey.id), class: "btn btn-default" %>
+            <%= link_to "Delete", presentation_survey_path(@presentation.id, survey.id), class: "btn  btn-default", method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+      <% end %>
+    </div>
+  </div
+
+</div>
