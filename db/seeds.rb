@@ -7,6 +7,45 @@ QUESTIONS_PER_SURVEY = 5
 RESPONSE_NUM_MAX = 5
 PASSWORD = "testing"
 
+nest = [
+  { first_name: "Nick", last_name: "Oki" },
+  { first_name: "Pramod", last_name: "Jacob" },
+  { first_name: "Khoi", last_name: "Le" },
+  { first_name: "Drew", last_name: "Nickerson" }
+ ]
+
+presentations = [
+  "Intro to Git",
+  "Debugging/Refactoring",
+  "DevOps",
+  "Testing",
+  "Agile/Scrum"
+]
+
+locations = [
+  "ATX A",
+  "ATX B",
+  "2300 Clarendon 3rd Floor",
+  "2300 Clarendon 9th Floor",
+  "Bench"
+]
+
+survey = [
+  "Overall",
+  "Presenters",
+  "Material"
+]
+
+number_questions = [
+  "Rate this (A)",
+  "Rate this (B)"
+]
+
+text_questions = [
+  "Additional Comments"
+]
+
+
 unless Rails.env.production?
   puts "Destroying everything..."
   User.destroy_all
@@ -18,25 +57,6 @@ unless Rails.env.production?
 end
 
 puts "Creating basic users..."
-nest = [
-  { first_name: "Nick", last_name: "Oki" },
-  { first_name: "Pramod", last_name: "Jacob" },
-  { first_name: "Khoi", last_name: "Le" },
-  { first_name: "Drew", last_name: "Nickerson" }
- ]
-
-nest.each do |n|
-   u = User.new(
-     first_name: "#{n[:first_name]}",
-     last_name: "#{n[:last_name]}",
-     password: PASSWORD,
-     is_admin: false
-   )
-   u.email = "#{u[:first_name]}.#{u[:last_name]}@excella.com"
-   u.save
- end
-
-
 # NUM_USERS.times do |n|
 #   u = User.new(
 #     first_name: "Foo#{n}",
@@ -47,8 +67,16 @@ nest.each do |n|
 #   u.email = "#{u.first_name}#{u.last_name}@example.com"
 #   u.save
 # end
-
-
+nest.each do |n|
+  u = User.new(
+   first_name: "#{n[:first_name]}",
+   last_name: "#{n[:last_name]}",
+   password: PASSWORD,
+   is_admin: false
+  )
+  u.email = "#{u[:first_name]}.#{u[:last_name]}@excella.com"
+  u.save
+end
 
 puts "Creating #{NUM_ADMINS} admins..."
 NUM_ADMINS.times do |n|
@@ -82,24 +110,18 @@ end
 # )
 
 puts "Creating presentations, surveys, and questions..."
-text_questions = ["Additional Comments"]
-number_questions = [
-  "The presenter conveyed information clearly",
-  "The presenter had a strong understanding of the material",
-  "I have a better understanding of the material"
-]
-NUM_PRESENTATIONS.times do
+presentations.each do |pres_name|
   pres = Presentation.create(
-    title: Faker::HarryPotter.book,
+    title: pres_name,
     date: Faker::Time.between(6.months.ago, Date.today),
-    location: Faker::HarryPotter.location,
+    location: locations.sample,
     description: Faker::HarryPotter.quote,
     is_published: true
   )
-  SURVEYS_PER_PRESENTATION.times do |survey_num|
+  surveys.each do |survey_name|
     survey = pres.surveys.create(
       order: survey_num,
-      subject: Faker::HarryPotter.character
+      subject: survey_name
     )
     number_questions.each_with_index do |question, index|
       ques = survey.questions.create(
