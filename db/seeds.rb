@@ -14,6 +14,13 @@ nest = [
   { first_name: "Drew", last_name: "Nickerson" }
  ]
 
+presenters = [
+  { first_name: "Starr", last_name: "Chen" },
+  { first_name: "Jen", last_name: "Pengelly" },
+  { first_name: "Alexis", last_name: "Johnson" },
+  { first_name: "Dan", last_name: "Davis" }
+]
+
 presentations = [
   "Intro to Git",
   "Debugging/Refactoring",
@@ -30,7 +37,7 @@ locations = [
   "Bench"
 ]
 
-survey = [
+surveys = [
   "Overall",
   "Presenters",
   "Material"
@@ -68,6 +75,16 @@ puts "Creating basic users..."
 #   u.save
 # end
 nest.each do |n|
+  u = User.new(
+   first_name: "#{n[:first_name]}",
+   last_name: "#{n[:last_name]}",
+   password: PASSWORD,
+   is_admin: false
+  )
+  u.email = "#{u[:first_name]}.#{u[:last_name]}@excella.com"
+  u.save
+end
+presenters.each do |n|
   u = User.new(
    first_name: "#{n[:first_name]}",
    last_name: "#{n[:last_name]}",
@@ -118,9 +135,9 @@ presentations.each do |pres_name|
     description: Faker::HarryPotter.quote,
     is_published: true
   )
-  surveys.each do |survey_name|
+  surveys.each_with_index do |survey_name, index|
     survey = pres.surveys.create(
-      order: survey_num,
+      order: index,
       subject: survey_name
     )
     number_questions.each_with_index do |question, index|
@@ -152,13 +169,21 @@ end
 
 puts "Creating participations..."
 Presentation.all.each do |pres|
-  User.all.each do |user|
+  nest.each do |person|
+    user = User.find_by(email: "#{person[:first_name].downcase}.#{person[:last_name].downcase}@excella.com")
     Participation.create(
       user_id: user.id,
       presentation_id: pres.id,
       is_presenter: false
     )
   end
+  rand_presenter = presenters.sample
+  presenter = User.find_by(email: "#{rand_presenter[:first_name].downcase}.#{rand_presenter[:last_name].downcase}@excella.com")
+  Participation.create(
+    user_id: presenter.id,
+    presentation_id: pres.id,
+    is_presenter: true
+  )
   # PARTICIPATIONS_PER_PRESENTATION.times do
   #   u = User.all.sample
   #   part = Participation.find_by(user_id: u.id, presentation_id: pres.id)
