@@ -29,10 +29,12 @@ module PresentationsHelper
     panel_color = role == :presenter ? "panel-info" : "panel-default"
     if presentations_as(role, user).any?
       render partial: 'presentations/presentation_table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message, panel_color: panel_color }
+    else
+      render partial: 'presentations/presentation_table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message, panel_color: panel_color }
     end
-    if @presentations.none?
-      render partial: 'presentations/table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message }
-    end
+    # if @presentations.none?
+    #   render partial: 'presentations/table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message }
+    # end
   end
 
   # Sets value for header of feedback (right-most) column in Presentation index tables
