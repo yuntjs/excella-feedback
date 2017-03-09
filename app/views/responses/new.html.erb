@@ -1,14 +1,16 @@
 <h1>Feedback for <%= @presentation.title %></h1>
 
+<!--TODO: extract into helper-->
+
 <%= form_tag(presentation_responses_path(@presentation), method: 'post') do |f|%>
   <% @surveys.each do |survey|  %>
     <h3><%= survey.subject %></h3>
 
-      <% survey.order_questions.each do |q| %>
-          <% if q.response_type == "text" %>
-            <%= render 'text_form_partial', question: q %>
+      <% survey.order_questions.each do |question| %>
+          <% if question.response_type == "text" %>
+            <%= render 'text_form_partial', question: question %>
           <% else %>
-            <%= render 'scale_form_partial', question: q %><br>
+            <%= render 'scale_form_partial', question: question %><br>
           <% end %>
       <% end %>
 

@@ -10,7 +10,7 @@ class Presentation < ApplicationRecord
 
 
   def order_surveys
-    self.surveys.sort_by{|survey| survey.order}
+    self.surveys.sort_by{ |survey| survey.order }
   end
 
   def description_short(length)
