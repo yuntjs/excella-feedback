@@ -34,6 +34,7 @@ class SurveysController < ApplicationController
   def update
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:id])
+    # binding.pry
 
     if @survey.update(survey_params)
       flash[:success] = success_message(@survey, :update)
@@ -60,6 +61,6 @@ class SurveysController < ApplicationController
   private
 
     def survey_params
-      params.require(:survey).permit(:presentation_id, :order, :subject)
+      params.require(:survey).permit(:presentation_id, :order, :subject, :position)
     end
 end
