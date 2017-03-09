@@ -7,15 +7,6 @@
     <th>Description</th>
     <th><%= feedback_header(current_user) %></th>
   </tr>
-  <% if @presentations.none? %>
-    <tr>
-      <td> Not currently signed up for any presentations</td>
-      <td> N/A</td>
-      <td> N/A</td>
-      <td> N/A</td>
-      <td> N/A</td>
-    </tr>
-  <% else %>
     <% presentations.each do |pre| %>
     <tr>
       <td><%= link_to pre.title, pre %></td>
@@ -29,5 +20,4 @@
           ) %></td>
     </tr>
     <% end %>
-  <% end %>
 </table>

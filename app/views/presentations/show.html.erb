@@ -1,14 +1,7 @@
 <div class="container">
 
-<h1><%= @presentation.title %></h1>
-<% if current_user && current_user.is_admin %>
-<%= link_to 'Edit', edit_presentation_path(@presentation) %>
-<%= link_to 'Delete', presentation_path(@presentation), method: :delete %>
-
-<% end %>
-
-  <%= back_button %>
-
+  <%= back_button(presentations_path) %>
+  
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3 text-center">
       <%= admin_options(current_user, @presentation) %>
