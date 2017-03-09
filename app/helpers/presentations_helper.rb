@@ -17,7 +17,7 @@ module PresentationsHelper
   end
 
 # Renders partial of Presentation table for admin users
-  def admin_table(user, presentations)
+  def admin_table(user)
     if user.is_admin
       render partial: 'presentations/presentation_table', locals: { title: "As Admin", presentations: @presentations, feedback_message: nil, panel_color: "panel-warning" }
     end
