@@ -91,7 +91,7 @@ module PresentationsHelper
   end
 
   # Renders options/links for Presentation show page
-  def admin_options(user, presentation)
+  def presentation_admin_options(user, presentation)
     if user.is_admin
       content_tag :div, class: "admin-options" do
         edit_details_link = link_to 'Edit Details', edit_presentation_path(presentation), class: "btn btn-primary"
