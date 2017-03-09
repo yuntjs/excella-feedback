@@ -32,7 +32,6 @@ class SurveysControllerTest < ActionController::TestCase
       updated_subject = "Git 2"
       updated_position = 2
 
-byebug
       sign_in admin
 
       patch :update, params: {
@@ -45,7 +44,6 @@ byebug
       }
 
       survey.reload
-byebug
       assert_equal [updated_subject, updated_position], [survey.subject, survey.position], "Survey subject & position was not updated properly"
       assert_redirected_to presentation_survey_path(presentation.id, survey.id), "No redirect to presentation_survey_path"
     end
