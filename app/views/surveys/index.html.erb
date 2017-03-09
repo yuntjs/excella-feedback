@@ -1,10 +1,12 @@
 <div class="container">
   <%= back_button %>
-  <h1 class="text-center">Surveys</h1>
 
   <div class="row">
-    <div class="col-lg-6 col-lg-offset-3">
-      <%= content_tag :div, class: "panel panel-warning" do %>
+    <div class="col-lg-6 col-lg-offset-3 text-center">
+
+      <%= admin_options(current_user, @presentation) %>
+      <h1 class="text-center">Surveys</h1>
+      <%= content_tag :div, class: "panel panel-warning text-left" do %>
       <div class="panel-heading">
         <h4><%= @presentation.title %></h4>
       </div>
