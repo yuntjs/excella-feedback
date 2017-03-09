@@ -1,7 +1,7 @@
 <div class="container">
 
   <%= back_button(presentations_path) %>
-
+  
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3 text-center">
       <%= admin_options(current_user, @presentation) %>
@@ -37,6 +37,7 @@
 
 </div>
 <!-- /.container -->
+
 
 <% if current_user && current_user.is_admin %>
 <div id="participation-form-modal" class="modal fade bs-example-modal-sm" tabindex="-1">
