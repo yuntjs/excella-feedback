@@ -11,10 +11,7 @@ class Survey < ApplicationRecord
   validates :order, presence: true
   validates :subject, presence: true
 
-  # survey_list = Presentation.find()
-  # survey_list.surveys.first.move_to_bottom
-  # survey_list.surveys.last.move_higher
-
+  # TODO remove order from schema
   def order_questions
     self.questions.sort_by {|q| q.order}
   end
