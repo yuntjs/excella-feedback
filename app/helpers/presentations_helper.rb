@@ -16,7 +16,7 @@ module PresentationsHelper
     ).distinct
   end
 
-  # Renders partial of Presentation table for admin users
+# Renders partial of Presentation table for admin users
   def admin_table(user)
     if user.is_admin
       render partial: 'presentations/presentation_table', locals: { title: "As Admin", presentations: @presentations, feedback_message: nil, panel_color: "panel-warning" }
@@ -127,7 +127,6 @@ module PresentationsHelper
       link_to "Change to Presenter", presentation_participation_path(@presentation, participation, participation: { is_presenter: true }), method: :put
     end
   end
-
   # Sets title and handles plurality for Participations (presenter, attendee)
   def set_participation_title(role, participants)
     participants == 1 ? role.to_s : role.to_s.pluralize
