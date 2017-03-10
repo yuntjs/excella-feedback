@@ -18,6 +18,7 @@ group :development, :test do
   gem 'minitest-reporters'
   gem 'minitest-spec-rails'
   gem 'pry-rails'
+  gem 'rubocop'
 end
 
 group :development do
