@@ -11,12 +11,11 @@ class SurveysController < ApplicationController
   def create
     @presentation = Presentation.find(params[:presentation_id])
     @survey = @presentation.surveys.new(survey_params)
-
     if @survey.save
       flash[:success] = success_message(@survey, :create)
       redirect_to presentation_survey_path(@presentation.id, @survey.id)
     elsif
-      flash.now[:error] = error_message(@survey, :create0)
+      flash.now[:error] = error_message(@survey, :create)
       render :new
     end
   end
@@ -34,7 +33,6 @@ class SurveysController < ApplicationController
   def update
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:id])
-    # binding.pry
 
     if @survey.update(survey_params)
       flash[:success] = success_message(@survey, :update)
