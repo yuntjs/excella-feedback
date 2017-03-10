@@ -36,11 +36,7 @@ class CreateSurveyTest < Capybara::Rails::TestCase
 
       visit new_presentation_survey_path(pres)
 
-      
-
-
-
-
+      refute_equal current_path, new_presentation_survey_path(pres), "Page did not redirect for non-admin"
     end
   end
 
