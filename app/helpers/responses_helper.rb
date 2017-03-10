@@ -1,5 +1,10 @@
+#
+# ResponsesHelper
+#
 module ResponsesHelper
+  #
   # Determine which partial to render based on a question's response type
+  #
   def display_question(response)
     case response.question.response_type
     when 'text'
