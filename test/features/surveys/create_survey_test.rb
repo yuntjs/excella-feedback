@@ -26,6 +26,20 @@ class CreateSurveyTest < Capybara::Rails::TestCase
       end
 
       page.must_have_content "Testing"
+    end
+
+    scenario "cannot access survey#create if non-admin" do
+      user = create(:user)
+      login_as(user, scope: :user)
+
+      pres = create(:presentation, title: "Intro to Git")
+
+      visit new_presentation_survey_path(pres)
+
+      
+
+
+
 
     end
   end
