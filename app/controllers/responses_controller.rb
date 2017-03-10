@@ -5,6 +5,8 @@ class ResponsesController < ApplicationController
   def new # TODO: requires cleanup
     set_instance_variables
 
+    # TODO: Check if responses already exist (maybe as before_action)
+
     @responses = []
     @questions.each do |question|
       @responses << question.responses.new(user_id: current_user.id)
@@ -25,7 +27,6 @@ class ResponsesController < ApplicationController
     all_valid = true
 
     @responses.each do |response|
-      binding.pry
       next if response.valid?
       all_valid = false
     end
@@ -34,41 +35,11 @@ class ResponsesController < ApplicationController
       @responses.each do |response|
         response.save
       end
+      redirect_to presentation_path(@presentation)
+    else
+      # TODO: Handle invalid response submition (notices, error messages, etc.)
+      render :new
     end
-
-
-    # presentation = Presentation.find(params[:presentation_id])
-    # surveys = presentation.surveys
-    #
-    # question_ids = surveys.map do |survey|
-    #   survey.questions.pluck(:id)
-    # end.flatten # TODO: extract out somewhere else
-    #
-    # responses = response_params(question_ids)
-
-    # @feedback = {
-    #   responses: params[:question],
-    #   errors: []
-    # }
-    # @feedback[:responses].each do |question_id, answer|
-    #     response = Response.new(
-    #       question_id: question_id,
-    #       user_id: current_user.id,
-    #       value: answer)
-    #     if !response.save
-    #       @feedback[:errors] << {question_id: question_id, error_obj: response.errors}
-    #     end
-    # end
-    #
-    # if @feedback[:errors].length > 0
-    #   flash.now[:error] = error_message(Response.new, :save)
-    #   @presentation = Presentation.find(params[:presentation_id])
-    #   @surveys = @presentation.order_surveys
-    #   render :new
-    # else
-    #   flash[:success] = success_message(Response.new, :save)
-    #   redirect_to presentations_path
-    # end
   end
 
   # def show
@@ -77,10 +48,16 @@ class ResponsesController < ApplicationController
 
   private
 
+  #
+  # Set and sanitize response parameters
+  #
   def response_params
     params.require(:responses).permit!
   end
 
+  #
+  # Set variables to be used in routes
+  #
   def set_instance_variables
     @presentation = Presentation.find(params[:presentation_id])
     @surveys = @presentation.order_surveys
