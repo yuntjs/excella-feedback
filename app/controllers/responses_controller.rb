@@ -1,17 +1,11 @@
 class ResponsesController < ApplicationController
   def new # TODO: requires cleanup
-    @presentation = Presentation.find(params[:presentation_id])
-    @surveys = @presentation.order_surveys
-
-    questions = Question.where(survey_id: @surveys.pluck(:id))
-
-    @responses = []
-    questions.each do |question|
-      @responses << question.responses.new(user_id: current_user.id)
-    end
+    set_instance_variables
   end
 
   def create # TODO: requires cleanup
+    set_instance_variables
+
     # presentation = Presentation.find(params[:presentation_id])
     # surveys = presentation.surveys
     #
@@ -54,6 +48,16 @@ class ResponsesController < ApplicationController
 
     def response_params
       params.require(:responses).permit(:question_id, :value)
-      # responses: { question_id: question_id, value: value }
+    end
+
+    def set_instance_variables
+      @presentation = Presentation.find(params[:presentation_id])
+      @surveys = @presentation.order_surveys
+      @questions = Question.where(survey_id: @surveys.pluck(:id))
+
+      @responses = []
+      @questions.each do |question|
+        @responses << question.responses.new(user_id: current_user.id)
+      end
     end
 end
