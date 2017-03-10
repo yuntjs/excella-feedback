@@ -43,9 +43,9 @@ describe Presentation do
     end
 
     it 'orders a presentations surveys from 0 to n' do
-      survey3 = create(:survey, presentation_id: @presentation2.id, order:2)
-      survey1 = create(:survey, presentation_id: @presentation2.id, order:0)
-      survey2 = create(:survey, presentation_id: @presentation2.id, order:1)
+      survey3 = create(:survey, presentation_id: @presentation2.id, order: 2)
+      survey1 = create(:survey, presentation_id: @presentation2.id, order: 0)
+      survey2 = create(:survey, presentation_id: @presentation2.id, order: 1)
 
       expected_order = [survey1, survey2, survey3]
       actual_order = @presentation2.order_surveys
