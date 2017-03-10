@@ -5,12 +5,12 @@ class Response < ApplicationRecord
   validates :question_id, presence: true
   validates :user_id, presence: true
   validates :value, presence: true
-  validate :unique_response, on: :create, unless: "question_id.nil?" || "user_id.nil?"
+  validate :unique_response, on: :create, unless: 'question_id.nil?' || 'user_id.nil?'
 
   def unique_response
     response = Response.where(question_id: question.id, user_id: user.id)
-    if response.length > 0
-      errors.add(:unique_response, "A response has already been submitted for this question.")
+    unless response.empty?
+      errors.add(:unique_response, 'A response has already been submitted for this question.')
     end
   end
 end

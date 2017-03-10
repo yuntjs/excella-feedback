@@ -1,10 +1,20 @@
+#
+# QuestionsController
+#
 class QuestionsController < ApplicationController
+
+  #
+  # New route
+  #
   def new
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:survey_id])
     @question = Question.new
   end
 
+  #
+  # Create route
+  #
   def create
     @question = Question.new(question_params)
     @question.survey_id = params[:survey_id]
@@ -19,13 +29,22 @@ class QuestionsController < ApplicationController
     end
   end
 
+  #
+  # Show route
+  #
   def show
   end
 
+  #
+  # Edit route
+  #
   def edit
     set_instance_variables
   end
 
+  #
+  # Update route
+  #
   def update
     set_instance_variables
 
@@ -38,6 +57,9 @@ class QuestionsController < ApplicationController
     end
   end
 
+  #
+  # Destroy route
+  #
   def destroy
     set_instance_variables
 
@@ -50,13 +72,18 @@ class QuestionsController < ApplicationController
     end
   end
 
+  private
 
-private
-
+  #
+  # Set and sanitize question params
+  #
   def question_params
     params.require(:question).permit(:order, :prompt, :response_type)
   end
 
+  #
+  # Define instance variables
+  #
   def set_instance_variables
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:survey_id])

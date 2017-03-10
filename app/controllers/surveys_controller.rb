@@ -1,15 +1,27 @@
+#
+# SurveysController
+#
 class SurveysController < ApplicationController
   before_action :authenticate_admin, only: [:index, :new, :create, :update, :delete]
 
+  #
+  # Index route
+  #
   def index
     @presentation = Presentation.find(params[:presentation_id])
   end
 
+  #
+  # New route
+  #
   def new
     @presentation = Presentation.find(params[:presentation_id])
     @survey = @presentation.surveys.new
   end
 
+  #
+  # Create route
+  #
   def create
     @presentation = Presentation.find(params[:presentation_id])
     @survey = @presentation.surveys.new(survey_params)
@@ -23,16 +35,25 @@ class SurveysController < ApplicationController
     end
   end
 
+  #
+  # Show route
+  #
   def show
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:id])
   end
 
+  #
+  # Edit route
+  #
   def edit
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:id])
   end
 
+  #
+  # Update route
+  #
   def update
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:id])
@@ -46,6 +67,9 @@ class SurveysController < ApplicationController
     end
   end
 
+  #
+  # Destroy route
+  #
   def destroy
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:id])
@@ -61,7 +85,10 @@ class SurveysController < ApplicationController
 
   private
 
-    def survey_params
-      params.require(:survey).permit(:presentation_id, :order, :subject, :position)
-    end
+  #
+  # Set and sanitize survey params
+  #
+  def survey_params
+    params.require(:survey).permit(:presentation_id, :order, :subject, :position)
+  end
 end
