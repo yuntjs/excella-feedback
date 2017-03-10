@@ -43,6 +43,5 @@ class EditParticipationTest < Capybara::Rails::TestCase
         refute page.has_content? admin.email
       end
     end
-
   end
 end
