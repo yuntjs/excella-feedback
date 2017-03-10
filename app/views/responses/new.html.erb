@@ -2,9 +2,7 @@
 
 <%= form_tag presentation_responses_path(@presentation), method: :post do %>
   <% @responses.each do |response| %>
-    <%= fields_for 'responses[]', response do |response_form| %>
-      <%- display_question(response, response_form) %>
-    <% end %>
+    <%= display_question(response) %>
   <% end %>
 <%= submit_tag("Submit") %>
 <% end %>

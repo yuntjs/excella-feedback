@@ -1,11 +1,11 @@
 module ResponsesHelper
   # Determine which partial to render based on a question's response type
-  def display_question(response, response_form)
+  def display_question(response)
     case response.question.response_type
     when 'text'
-      render 'text_form_partial', response: response, response_form: response_form
+      render 'text_form_partial', response: response
     when 'number'
-      # render 'scale_form_partial', response: response, response_form: response_form
+      render 'scale_form_partial', response: response
     else
     end
   end

@@ -53,7 +53,7 @@ class ResponsesController < ApplicationController
   private
 
     def response_params
-      # params.permit(questions: {})
-      # params.require(:response).permit(:question_id, :user_id, :value)
+      params.require(:responses).permit(:question_id, :value)
+      # responses: { question_id: question_id, value: value }
     end
 end

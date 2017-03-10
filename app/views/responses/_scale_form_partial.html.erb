@@ -1,21 +1,23 @@
 <fieldset class="form-group">
   <h5><%= response.question.prompt %></h5>
   <div class="form-control">
-    <%= radio_button_tag("responses[#{response.question.id}]", "1", false) %>
+    <%= hidden_field_tag('responses[][question_id]', response.question.id) %>
+
+    <%= radio_button_tag("responses[][value]", "1", false) %>
     <%= label_tag(:responses, "Strongly Disagree")%>
 
-    <%= radio_button_tag("responses[#{response.question.id}]", "2", false) %>
+    <%= radio_button_tag("responses[][value]", "2", false) %>
     <%= label_tag(:responses, "Disagree")%>
 
-    <%= radio_button_tag("responses[#{response.question.id}]", "3", false) %>
+    <%= radio_button_tag("responses[][value]", "3", false) %>
     <%= label_tag(:responses, "Neutral")%>
 
-    <%= radio_button_tag("responses[#{response.question.id}]", "4", false) %>
+    <%= radio_button_tag("responses[][value]", "4", false) %>
     <%= label_tag(:responses, "Agree")%>
 
-    <%= radio_button_tag("responses[#{response.question.id}]", "5", false) %>
+    <%= radio_button_tag("responses[][value]", "5", false) %>
     <%= label_tag(:responses, "Strongly Agree")%>
 
-    <%= radio_button_tag("responses[#{response.question.id}]", "", true, type: "hidden") %>
+    <%= radio_button_tag("responses[][value]", "", true, type: "hidden") %>
   </div>
 </fieldset>

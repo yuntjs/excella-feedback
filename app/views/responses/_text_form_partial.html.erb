@@ -1,6 +1,5 @@
 <div class="form-group">
-  <%# label_tag(:responses, "#{response.question.prompt}") %>
-  <%# text_area_tag("responses[#{response.question.id}]", nil, class: "form-control") %>
-  <%= response_form.label "#{response.question.prompt}" %>
-  <%= response_form.text_field :value, class: 'form-control' %>
+  <%= label_tag(:response, response.question.prompt) %>
+  <%= hidden_field_tag('responses[][question_id]', response.question.id) %>
+  <%= text_area_tag('responses[][value]', nil, class: 'form-control') %>
 </div>
