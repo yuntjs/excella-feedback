@@ -1,3 +1,6 @@
+#
+# Response model
+#
 class Response < ApplicationRecord
   belongs_to :question
   belongs_to :user
