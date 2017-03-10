@@ -36,7 +36,6 @@ describe Presentation do
     refute result, 'Accepted presentation with invalid location'
   end
 
-
   describe '#order_surveys' do
     before do
       @presentation2 = create(:presentation)
