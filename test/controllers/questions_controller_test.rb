@@ -7,7 +7,7 @@ class QuestionsControllerTest < ActionController::TestCase
   before do
     @admin = create :user, :admin
     @presentation = create :presentation
-    @survey = create :survey, order: 1, subject: "Git", presentation_id: @presentation.id
+    @survey = create :survey, position: 1, subject: "Git", presentation_id: @presentation.id
     @question = create :question, survey_id: @survey.id
   end
 
@@ -21,7 +21,7 @@ class QuestionsControllerTest < ActionController::TestCase
         presentation_id: @presentation.id,
         survey_id: @survey.id,
         question: {
-          order: question.order,
+          position: question.position,
           prompt: question.prompt,
           response_type: question.response_type
         }

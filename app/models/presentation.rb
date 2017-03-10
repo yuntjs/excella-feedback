@@ -9,8 +9,8 @@ class Presentation < ApplicationRecord
   validates :location, presence: true
 
 
-  def order_surveys
-    self.surveys.sort_by{|survey| survey.order}
+  def position_surveys
+    self.surveys.sort_by{|survey| survey.position}
   end
 
   def description_short(length)
