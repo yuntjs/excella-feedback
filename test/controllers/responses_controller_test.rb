@@ -15,11 +15,11 @@ class ResponsesControllerTest < ActionController::TestCase
       user = create(:user)
       question = create(:question)
 
-      response_1 = create(:response, user_id: user.id, question_id: question.id)
-      response_2 = build(:response, user_id: user.id, question_id: question.id)
+      response1 = create(:response, user_id: user.id, question_id: question.id)
+      response2 = build(:response, user_id: user.id, question_id: question.id)
 
-      assert response_2.invalid?, 'Response saved twice with same user_id and question_id'
-      assert_equal [:unique_response], response_2.errors.keys
+      assert response2.invalid?, 'Response saved twice with same user_id and question_id'
+      assert_equal [:unique_response], response2.errors.keys
     end
   end
 end

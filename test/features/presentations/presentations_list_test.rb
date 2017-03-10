@@ -35,11 +35,11 @@ class PresentationsListTest < Capybara::Rails::TestCase
     end
 
     scenario 'a general user sees separate tables for sessions where they are presenting and attending' do
-      pres_1 = create(:presentation, title: "user's presentation")
-      pres_2 = create(:presentation, title: 'another presentation')
+      pres1 = create(:presentation, title: "user's presentation")
+      pres2 = create(:presentation, title: 'another presentation')
 
-      create(:participation, user: @user, presentation: pres_1, is_presenter: true)
-      create(:participation, user: @user, presentation: pres_2, is_presenter: false)
+      create(:participation, user: @user, presentation: pres1, is_presenter: true)
+      create(:participation, user: @user, presentation: pres2, is_presenter: false)
 
       visit(presentations_path)
 

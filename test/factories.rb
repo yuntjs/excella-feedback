@@ -12,7 +12,7 @@ FactoryGirl.define do
   end
 
   factory :presentation do
-    sequence(:title) { |n| "presentation#{n}"}
+    sequence(:title) { |n| "presentation#{n}" }
     date DateTime.now
     location 'location'
     description 'description'

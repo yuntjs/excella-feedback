@@ -66,7 +66,7 @@ class PresentationsControllerTest < ActionController::TestCase
 
       sign_in admin
 
-      patch :update, params:{ id: presentation.id, presentation:{ location: updated_location, description: updated_description } }
+      patch :update, params: { id: presentation.id, presentation: { location: updated_location, description: updated_description } }
       presentation.reload
 
       assert_equal [updated_location, updated_description], [presentation.location, presentation.description], 'Update method unsuccessful. Values do not match'
@@ -81,8 +81,8 @@ class PresentationsControllerTest < ActionController::TestCase
 
       sign_in admin
 
-      delete :destroy, params:{ id: presentation.id}
+      delete :destroy, params: { id: presentation.id }
       assert_equal Presentation.count, 0, 'Presentation was not deleted'
-      end
     end
+  end
 end

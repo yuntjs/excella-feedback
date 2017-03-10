@@ -2,7 +2,6 @@
 # RegistrationsController
 #
 class RegistrationsController < Devise::RegistrationsController
-
   #
   # Create route
   #

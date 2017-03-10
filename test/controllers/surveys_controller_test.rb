@@ -16,8 +16,8 @@ class SurveysControllerTest < ActionController::TestCase
         survey: {
           order: 1,
           subject: 'Git'
-          }
         }
+      }
 
       assert_redirected_to presentation_survey_path(presentation.id, presentation.surveys.first.id), 'No redirect to presentations_survey_path'
     end

@@ -43,8 +43,8 @@ class QuestionsControllerTest < ActionController::TestCase
         id: @question.id,
         question: {
           prompt: updated_prompt
-          }
         }
+      }
 
       @question.reload
 
@@ -62,8 +62,8 @@ class QuestionsControllerTest < ActionController::TestCase
         id: @question.id,
         question: {
           prompt: updated_prompt
-          }
         }
+      }
 
       assert_redirected_to presentation_survey_path(@presentation.id, @survey.id), 'No redirection to presentation_survey_path'
     end
