@@ -1,3 +1,6 @@
+#
+# ResponsesController
+#
 class ResponsesController < ApplicationController
   def new # TODO: requires cleanup
     set_instance_variables
@@ -46,18 +49,18 @@ class ResponsesController < ApplicationController
 
   private
 
-    def response_params
-      params.require(:responses).permit(:question_id, :value)
-    end
+  def response_params
+    params.require(:responses).permit(:question_id, :value)
+  end
 
-    def set_instance_variables
-      @presentation = Presentation.find(params[:presentation_id])
-      @surveys = @presentation.order_surveys
-      @questions = Question.where(survey_id: @surveys.pluck(:id))
+  def set_instance_variables
+    @presentation = Presentation.find(params[:presentation_id])
+    @surveys = @presentation.order_surveys
+    @questions = Question.where(survey_id: @surveys.pluck(:id))
 
-      @responses = []
-      @questions.each do |question|
-        @responses << question.responses.new(user_id: current_user.id)
-      end
+    @responses = []
+    @questions.each do |question|
+      @responses << question.responses.new(user_id: current_user.id)
     end
+  end
 end

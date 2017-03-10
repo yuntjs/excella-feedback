@@ -7,6 +7,7 @@ gem 'puma', '~> 3.0'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '>= 3.2'
 gem 'devise'
+gem 'acts_as_list', '~> 0.7.2'
 
 group :development, :test do
   gem 'byebug', platform: :mri
@@ -18,6 +19,7 @@ group :development, :test do
   gem 'minitest-reporters'
   gem 'minitest-spec-rails'
   gem 'pry-rails'
+  gem 'rubocop'
 end
 
 group :development do

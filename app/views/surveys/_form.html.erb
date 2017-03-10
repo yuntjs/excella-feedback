@@ -1,16 +1,15 @@
 <%= form_for ([@presentation, @survey]) do |f| %>
-  <p>
-    <%= f.label :order %>
-    <%= f.text_field :order %>
-  </p>
+  <div class="form-group">
+    <%= f.label :position %>
+    <%= f.number_field :position, class: "form-control" %>
+  </div>
 
-  <p>
+  <div class="form-group">
     <%= f.label :subject %>
-    <%= f.text_area :subject %>
-  </p>
+    <%= f.text_area :subject, class: "form-control" %>
+  </div>
 
-  <p>
-    <%= f.submit %>
-  </p>
+  <%= f.submit "Submit", class: "btn btn-primary" %>
+  <%= link_to "Cancel", :back, class: "btn btn-default" %>
 
 <% end %>
