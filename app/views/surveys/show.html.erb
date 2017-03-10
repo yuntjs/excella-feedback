@@ -11,7 +11,7 @@
   <p><%= link_to "Create a New Question", new_presentation_survey_question_path(@survey.presentation_id, @survey.id) %></p>
     <% @survey.questions.each do |question| %>
       <ul>
-        <li><%= question.order %>
+        <li><%= question.position %>
         <%= question.prompt %>
         <%= question.response_type %>
         <%= link_to "Edit", edit_presentation_survey_question_path(@presentation.id, @survey.id, question.id) %>
