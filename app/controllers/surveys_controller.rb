@@ -1,5 +1,5 @@
 class SurveysController < ApplicationController
-  before_action :authenticate_admin, only: [:index, :new, :create, :update, :delete]
+  before_action :authenticate_admin, except: [:show]
 
   def index
     @presentation = Presentation.find(params[:presentation_id])
