@@ -30,7 +30,7 @@ class SignUpTest < Capybara::Rails::TestCase
         click_button 'Sign Up'
       end
 
-      page.must_have_content 'Password confirmation doesn't match Password'
+      page.must_have_content "Password confirmation doesn't match Password"
     end
   end
 end
