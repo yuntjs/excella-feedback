@@ -1,10 +1,10 @@
 <h1>Feedback for <%= @presentation.title %></h1>
 
-<!--TODO: extract into helper-->
-
-<%= form_tag(presentation_responses_path(@presentation), method: 'post') do |f| %>
+<%= form_tag presentation_responses_path(@presentation), method: :post do %>
   <% @responses.each do |response| %>
-    <%= display_question(response) %>
+    <%= fields_for 'responses[]', response do |response_form| %>
+      <%- display_question(response, response_form) %>
+    <% end %>
   <% end %>
 <%= submit_tag("Submit") %>
 <% end %>
