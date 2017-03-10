@@ -1,2 +1,5 @@
+#
+# ParticipationsHelper
+#
 module ParticipationsHelper
 end

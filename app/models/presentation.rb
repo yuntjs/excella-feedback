@@ -1,3 +1,6 @@
+#
+# Presentation model
+#
 class Presentation < ApplicationRecord
   has_many :participations, dependent: :destroy
   has_many :users, through: :participations, dependent: :destroy
@@ -8,11 +11,17 @@ class Presentation < ApplicationRecord
   validates :date, presence: true
   validates :location, presence: true
 
-
+  #
+  # Order surveys by :order
+  # TODO remove and use acts_as_list
+  #
   def order_surveys
-    self.surveys.sort_by{|survey| survey.order}
+    surveys.sort_by(&:order)
   end
 
+  #
+  # Shorten long presentation descriptions for Presentation#index
+  #
   def description_short(length)
     if length < 1
       raise ArgumentError

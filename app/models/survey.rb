@@ -1,3 +1,6 @@
+#
+# Survey model
+#
 class Survey < ApplicationRecord
   belongs_to :presentation
 
@@ -11,8 +14,8 @@ class Survey < ApplicationRecord
   # validates :order, presence: false
   validates :subject, presence: true
 
-  # TODO remove order from schema
+  # TODO: remove order from schema
   def order_questions
-    self.questions.sort_by {|q| q.order}
+    questions.sort_by(&:order)
   end
 end
