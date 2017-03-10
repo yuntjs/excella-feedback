@@ -57,6 +57,4 @@ class CreateSurveyTest < Capybara::Rails::TestCase
       page.must_have_content "Warning!"
     end
   end
-
-
 end
