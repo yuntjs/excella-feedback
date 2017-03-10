@@ -51,6 +51,8 @@ class PresentationsController < ApplicationController
     end
   end
 
+
+
 private
 
   def presentation_params

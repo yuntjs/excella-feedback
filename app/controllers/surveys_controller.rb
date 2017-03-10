@@ -1,4 +1,6 @@
 class SurveysController < ApplicationController
+  before_action :authenticate_admin, only: [:index, :new, :create, :update, :delete]
+
   def index
     @presentation = Presentation.find(params[:presentation_id])
   end
@@ -16,7 +18,7 @@ class SurveysController < ApplicationController
       flash[:success] = success_message(@survey, :create)
       redirect_to presentation_survey_path(@presentation.id, @survey.id)
     elsif
-      flash.now[:error] = error_message(@survey, :create0)
+      flash.now[:error] = error_message(@survey, :create)
       render :new
     end
   end
@@ -60,6 +62,6 @@ class SurveysController < ApplicationController
   private
 
     def survey_params
-      params.require(:survey).permit(:presentation_id, :order, :subject)
+      params.require(:survey).permit(:presentation_id, :order, :subject, :position)
     end
 end

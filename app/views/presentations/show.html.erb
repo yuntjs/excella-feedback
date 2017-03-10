@@ -4,7 +4,7 @@
 
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3 text-center">
-      <%= admin_options(current_user, @presentation) %>
+      <%= presentation_admin_options(current_user, @presentation) %>
       <h1><%= @presentation.title.capitalize %></h1>
       <h4><strong>Location:&nbsp;</strong><%= @presentation.location %></h4>
       <h4><strong>Date &amp; Time:&nbsp;</strong><%= display_date(@presentation.date) %></h4>
@@ -37,6 +37,7 @@
 
 </div>
 <!-- /.container -->
+
 
 <% if current_user && current_user.is_admin %>
 <div id="participation-form-modal" class="modal fade bs-example-modal-sm" tabindex="-1">

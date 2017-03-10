@@ -91,7 +91,7 @@ module PresentationsHelper
   end
 
   # Renders options/links for Presentation show page
-  def admin_options(user, presentation)
+  def presentation_admin_options(user, presentation)
     if user.is_admin
       content_tag :div, class: "admin-options" do
         edit_details_link = link_to 'Edit Details', edit_presentation_path(presentation), class: "btn btn-primary"
@@ -100,9 +100,10 @@ module PresentationsHelper
             toggle: "modal",
             target: ".bs-example-modal-sm"
           }
+        view_surveys_link = link_to 'View Surveys', presentation_surveys_path(presentation), class: "btn btn-primary"
         delete_link = link_to "Delete", presentation_path(presentation), class: "btn btn-danger", method: :delete, data: { confirm: "Are you sure?" }
 
-        edit_details_link + edit_participants_link + delete_link
+        edit_details_link + edit_participants_link + view_surveys_link + delete_link
       end
     end
   end
