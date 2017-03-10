@@ -16,10 +16,8 @@ class Presentation < ApplicationRecord
   end
 
   def description_short(length)
-    if length < 1
-      raise ArgumentError
-    else
-      description[0..length].gsub(/\s\w+\s*$/, '...')
-    end
+    return unless length < 1
+    description[0..length].gsub(/\s\w+\s*$/, '...')
+    #raise ArgumentError
   end
 end
