@@ -8,7 +8,7 @@ class Survey < ApplicationRecord
 
   has_many :questions, dependent: :destroy
 
-  validates :order, presence: true
+  # validates :order, presence: false
   validates :subject, presence: true
 
   # TODO remove order from schema

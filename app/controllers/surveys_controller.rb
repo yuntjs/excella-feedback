@@ -11,6 +11,7 @@ class SurveysController < ApplicationController
   def create
     @presentation = Presentation.find(params[:presentation_id])
     @survey = @presentation.surveys.new(survey_params)
+
     if @survey.save
       flash[:success] = success_message(@survey, :create)
       redirect_to presentation_survey_path(@presentation.id, @survey.id)
