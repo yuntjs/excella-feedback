@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 include FactoryGirl::Syntax::Methods
 
 describe Presentation do
@@ -9,7 +9,7 @@ describe Presentation do
   it 'accepts a valid presentation' do
     result = @presentation.valid?
 
-    assert result, "Valid presentation was considered invalid"
+    assert result, 'Valid presentation was considered invalid'
   end
 
   it 'rejects a presentation without a title' do
@@ -17,7 +17,7 @@ describe Presentation do
 
     result = @presentation.valid?
 
-    refute result, "Accepted presentation with invalid title"
+    refute result, 'Accepted presentation with invalid title'
   end
 
   it 'rejects a presentation without a date' do
@@ -25,7 +25,7 @@ describe Presentation do
 
     result = @presentation.valid?
 
-    refute result, "Accepted presentation with invalid date"
+    refute result, 'Accepted presentation with invalid date'
   end
 
   it 'rejects a presentation without a location' do
@@ -33,9 +33,8 @@ describe Presentation do
 
     result = @presentation.valid?
 
-    refute result, "Accepted presentation with invalid location"
+    refute result, 'Accepted presentation with invalid location'
   end
-
 
   describe "#position_surveys" do
     before do

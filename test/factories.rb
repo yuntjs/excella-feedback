@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :user do
-    email "email@example.com"
-    password "password"
-    first_name "First"
-    last_name  "Last"
+    email 'email@example.com'
+    password 'password'
+    first_name 'First'
+    last_name  'Last'
     is_admin false
 
     trait :admin do
@@ -12,13 +12,13 @@ FactoryGirl.define do
   end
 
   factory :presentation do
-    sequence(:title) { |n| "presentation#{n}"}
+    sequence(:title) { |n| "presentation#{n}" }
     date DateTime.now
-    location "location"
-    description "description"
+    location 'location'
+    description 'description'
 
     trait :long_description do
-      description "description description description description description description"
+      description 'description description description description description description'
     end
   end
 
@@ -41,14 +41,14 @@ FactoryGirl.define do
   factory :question do
     position 1
     survey
-    prompt "The presentation was great"
-    response_type "text"
+    prompt 'The presentation was great'
+    response_type 'text'
   end
 
   factory :response do
     question
     user
-    value "I responded to this question!"
+    value 'I responded to this question!'
 
     trait :invalid do
       question nil
