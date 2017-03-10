@@ -42,7 +42,7 @@ describe Presentation do
       @presentation2 = create(:presentation)
     end
 
-    it 'orders a presentation's surveys from 0 to n' do
+    it 'orders a presentations surveys from 0 to n' do
       survey3 = create(:survey, presentation_id: @presentation2.id, order:2)
       survey1 = create(:survey, presentation_id: @presentation2.id, order:0)
       survey2 = create(:survey, presentation_id: @presentation2.id, order:1)
