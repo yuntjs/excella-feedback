@@ -2,12 +2,12 @@
 # QuestionsController
 #
 class QuestionsController < ApplicationController
+  before_action :set_presentation, only: [:new, :create]
 
   #
   # New route
   #
   def new
-    @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:survey_id])
     @question = Question.new
   end
@@ -18,7 +18,6 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
     @question.survey_id = params[:survey_id]
-    @presentation = Presentation.find(params[:presentation_id])
 
     if @question.save
       flash[:success] = success_message(@question, :create)
@@ -79,6 +78,13 @@ class QuestionsController < ApplicationController
   #
   def question_params
     params.require(:question).permit(:order, :prompt, :response_type)
+  end
+
+  #
+  # Set presentation to be used in routes
+  #
+  def set_presentation
+    @presentation = Presentation.find(params[:presentation_id])
   end
 
   #

@@ -3,3 +3,5 @@ AllCops:
     - db/**
     - config/**
     - script/**
+Metrics/LineLength:
+  Enabled: false

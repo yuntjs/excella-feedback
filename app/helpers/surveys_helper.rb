@@ -1,5 +1,10 @@
+#
+# SurveysHelper
+#
 module SurveysHelper
+  #
   # Renders options/links for Presentation show page
+  #
   def survey_admin_options(user, presentation)
     if user.is_admin
       content_tag :div, class: 'admin-options' do

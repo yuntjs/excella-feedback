@@ -29,7 +29,7 @@ class SurveysController < ApplicationController
     if @survey.save
       flash[:success] = success_message(@survey, :create)
       redirect_to presentation_survey_path(@presentation.id, @survey.id)
-    elsif
+    else
       flash.now[:error] = error_message(@survey, :create)
       render :new
     end

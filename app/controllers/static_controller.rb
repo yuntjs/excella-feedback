@@ -2,7 +2,6 @@
 # StaticController
 #
 class StaticController < ApplicationController
-
   #
   # Home route
   #

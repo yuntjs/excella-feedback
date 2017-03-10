@@ -1,2 +1,5 @@
+#
+# StaticHelper
+#
 module StaticHelper
 end
