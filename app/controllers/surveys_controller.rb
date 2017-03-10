@@ -2,7 +2,7 @@
 # SurveysController
 #
 class SurveysController < ApplicationController
-  before_action :authenticate_admin, only: [:index, :new, :create, :update, :delete]
+  before_action :authenticate_admin, except: [:show]
 
   #
   # Index route

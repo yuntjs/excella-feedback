@@ -33,13 +33,13 @@ FactoryGirl.define do
   end
 
   factory :survey do
-    order 1
-    subject 'Git'
+    position 1
+    subject "Git"
     presentation
   end
 
   factory :question do
-    order 1
+    position 1
     survey
     prompt 'The presentation was great'
     response_type 'text'
