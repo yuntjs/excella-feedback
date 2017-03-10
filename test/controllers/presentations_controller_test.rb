@@ -9,7 +9,7 @@ class PresentationsControllerTest < ActionController::TestCase
       location: 'ATX',
       date: DateTime.new(2017, 2, 22),
       description: 'Lorem ipsum',
-      is_published: true,
+      is_published: true
     }
   end
 
