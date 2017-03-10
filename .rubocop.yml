@@ -1,3 +1,5 @@
 AllCops:
   Excludes:
     - db/**
+    - config/**
+    - script/**
