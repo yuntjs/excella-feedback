@@ -11,13 +11,22 @@ class Presentation < ApplicationRecord
   validates :date, presence: true
   validates :location, presence: true
 
+  #
+  # Order surveys by :order
+  # TODO remove and use acts_as_list
+  #
   def order_surveys
     surveys.sort_by(&:order)
   end
 
+  #
+  # Shorten long presentation descriptions for Presentation#index
+  #
   def description_short(length)
-    return unless length < 1
-    description[0..length].gsub(/\s\w+\s*$/, '...')
-    #raise ArgumentError
+    if length < 1
+      raise ArgumentError
+    else
+      description[0..length].gsub(/\s\w+\s*$/, '...')
+    end
   end
 end

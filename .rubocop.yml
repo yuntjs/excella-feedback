@@ -1,6 +1,7 @@
 AllCops:
   Excludes:
     - db/**
+    - db/migrate/**
     - config/**
     - script/**
 Metrics/LineLength:
