@@ -13,7 +13,7 @@ describe Survey do
       question2 = create(:question, survey_id: @survey.id, position:2)
 
       expected_position= [question1, question2, question3]
-      actual_position= @survey.order_questions
+      actual_position= @survey.position_questions
 
       assert_equal expected_position, actual_position, "Array not positioned correctly"
     end

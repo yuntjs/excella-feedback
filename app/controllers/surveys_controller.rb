@@ -89,6 +89,6 @@ class SurveysController < ApplicationController
   # Set and sanitize survey params
   #
   def survey_params
-    params.require(:survey).permit(:presentation_id, :order, :subject, :position)
+    params.require(:survey).permit(:presentation_id, :subject, :position)
   end
 end
