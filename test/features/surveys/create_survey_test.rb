@@ -38,6 +38,24 @@ class CreateSurveyTest < Capybara::Rails::TestCase
 
       refute_equal current_path, new_presentation_survey_path(pres), "Page did not redirect for non-admin"
     end
+
+    scenario "does not create survey with empty subject" do
+      admin = create(:user, :admin)
+      login_as(admin, scope: :user)
+
+      pres = create(:presentation, title: "Intro to Git")
+
+      visit presentation_surveys_path(pres)
+
+      click_on "Create New Survey"
+
+      within ("form") do
+        fill_in "Position", with: 1
+        click_button "Submit"
+      end
+
+      page.must_have_content "Warning!"
+    end
   end
 
 
