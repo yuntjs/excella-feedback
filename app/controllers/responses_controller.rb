@@ -1,25 +1,25 @@
 class ResponsesController < ApplicationController
-  def new
+  def new # TODO: requires cleanup
     @presentation = Presentation.find(params[:presentation_id])
     @surveys = @presentation.order_surveys
+
+    questions = Question.where(survey_id: @surveys.pluck(:id))
+
+    @responses = []
+    questions.each do |question|
+      @responses << question.responses.new(user_id: current_user.id)
+    end
   end
 
-  def create
-    presentation = Presentation.find(params[:presentation_id])
-    surveys = presentation.surveys
-
-    question_ids = surveys.map do |survey|
-      survey.questions.pluck(:id)
-    end.flatten # TODO: extract out somewhere else
-
-    responses = response_params(question_ids)
-
-    # for each question
-    #   response = Response.new(response_params)
-    #   error validation
-    #   saving
-    #   etc
-    # end
+  def create # TODO: requires cleanup
+    # presentation = Presentation.find(params[:presentation_id])
+    # surveys = presentation.surveys
+    #
+    # question_ids = surveys.map do |survey|
+    #   survey.questions.pluck(:id)
+    # end.flatten # TODO: extract out somewhere else
+    #
+    # responses = response_params(question_ids)
 
     # @feedback = {
     #   responses: params[:question],
@@ -54,6 +54,6 @@ class ResponsesController < ApplicationController
 
     def response_params
       # params.permit(questions: {})
-      params.require(:response).permit(:question_id, :user_id, :value)
+      # params.require(:response).permit(:question_id, :user_id, :value)
     end
 end

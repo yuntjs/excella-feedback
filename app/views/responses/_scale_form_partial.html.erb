@@ -1,21 +1,21 @@
 <fieldset class="form-group">
-  <h5><%= question.prompt %></h5>
+  <h5><%= response.question.prompt %></h5>
   <div class="form-control">
-    <%= radio_button_tag("questions[#{question.id}]", "1", false) %>
-    <%= label_tag(:questions, "Strongly Disagree", for:"question_#{question.id}_1")%>
+    <%= radio_button_tag("responses[#{response.question.id}]", "1", false) %>
+    <%= label_tag(:responses, "Strongly Disagree")%>
 
-    <%= radio_button_tag("questions[#{question.id}]", "2", false) %>
-    <%= label_tag(:questions, "Somewhat Disagree", for:"question_#{question.id}_2")%>
+    <%= radio_button_tag("responses[#{response.question.id}]", "2", false) %>
+    <%= label_tag(:responses, "Disagree")%>
 
-    <%= radio_button_tag("questions[#{question.id}]", "3", false) %>
-    <%= label_tag(:questions, "Neutral", for:"question_#{question.id}_3")%>
+    <%= radio_button_tag("responses[#{response.question.id}]", "3", false) %>
+    <%= label_tag(:responses, "Neutral")%>
 
-    <%= radio_button_tag("questions[#{question.id}]", "4", false) %>
-    <%= label_tag(:questions, "Somewhat Agree", for:"question_#{question.id}_4")%>
+    <%= radio_button_tag("responses[#{response.question.id}]", "4", false) %>
+    <%= label_tag(:responses, "Agree")%>
 
-    <%= radio_button_tag("questions[#{question.id}]", "5", false) %>
-    <%= label_tag(:questions, "Strongly Agree", for:"question_#{question.id}_5")%>
+    <%= radio_button_tag("responses[#{response.question.id}]", "5", false) %>
+    <%= label_tag(:responses, "Strongly Agree")%>
 
-    <%= radio_button_tag("questions[#{question.id}]", "", true, type: "hidden") %>
+    <%= radio_button_tag("responses[#{response.question.id}]", "", true, type: "hidden") %>
   </div>
 </fieldset>
