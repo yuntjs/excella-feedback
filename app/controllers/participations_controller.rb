@@ -10,9 +10,12 @@ class ParticipationsController < ApplicationController
   #
   def update
     if @participation.update(participation_params)
-      binding.pry
+      # If creating new presenter, create a survey for the presenter
       if participation_params[:is_presenter] == "true" # Why is this a string?
         create_default_presenter_survey(User.find(@participation.user_id))
+      # else
+        # Otherwise, delete the presenter's survey
+        # Presentation.where(@participation.presentation_id).surveys.where()
       end
       redirect_to presentation_path(params[:presentation_id]), notice: 'Participation was successfully updated.'
     else
