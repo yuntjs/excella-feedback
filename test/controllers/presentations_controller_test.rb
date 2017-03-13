@@ -40,6 +40,15 @@ class PresentationsControllerTest < ActionController::TestCase
   end
 
   describe '#create' do
+    it 'creates a new presentation' do
+      admin = create :user, :admin
+      create :presentation
+
+      sign_in admin
+
+      assert Presentation.first.valid?, "Presentation was not created"
+    end
+
     it 'redirects to index page if logged in' do
       user = create :user
       sign_in user
@@ -53,16 +62,6 @@ class PresentationsControllerTest < ActionController::TestCase
       post :create, params: @params
 
       assert_redirected_to new_user_session_path, 'Did not redirect to sign-in page'
-    end
-
-    it 'creates a new default survey for this presentation' do
-      admin = create :user, :admin
-      create :presentation
-      # create :survey
-
-      sign_in admin
-
-      binding.pry
     end
   end
 
