@@ -9,7 +9,7 @@ class ResponsesController < ApplicationController
 
     @responses = []
     @questions.each do |question|
-      @responses << question.responses.new
+      @responses << question.responses.new(user_id: current_user.id)
     end
   end
 
@@ -29,7 +29,6 @@ class ResponsesController < ApplicationController
     @responses.each do |response|
       next if response.valid?
       all_valid = false
-      break
     end
 
     if all_valid
@@ -39,7 +38,6 @@ class ResponsesController < ApplicationController
       flash[:success] = "Your responses have beeen successfully recorded."
       redirect_to presentation_path(@presentation)
     else
-      # TODO: Handle invalid response submition (notices, error messages, etc.)
       flash.now[:error] = "We ran into some errors while trying to save your responses. Please try again."
       render :new
     end

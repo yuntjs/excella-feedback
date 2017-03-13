@@ -28,4 +28,11 @@ module ResponsesHelper
   def display_scale_response(response, value)
     response.value == value ? true : false
   end
+
+  #
+  # Add error class if response has errors
+  #
+  def error_class(response)
+    response.errors.any? ? 'has-error' : ''
+  end
 end
