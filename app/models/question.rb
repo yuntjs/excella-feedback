@@ -9,7 +9,16 @@ class Question < ApplicationRecord
   #
   acts_as_list scope: :survey
 
-
   has_many :responses, dependent: :destroy
   has_many :users, through: :responses, dependent: :destroy
+
+  #
+  # Values for default survey questions
+  #
+  def self.default_presentation_questions
+    a = [
+    { prompt: "I thought this course was really great.",
+      response_type: "scale" }
+    ]
+  end
 end

@@ -7,7 +7,7 @@ class ResponsesController < ApplicationController
   #
   def new
     @presentation = Presentation.find(params[:presentation_id])
-    @surveys = @presentation.order_surveys
+    @surveys = @presentation.position_surveys
     @feedback = { errors: [] }
   end
 
