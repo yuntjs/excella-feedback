@@ -14,4 +14,11 @@ module ResponsesHelper
     else
     end
   end
+
+  #
+  # Display text response if response.value exists
+  #
+  def display_text_response(response)
+    response.value ? response.value : nil
+  end
 end

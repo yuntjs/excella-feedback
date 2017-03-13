@@ -1,4 +1,4 @@
 <div class="form-group">
   <%= label_tag(:response, response.question.prompt) %>
-  <%= text_area_tag("responses[question_id][#{response.question.id}]", nil, class: 'form-control') %>
+  <%= text_area_tag("responses[question_id][#{response.question.id}]", display_text_response(response), class: 'form-control') %>
 </div>
