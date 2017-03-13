@@ -1,4 +1,4 @@
-<fieldset class="form-group">
+<fieldset class="form-group <%= error_class(response) %>">
   <h5><%= response.question.prompt %></h5>
   <div class="form-control">
     <%= radio_button_tag("responses[question_id][#{response.question.id}]",
@@ -21,4 +21,5 @@
       "5", display_scale_response(response, "5")) %>
     <%= label_tag(:responses, "Strongly Agree")%>
   </div>
+  <%= error_messages(response) %>
 </fieldset>
