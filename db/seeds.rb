@@ -108,7 +108,8 @@ presentations.each do |pres_name|
       ques = survey.questions.create(
         order: index,
         prompt: question,
-        response_type: 'number'
+        response_type: 'number',
+        response_required: true
       )
       ques.save
     end
@@ -116,7 +117,8 @@ presentations.each do |pres_name|
       ques = survey.questions.create(
         order: index + number_questions.length,
         prompt: question,
-        response_type: 'text'
+        response_type: 'text',
+        response_required: false
       )
       ques.save
     end
