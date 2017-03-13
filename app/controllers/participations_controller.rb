@@ -16,7 +16,6 @@ class ParticipationsController < ApplicationController
       # Otherwise, delete the presenter's survey
       Survey.destroy(Presentation.find(@participation.presentation_id).surveys.where(presenter_id: User.find(@participation.user_id).id))
     end
-    end
     if @participation.update(participation_params)
       redirect_to presentation_path(params[:presentation_id]), notice: 'Participation was successfully updated.'
     else
