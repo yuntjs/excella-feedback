@@ -35,4 +35,30 @@ module ResponsesHelper
   def error_class(response)
     response.errors.any? ? 'has-error' : ''
   end
+
+  #
+  # Add list of errors below response
+  #
+  def error_messages(response)
+    if response.errors.any?
+      content_tag(:div,
+        content_tag(:ul,
+          render_list(response.errors.full_messages)
+        ),
+        class: 'has-error'
+      )
+    end
+  end
+
+  #
+  # Provides all messages from an array as <li>
+  #
+
+  def render_list(messages)
+    result = ''
+    messages.each do |msg|
+      result += content_tag(:li, msg)
+    end
+    result.html_safe
+  end
 end
