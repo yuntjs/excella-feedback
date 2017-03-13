@@ -40,10 +40,21 @@ FactoryGirl.define do
   end
 
   factory :question do
+    sequence(:prompt) { |n| "Question#{n}" }
     order 1
     survey
-    prompt 'The presentation was great'
-    response_type 'text'
+    
+    trait :text do
+      response_type 'text'
+    end
+
+    trait :number do
+      response_type 'number'
+    end
+
+    trait :required do
+      response_required true
+    end
   end
 
   factory :response do

@@ -20,6 +20,7 @@ group :development, :test do
   gem 'minitest-spec-rails'
   gem 'pry-rails'
   gem 'rubocop'
+  gem 'rails-controller-testing'
 end
 
 group :development do

@@ -2,11 +2,9 @@
 # ResponsesController
 #
 class ResponsesController < ApplicationController
-  def new # TODO: requires cleanup
+  def new
     set_instance_variables
-
-    # TODO: Check if responses already exist (maybe as before_action)
-
+    
     @responses = []
     @questions.each do |question|
       @responses << question.responses.new(user_id: current_user.id)
