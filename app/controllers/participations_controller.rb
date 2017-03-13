@@ -10,7 +10,8 @@ class ParticipationsController < ApplicationController
   #
   def update
     if @participation.update(participation_params)
-      if participation_params[:is_presenter]
+      binding.pry
+      if participation_params[:is_presenter] == "true" # Why is this a string?
         create_default_presenter_survey(User.find(@participation.user_id))
       end
       redirect_to presentation_path(params[:presentation_id]), notice: 'Participation was successfully updated.'
