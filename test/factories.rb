@@ -34,16 +34,16 @@ FactoryGirl.define do
   end
 
   factory :survey do
-    order 1
-    subject 'Git'
+    position 1
+    subject "Git"
     presentation
   end
 
   factory :question do
     sequence(:prompt) { |n| "Question#{n}" }
-    order 1
+    position 1
     survey
-    
+
     trait :text do
       response_type 'text'
     end

@@ -101,12 +101,12 @@ presentations.each do |pres_name|
   )
   surveys.each_with_index do |survey_name, index|
     survey = pres.surveys.create(
-      order: index,
+      position: index,
       subject: survey_name
     )
     number_questions.each_with_index do |question, index|
       ques = survey.questions.create(
-        order: index,
+        position: index,
         prompt: question,
         response_type: 'number',
         response_required: true
@@ -115,7 +115,7 @@ presentations.each do |pres_name|
     end
     text_questions.each_with_index do |question, index|
       ques = survey.questions.create(
-        order: index + number_questions.length,
+        position: index + number_questions.length,
         prompt: question,
         response_type: 'text',
         response_required: false

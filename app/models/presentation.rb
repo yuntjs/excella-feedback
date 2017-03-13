@@ -15,8 +15,8 @@ class Presentation < ApplicationRecord
   # Order surveys by :order
   # TODO remove and use acts_as_list
   #
-  def order_surveys
-    self.surveys.sort_by{ |survey| survey.order }
+  def position_surveys
+    self.surveys.sort_by{|survey| survey.position}
   end
 
   #

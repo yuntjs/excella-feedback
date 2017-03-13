@@ -4,7 +4,7 @@
 class ResponsesController < ApplicationController
   def new
     set_instance_variables
-    
+
     @responses = []
     @questions.each do |question|
       @responses << question.responses.new(user_id: current_user.id)
@@ -60,7 +60,7 @@ class ResponsesController < ApplicationController
   #
   def set_instance_variables
     @presentation = Presentation.find(params[:presentation_id])
-    @surveys = @presentation.order_surveys
+    @surveys = @presentation.position_surveys
     @questions = Question.where(survey_id: @surveys.pluck(:id))
   end
 end
