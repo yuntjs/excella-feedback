@@ -12,7 +12,11 @@ class CreateParticipationTest < Capybara::Rails::TestCase
     scenario 'destroys a participation if admin' do
       user = create :user, :admin
       pres = create(:presentation, title: "user's presentation")
-      create(:participation, user: user, presentation: pres)
+      create(:participation,
+        user_id: user.id,
+        presentation_id: pres.id
+      )
+
       login_as(user, scope: :user)
 
       visit presentation_path(pres)
@@ -31,8 +35,12 @@ class CreateParticipationTest < Capybara::Rails::TestCase
     scenario 'unable to destroy a participation if non-admin' do
       user = create :user
       pres = create(:presentation, title: "user's presentation")
-      create(:participation, user: user, presentation: pres)
       login_as(user, scope: :user)
+
+      create(:participation,
+        user_id: user.id,
+        presentation_id: pres.id
+      )
 
       visit presentation_path(pres)
 

@@ -26,6 +26,7 @@ FactoryGirl.define do
     user
     presentation
     is_presenter false
+    feedback_provided false
 
     trait :presenter do
       is_presenter true
