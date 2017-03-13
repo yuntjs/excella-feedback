@@ -21,4 +21,11 @@ module ResponsesHelper
   def display_text_response(response)
     response.value ? response.value : nil
   end
+
+  #
+  # Display boolean depending on if response.value matches given value
+  #
+  def display_scale_response(response, value)
+    response.value == value ? true : false
+  end
 end
