@@ -10,8 +10,8 @@ class CreatePresentationTest < Capybara::Rails::TestCase
 
   feature 'Create' do
     scenario 'creates a new presentation if admin' do
-      user = create :user, :admin
-      login_as(user, scope: :user)
+      admin = create :user, :admin
+      login_as(admin, scope: :user)
 
       visit root_path
 
@@ -26,6 +26,27 @@ class CreatePresentationTest < Capybara::Rails::TestCase
 
       page.must_have_content 'Foo Bar'
       page.must_have_content 'Success! Presentation has been successfully created.'
+    end
+
+    scenario 'creates a default survey for a new presentation' do
+      admin = create :user, :admin
+      login_as(admin, scope: :user)
+
+      visit root_path
+
+      click_on 'Create New Presentation'
+
+      within ('form') do
+        fill_in 'Title', with: 'Foo Bar'
+        fill_in 'Location', with: 'Over there'
+        fill_in 'Description', with: 'Lorem ipsum'
+        click_button 'Submit'
+      end
+
+      click_on 'Foo Bar'
+      click_on 'View Surveys'
+
+      page.must_have_content 'Overall Presentation'
     end
 
     scenario 'does not create a presentation if it is invalid' do

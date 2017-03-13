@@ -52,7 +52,6 @@ class ParticipationsController < ApplicationController
   #
   def create_default_presenter_survey(presenter)
     survey = Presentation.find(@participation.presentation_id).surveys.create(subject: "Feedback for #{presenter.full_name}", presenter_id: presenter.id)
-    # binding.pry
     Question.default_presenter_questions(presenter).each do |question|
       Question.create(survey_id: survey.id,
                    prompt: question[:prompt],
