@@ -54,6 +54,7 @@ class ResponsesControllerTest < ActionController::TestCase
       question_value_pairs[@questions.last.id.to_s] = ''
 
       assert Response.all.empty?, 'Invalid responses created'
+      # TODO: assert_template :new not working 
     end
 
   end
