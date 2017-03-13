@@ -34,7 +34,6 @@ class EditParticipationTest < Capybara::Rails::TestCase
       login_as(admin, scope: :user)
       # Must refresh page for login_as to take effect
       visit presentation_path(pres)
-
       within '.presenters' do
         click_on 'Change to Attendee'
       end

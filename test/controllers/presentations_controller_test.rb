@@ -54,6 +54,16 @@ class PresentationsControllerTest < ActionController::TestCase
 
       assert_redirected_to new_user_session_path, 'Did not redirect to sign-in page'
     end
+
+    it 'creates a new default survey for this presentation' do
+      admin = create :user, :admin
+      create :presentation
+      # create :survey
+
+      sign_in admin
+
+      binding.pry
+    end
   end
 
   describe '#update' do

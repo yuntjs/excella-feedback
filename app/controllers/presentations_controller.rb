@@ -113,6 +113,7 @@ class PresentationsController < ApplicationController
   #
   def create_default_presentation_survey
     survey = @presentation.surveys.create(subject: "Overall Presentation")
+    binding.pry
     Question.default_presentation_questions.each do |question|
       Question.create(survey_id: survey.id,
                    prompt: question[:prompt],

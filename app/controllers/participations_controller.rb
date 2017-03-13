@@ -9,18 +9,20 @@ class ParticipationsController < ApplicationController
   # Update route
   #
   def update
-    if @participation.update(participation_params)
-      survey_updated = false
-      # If creating new presenter, create a survey for the presenter
-      if participation_params[:is_presenter] == "true" # Why is this a string?
-        return unless create_default_presenter_survey(User.find(@participation.user_id))
-        survey_updated = true
-      else
-        # Otherwise, delete the presenter's survey
-        return unless Survey.destroy(Presentation.find(@participation.presentation_id).surveys.where(presenter_id: User.find(@participation.user_id).id))
-        survey_updated = true
+    # survey_updated = false
+    # If creating new presenter, create a survey for the presenter
+    if participation_params[:is_presenter] == "true" # Why is this a string?
+      create_default_presenter_survey(User.find(@participation.user_id))
+      #   survey_updated = true
+      # end
+    else
+      # Otherwise, delete the presenter's survey
+      if Presentation.find(@participation.presentation_id).surveys.where(presenter_id: User.find(@participation.user_id).id).exists?
+        Survey.destroy(Presentation.find(@participation.presentation_id).surveys.where(presenter_id: User.find(@participation.user_id).id))
+          # survey_updated = true
       end
-      return unless survey_updated
+    end
+    if @participation.update(participation_params)
       redirect_to presentation_path(params[:presentation_id]), notice: 'Participation was successfully updated.'
     else
       render presentation_path(params[:presentation_id])
@@ -50,6 +52,7 @@ class ParticipationsController < ApplicationController
   #
   def create_default_presenter_survey(presenter)
     survey = Presentation.find(@participation.presentation_id).surveys.create(subject: "Feedback for #{presenter.full_name}", presenter_id: presenter.id)
+    # binding.pry
     Question.default_presenter_questions(presenter).each do |question|
       Question.create(survey_id: survey.id,
                    prompt: question[:prompt],
