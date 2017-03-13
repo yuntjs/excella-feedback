@@ -39,7 +39,7 @@ class ResponsesController < ApplicationController
       participation = Participation.where(
         user_id: current_user.id,
         presentation_id: @presentation.id
-      )
+      ).first
       participation.set_feedback_provided
       redirect_to presentation_path(@presentation)
     else
