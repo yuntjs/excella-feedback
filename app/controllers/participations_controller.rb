@@ -10,6 +10,9 @@ class ParticipationsController < ApplicationController
   #
   def update
     if @participation.update(participation_params)
+      if participation_params[:is_presenter]
+        create_default_presenter_survey(User.find(@participation.user_id))
+      end
       redirect_to presentation_path(params[:presentation_id]), notice: 'Participation was successfully updated.'
     else
       render presentation_path(params[:presentation_id])
@@ -31,5 +34,18 @@ class ParticipationsController < ApplicationController
   def participation_params
     params.require(:participation)
           .permit(:user_id, :presentation_id, :is_presenter)
+  end
+
+  #
+  # Create default survey for presentation
+  # Default questions in Question Model
+  #
+  def create_default_presenter_survey(presenter)
+    survey = Presentation.find(@participation.presentation_id).surveys.create(subject: "Feedback for #{presenter.full_name}")
+    Question.default_presenter_questions(presenter).each do |question|
+      Question.create(survey_id: survey.id,
+                   prompt: question[:prompt],
+                   response_type: question[:response_type])
+    end
   end
 end
