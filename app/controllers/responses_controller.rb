@@ -36,6 +36,11 @@ class ResponsesController < ApplicationController
         response.save
       end
       flash[:success] = "Your responses have beeen successfully recorded."
+      participation = Participation.where(
+        user_id: current_user.id,
+        presentation_id: @presentation.id
+      )
+      participation.set_feedback_provided
       redirect_to presentation_path(@presentation)
     else
       flash.now[:error] = "We ran into some errors while trying to save your responses. Please try again."
