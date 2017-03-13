@@ -16,9 +16,16 @@ class Question < ApplicationRecord
   # Values for default survey questions
   #
   def self.default_presentation_questions
-    a = [
-    { prompt: "I thought this course was really great.",
-      response_type: "scale" }
+    questions = [
+      { prompt: "I thought this course effectively taught the subject matter.",
+        response_type: "scale"
+      }, {
+        prompt: "I thought this course was relevant to my future projects.",
+        response_type: "scale"
+      }, {
+        prompt: "Do you have any additional comments?",
+        response_type: "text"
+      }
     ]
   end
 end
