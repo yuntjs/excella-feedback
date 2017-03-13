@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313155510) do
+ActiveRecord::Schema.define(version: 20170313182126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,8 +40,9 @@ ActiveRecord::Schema.define(version: 20170313155510) do
     t.string   "prompt"
     t.integer  "order"
     t.string   "response_type"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "response_required", default: false
     t.index ["survey_id"], name: "index_questions_on_survey_id", using: :btree
   end
 
