@@ -2,23 +2,23 @@
   <h5><%= response.question.prompt %></h5>
   <div class="form-control">
     <%= radio_button_tag("responses[question_id][#{response.question.id}]",
-      "1", display_scale_response(response, "1")) %>
+      "1", scale_response_match(response, "1")) %>
     <%= label_tag(:responses, "Strongly Disagree")%>
 
     <%= radio_button_tag("responses[question_id][#{response.question.id}]",
-      "2", display_scale_response(response, "2")) %>
+      "2", scale_response_match(response, "2")) %>
     <%= label_tag(:responses, "Disagree")%>
 
     <%= radio_button_tag("responses[question_id][#{response.question.id}]",
-      "3", display_scale_response(response, "3")) %>
+      "3", scale_response_match(response, "3")) %>
     <%= label_tag(:responses, "Neutral")%>
 
     <%= radio_button_tag("responses[question_id][#{response.question.id}]",
-      "4", display_scale_response(response, "4")) %>
+      "4", scale_response_match(response, "4")) %>
     <%= label_tag(:responses, "Agree")%>
 
     <%= radio_button_tag("responses[question_id][#{response.question.id}]",
-      "5", display_scale_response(response, "5")) %>
+      "5", scale_response_match(response, "5")) %>
     <%= label_tag(:responses, "Strongly Agree")%>
   </div>
   <%= error_messages(response) %>

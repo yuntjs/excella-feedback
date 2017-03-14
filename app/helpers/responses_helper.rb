@@ -8,25 +8,19 @@ module ResponsesHelper
   def display_question(response)
     case response.question.response_type
     when 'text'
-      render 'text_form_partial', response: response
+      render partial: 'text_form_partial', locals: { response: response }
     when 'number'
-      render 'scale_form_partial', response: response
+      render partial: 'scale_form_partial', locals: { response: response }
     else
+      raise ArgumentError, 'Unknown response type'
     end
-  end
-
-  #
-  # Display text response if response.value exists
-  #
-  def display_text_response(response)
-    response.value ? response.value : nil
   end
 
   #
   # Display boolean depending on if response.value matches given value
   #
-  def display_scale_response(response, value)
-    response.value == value ? true : false
+  def scale_response_match(response, value)
+    response.value == value
   end
 
   #

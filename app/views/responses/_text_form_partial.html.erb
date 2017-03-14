@@ -1,5 +1,5 @@
 <div class="form-group <%= error_class(response) %>">
   <%= label_tag(:response, response.question.prompt) %>
-  <%= text_area_tag("responses[question_id][#{response.question.id}]", display_text_response(response), class: 'form-control') %>
+  <%= text_area_tag("responses[question_id][#{response.question.id}]", response.value, class: 'form-control') %>
   <%= error_messages(response) %>
 </div>

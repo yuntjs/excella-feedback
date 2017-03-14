@@ -59,6 +59,26 @@ class PresentationsHelperTest < ActionView::TestCase
     end
   end
 
+  describe '#admin_table' do
+    it 'tests pending...'
+  end
+
+  describe '#general_user_table' do
+    it 'tests pending...'
+  end
+
+  describe '#feedback_header' do
+    it 'tests pending...'
+  end
+
+  describe '#display_description' do
+    it 'tests pending...'
+  end
+
+  describe '#feedback_content' do
+    it 'tests pending...'
+  end
+
   describe '#see_feedback_button?' do
     it 'returns true if user is not an admin' do
       assert see_feedback_button?(@user, @presentation_as_attendee), 'Returns false for non-admin as attendee'
@@ -118,5 +138,21 @@ class PresentationsHelperTest < ActionView::TestCase
 
       refute link_string.include?("See Feedback"), 'Link should not contain "See Feedback"'
     end
+  end
+
+  describe '#survey_link_for' do
+    it 'tests pending...'
+  end
+
+  describe '#presentation_admin_options' do
+    it 'tests pending...'
+  end
+
+  describe '#participation_table' do
+    it 'tests pending...'
+  end
+
+  describe '#set_participation_table' do
+    it 'tests pending...'
   end
 end

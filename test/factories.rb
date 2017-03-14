@@ -64,7 +64,14 @@ FactoryGirl.define do
   factory :response do
     question
     user
-    value 'I responded to this question!'
+
+    trait :text do
+      value 'I responded to this question!'
+    end
+
+    trait :number do
+      value 3
+    end
 
     trait :invalid do
       question nil
