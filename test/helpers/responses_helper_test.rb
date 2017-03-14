@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ResponsesHelperTest < ActionView::TestCase
-  # include Devise::Test::ControllerHelpers
 
   before do
     @user = create(:user)
@@ -26,7 +25,8 @@ class ResponsesHelperTest < ActionView::TestCase
   end
 
   describe '#display_question' do
-    it 'renders text form partial if response type is "text"'
+    it 'renders text form partial if response type is "text"' do
+    end
 
     it 'renders scale form partial if response type is "number"'
 
