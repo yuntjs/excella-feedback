@@ -9,22 +9,20 @@ class ResponsesController < ApplicationController
     @data = {}
     @presentation.surveys.each do |survey|
       survey.questions.each do |question|
-        puts "QUESTION: #{question.id}"
         if question.response_type == 'number'
           question_data = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 }
           @responses.where(question_id: question.id).each do |response|
-            puts "RESPONSE: #{response.value}"
             res_value = response.value.to_sym
             question_data[res_value] += 1
           end
-          # binding.pry
           @data[question.id] = question_data
         end
-        puts "#{@data}"
       end
     end
+    # Set maximum chart value for chartkick
     @maximum = @data.length
   end
+
   #
   # New route
   #

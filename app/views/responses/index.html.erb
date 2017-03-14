@@ -3,6 +3,12 @@
   <h2><%= survey.subject %></h2>
   <% survey.questions.each do |question| %>
     <h5><%= question.prompt %></h5>
-    <%= bar_chart(@data[question.id], max: @maximum) %>
+    <% if question.response_type == 'number' %>
+      <%= bar_chart(@data[question.id], max: @maximum) %>
+    <% elsif question.response_type == 'text' %>
+      <% @responses.where(question_id: question.id).each do |response| %>
+        <li><%= response.value %></li>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>
