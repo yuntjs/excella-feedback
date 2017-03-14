@@ -47,6 +47,10 @@ class CreatePresentationTest < Capybara::Rails::TestCase
       click_on 'View Surveys'
 
       page.must_have_content 'Overall Presentation'
+
+      click_on 'Overall Presentation'
+
+      page.must_have_content 'I thought this course effectively taught the subject matter.'
     end
 
     scenario 'does not create a presentation if it is invalid' do
