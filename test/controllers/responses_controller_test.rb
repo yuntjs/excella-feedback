@@ -3,6 +3,23 @@ require 'test_helper'
 class ResponsesControllerTest < ActionController::TestCase
   include FactoryGirl::Syntax::Methods
 
+  describe '#index' do
+    it 'should show all responses' do
+    pres = create(:presentation)
+    survey = create :survey, presentation_id: pres.id
+    question = create(:question, survey_id: survey.id)
+    response1 = create(:response, question_id: question.id)
+
+    # get :index
+
+    assert_equal pres.surveys.first.questions.first.responses, [response1], "Did not return any Responses"
+
+    end
+
+  end
+
+
+
   describe '#create' do
     it 'should require neccessary validators' do
       response = build(:response, :invalid)
