@@ -1,3 +1,10 @@
-<% @responses.each do |response| %>
-<li> <%= response.value %> </li>
+<h1><%= @presentation.title %></h1>
+<% @presentation.surveys.each do |survey| %>
+  <h2><%= survey.subject %></h2>
+  <% survey.questions.each do |question| %>
+    <h5><%= question.prompt %></h5>
+    <% @responses.where(question_id: question.id).each do |response| %>
+      <p><%= response.value %></p>
+    <% end %>
+  <% end %>
 <% end %>
