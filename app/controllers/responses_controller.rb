@@ -4,6 +4,7 @@
 class ResponsesController < ApplicationController
   def index
     @presentation = Presentation.find(params[:presentation_id])
+    @responses = Response.all
   end
   #
   # New route
@@ -41,4 +42,23 @@ class ResponsesController < ApplicationController
   #
   def show
   end
+
+# private
+#   def average_score
+#     # binding.pry
+#     @feedback[:responses].values.each do |response|
+#       if response.to_i.is_a?(Integer)
+#         p "#{response.value} NUMBER++++++++++++++++++++++++++++"
+#       else
+#         p "NOT A NUMBER NOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBER"
+#       end
+#     end
+#   end
 end
+
+# array = []
+# @feedback[:responses].values.map do |response|
+#      array.push(response.to_i)
+# end
+# array.reduce(:+)/array.length
+# h.merge(h) { |k, v| Integer(v) rescue v }

@@ -4,11 +4,11 @@
   <% @surveys.each do |survey|  %>
     <h3><%= survey.subject %></h3>
 
-      <% survey.position_questions.each do |q| %>
+      <% survey.position_questions.each do |question| %>
           <% if q.response_type == "text" %>
-            <%= render 'text_form_partial', question: q %>
+            <%= render 'text_form_partial', question: question %>
           <% else %>
-            <%= render 'scale_form_partial', question: q %><br>
+            <%= render 'scale_form_partial', question: question %><br>
           <% end %>
       <% end %>
 
