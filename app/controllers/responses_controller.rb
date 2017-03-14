@@ -2,6 +2,9 @@
 # ResponsesController
 #
 class ResponsesController < ApplicationController
+  def index
+    @presentation = Presentation.find(params[:presentation_id])
+  end
   #
   # New route
   #
