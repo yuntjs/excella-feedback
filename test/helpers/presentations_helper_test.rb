@@ -13,7 +13,7 @@ class PresentationsHelperTest < ActionView::TestCase
       user_id: @user.id,
       presentation_id: @presentation_as_presenter.id,
       is_presenter: true)
-      
+
     create(:participation,
       user_id: @user.id,
       presentation_id: @presentation_as_attendee.id,

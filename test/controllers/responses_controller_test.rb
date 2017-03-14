@@ -7,7 +7,7 @@ class ResponsesControllerTest < ActionController::TestCase
   before do
     @user = create :user
     @presentation = create :presentation
-    @survey = create :survey, order: 1, subject: 'Git', presentation_id: @presentation.id
+    @survey = create :survey, position: 1, subject: 'Git', presentation_id: @presentation.id
     @questions = create_list :question, 5, :required, :number, survey_id: @survey.id
 
     sign_in @user
@@ -54,7 +54,7 @@ class ResponsesControllerTest < ActionController::TestCase
       question_value_pairs[@questions.last.id.to_s] = ''
 
       assert Response.all.empty?, 'Invalid responses created'
-      # TODO: assert_template :new not working 
+      # TODO: assert_template :new not working
     end
 
   end
