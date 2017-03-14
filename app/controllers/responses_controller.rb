@@ -19,8 +19,6 @@ class ResponsesController < ApplicationController
           end
           # binding.pry
           @data[question.id] = question_data
-        elsif question.response_type == 'text'
-          @data[question.id] = { '1': 7, '2': 6, '3': 5, '4': 4, '5': 3 }
         end
         puts "#{@data}"
       end
