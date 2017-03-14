@@ -97,4 +97,26 @@ class PresentationsHelperTest < ActionView::TestCase
       assert link_string.include?('Feedback Submitted'), 'Link does not contain "Feedback Submitted"'
     end
   end
+
+  describe '#feedback_button' do
+    it 'shows "See Feedback" button if user is presenter' do
+      link_string = feedback_button(@user, @presentation_as_presenter)
+
+      assert link_string.include?("See Feedback"), 'Link does not contain "See Feedback"'
+      assert link_string.include?(presentation_responses_path(@presentation_as_presenter)), 'Link does not include correct path'
+    end
+
+    it 'shows "See Feedback" button if admin is presenter' do
+      link_string = feedback_button(@admin, @presentation_as_admin_presenter)
+
+      assert link_string.include?("See Feedback"), 'Link does not contain "See Feedback"'
+      assert link_string.include?(presentation_responses_path(@presentation_as_admin_presenter)), 'Link does not include correct path'
+    end
+
+    it 'does not show "See Feedback" button if user is not presenter' do
+      link_string = feedback_button(@user, @presentation_as_attendee)
+
+      refute link_string.include?("See Feedback"), 'Link should not contain "See Feedback"'
+    end
+  end
 end
