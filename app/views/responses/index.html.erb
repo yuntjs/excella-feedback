@@ -1,14 +1,45 @@
-<h1><%= @presentation.title %></h1>
-<% @presentation.surveys.each do |survey| %>
-  <h2><%= survey.subject %></h2>
-  <% survey.questions.each do |question| %>
-    <h5><%= question.prompt %></h5>
-    <% if question.response_type == 'number' %>
-      <%= bar_chart(@data[question.id], max: @maximum) %>
-    <% elsif question.response_type == 'text' %>
-      <% @responses.where(question_id: question.id).each do |response| %>
-        <li><%= response.value %></li>
-      <% end %>
-    <% end %>
+<div class="container">
+
+  <%= back_button(presentation_path(@presentation)) %>
+
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3 text-center">
+      <h1>Feedback for &quot;<%= @presentation.title %>&quot;</h1>
+      <h4><strong>Location:&nbsp;</strong><%= @presentation.location %></h4>
+      <h4><strong>Date &amp; Time:&nbsp;</strong><%= display_date(@presentation.date) %></h4>
+      <div class="well">
+        <%= @presentation.description %>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
+
+  <% @presentation.surveys.each do |survey| %>
+    <div class="row">
+      <div class="col-lg-10 col-lg-offset-1 text-center">
+        <hr />
+        <h2><%= survey.subject %></h2>
+        <% survey.questions.each do |question| %>
+        <div class="panel panel-default text-left">
+          <div class="panel-heading">
+            <h5><%= question.prompt %></h5>
+          </div>
+          <% if question.response_type == 'number' %>
+          <div class="panel-body">
+            <%= bar_chart(@data[question.id], max: @maximum) %>
+          </div>
+          <% elsif question.response_type == 'text' %>
+            <ul class="list-group">
+              <% @responses.where(question_id: question.id).each do |response| %>
+                <li class="list-group-item"><%= response.value %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <!-- /.row -->
   <% end %>
-<% end %>
+
+</div>
