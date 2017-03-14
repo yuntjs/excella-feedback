@@ -47,7 +47,6 @@ module ResponsesHelper
   #
   # Provides all messages from an array as <li>
   #
-
   def render_list(messages)
     result = ''
     messages.each do |msg|
