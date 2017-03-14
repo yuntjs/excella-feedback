@@ -2,7 +2,6 @@
 # Participation model test
 #
 require 'test_helper'
-# include FactoryGirl::Syntax::Methods
 
 describe Participation do
   before do
