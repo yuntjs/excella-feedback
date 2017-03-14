@@ -113,7 +113,7 @@ module PresentationsHelper
   #
   def provide_feedback_button(user, presentation)
     participation = Participation.where(user_id: user.id, presentation_id: presentation.id).first
-
+    
     if participation.feedback_provided
       link_to 'Feedback Submitted', '#', class: 'btn btn-success disabled'
     else

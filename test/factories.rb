@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    email 'email@example.com'
+    sequence (:email) {|n| "email#{n}@example.com"}
     password 'password'
     first_name 'First'
     last_name  'Last'
@@ -30,6 +30,10 @@ FactoryGirl.define do
 
     trait :presenter do
       is_presenter true
+    end
+
+    trait :feedback_submitted do
+      feedback_provided true
     end
   end
 
