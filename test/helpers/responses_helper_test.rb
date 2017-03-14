@@ -26,4 +26,32 @@ class ResponsesHelperTest < ActionView::TestCase
 
     it 'returns false if response.value does not match value'
   end
+
+  describe '#error_class' do
+    it 'returns a css class as a string when response has an error' do
+      text = build(:response,
+        :text,
+        question_id: @text_question.id)
+      number = build(:response,
+        :number,
+        question_id: @number_question.id)
+
+      text.errors.add(:require_question)
+      number.errors.add(:require_question)
+
+      text_response = error_class(text)
+      number_response = error_class(number)
+
+      assert_equal text_response, 'has-error', 'Text response with error does not return correct css error class.'
+      assert_equal number_response, 'has-error', 'Number response with error does not return correct css error class'
+    end
+
+    it 'returns an empty string when response does not contain an error' do
+      text_response = error_class(@text_question)
+      number_response = error_class(@number_question)
+
+      assert text_response.empty?, "Does not return an empty string for a valid text response. Got: #{text_response}"
+      assert number_response.empty?, "Does not return an empty string for a valid number response. Got: #{number_response}"
+    end
+  end
 end
