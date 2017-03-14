@@ -5,6 +5,11 @@ class ResponsesController < ApplicationController
   def index
     @presentation = Presentation.find(params[:presentation_id])
     @responses = Response.all
+    data = []
+    @presentation.surveys.each do |survey|
+      survey.questions.each do |question|
+        question_data
+        @responses.where(question_id: question.id)
   end
   #
   # New route

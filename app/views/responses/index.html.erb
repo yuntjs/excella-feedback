@@ -3,6 +3,6 @@
   <h2><%= survey.subject %></h2>
   <% survey.questions.each do |question| %>
     <h5><%= question.prompt %></h5>
-    <%= bar_chart @responses.where(question_id: question.id).group(:value).count %>
+    <%= bar_chart({ "1": 0 }, @responses.where(question_id: question.id).group(:value).count) %>
   <% end %>
 <% end %>
