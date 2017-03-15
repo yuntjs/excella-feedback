@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-lg-10 col-lg-offset-1 text-center">
+    <hr />
+    <h2><%= survey.subject %></h2>
+    <% survey.questions.each do |question| %>
+    <div class="panel panel-default text-left">
+      <div class="panel-heading">
+        <h5><%= question.prompt %></h5>
+      </div>
+      <% if question.response_type == 'number' %>
+      <div class="panel-body">
+        <%= bar_chart(@data[question.id], max: @maximum) %>
+      </div>
+      <% elsif question.response_type == 'text' %>
+        <ul class="list-group">
+          <% @responses.where(question_id: question.id).each do |response| %>
+            <li class="list-group-item"><%= response.value %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>
+<!-- /.row -->
