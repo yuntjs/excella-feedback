@@ -1,4 +1,5 @@
-<div class="form-group">
-  <%= label_tag(:question, "#{question.prompt}", for:"question_#{question.id}") %>
-  <%= text_area(:question, "#{question.id}", class: "form-control") %>
+<div class="form-group <%= error_class(response) %>">
+  <%= label_tag(:response, response.question.prompt) %>
+  <%= text_area_tag("responses[question_id][#{response.question.id}]", response.value, class: 'form-control') %>
+  <%= error_messages(response) %>
 </div>

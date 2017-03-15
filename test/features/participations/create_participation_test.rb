@@ -15,6 +15,11 @@ class CreateParticipationTest < Capybara::Rails::TestCase
       pres = create(:presentation, title: "user's presentation")
       login_as(user, scope: :user)
 
+      create(:participation,
+        user_id: user.id,
+        presentation_id: pres.id
+      )
+
       visit presentation_path(pres)
       within('#participation-form-modal') do
         page.check user.full_name
@@ -31,6 +36,11 @@ class CreateParticipationTest < Capybara::Rails::TestCase
       user = create :user
       pres = create(:presentation, title: "user's presentation")
       login_as(user, scope: :user)
+
+      create(:participation,
+        user_id: user.id,
+        presentation_id: pres.id
+      )
 
       visit presentation_path(pres)
 

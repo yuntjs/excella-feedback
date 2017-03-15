@@ -18,9 +18,6 @@ class Presentation < ApplicationRecord
   def position_surveys
     surveys.sort_by(&:position)
   end
-  # def order_surveys
-  #   surveys.sort_by(&:order)
-  # end
 
   #
   # Shorten long presentation descriptions for Presentation#index

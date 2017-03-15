@@ -21,6 +21,8 @@ group :development, :test do
   gem 'minitest-spec-rails'
   gem 'pry-rails'
   gem 'rubocop'
+  gem 'rails-controller-testing'
+  gem 'launchy'
 end
 
 group :development do
@@ -29,6 +31,10 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'faker'
+end
+
+group :test do
+  gem 'm'
 end
 
 gem 'mini_racer', platforms: :ruby
