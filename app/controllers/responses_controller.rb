@@ -14,39 +14,86 @@ class ResponsesController < ApplicationController
 
   #
   # New route
+  # creates a feedback object with unsaved responses
   #
   def new
-    @presentation = Presentation.find(params[:presentation_id])
-    @surveys = @presentation.position_surveys
-    @feedback = { errors: [] }
+    set_instance_variables
+
+    @feedback.each do |survey|
+      survey[:responses] = []
+
+      survey[:questions].each do |question|
+        survey[:responses] << question.responses.new(user_id: current_user.id)
+      end
+    end
   end
 
   #
   # Create route
+  # saves valid responses, re-renders invalid submissions
   #
-  def create
-    @feedback = { responses: params[:question], errors: [] }
-    @feedback[:responses].each do |question_id, answer|
-      response = Response.new(question_id: question_id, user_id: current_user.id, value: answer)
-      unless response.save
-        @feedback[:errors] << { question_id: question_id, error_obj: response.errors }
+  def create # TODO: requires cleanup
+    set_instance_variables
+
+    @feedback.each do |survey|
+      survey[:responses] = []
+
+      survey[:questions].each do |question|
+        survey[:responses] << question.responses.new(
+          user_id: current_user.id,
+          value: response_params[:question_id]["#{question.id.to_s}"])
       end
     end
 
-    if !@feedback[:errors].empty?
-      @presentation = Presentation.find(params[:presentation_id])
-      @surveys = @presentation.position_surveys
-      render :new
+    all_valid = true
+
+    @feedback.each do |survey|
+      survey[:responses].each do |response|
+        next if response.valid?
+        all_valid = false
+      end
+    end
+
+    if all_valid
+      @feedback.each do |survey|
+        survey[:responses].each do |response|
+          response.save
+        end
+      end
+      flash[:success] = "Your responses have beeen successfully recorded."
+      participation = Participation.where(
+        user_id: current_user.id,
+        presentation_id: @presentation.id
+      ).first
+      participation.set_feedback_provided
+      redirect_to presentation_path(@presentation)
     else
-      flash[:success] = success_message(Response.new, :save)
-      redirect_to presentations_path
+      flash.now[:error] = "We ran into some errors while trying to save your responses. Please try again."
+      render :new
     end
   end
 
+  private
+
   #
-  # Show route
+  # Set and sanitize response parameters
   #
-  def show
+  def response_params
+    params.require(:responses).permit!
+  end
+
+  #
+  # Set variables to be used in routes
+  #
+  def set_instance_variables
+    @presentation = Presentation.find(params[:presentation_id])
+    @surveys = @presentation.position_surveys
+    @feedback = @surveys.map do |survey|
+      {
+      title: "#{survey.subject}",
+      questions: survey.questions
+      }
+    end
   end
 
   private

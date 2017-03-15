@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313155436) do
+ActiveRecord::Schema.define(version: 20170313182126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "participations", force: :cascade do |t|
-    t.boolean  "is_presenter",    default: false
+    t.boolean  "is_presenter",      default: false
     t.integer  "presentation_id"
     t.integer  "user_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "feedback_provided", default: false
     t.index ["user_id", "presentation_id"], name: "add_index_to_participations", unique: true, using: :btree
   end
 
@@ -38,9 +39,10 @@ ActiveRecord::Schema.define(version: 20170313155436) do
     t.integer  "survey_id"
     t.string   "prompt"
     t.string   "response_type"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "position"
+    t.boolean  "response_required", default: false
     t.index ["survey_id"], name: "index_questions_on_survey_id", using: :btree
   end
 

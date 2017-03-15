@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    email 'email@example.com'
+    sequence(:email) { |n| "email#{n}@example.com" }
     password 'password'
     first_name 'First'
     last_name  'Last'
@@ -12,7 +12,7 @@ FactoryGirl.define do
   end
 
   factory :presentation do
-    sequence(:title) { |n| "presentation#{n}" }
+    sequence(:title) { |n| "Presentation #{n}" }
     date DateTime.now
     location 'location'
     description 'description'
@@ -26,9 +26,14 @@ FactoryGirl.define do
     user
     presentation
     is_presenter false
+    feedback_provided false
 
     trait :presenter do
       is_presenter true
+    end
+
+    trait :feedback_submitted do
+      feedback_provided true
     end
   end
 
@@ -39,16 +44,40 @@ FactoryGirl.define do
   end
 
   factory :question do
+    sequence(:prompt) { |n| "Question #{n}" }
     position 1
     survey
-    prompt 'The presentation was great'
     response_type 'text'
+    response_required false
+
+    trait :text do
+      response_type 'text'
+    end
+
+    trait :number do
+      response_type 'number'
+    end
+
+    trait :optional do
+      response_required false
+    end
+
+    trait :required do
+      response_required true
+    end
   end
 
   factory :response do
     question
     user
-    value 'I responded to this question!'
+
+    trait :text do
+      value 'I responded to this question!'
+    end
+
+    trait :number do
+      value 3
+    end
 
     trait :invalid do
       question nil
