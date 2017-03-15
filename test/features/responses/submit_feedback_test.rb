@@ -27,7 +27,16 @@ class SubmitFeedbackTest < Capybara::Rails::TestCase
 
   feature 'submitting feedback' do
     scenario 'records responses if feedback submission is valid' do
-      save_and_open_page
+      Question.all.each do |question|
+        case question.response_type
+        when 'number'
+          choose("responses_question_id_#{question.id}_3")
+        when 'text'
+          fill_in("responses_question_id_#{question.id}", with: "Text")
+        else
+        end
+      end
+      click_on('Submit')
     end
   end
 end
