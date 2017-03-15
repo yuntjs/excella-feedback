@@ -43,9 +43,10 @@ module ResponsesHelper
     if response.errors.any?
       content_tag(:div,
         content_tag(:ul,
-          render_list(response.errors.full_messages)
+          render_list(response.errors.full_messages),
+          class: "error-list"
         ),
-        class: 'has-error'
+        class: 'has-error text-danger'
       )
     end
   end
