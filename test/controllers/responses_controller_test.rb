@@ -23,13 +23,12 @@ class ResponsesControllerTest < ActionController::TestCase
 
   describe '#index' do
     it 'should show all responses' do
-    pres = create(:presentation)
-    survey = create :survey, presentation_id: pres.id
-    question = create(:question, survey_id: survey.id)
-    response1 = create(:response, question_id: question.id)
+      pres = create(:presentation)
+      survey = create(:survey, presentation_id: pres.id)
+      question = create(:question, survey_id: survey.id)
+      response1 = create(:response, question_id: question.id)
 
-    # get :index
-    assert_equal pres.surveys.first.questions.first.responses, [response1], 'Did not return any Responses'
+      assert_equal pres.surveys.first.questions.first.responses, [response1], 'Did not return any Responses'
     end
   end
 
