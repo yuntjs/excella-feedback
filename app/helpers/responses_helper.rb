@@ -34,13 +34,12 @@ module ResponsesHelper
   # Add list of errors below response
   #
   def error_messages(response)
-    if response.errors.any?
-      content_tag(:div,
-                  content_tag(:ul,
-                              render_list(response.errors.full_messages),
-                              class: 'error-list'),
-                  class: 'has-error text-danger')
-    end
+    return unless response.errors.any?
+    content_tag(:div,
+                content_tag(:ul,
+                            render_list(response.errors.full_messages),
+                            class: 'error-list'),
+                class: 'has-error text-danger')
   end
 
   #
