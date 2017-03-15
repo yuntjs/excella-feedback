@@ -7,7 +7,7 @@ class ResponsesController < ApplicationController
   #
   def new
     @presentation = Presentation.find(params[:presentation_id])
-    @surveys = @presentation.order_surveys
+    @surveys = @presentation.position_surveys
     @feedback = { errors: [] }
   end
 
@@ -25,7 +25,7 @@ class ResponsesController < ApplicationController
 
     if !@feedback[:errors].empty?
       @presentation = Presentation.find(params[:presentation_id])
-      @surveys = @presentation.order_surveys
+      @surveys = @presentation.position_surveys
       render :new
     else
       flash[:success] = success_message(Response.new, :save)

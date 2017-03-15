@@ -40,6 +40,15 @@ class PresentationsControllerTest < ActionController::TestCase
   end
 
   describe '#create' do
+    it 'creates a new presentation' do
+      admin = create :user, :admin
+      create :presentation
+
+      sign_in admin
+
+      assert Presentation.first.valid?, "Presentation was not created"
+    end
+
     it 'redirects to index page if logged in' do
       user = create :user
       sign_in user

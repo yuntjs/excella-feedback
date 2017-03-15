@@ -27,6 +27,23 @@ class EditParticipationTest < Capybara::Rails::TestCase
       end
     end
 
+    scenario 'creates default survey when setting attendee to presenter' do
+      admin = create :user, :admin
+      pres = create(:presentation, title: "user's presentation")
+      part = create(:participation, user: admin, presentation: pres, is_presenter: false)
+      login_as(admin, scope: :user)
+      # Must refresh page for login_as to take effect
+      visit presentation_path(pres)
+
+      within '.attendees' do
+        click_on 'Change to Presenter'
+      end
+
+      click_on 'View Surveys'
+
+      page.must_have_content "Feedback for #{admin.full_name}"
+    end
+
     scenario 'sets presenter to attendee' do
       admin = create :user, :admin
       pres = create(:presentation, title: "user's presentation")
@@ -34,7 +51,6 @@ class EditParticipationTest < Capybara::Rails::TestCase
       login_as(admin, scope: :user)
       # Must refresh page for login_as to take effect
       visit presentation_path(pres)
-
       within '.presenters' do
         click_on 'Change to Attendee'
       end
@@ -42,6 +58,27 @@ class EditParticipationTest < Capybara::Rails::TestCase
       within '.presenters' do
         refute page.has_content? admin.email
       end
+    end
+
+    scenario 'deletes survey associated to presenter when setting presenter to attendee' do
+      admin = create :user, :admin
+      pres = create(:presentation, title: "user's presentation")
+      part = create(:participation, user: admin, presentation: pres, is_presenter: false)
+      login_as(admin, scope: :user)
+      # Must refresh page for login_as to take effect
+      visit presentation_path(pres)
+
+      within '.attendees' do
+        click_on 'Change to Presenter'
+      end
+
+      within '.presenters' do
+        click_on 'Change to Attendee'
+      end
+
+      click_on 'View Surveys'
+
+      refute page.has_content? "Feedback for #{admin.full_name}"
     end
   end
 end
