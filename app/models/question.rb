@@ -18,14 +18,13 @@ class Question < ApplicationRecord
   def self.default_presentation_questions
     questions = [
       { prompt: 'I thought this course effectively taught the subject matter.',
-        response_type: 'number'
-      }, {
-        prompt: 'I thought this course was relevant to my future projects.',
-        response_type: 'number'
-      }, {
-        prompt: 'Do you have any additional comments?',
-        response_type: 'text'
-      }
+        response_type: 'number' }, {
+          prompt: 'I thought this course was relevant to my future projects.',
+          response_type: 'number'
+        }, {
+          prompt: 'Do you have any additional comments?',
+          response_type: 'text'
+        }
     ]
   end
 
@@ -35,14 +34,13 @@ class Question < ApplicationRecord
   def self.default_presenter_questions(presenter)
     questions = [
       { prompt: "I thought #{presenter.full_name} effectively taught the subject matter.",
-        response_type: 'number'
-      }, {
-        prompt: "I thought #{presenter.full_name} answered questions effectively.",
-        response_type: 'number'
-      }, {
-        prompt: "Do you have any additional comments for #{presenter.full_name}?",
-        response_type: 'text'
-      }
+        response_type: 'number' }, {
+          prompt: "I thought #{presenter.full_name} answered questions effectively.",
+          response_type: 'number'
+        }, {
+          prompt: "Do you have any additional comments for #{presenter.full_name}?",
+          response_type: 'text'
+        }
     ]
   end
 end

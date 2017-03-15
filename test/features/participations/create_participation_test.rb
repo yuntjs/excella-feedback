@@ -16,13 +16,13 @@ class CreateParticipationTest < Capybara::Rails::TestCase
       login_as(user, scope: :user)
 
       visit presentation_path(pres)
-      within '#participation-form-modal' do
+      within('#participation-form-modal') do
         page.check user.full_name
       end
 
       find('#submit-capybara', visible: false).click
 
-      within '.attendees' do
+      within('.attendees') do
         page.must_have_content user.email
       end
     end
