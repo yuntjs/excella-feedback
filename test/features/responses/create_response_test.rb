@@ -8,7 +8,7 @@ class CreateResponseTest < Capybara::Rails::TestCase
     Warden.test_reset!
   end
 
-  feature 'Create'do
+  feature 'Create' do
     scenario 'creates a new response' do
       admin = create(:user, :admin)
       login_as(admin, scope: :user)
@@ -21,7 +21,7 @@ class CreateResponseTest < Capybara::Rails::TestCase
 
       within ('form') do
         find('.form-control')
-        fill_in "The presentation was great", :with => "No Additional comments"
+        fill_in 'The presentation was great', :with => 'No Additional comments'
         click_button 'Submit'
       end
     end
