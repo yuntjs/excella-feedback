@@ -13,40 +13,44 @@ class CreatePresentationTest < Capybara::Rails::TestCase
       admin = create :user, :admin
       login_as(admin, scope: :user)
 
-      visit root_path
+      visit(root_path)
 
-      click_on 'Create New Presentation'
+      click_on('Create New Presentation')
 
-      within ('form') do
+      within('form') do
         fill_in 'Title', with: 'Foo Bar'
         fill_in 'Location', with: 'Over there'
         fill_in 'Description', with: 'Lorem ipsum'
         click_button 'Submit'
       end
 
-      page.must_have_content 'Foo Bar'
-      page.must_have_content 'Success! Presentation has been successfully created.'
+      page.must_have_content('Foo Bar')
+      page.must_have_content('Success! Presentation has been successfully created.')
     end
 
     scenario 'creates a default survey for a new presentation' do
       admin = create :user, :admin
       login_as(admin, scope: :user)
 
-      visit root_path
+      visit(root_path)
 
-      click_on 'Create New Presentation'
+      click_on('Create New Presentation')
 
-      within ('form') do
+      within('form') do
         fill_in 'Title', with: 'Foo Bar'
         fill_in 'Location', with: 'Over there'
         fill_in 'Description', with: 'Lorem ipsum'
         click_button 'Submit'
       end
 
-      click_on 'Foo Bar'
-      click_on 'View Surveys'
+      click_on('Foo Bar')
+      click_on('View Surveys')
 
-      page.must_have_content 'Overall Presentation'
+      page.must_have_content('Overall Presentation')
+
+      click_on('Overall Presentation')
+
+      page.must_have_content('I thought this course effectively taught the subject matter.')
     end
 
     scenario 'does not create a presentation if it is invalid' do
@@ -57,7 +61,7 @@ class CreatePresentationTest < Capybara::Rails::TestCase
 
       click_on 'Create New Presentation'
 
-      within ('form') do
+      within('form') do
         fill_in 'Title', with: ''
         fill_in 'Location', with: ''
         fill_in 'Description', with: ''

@@ -27,7 +27,7 @@ class PresentationsControllerTest < ActionController::TestCase
     it 'gets only presentations for which a non-admin user is a participant' do
       user = create :user
       pres1 = create :presentation
-      pres2 = create :presentation
+      create :presentation
 
       create :participation, user: user, presentation: pres1
 
@@ -46,7 +46,7 @@ class PresentationsControllerTest < ActionController::TestCase
 
       sign_in admin
 
-      assert Presentation.first.valid?, "Presentation was not created"
+      assert Presentation.first.valid?, 'Presentation was not created'
     end
 
     it 'redirects to index page if logged in' do

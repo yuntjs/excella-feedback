@@ -37,8 +37,7 @@ class PresentationsController < ApplicationController
     @presentation = Presentation.new(presentation_params)
     if @presentation.save
       flash[:success] = success_message(@presentation, :create)
-      # Create default survey
-      create_default_presentation_survey
+      create_default_survey(@presentation)
       redirect_to presentations_path
     else
       flash.now[:error] = error_message(@presentation, :create)
@@ -105,18 +104,5 @@ class PresentationsController < ApplicationController
   #
   def set_presentation
     @presentation = Presentation.find(params[:id])
-  end
-
-  #
-  # Create default survey for presentation
-  # Default questions in Question Model
-  #
-  def create_default_presentation_survey
-    survey = @presentation.surveys.create(subject: "Overall Presentation")
-    Question.default_presentation_questions.each do |question|
-      Question.create(survey_id: survey.id,
-                   prompt: question[:prompt],
-                   response_type: question[:response_type])
-    end
   end
 end

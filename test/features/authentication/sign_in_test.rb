@@ -3,14 +3,14 @@ require 'test_helper'
 class SignInTest < Capybara::Rails::TestCase
   feature 'Sign In' do
     before do
-      visit root_path
-      click_on 'Log In'
+      visit(root_path)
+      click_on('Log In')
     end
 
     scenario 'has valid content' do
       user = create(:user)
 
-      within ('form') do
+      within('form') do
         fill_in 'Email', with: user.email
         fill_in 'Password', with: user.password
         click_button 'Log In'
@@ -22,10 +22,10 @@ class SignInTest < Capybara::Rails::TestCase
     scenario 'has invalid password' do
       user = create :user
 
-      within ('form') do
+      within('form') do
         fill_in 'Email', with: user.email
         fill_in 'Password', with: user.password + '_wrong'
-        click_button 'Log In'
+        click_button('Log In')
       end
 
       assert_equal current_path, new_user_session_path

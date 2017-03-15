@@ -34,7 +34,7 @@ FactoryGirl.define do
 
   factory :survey do
     position 1
-    subject "Git"
+    subject 'Git'
     presentation
   end
 
