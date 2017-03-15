@@ -65,8 +65,9 @@ class SubmitFeedbackTest < Capybara::Rails::TestCase
         'Page does not have error flash message'
       assert_equal Response.count, 0,
         'Response were saved after an invalid submission'
-      assert_equal current_path, new_presentation_response_path(@presentation),
+      assert_equal current_path, presentation_responses_path(@presentation),
         "Current path does not match desired path"
+      # TODO: should desired path be new_presentation_response_path instead?
     end
   end
 end

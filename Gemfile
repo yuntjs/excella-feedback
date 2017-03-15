@@ -32,4 +32,8 @@ group :development do
   gem 'faker'
 end
 
+group :test do
+  gem 'm'
+end
+
 gem 'mini_racer', platforms: :ruby
