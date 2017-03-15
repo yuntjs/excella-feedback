@@ -63,7 +63,7 @@ class SubmitFeedbackTest < Capybara::Rails::TestCase
 
       assert page.has_content?('Warning!'),
         'Page does not have an error flash message'
-      assert page.has_content?('A response is required for this question.', count: Question.count - 1),
+      assert page.has_content?('Required question - please provide a response.', count: Question.count - 1),
         'Page does not display the correct number of error messages for invalid question responses'
       assert page.has_css?('.has-error'),
         'Page does not have the "has-error" class for displaying errors'
