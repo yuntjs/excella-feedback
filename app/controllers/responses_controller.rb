@@ -2,6 +2,10 @@
 # ResponsesController
 #
 class ResponsesController < ApplicationController
+  #
+  # New route
+  # creates a feedback object with unsaved responses
+  #
   def new
     set_instance_variables
 
@@ -14,6 +18,10 @@ class ResponsesController < ApplicationController
     end
   end
 
+  #
+  # Create route
+  # saves valid responses, re-renders invalid submissions
+  #
   def create # TODO: requires cleanup
     set_instance_variables
 
@@ -70,7 +78,6 @@ class ResponsesController < ApplicationController
   def set_instance_variables
     @presentation = Presentation.find(params[:presentation_id])
     @surveys = @presentation.position_surveys
-    # @questions = Question.where(survey_id: @surveys.pluck(:id))
     @feedback = @surveys.map do |survey|
       {
       title: "#{survey.subject}",

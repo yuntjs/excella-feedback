@@ -3,12 +3,6 @@
 #
 module ResponsesHelper
   #
-  #
-  #
-  def display_survey_title(survey)
-    survey[:title]
-  end
-  #
   # Determine which partial to render based on a question's response type
   #
   def display_question(response)
