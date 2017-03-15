@@ -11,13 +11,9 @@ class ResponsesControllerTest < ActionController::TestCase
     response1 = create(:response, question_id: question.id)
 
     # get :index
-
     assert_equal pres.surveys.first.questions.first.responses, [response1], 'Did not return any Responses'
-
     end
   end
-
-
 
   describe '#create' do
     it 'should require neccessary validators' do
