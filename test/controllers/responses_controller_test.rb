@@ -12,10 +12,9 @@ class ResponsesControllerTest < ActionController::TestCase
 
     # get :index
 
-    assert_equal pres.surveys.first.questions.first.responses, [response1], "Did not return any Responses"
+    assert_equal pres.surveys.first.questions.first.responses, [response1], 'Did not return any Responses'
 
     end
-
   end
 
 
