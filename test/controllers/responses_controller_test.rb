@@ -16,8 +16,8 @@ class ResponsesControllerTest < ActionController::TestCase
   describe '#new' do
     it 'creates multiple unsaved response objects from questions for the view' do
       get :new, params: { presentation_id: @presentation.id }
-
-      assert_equal @questions.length, assigns(:responses).length
+      feedback = assigns(:feedback)
+      assert_equal @questions.length, feedback.first[:responses].length
     end
   end
 
