@@ -14,13 +14,14 @@ class CreateResponseTest < Capybara::Rails::TestCase
       login_as(admin, scope: :user)
       pres = create(:presentation, title: 'Intro to Git')
       survey = create(:survey, presentation_id: pres.id)
+      question = create(:question, survey_id: survey.id)
       visit presentation_path(pres)
 
       click_on 'Provide Feedback'
 
       within ('form') do
         find('.form-control')
-        fill_in 'The presentation was great', :with => 'No Additional comments'
+        fill_in 'The presentation was great', :with: 'No Additional comments'
         click_button 'Submit'
       end
     end
