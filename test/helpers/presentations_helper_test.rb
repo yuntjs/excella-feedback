@@ -27,10 +27,10 @@ class PresentationsHelperTest < ActionView::TestCase
       presentation_id: @presentation_as_admin_attendee.id,
       is_presenter: false)
 
-      create(:participation,
-        user_id: @admin.id,
-        presentation_id: @presentation_as_admin_presenter.id,
-        is_presenter: true)
+    create(:participation,
+      user_id: @admin.id,
+      presentation_id: @presentation_as_admin_presenter.id,
+      is_presenter: true)
   end
 
   describe '#presentations_as' do
