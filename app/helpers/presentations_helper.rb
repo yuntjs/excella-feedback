@@ -101,7 +101,7 @@ module PresentationsHelper
   # Handles if user is presenter or attendee
   #
   def feedback_button(user, presentation)
-    if user.is_presenter? presentation
+    if(user.is_presenter?(presentation) || user.is_admin)
       link_to 'See Feedback', presentation_responses_path(presentation), class: 'btn btn-success'
     else
       provide_feedback_button(user, presentation)
@@ -113,7 +113,7 @@ module PresentationsHelper
   #
   def provide_feedback_button(user, presentation)
     participation = Participation.where(user_id: user.id, presentation_id: presentation.id).first
-    
+
     if participation.feedback_provided
       link_to 'Feedback Submitted', '#', class: 'btn btn-success disabled'
     else

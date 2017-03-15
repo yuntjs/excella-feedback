@@ -11,9 +11,7 @@
       <div class="well">
         <%= @presentation.description %>
       </div>
-      <% if see_feedback_button?(current_user, @presentation) %>
         <%= feedback_button(current_user, @presentation) %>
-      <% end %>
       <hr />
     </div>
   </div>
