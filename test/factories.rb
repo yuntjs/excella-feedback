@@ -12,7 +12,7 @@ FactoryGirl.define do
   end
 
   factory :presentation do
-    sequence(:title) { |n| "presentation#{n}" }
+    sequence(:title) { |n| "Presentation #{n}" }
     date DateTime.now
     location 'location'
     description 'description'
@@ -44,9 +44,11 @@ FactoryGirl.define do
   end
 
   factory :question do
-    sequence(:prompt) { |n| "Question#{n}" }
+    sequence(:prompt) { |n| "Question #{n}" }
     position 1
     survey
+    response_type 'text'
+    response_required false
 
     trait :text do
       response_type 'text'
@@ -54,6 +56,10 @@ FactoryGirl.define do
 
     trait :number do
       response_type 'number'
+    end
+
+    trait :optional do
+      response_required false
     end
 
     trait :required do
