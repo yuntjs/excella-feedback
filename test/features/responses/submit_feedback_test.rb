@@ -27,7 +27,7 @@ class SubmitFeedbackTest < Capybara::Rails::TestCase
   end
 
   feature 'submitting feedback' do
-    scenario 'feedback submission is valid' do
+    scenario 'feedback submission is valid if all required questions are answered' do
       Question.all.each do |question|
         case question.response_type
         when 'number'
@@ -41,14 +41,14 @@ class SubmitFeedbackTest < Capybara::Rails::TestCase
       click_on('Submit')
 
       assert page.has_content?('Success!'),
-        'Page does not have success flash message'
+        'Page does not have a success flash message'
       assert_equal Response.count, Question.count,
         'The correct amount of responses were not created'
       assert_equal current_path, presentation_path(@presentation),
-        "Current path does not match desired path"
+        "The current path does not match the desired path"
     end
 
-    scenario 'feedback submission is invalid' do
+    scenario 'feedback submission is invalid if any required question are unanswered' do
       question = Question.first
 
       case question.response_type
@@ -62,11 +62,15 @@ class SubmitFeedbackTest < Capybara::Rails::TestCase
       click_on('Submit')
 
       assert page.has_content?('Warning!'),
-        'Page does not have error flash message'
+        'Page does not have an error flash message'
+      assert page.has_content?('A response is required for this question.', count: Question.count - 1),
+        'Page does not display the correct number of error messages for invalid question responses'
+      assert page.has_css?('.has-error'),
+        'Page does not have the "has-error" class for displaying errors'
       assert_equal Response.count, 0,
-        'Response were saved after an invalid submission'
+        'Responses were saved after an invalid submission'
       assert_equal current_path, presentation_responses_path(@presentation),
-        "Current path does not match desired path"
+        "The current path does not match the desired path"
       # TODO: should desired path be new_presentation_response_path instead?
     end
   end
