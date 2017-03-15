@@ -9,7 +9,7 @@
       </div>
       <% if question.response_type == 'number' %>
       <div class="panel-body">
-        <%= bar_chart(@data[question.id], max: @maximum) %>
+        <%= bar_chart(@data[question.id], max: @maximum, library: { hAxis: { title: 'Responses per Category'} }) %>
       </div>
       <% elsif question.response_type == 'text' %>
         <ul class="list-group">
