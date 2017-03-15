@@ -2,25 +2,14 @@
 # ResponsesController
 #
 class ResponsesController < ApplicationController
+  #
+  # Index route
+  #
   def index
     @presentation = Presentation.find(params[:presentation_id])
     @responses = Response.all
     # Save response data for integer responses
-    @data = {}
-    @presentation.surveys.each do |survey|
-      survey.questions.each do |question|
-        if question.response_type == 'number'
-          question_data = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 }
-          @responses.where(question_id: question.id).each do |response|
-            res_value = response.value.to_sym
-            question_data[res_value] += 1
-          end
-          @data[question.id] = question_data
-        end
-      end
-    end
-    # Set maximum chart value for chartkick
-    @maximum = @data.length
+    set_chart_data(@presentation)
   end
 
   #
@@ -60,22 +49,36 @@ class ResponsesController < ApplicationController
   def show
   end
 
-# private
-#   def average_score
-#     # binding.pry
-#     @feedback[:responses].values.each do |response|
-#       if response.to_i.is_a?(Integer)
-#         p "#{response.value} NUMBER++++++++++++++++++++++++++++"
-#       else
-#         p "NOT A NUMBER NOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBERNOT A NUMBER"
-#       end
-#     end
-#   end
-end
+  private
 
-# array = []
-# @feedback[:responses].values.map do |response|
-#      array.push(response.to_i)
-# end
-# array.reduce(:+)/array.length
-# h.merge(h) { |k, v| Integer(v) rescue v }
+  #
+  # Set data for scale (number) question charts
+  #
+  def set_chart_data(presentation)
+    @data = {}
+    presentation.surveys.each do |survey|
+      survey.questions.each do |question|
+        if question.response_type == 'number'
+          question_data = { 'Strongly Disagree': 0, 'Disagree': 0, 'Neutral': 0, 'Agree': 0, 'Strongly Agree': 0 }
+          question.responses.each do |response|
+            res_value = response.value.to_sym
+            case res_value
+            when :'1'
+              res_value = :'Strongly Disagree'
+            when :'2'
+              res_value = :'Disagree'
+            when :'3'
+              res_value = :'Neutral'
+            when :'4'
+              res_value = :'Agree'
+            when :'5'
+              res_value = :'Strongly Agree'
+            end
+            question_data[res_value] += 1
+          end
+          @data[question.id] = question_data
+        end
+      end
+    end
+  end
+end
