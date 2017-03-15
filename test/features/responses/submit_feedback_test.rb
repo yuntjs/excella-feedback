@@ -13,8 +13,8 @@ class SubmitFeedbackTest < Capybara::Rails::TestCase
     )
 
     @survey = create(:survey, presentation_id: @presentation.id)
-    create_list(:question, 5, :number, survey_id: @survey.id)
-    create_list(:question, 5, :text, survey_id: @survey.id)
+    create_list(:question, 5, :number, :required, survey_id: @survey.id)
+    create_list(:question, 5, :text, :required, survey_id: @survey.id)
 
     login_as(@user, scope: :user)
 
@@ -36,7 +36,15 @@ class SubmitFeedbackTest < Capybara::Rails::TestCase
         else
         end
       end
+
       click_on('Submit')
+
+      assert page.has_content?('Success! Your responses have beeen successfully recorded.'),
+        'Page does not have success flash message'
+      assert_equal Response.count, Question.count,
+        'The correct amount of responses were not created'
+      assert_equal current_path, presentation_path(@presentation),
+        "Current path does not match desired path"
     end
   end
 end
