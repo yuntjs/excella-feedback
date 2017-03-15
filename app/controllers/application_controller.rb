@@ -28,4 +28,24 @@ class ApplicationController < ActionController::Base
     "We ran into some errors while trying to #{action} this"\
     " #{object.class.name.downcase}. Please try again."
   end
+
+  #
+  # Create default survey and populate with default questions
+  # for either a Presentation or an individual Presenter
+  # Default questions are in Question Model
+  #
+  def create_default_survey(subject)
+    # Assign survey and questions based on subject type
+    if subject.class == Presentation
+      survey = @presentation.surveys.create(subject: "Overall Presentation")
+      questions = Question.default_presentation_questions
+    elsif subject.class == User
+      survey = Presentation.find(@participation.presentation_id).surveys.create(subject: "Feedback for #{subject.full_name}", presenter_id: subject.id)
+      questions = Question.default_presenter_questions(subject)
+    end
+    # Create default questions in new survey
+    questions.each do |question|
+      survey.questions.create(prompt: question[:prompt], response_type: question[:response_type])
+    end
+  end
 end
