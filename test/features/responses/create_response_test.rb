@@ -19,9 +19,9 @@ class CreateResponseTest < Capybara::Rails::TestCase
 
       click_on 'Provide Feedback'
 
-      within ('form') do
+      within('form') do
         find('.form-control')
-        fill_in 'The presentation was great', :with: 'No Additional comments'
+        fill_in 'The presentation was great', with: 'No Additional comments'
         click_button 'Submit'
       end
     end
