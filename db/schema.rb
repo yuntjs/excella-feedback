@@ -39,10 +39,10 @@ ActiveRecord::Schema.define(version: 20170313182126) do
     t.integer  "survey_id"
     t.string   "prompt"
     t.string   "response_type"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "position"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.boolean  "response_required", default: false
+    t.integer  "position"
     t.index ["survey_id"], name: "index_questions_on_survey_id", using: :btree
   end
 
