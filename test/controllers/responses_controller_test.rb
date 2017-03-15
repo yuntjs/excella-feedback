@@ -24,9 +24,8 @@ class ResponsesControllerTest < ActionController::TestCase
   describe '#create' do
     it 'creates responses if they are valid' do
       create(:participation,
-        user_id: @user.id,
-        presentation_id: @presentation.id
-      )
+             user_id: @user.id,
+             presentation_id: @presentation.id)
 
       question_value_pairs = {}
       @questions.each do |question|

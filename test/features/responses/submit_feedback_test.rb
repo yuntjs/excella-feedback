@@ -9,9 +9,8 @@ class SubmitFeedbackTest < Capybara::Rails::TestCase
     @user = create(:user)
     @presentation = create(:presentation)
     create(:participation,
-      user_id: @user.id,
-      presentation_id: @presentation.id
-    )
+           user_id: @user.id,
+           presentation_id: @presentation.id)
 
     @survey = create(:survey, presentation_id: @presentation.id)
     create_list(:question, 5, :number, :required, survey_id: @survey.id)
@@ -33,19 +32,18 @@ class SubmitFeedbackTest < Capybara::Rails::TestCase
         when 'number'
           choose("responses_question_id_#{question.id}_3")
         when 'text'
-          fill_in("responses_question_id_#{question.id}", with: "Text")
-        else
+          fill_in("responses_question_id_#{question.id}", with: 'Text')
         end
       end
 
       click_on('Submit')
 
       assert page.has_content?('Success!'),
-        'Page does not have a success flash message'
+             'Page does not have a success flash message'
       assert_equal Response.count, Question.count,
-        'The correct amount of responses were not created'
+                   'The correct amount of responses were not created'
       assert_equal current_path, presentation_path(@presentation),
-        "The current path does not match the desired path"
+                   'The current path does not match the desired path'
     end
 
     scenario 'feedback submission is invalid if any required question are unanswered' do
@@ -55,22 +53,21 @@ class SubmitFeedbackTest < Capybara::Rails::TestCase
       when 'number'
         choose("responses_question_id_#{question.id}_3")
       when 'text'
-        fill_in("responses_question_id_#{question.id}", with: "Text")
-      else
+        fill_in("responses_question_id_#{question.id}", with: 'Text')
       end
 
       click_on('Submit')
 
       assert page.has_content?('Warning!'),
-        'Page does not have an error flash message'
+             'Page does not have an error flash message'
       assert page.has_content?('Required question - please provide a response.', count: Question.count - 1),
-        'Page does not display the correct number of error messages for invalid question responses'
+             'Page does not display the correct number of error messages for invalid question responses'
       assert page.has_css?('.has-error'),
-        'Page does not have the "has-error" class for displaying errors'
+             'Page does not have the "has-error" class for displaying errors'
       assert_equal Response.count, 0,
-        'Responses were saved after an invalid submission'
+                   'Responses were saved after an invalid submission'
       assert_equal current_path, presentation_responses_path(@presentation),
-        "The current path does not match the desired path"
+                   'The current path does not match the desired path'
       # TODO: should desired path be new_presentation_response_path instead?
     end
   end

@@ -13,24 +13,24 @@ class PresentationsHelperTest < ActionView::TestCase
     @presentation_as_admin_presenter = create(:presentation)
 
     create(:participation,
-      user_id: @user.id,
-      presentation_id: @presentation_as_presenter.id,
-      is_presenter: true)
+           user_id: @user.id,
+           presentation_id: @presentation_as_presenter.id,
+           is_presenter: true)
 
     create(:participation,
-      user_id: @user.id,
-      presentation_id: @presentation_as_attendee.id,
-      is_presenter: false)
+           user_id: @user.id,
+           presentation_id: @presentation_as_attendee.id,
+           is_presenter: false)
 
     create(:participation,
-      user_id: @admin.id,
-      presentation_id: @presentation_as_admin_attendee.id,
-      is_presenter: false)
+           user_id: @admin.id,
+           presentation_id: @presentation_as_admin_attendee.id,
+           is_presenter: false)
 
     create(:participation,
-      user_id: @admin.id,
-      presentation_id: @presentation_as_admin_presenter.id,
-      is_presenter: true)
+           user_id: @admin.id,
+           presentation_id: @presentation_as_admin_presenter.id,
+           is_presenter: true)
   end
 
   describe '#presentations_as' do
@@ -106,10 +106,10 @@ class PresentationsHelperTest < ActionView::TestCase
     it 'shows disabled feedback button when feedback completed' do
       presentation = create(:presentation)
       create(:participation,
-        user_id: @user.id,
-        presentation_id: presentation.id,
-        is_presenter: false,
-        feedback_provided: true)
+             user_id: @user.id,
+             presentation_id: presentation.id,
+             is_presenter: false,
+             feedback_provided: true)
 
       link_string = provide_feedback_button(@user, presentation)
 
@@ -122,21 +122,21 @@ class PresentationsHelperTest < ActionView::TestCase
     it 'shows "See Feedback" button if user is presenter' do
       link_string = feedback_button(@user, @presentation_as_presenter)
 
-      assert link_string.include?("See Feedback"), 'Link does not contain "See Feedback"'
+      assert link_string.include?('See Feedback'), 'Link does not contain "See Feedback"'
       assert link_string.include?(presentation_responses_path(@presentation_as_presenter)), 'Link does not include correct path'
     end
 
     it 'shows "See Feedback" button if admin is presenter' do
       link_string = feedback_button(@admin, @presentation_as_admin_presenter)
 
-      assert link_string.include?("See Feedback"), 'Link does not contain "See Feedback"'
+      assert link_string.include?('See Feedback'), 'Link does not contain "See Feedback"'
       assert link_string.include?(presentation_responses_path(@presentation_as_admin_presenter)), 'Link does not include correct path'
     end
 
     it 'does not show "See Feedback" button if user is not presenter' do
       link_string = feedback_button(@user, @presentation_as_attendee)
 
-      refute link_string.include?("See Feedback"), 'Link should not contain "See Feedback"'
+      refute link_string.include?('See Feedback'), 'Link should not contain "See Feedback"'
     end
   end
 

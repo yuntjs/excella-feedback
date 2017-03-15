@@ -10,6 +10,6 @@ class Participation < ApplicationRecord
   #
   def set_feedback_provided
     self.feedback_provided = true
-    self.save
+    save
   end
 end

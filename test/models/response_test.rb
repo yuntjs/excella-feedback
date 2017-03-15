@@ -19,9 +19,8 @@ describe Response do
     it 'adds errors to response if it was already recorded' do
       response = create(:response)
       duplicate_response = build(:response,
-        user_id: response.user_id,
-        question_id: response.question_id
-      )
+                                 user_id: response.user_id,
+                                 question_id: response.question_id)
 
       duplicate_response.unique_response
 
@@ -38,7 +37,7 @@ describe Response do
 
     it 'passes validation if response is required but has a value' do
       question_required = create(:question, :required)
-      response = build(:response, value: "exists", question_id: question_required.id)
+      response = build(:response, value: 'exists', question_id: question_required.id)
 
       assert_nil response.require_question
     end

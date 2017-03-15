@@ -13,9 +13,8 @@ class CreateParticipationTest < Capybara::Rails::TestCase
       user = create :user, :admin
       pres = create(:presentation, title: "user's presentation")
       create(:participation,
-        user_id: user.id,
-        presentation_id: pres.id
-      )
+             user_id: user.id,
+             presentation_id: pres.id)
 
       login_as(user, scope: :user)
 
@@ -38,9 +37,8 @@ class CreateParticipationTest < Capybara::Rails::TestCase
       login_as(user, scope: :user)
 
       create(:participation,
-        user_id: user.id,
-        presentation_id: pres.id
-      )
+             user_id: user.id,
+             presentation_id: pres.id)
 
       visit presentation_path(pres)
 
