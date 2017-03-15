@@ -3,10 +3,15 @@
     <h1>Feedback for "<%= @presentation.title %>"</h1>
   </div>
 </div>
-<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
+<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 spaceMdBtm">
   <%= form_tag presentation_responses_path(@presentation), method: :post do %>
-    <% @responses.each do |response| %>
-      <%= display_question(response) %>
+  <% @feedback.each do |survey| %>
+    <h3><%= display_survey_title(survey) %></h3>
+
+    <% survey[:responses].each do |response| %>
+    <%= display_question(response) %>
+    <% end %>
+
     <% end %>
   <%= submit_tag("Submit", class: "btn btn-primary col-lg-12") %>
   <% end %>

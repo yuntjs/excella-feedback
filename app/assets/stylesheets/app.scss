@@ -1,6 +1,10 @@
 // Variables
 $light-blue: #5C86C0;
 $orange: #DC5C29;
+$small-space: 1em;
+$medium-space: 1.83em;
+$large-space: 2.6em;
+
 
 // General
 body {
@@ -8,8 +12,12 @@ body {
   font-family: "Lato","Helvetica Neue", sans-serif;
 }
 
-.spaceMdRight {
-  padding-right: 1em;
+.spaceSmRight {
+  padding-right: $small-space;
+}
+
+.spaceMdBtm {
+  padding-bottom: $medium-space;
 }
 
 

@@ -3,23 +3,23 @@
   <div class="form-control text-center">
     <%= radio_button_tag("responses[question_id][#{response.question.id}]",
       "1", scale_response_match(response, "1")) %>
-    <%= label_tag(:responses, "Strongly Disagree", class: "spaceMdRight")%>
+    <%= label_tag(:responses, "Strongly Disagree", class: "spaceSmRight")%>
 
     <%= radio_button_tag("responses[question_id][#{response.question.id}]",
       "2", scale_response_match(response, "2")) %>
-    <%= label_tag(:responses, "Disagree", class: "spaceMdRight")%>
+    <%= label_tag(:responses, "Disagree", class: "spaceSmRight")%>
 
     <%= radio_button_tag("responses[question_id][#{response.question.id}]",
       "3", scale_response_match(response, "3")) %>
-    <%= label_tag(:responses, "Neutral", class: "spaceMdRight")%>
+    <%= label_tag(:responses, "Neutral", class: "spaceSmRight")%>
 
     <%= radio_button_tag("responses[question_id][#{response.question.id}]",
       "4", scale_response_match(response, "4")) %>
-    <%= label_tag(:responses, "Agree", class: "spaceMdRight")%>
+    <%= label_tag(:responses, "Agree", class: "spaceSmRight")%>
 
     <%= radio_button_tag("responses[question_id][#{response.question.id}]",
       "5", scale_response_match(response, "5")) %>
-    <%= label_tag(:responses, "Strongly Agree", class: "spaceMdRight")%>
+    <%= label_tag(:responses, "Strongly Agree", class: "spaceSmRight")%>
   </div>
   <%= error_messages(response) %>
 </fieldset>
