@@ -22,7 +22,7 @@ body {
   padding-bottom: $medium-space;
 }
 
-li:before {
+.error-list li:before {
     content: "\e174";
     font-family: 'Glyphicons Halflings';
     font-size: 1em;

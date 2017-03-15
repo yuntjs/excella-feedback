@@ -16,7 +16,7 @@ class Response < ApplicationRecord
   def unique_response
     response = Response.where(question_id: question.id, user_id: user.id)
     return if response.empty?
-    errors.add(:unique_response, 'A response has already been submitted for this question.')
+    errors.add(:unique_response, '- a response has already been submitted for this question.')
   end
 
   #
