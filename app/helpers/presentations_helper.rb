@@ -79,10 +79,21 @@ module PresentationsHelper
       delete_link = link_to 'Delete', presentation_path(presentation), class: 'btn btn-danger', method: :delete
 
       survey_link + edit_link + delete_link
-
     else
       feedback_button(user, presentation)
     end
+  end
+
+  #
+  # Returns boolean depending on whether user should see feedback button
+  #
+  def see_feedback_button?(user, presentation)
+    participation = Participation.where(
+      user_id: user.id,
+      presentation_id: presentation.id
+    )
+
+    !user.is_admin || (user.is_admin && participation.any?)
   end
 
   #
@@ -90,8 +101,21 @@ module PresentationsHelper
   # Handles if user is presenter or attendee
   #
   def feedback_button(user, presentation)
-    if user.is_presenter? presentation
+    if(user.is_presenter?(presentation) || user.is_admin)
       link_to 'See Feedback', presentation_responses_path(presentation), class: 'btn btn-success'
+    else
+      provide_feedback_button(user, presentation)
+    end
+  end
+
+  #
+  # Display link based on whether presentation surveys have been completed
+  #
+  def provide_feedback_button(user, presentation)
+    participation = Participation.where(user_id: user.id, presentation_id: presentation.id).first
+
+    if participation.feedback_provided
+      link_to 'Feedback Submitted', '#', class: 'btn btn-success disabled'
     else
       link_to 'Provide Feedback', new_presentation_response_path(presentation), class: 'btn btn-warning'
     end

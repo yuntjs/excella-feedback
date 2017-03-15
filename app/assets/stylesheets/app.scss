@@ -1,6 +1,12 @@
 // Variables
 $light-blue: #5C86C0;
 $orange: #DC5C29;
+$red-warning: #a94442;
+
+$small-space: 1em;
+$medium-space: 1.83em;
+$large-space: 2.6em;
+
 
 // General
 body {
@@ -8,7 +14,25 @@ body {
   font-family: "Lato","Helvetica Neue", sans-serif;
 }
 
+.spaceSmRight {
+  padding-right: $small-space;
+}
 
+.spaceMdBtm {
+  padding-bottom: $medium-space;
+}
+
+.error-list li:before {
+    content: "\e174";
+    font-family: 'Glyphicons Halflings';
+    font-size: 1em;
+    color: $red-warning;
+    padding-right: .3em;
+}
+
+.error-list {
+  list-style-type: none;
+}
 
 // Navigation
 .navbar {
