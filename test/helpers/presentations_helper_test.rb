@@ -144,6 +144,8 @@ class PresentationsHelperTest < ActionView::TestCase
 
       refute link_string.include?(@see_feedback_text), "Link should not contain '#{@see_feedback_text}' "
     end
+
+
   end
 
   describe '#survey_link_for' do

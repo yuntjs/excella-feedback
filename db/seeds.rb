@@ -94,7 +94,7 @@ puts "Creating presentations, surveys, and questions..."
 presentations.each do |pres_name|
   pres = Presentation.create(
     title: pres_name,
-    date: Faker::Time.between(6.months.ago, Date.today),
+    date: Faker::Time.between(6.months.ago, Date.today + 168),
     location: locations.sample,
     description: Faker::HarryPotter.quote,
     is_published: true
