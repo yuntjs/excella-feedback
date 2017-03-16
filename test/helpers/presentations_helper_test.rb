@@ -79,22 +79,6 @@ class PresentationsHelperTest < ActionView::TestCase
     it 'tests pending...'
   end
 
-  describe '#see_feedback_button?' do
-    it 'returns true if user is not an admin' do
-      assert see_feedback_button?(@user, @presentation_as_attendee), 'Returns false for non-admin as attendee'
-      assert see_feedback_button?(@user, @presentation_as_presenter), 'Returns false for non-admin as presenter'
-    end
-
-    it 'returns true if user is an admin and involved in a presentation' do
-      assert see_feedback_button?(@admin, @presentation_as_admin_attendee), 'Returns false for admin when attendee'
-      assert see_feedback_button?(@admin, @presentation_as_admin_presenter), 'Returns false for admin when presenting'
-    end
-
-    it 'returns false if user is an admin and not invloved in a presentation' do
-      refute see_feedback_button?(@admin, @presentation_as_attendee), 'Returns true for admin when not attending presentation'
-    end
-  end
-
   describe '#provide_feedback_button' do
     it 'shows provide feedback button if feedback has not been completed' do
       link_string = provide_feedback_button(@user, @presentation_as_attendee)
