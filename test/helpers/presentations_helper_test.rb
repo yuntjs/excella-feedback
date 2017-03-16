@@ -119,6 +119,22 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#feedback_button' do
+    it 'shows disabled button before presentation start time' do
+      future_presentation = create(:presentation, :in_the_future)
+      create(:participation,
+             user_id: @user.id,
+             presentation_id: future_presentation.id,
+             is_presenter: false)
+
+      link_string = feedback_button(@user, future_presentation)
+      puts link_string
+      puts link_string.include?('See Feedback')
+      refute link_string.include?('See Feedback'), 'Link contains "See Feedback"'
+      refute link_string.include?('Feedback Submitted'), 'Link contains "Feedback Submitted"'
+      assert link_string.include?('disabled'), 'Link does not contain "disabled" css class'
+      assert link_string.include?('Available after Presentation'),'Link does not contain "Available after Presentation"'
+    end
+
     it 'shows "See Feedback" button if user is presenter' do
       link_string = feedback_button(@user, @presentation_as_presenter)
 
