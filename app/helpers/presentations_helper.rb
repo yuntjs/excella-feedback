@@ -85,18 +85,6 @@ module PresentationsHelper
   end
 
   #
-  # Returns boolean depending on whether user should see feedback button
-  #
-  def see_feedback_button?(user, presentation)
-    participation = Participation.where(
-      user_id: user.id,
-      presentation_id: presentation.id
-    )
-
-    !user.is_admin || (user.is_admin && participation.any?)
-  end
-
-  #
   # Renders provide feedback button
   # Handles if user is presenter or attendee
   #
