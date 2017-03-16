@@ -44,6 +44,7 @@ FactoryGirl.define do
   end
 
   factory :question do
+    sequence(:id) { |n| n }
     sequence(:prompt) { |n| "Question #{n}" }
     position 1
     survey
