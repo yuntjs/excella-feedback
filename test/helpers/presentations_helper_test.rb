@@ -119,6 +119,13 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#feedback_button' do
+    before do
+      @see_feedback_text = 'See Feedback'
+      @submitted_text = 'Feedback Submitted'
+      @too_early_text = 'Available after Presentation'
+      @disabled_css = 'disabled'
+
+    end
     it 'shows disabled button before presentation start time' do
       future_presentation = create(:presentation, :in_the_future)
       create(:participation,
@@ -127,18 +134,17 @@ class PresentationsHelperTest < ActionView::TestCase
              is_presenter: false)
 
       link_string = feedback_button(@user, future_presentation)
-      puts link_string
-      puts link_string.include?('See Feedback')
-      refute link_string.include?('See Feedback'), 'Link contains "See Feedback"'
-      refute link_string.include?('Feedback Submitted'), 'Link contains "Feedback Submitted"'
-      assert link_string.include?('disabled'), 'Link does not contain "disabled" css class'
-      assert link_string.include?('Available after Presentation'),'Link does not contain "Available after Presentation"'
+
+      refute link_string.include?(@see_feedback_text), "Link contains '#{@see_feedback_text}'"
+      refute link_string.include?(@submitted_text), "Link contains '#{@submitted_text}'"
+      assert link_string.include?(@disabled_css), "Link does not contain '#{@disabled_css}' css class"
+      assert link_string.include?(@too_early_text),"Link does not contain '#{@too_early_text}'"
     end
 
     it 'shows "See Feedback" button if user is presenter' do
       link_string = feedback_button(@user, @presentation_as_presenter)
 
-      assert link_string.include?('See Feedback'), 'Link does not contain "See Feedback"'
+      assert link_string.include?(@see_feedback_text), "Link does not contain '#{@see_feedback_text}'"
       assert link_string.include?(presentation_responses_path(@presentation_as_presenter)), 'Link does not include correct path'
     end
 
@@ -152,7 +158,7 @@ class PresentationsHelperTest < ActionView::TestCase
     it 'does not show "See Feedback" button if user is not presenter' do
       link_string = feedback_button(@user, @presentation_as_attendee)
 
-      refute link_string.include?('See Feedback'), 'Link should not contain "See Feedback"'
+      refute link_string.include?(@see_feedback_text), "Link should not contain '#{@see_feedback_text}' "
     end
   end
 
