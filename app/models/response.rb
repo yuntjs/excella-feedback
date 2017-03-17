@@ -16,6 +16,19 @@ class Response < ApplicationRecord
   def unique_response
     response = Response.where(question_id: question.id, user_id: user.id)
     return if response.empty?
+<<<<<<< Updated upstream
     errors.add(:unique_response, 'A response has already been submitted for this question.')
+=======
+    errors.add(:unique_response, '- a response has already been submitted for this question.')
+  end
+
+  #
+  # Check if response is required for a question
+  #
+  def require_question
+    return unless question.response_required
+    return unless value.nil? || value.empty?
+    errors.add(:required_question, '- please provide a response.')
+>>>>>>> Stashed changes
   end
 end
