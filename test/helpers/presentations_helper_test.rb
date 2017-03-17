@@ -109,20 +109,28 @@ class PresentationsHelperTest < ActionView::TestCase
       @too_early_text = 'Available after Presentation'
       @disabled_css = 'disabled'
 
-    end
-    it 'shows disabled button before presentation start time' do
-      future_presentation = create(:presentation, :in_the_future)
+      @future_presentation = create(:presentation, :in_the_future)
       create(:participation,
              user_id: @user.id,
-             presentation_id: future_presentation.id,
+             presentation_id: @future_presentation.id,
              is_presenter: false)
-
-      link_string = feedback_button(@user, future_presentation)
+    end
+    it 'shows disabled button before presentation start time' do
+      link_string = feedback_button(@user, @future_presentation)
 
       refute link_string.include?(@see_feedback_text), "Link contains '#{@see_feedback_text}'"
       refute link_string.include?(@submitted_text), "Link contains '#{@submitted_text}'"
       assert link_string.include?(@disabled_css), "Link does not contain '#{@disabled_css}' css class"
       assert link_string.include?(@too_early_text),"Link does not contain '#{@too_early_text}'"
+    end
+
+    it 'does not show any button on presentation#show before presentation start time' do
+      params[:controller] = "presentations"
+      params[:action] = "show"
+
+      link_string = feedback_button(@user, @future_presentation)
+
+      assert link_string.nil?, 'Displaying link when on presentation#show page before presentation start date'
     end
 
     it 'shows "See Feedback" button if user is presenter' do
