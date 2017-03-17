@@ -121,12 +121,12 @@ class PresentationsHelperTest < ActionView::TestCase
       refute link_string.include?(@see_feedback_text), "Link contains '#{@see_feedback_text}'"
       refute link_string.include?(@submitted_text), "Link contains '#{@submitted_text}'"
       assert link_string.include?(@disabled_css), "Link does not contain '#{@disabled_css}' css class"
-      assert link_string.include?(@too_early_text),"Link does not contain '#{@too_early_text}'"
+      assert link_string.include?(@too_early_text), "Link does not contain '#{@too_early_text}'"
     end
 
     it 'does not show any button on presentation#show before presentation start time' do
-      params[:controller] = "presentations"
-      params[:action] = "show"
+      params[:controller] = 'presentations'
+      params[:action] = 'show'
 
       link_string = feedback_button(@user, @future_presentation)
 
@@ -152,8 +152,6 @@ class PresentationsHelperTest < ActionView::TestCase
 
       refute link_string.include?(@see_feedback_text), "Link should not contain '#{@see_feedback_text}' "
     end
-
-
   end
 
   describe '#survey_link_for' do
