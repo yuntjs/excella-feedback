@@ -12,12 +12,6 @@ FactoryGirl.define do
   end
 
   factory :presentation do
-<<<<<<< Updated upstream
-    sequence(:title) { |n| "presentation#{n}"}
-    date DateTime.now
-    location "location"
-    description "description"
-=======
     sequence(:title) { |n| "Presentation #{n}" }
     date DateTime.now - 100_000
     location 'location'
@@ -26,7 +20,6 @@ FactoryGirl.define do
     trait :in_the_future do
       date DateTime.now + 100_000
     end
->>>>>>> Stashed changes
 
     trait :long_description do
       description "description description description description description description"

@@ -46,8 +46,6 @@ class PresentationsHelperTest < ActionView::TestCase
       assert_raises(ArgumentError) { presentations_as(:presenter) }
     end
   end
-<<<<<<< Updated upstream
-=======
 
   describe '#admin_table' do
     it 'tests pending...'
@@ -159,5 +157,4 @@ class PresentationsHelperTest < ActionView::TestCase
   describe '#set_participation_table' do
     it 'tests pending...'
   end
->>>>>>> Stashed changes
 end
