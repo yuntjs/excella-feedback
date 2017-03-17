@@ -104,6 +104,7 @@ class ResponsesController < ApplicationController
   def set_chart_data(presentation)
     @data = {}
     @average = {}
+
     presentation.surveys.each do |survey|
       survey.questions.each do |question|
         if question.response_type == 'number'
@@ -130,11 +131,11 @@ class ResponsesController < ApplicationController
             end
             question_data[res_value] += 1
           end
+
           @data[question.id] = question_data
           @average[question.id] = sum / question.responses.length
         end
       end
-
     end
   end
 end

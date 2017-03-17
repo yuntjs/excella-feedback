@@ -50,5 +50,19 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
         'Page does not have proper responses for text questions'
       end
     end
+
+    scenario 'average response value is shown for scale (number) responses' do
+      number_question_ids = Question.where(response_type: 'number').pluck(:id)
+
+      @controller = ResponsesController.new
+      @controller.send(:set_chart_data, @presentation)
+
+      number_question_ids.each do |question_id|
+        assert_equal(@controller.instance_variable_get(:@average)[question_id], 3,
+        'Average was not calculated properly')
+        assert page.has_content?('Average: 3'),
+        'Average was not rendered properly'
+      end
+    end
   end
 end
