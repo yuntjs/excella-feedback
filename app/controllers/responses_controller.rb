@@ -133,6 +133,7 @@ class ResponsesController < ApplicationController
           end
 
           @data[question.id] = question_data
+          return if question.responses.length == 0
           @average[question.id] = sum / question.responses.length
         end
       end
