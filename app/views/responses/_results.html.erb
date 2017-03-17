@@ -8,8 +8,9 @@
         <h5><%= question.prompt %></h5>
       </div>
       <% if question.response_type == 'number' %>
-      <div class="panel-body">
+      <div class="panel-body text-center">
         <%= bar_chart(@data[question.id], max: @maximum, library: { hAxis: { title: 'Responses per Category'} }) %>
+        <p><strong>Average: <%= @average[question.id] %></strong></p>
       </div>
       <% elsif question.response_type == 'text' %>
         <ul class="list-group">
