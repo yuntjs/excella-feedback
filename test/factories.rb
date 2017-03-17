@@ -13,12 +13,12 @@ FactoryGirl.define do
 
   factory :presentation do
     sequence(:title) { |n| "Presentation #{n}" }
-    date DateTime.now - 100000
+    date DateTime.now - 100_000
     location 'location'
     description 'description'
 
     trait :in_the_future do
-      date DateTime.now + 100000
+      date DateTime.now + 100_000
     end
 
     trait :long_description do
