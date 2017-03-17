@@ -8,11 +8,10 @@ describe Participation do
     @user = create(:user)
     @presentation = create(:presentation)
     @participation = create(:participation,
-      user_id: @user.id,
-      presentation_id: @presentation.id,
-      is_presenter: false,
-      feedback_provided: false
-    )
+                            user_id: @user.id,
+                            presentation_id: @presentation.id,
+                            is_presenter: false,
+                            feedback_provided: false)
   end
 
   describe '#set_feedback_provided' do

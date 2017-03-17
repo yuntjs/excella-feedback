@@ -8,7 +8,7 @@ class SignUpTest < Capybara::Rails::TestCase
     end
 
     scenario 'has valid content' do
-      within ('form') do
+      within('form') do
         fill_in 'Email', with: 'user@example.com'
         fill_in 'First name', with: 'First'
         fill_in 'Last name', with: 'Last'
@@ -21,7 +21,7 @@ class SignUpTest < Capybara::Rails::TestCase
     end
 
     scenario 'had invalid content' do
-      within ('form') do
+      within('form') do
         fill_in 'Email', with: 'user@example.com'
         fill_in 'First name', with: 'First'
         fill_in 'Last name', with: 'Last'

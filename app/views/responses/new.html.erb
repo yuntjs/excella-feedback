@@ -7,9 +7,8 @@
   <%= form_tag presentation_responses_path(@presentation), method: :post do %>
     <% @feedback.each do |survey| %>
     <h3><%= survey[:title] %></h3>
-
     <% survey[:responses].each do |response| %>
-    <%= display_question(response) %>
+      <%= display_question(response) %>
     <% end %>
 
     <% end %>

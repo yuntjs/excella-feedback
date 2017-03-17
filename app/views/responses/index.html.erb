@@ -1,0 +1,23 @@
+<div class="container">
+
+  <%= back_button(presentation_path(@presentation)) %>
+
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3 text-center">
+      <h1>Feedback for &quot;<%= @presentation.title %>&quot;</h1>
+      <h4><strong>Location:&nbsp;</strong><%= @presentation.location %></h4>
+      <h4><strong>Date &amp; Time:&nbsp;</strong><%= display_date(@presentation.date) %></h4>
+      <div class="well">
+        <%= @presentation.description %>
+      </div>
+      <p><i>Note: Averages are shown on a scale of 1 &ndash; 5 where 5 represents &quot;Strongly Agree&quot;</i></p>
+    </div>
+  </div>
+  <!-- /.row -->
+
+  <% @presentation.surveys.each do |survey| %>
+    <%= render 'results', survey: survey %>
+  <% end %>
+
+</div>
+<!-- /.container -->

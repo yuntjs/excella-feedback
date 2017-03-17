@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    sequence (:email) {|n| "email#{n}@example.com"}
+    sequence(:email) { |n| "email#{n}@example.com" }
     password 'password'
     first_name 'First'
     last_name  'Last'
@@ -39,11 +39,12 @@ FactoryGirl.define do
 
   factory :survey do
     position 1
-    subject "Git"
+    subject 'Git'
     presentation
   end
 
   factory :question do
+    sequence(:id) { |n| n }
     sequence(:prompt) { |n| "Question #{n}" }
     position 1
     survey

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ResponsesHelperTest < ActionView::TestCase
-
   before do
     @user = create(:user)
 
@@ -11,14 +10,14 @@ class ResponsesHelperTest < ActionView::TestCase
     @text_response = build(:response, :text, question_id: @text_question.id)
     @number_response = build(:response, :number, question_id: @number_question.id)
 
-    @error_class = "has-error"
+    @error_class = 'has-error'
 
     @invalid_text_response = build(:response,
-      :text,
-      question_id: @text_question.id)
+                                   :text,
+                                   question_id: @text_question.id)
     @invalid_number_response = build(:response,
-      :number,
-      question_id: @number_question.id)
+                                     :number,
+                                     question_id: @number_question.id)
 
     @invalid_text_response.errors.add(:require_question, :unique_response)
     @invalid_number_response.errors.add(:require_question, :unique_response)
@@ -77,12 +76,12 @@ class ResponsesHelperTest < ActionView::TestCase
 
   describe '#render_list' do
     it 'returns each message in an array as a <li> element' do
-      msg_array = ["Hello World", "Hola Mundo", "Dlrow Olleh", "Odnum Aloh"]
+      msg_array = ['Hello World', 'Hola Mundo', 'Dlrow Olleh', 'Odnum Aloh']
 
       raw_string = render_list(msg_array)
-      list_length = raw_string.split("</li>").length
+      list_length = raw_string.split('</li>').length
 
-      assert raw_string.include?("<li>"), 'does not create any <li> elements'
+      assert raw_string.include?('<li>'), 'does not create any <li> elements'
       assert_equal msg_array.length, list_length, 'does not create <li> for each message.'
     end
 
@@ -93,8 +92,8 @@ class ResponsesHelperTest < ActionView::TestCase
       raw_text_string = render_list(text_errors)
       raw_number_string = render_list(number_errors)
 
-      text_list_length = raw_text_string.split("</li>").length
-      number_list_length = raw_number_string.split("</li>").length
+      text_list_length = raw_text_string.split('</li>').length
+      number_list_length = raw_number_string.split('</li>').length
 
       assert_equal text_errors.length, text_list_length, 'Text errors do not match resulting list'
       assert_equal number_errors.length, number_list_length, 'Number errors do not match resulting list'

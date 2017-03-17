@@ -19,7 +19,7 @@ class CreateSurveyTest < Capybara::Rails::TestCase
 
       click_on 'Create New Survey'
 
-      within ('form') do
+      within('form') do
         fill_in 'Position', with: 1
         fill_in 'Subject', with: 'Testing'
         click_button 'Submit'
@@ -47,14 +47,14 @@ class CreateSurveyTest < Capybara::Rails::TestCase
 
       visit presentation_surveys_path(pres)
 
-      click_on 'Create New Survey'
+      click_on('Create New Survey')
 
-      within ('form') do
+      within('form') do
         fill_in 'Position', with: 1
         click_button 'Submit'
       end
 
-      page.must_have_content 'Warning!'
+      page.must_have_content('Warning!')
     end
   end
 end

@@ -16,7 +16,7 @@ class Survey < ApplicationRecord
 
   # TODO: remove order from schema
   def position_questions
-    self.questions.sort_by {|q| q.position}
-  #   questions.sort_by(&:order)
+    questions.sort_by(&:position)
+    #   questions.sort_by(&:order)
   end
 end
