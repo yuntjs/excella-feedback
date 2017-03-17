@@ -79,22 +79,6 @@ class PresentationsHelperTest < ActionView::TestCase
     it 'tests pending...'
   end
 
-  describe '#see_feedback_button?' do
-    it 'returns true if user is not an admin' do
-      assert see_feedback_button?(@user, @presentation_as_attendee), 'Returns false for non-admin as attendee'
-      assert see_feedback_button?(@user, @presentation_as_presenter), 'Returns false for non-admin as presenter'
-    end
-
-    it 'returns true if user is an admin and involved in a presentation' do
-      assert see_feedback_button?(@admin, @presentation_as_admin_attendee), 'Returns false for admin when attendee'
-      assert see_feedback_button?(@admin, @presentation_as_admin_presenter), 'Returns false for admin when presenting'
-    end
-
-    it 'returns false if user is an admin and not invloved in a presentation' do
-      refute see_feedback_button?(@admin, @presentation_as_attendee), 'Returns true for admin when not attending presentation'
-    end
-  end
-
   describe '#provide_feedback_button' do
     it 'shows provide feedback button if feedback has not been completed' do
       link_string = provide_feedback_button(@user, @presentation_as_attendee)
@@ -119,10 +103,40 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#feedback_button' do
+    before do
+      @see_feedback_text = 'See Feedback'
+      @submitted_text = 'Feedback Submitted'
+      @too_early_text = 'Available after Presentation'
+      @disabled_css = 'disabled'
+
+      @future_presentation = create(:presentation, :in_the_future)
+      create(:participation,
+             user_id: @user.id,
+             presentation_id: @future_presentation.id,
+             is_presenter: false)
+    end
+    it 'shows disabled button before presentation start time' do
+      link_string = feedback_button(@user, @future_presentation)
+
+      refute link_string.include?(@see_feedback_text), "Link contains '#{@see_feedback_text}'"
+      refute link_string.include?(@submitted_text), "Link contains '#{@submitted_text}'"
+      assert link_string.include?(@disabled_css), "Link does not contain '#{@disabled_css}' css class"
+      assert link_string.include?(@too_early_text),"Link does not contain '#{@too_early_text}'"
+    end
+
+    it 'does not show any button on presentation#show before presentation start time' do
+      params[:controller] = "presentations"
+      params[:action] = "show"
+
+      link_string = feedback_button(@user, @future_presentation)
+
+      assert link_string.nil?, 'Displaying link when on presentation#show page before presentation start date'
+    end
+
     it 'shows "See Feedback" button if user is presenter' do
       link_string = feedback_button(@user, @presentation_as_presenter)
 
-      assert link_string.include?('See Feedback'), 'Link does not contain "See Feedback"'
+      assert link_string.include?(@see_feedback_text), "Link does not contain '#{@see_feedback_text}'"
       assert link_string.include?(presentation_responses_path(@presentation_as_presenter)), 'Link does not include correct path'
     end
 
@@ -136,8 +150,10 @@ class PresentationsHelperTest < ActionView::TestCase
     it 'does not show "See Feedback" button if user is not presenter' do
       link_string = feedback_button(@user, @presentation_as_attendee)
 
-      refute link_string.include?('See Feedback'), 'Link should not contain "See Feedback"'
+      refute link_string.include?(@see_feedback_text), "Link should not contain '#{@see_feedback_text}' "
     end
+
+
   end
 
   describe '#survey_link_for' do
