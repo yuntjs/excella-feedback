@@ -90,7 +90,9 @@ module PresentationsHelper
   #
   def feedback_button(user, presentation)
     if (presentation.date - Time.now > 0)
-      link_to "Available after Presentation", '#', class: 'btn btn-default disabled'
+      unless params[:controller] == "presentations" && params[:action] == "show"
+          link_to "Available after Presentation", '#', class: 'btn btn-default disabled'
+      end
     elsif (user.is_presenter?(presentation) || user.is_admin)
       link_to 'See Feedback', presentation_responses_path(presentation), class: 'btn btn-success'
     else
