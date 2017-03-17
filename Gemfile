@@ -8,6 +8,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '>= 3.2'
 gem 'devise'
 gem 'acts_as_list', '~> 0.7.2'
+gem 'chartkick'
 
 group :development, :test do
   gem 'byebug', platform: :mri
@@ -20,6 +21,8 @@ group :development, :test do
   gem 'minitest-spec-rails'
   gem 'pry-rails'
   gem 'rubocop'
+  gem 'rails-controller-testing'
+  gem 'launchy'
 end
 
 group :development do
@@ -28,6 +31,10 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'faker'
+end
+
+group :test do
+  gem 'm'
 end
 
 gem 'mini_racer', platforms: :ruby

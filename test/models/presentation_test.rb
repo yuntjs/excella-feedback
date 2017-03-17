@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 include FactoryGirl::Syntax::Methods
 
 describe Presentation do
@@ -9,7 +9,7 @@ describe Presentation do
   it 'accepts a valid presentation' do
     result = @presentation.valid?
 
-    assert result, "Valid presentation was considered invalid"
+    assert result, 'Valid presentation was considered invalid'
   end
 
   it 'rejects a presentation without a title' do
@@ -17,7 +17,7 @@ describe Presentation do
 
     result = @presentation.valid?
 
-    refute result, "Accepted presentation with invalid title"
+    refute result, 'Accepted presentation with invalid title'
   end
 
   it 'rejects a presentation without a date' do
@@ -25,7 +25,7 @@ describe Presentation do
 
     result = @presentation.valid?
 
-    refute result, "Accepted presentation with invalid date"
+    refute result, 'Accepted presentation with invalid date'
   end
 
   it 'rejects a presentation without a location' do
@@ -33,24 +33,23 @@ describe Presentation do
 
     result = @presentation.valid?
 
-    refute result, "Accepted presentation with invalid location"
+    refute result, 'Accepted presentation with invalid location'
   end
 
-
-  describe "#order_surveys" do
+  describe '#position_surveys' do
     before do
       @presentation2 = create(:presentation)
     end
 
-    it "orders a presentation's surveys from 0 to n" do
-      survey3 = create(:survey, presentation_id: @presentation2.id, order:2)
-      survey1 = create(:survey, presentation_id: @presentation2.id, order:0)
-      survey2 = create(:survey, presentation_id: @presentation2.id, order:1)
+    it "positions a presentation's surveys from 0 to n" do
+      survey3 = create(:survey, presentation_id: @presentation2.id, position: 3)
+      survey1 = create(:survey, presentation_id: @presentation2.id, position: 1)
+      survey2 = create(:survey, presentation_id: @presentation2.id, position: 2)
 
-      expected_order = [survey1, survey2, survey3]
-      actual_order = @presentation2.order_surveys
+      expected_position = [survey1, survey2, survey3]
+      actual_position = @presentation2.position_surveys
 
-      assert_equal expected_order, actual_order, "Array not ordered correctly"
+      assert_equal expected_position, actual_position, 'Array not positioned correctly'
     end
   end
 

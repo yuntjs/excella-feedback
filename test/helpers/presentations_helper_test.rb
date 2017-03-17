@@ -5,20 +5,32 @@ class PresentationsHelperTest < ActionView::TestCase
 
   before do
     @user = create(:user)
+    @admin = create(:user, :admin)
 
     @presentation_as_presenter = create(:presentation)
     @presentation_as_attendee = create(:presentation)
+    @presentation_as_admin_attendee = create(:presentation)
+    @presentation_as_admin_presenter = create(:presentation)
 
     create(:participation,
-      user_id: @user.id,
-      presentation_id: @presentation_as_presenter.id,
-      is_presenter: true
-    )
+           user_id: @user.id,
+           presentation_id: @presentation_as_presenter.id,
+           is_presenter: true)
+
     create(:participation,
-      user_id: @user.id,
-      presentation_id: @presentation_as_attendee.id,
-      is_presenter: false
-    )
+           user_id: @user.id,
+           presentation_id: @presentation_as_attendee.id,
+           is_presenter: false)
+
+    create(:participation,
+           user_id: @admin.id,
+           presentation_id: @presentation_as_admin_attendee.id,
+           is_presenter: false)
+
+    create(:participation,
+           user_id: @admin.id,
+           presentation_id: @presentation_as_admin_presenter.id,
+           is_presenter: true)
   end
 
   describe '#presentations_as' do

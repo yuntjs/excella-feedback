@@ -15,7 +15,8 @@ class Survey < ApplicationRecord
   validates :subject, presence: true
 
   # TODO: remove order from schema
-  def order_questions
-    questions.sort_by(&:order)
+  def position_questions
+    questions.sort_by(&:position)
+    #   questions.sort_by(&:order)
   end
 end

@@ -1,17 +1,17 @@
-<h1>Feedback for <%= @presentation.title %></h1>
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <h1>Feedback for "<%= @presentation.title %>"</h1>
+  </div>
+</div>
+<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 spaceMdBtm">
+  <%= form_tag presentation_responses_path(@presentation), method: :post do %>
+    <% @feedback.each do |survey| %>
+    <h3><%= survey[:title] %></h3>
+    <% survey[:responses].each do |response| %>
+      <%= display_question(response) %>
+    <% end %>
 
-<%= form_tag(presentation_responses_path(@presentation), method: 'post') do |f|%>
-  <% @surveys.each do |survey|  %>
-    <h3><%= survey.subject %></h3>
-
-      <% survey.order_questions.each do |q| %>
-          <% if q.response_type == "text" %>
-            <%= render 'text_form_partial', question: q %>
-          <% else %>
-            <%= render 'scale_form_partial', question: q %><br>
-          <% end %>
-      <% end %>
-
+    <% end %>
+  <%= submit_tag("Submit", class: "btn btn-primary col-lg-12") %>
   <% end %>
-  <%= submit_tag("Submit") %>
-<% end %>
+</div>

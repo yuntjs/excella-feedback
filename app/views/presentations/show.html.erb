@@ -5,13 +5,13 @@
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3 text-center">
       <%= presentation_admin_options(current_user, @presentation) %>
-      <h1><%= @presentation.title.capitalize %></h1>
+      <h1><%= @presentation.title %></h1>
       <h4><strong>Location:&nbsp;</strong><%= @presentation.location %></h4>
       <h4><strong>Date &amp; Time:&nbsp;</strong><%= display_date(@presentation.date) %></h4>
       <div class="well">
         <%= @presentation.description %>
       </div>
-      <%= feedback_button(current_user, @presentation) %>
+        <%= feedback_button(current_user, @presentation) %>
       <hr />
     </div>
   </div>

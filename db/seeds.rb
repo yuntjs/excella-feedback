@@ -94,29 +94,31 @@ puts "Creating presentations, surveys, and questions..."
 presentations.each do |pres_name|
   pres = Presentation.create(
     title: pres_name,
-    date: Faker::Time.between(6.months.ago, Date.today),
+    date: Faker::Time.between(6.months.ago, Faker::Time.forward(168)),
     location: locations.sample,
     description: Faker::HarryPotter.quote,
     is_published: true
   )
   surveys.each_with_index do |survey_name, index|
     survey = pres.surveys.create(
-      order: index,
+      position: index,
       subject: survey_name
     )
     number_questions.each_with_index do |question, index|
       ques = survey.questions.create(
-        order: index,
+        position: index,
         prompt: question,
-        response_type: 'number'
+        response_type: 'number',
+        response_required: true
       )
       ques.save
     end
     text_questions.each_with_index do |question, index|
       ques = survey.questions.create(
-        order: index + number_questions.length,
+        position: index + number_questions.length,
         prompt: question,
-        response_type: 'text'
+        response_type: 'text',
+        response_required: false
       )
       ques.save
     end
