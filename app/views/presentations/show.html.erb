@@ -21,13 +21,11 @@
     <div class="col-lg-8 col-lg-offset-2">
 
       <%= participation_table(
-        user: current_user,
         role: :presenter,
         participations: @presenters
       ) %>
 
       <%= participation_table(
-        user: current_user,
         role: :attendee,
         participations: @attendees
       ) %>

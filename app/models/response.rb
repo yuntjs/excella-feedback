@@ -24,7 +24,7 @@ class Response < ApplicationRecord
   #
   def require_question
     return unless question.response_required
-    return unless value.nil? || value.empty?
+    return unless value.nil? || value&.empty?
     errors.add(:required_question, '- please provide a response.')
   end
 end
