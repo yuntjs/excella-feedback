@@ -92,16 +92,14 @@ module PresentationsHelper
   # Determine if user is an attendee (versus presenter or admin)
   #
   def user_is_not_attendee?(user, presentation)
-    return true if user.is_presenter?(presentation) || user.is_admin
-    false
+    user.is_presenter?(presentation) || user.is_admin
   end
 
   #
   # Determine if a presentation is set in the future
   #
   def is_in_future?(presentation)
-    return true if (presentation.date - Time.now).positive?
-    false
+    (presentation.date - Time.now).positive?
   end
 
   #
