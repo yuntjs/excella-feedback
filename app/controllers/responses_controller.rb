@@ -3,7 +3,7 @@
 #
 class ResponsesController < ApplicationController
   #
-  # Index
+  # Render response data
   #
   def index
     @presentation = Presentation.find(params[:presentation_id])
@@ -13,21 +13,19 @@ class ResponsesController < ApplicationController
   end
 
   #
-  # New
-  # Creates a feedback object with unsaved responses
+  # Create a feedback object with unsaved responses
   #
   def new
     set_instance_variables
-    @feedback.set_responses(user: current_user)
+    @feedback.set_responses
   end
 
   #
-  # Create
-  # Saves valid responses, re-renders invalid submissions
+  # Save valid feedback & re-render invalid feedback
   #
   def create
     set_instance_variables
-    @feedback.set_responses(user: current_user, responses: response_params)
+    @feedback.set_responses(form_inputs: response_params[:question_id])
 
     if @feedback.valid?
       @feedback.save

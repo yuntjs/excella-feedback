@@ -1,14 +1,21 @@
 #
 # Feedback PORO
-# A feedback object is a wrapper for a given user's feedback submission
+# A feedback object is essentially  wrapper for a given user's feedback submission
 #
 class Feedback
-  attr_reader :user, :feedback
+  #
+  # :user is the User that provided the feedback
+  # :survey_data is an array of objects that stores survey titles, questions, & responses
+  #
+  attr_reader :user, :survey_data
 
+  #
+  # Set user, then create survey_data array from provided surveys
+  #
   def initialize(user, surveys)
     @user = user
 
-    @feedback = surveys.map do |survey|
+    @survey_data = surveys.map do |survey|
       {
       title: "#{survey.subject}",
       questions: survey.questions
@@ -16,31 +23,52 @@ class Feedback
     end
   end
 
-  def set_responses(responses: nil)
-    @feedback.each do |survey_info|
+  def responses
+    resps = []
+
+    @survey_data.each do |survey|
+      resps << survey[:responses]
+    end
+
+    resps.flatten
+  end
+
+  #
+  # Create unsaved responses from form inputs
+  #
+  def set_responses(form_inputs: nil)
+    @survey_data.each do |survey|
       survey[:responses] = survey[:questions].map do |question|
-        response = question.responses.new
+        value = form_inputs ? form_inputs[question.id.to_s] : nil
 
-        response.user_id = @user.id
-        response.value = responses.try(:question_id).try("#{question.id.to_s}")
-
-        response
+        question.responses.new(
+          user_id: @user.id,
+          value: value
+        )
       end
     end
   end
 
+  #
+  # Checks whether feedback is valid by checking if all responses are valid
+  #
   def valid?
-    @feedbacks.each do |survey_info|
+    all_valid = true
+
+    @survey_data.each do |survey|
       survey[:responses].each do |response|
-        return false unless response.valid?
+        all_valid = false if response.invalid?
       end
     end
 
-    true
+    all_valid
   end
 
+  #
+  # Saves all responses in survey_data
+  #
   def save
-    @feedbacks.each do |survey_info|
+    @survey_data.each do |survey|
       survey[:responses].each do |response|
         response.save
       end
