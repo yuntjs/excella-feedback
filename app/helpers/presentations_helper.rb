@@ -39,8 +39,9 @@ module PresentationsHelper
   #
   # Sets value for header of feedback (right-most) column in Presentation index tables
   #
-  def feedback_header(user)
-    user.is_admin ? 'Admin' : 'Feedback'
+  def feedback_header(title)
+    return 'Feedback' if title == 'As Presenter' || title == 'As Attendee'
+    'Admin'
   end
 
   #
