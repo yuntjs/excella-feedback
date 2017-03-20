@@ -3,7 +3,7 @@
 #
 class ResponsesController < ApplicationController
   #
-  # Index route
+  # Index
   #
   def index
     @presentation = Presentation.find(params[:presentation_id])
@@ -13,33 +13,29 @@ class ResponsesController < ApplicationController
   end
 
   #
-  # New route
-  # creates a feedback object with unsaved responses
+  # New
+  # Creates a feedback object with unsaved responses
   #
   def new
     set_instance_variables
 
     @feedback.each do |survey|
-      survey[:responses] = []
-
-      survey[:questions].each do |question|
-        survey[:responses] << question.responses.new(user_id: current_user.id)
+      survey[:responses] = survey[:questions].map do |question|
+        question.responses.new(user_id: current_user.id)
       end
     end
   end
 
   #
-  # Create route
-  # saves valid responses, re-renders invalid submissions
+  # Create
+  # Saves valid responses, re-renders invalid submissions
   #
   def create # TODO: requires cleanup
     set_instance_variables
 
     @feedback.each do |survey|
-      survey[:responses] = []
-
-      survey[:questions].each do |question|
-        survey[:responses] << question.responses.new(
+      survey[:responses] = survey[:questions].map do |question|
+        question.responses.new(
           user_id: current_user.id,
           value: response_params[:question_id]["#{question.id.to_s}"])
       end
