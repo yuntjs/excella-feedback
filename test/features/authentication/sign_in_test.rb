@@ -4,7 +4,9 @@ class SignInTest < Capybara::Rails::TestCase
   feature 'Sign In' do
     before do
       visit(root_path)
-      click_on('Log In')
+      within('nav') do
+        click_on('Log In')
+      end
     end
 
     scenario 'has valid content' do
