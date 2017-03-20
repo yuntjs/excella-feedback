@@ -9,6 +9,8 @@ Metrics/LineLength:
   Enabled: false
 ClassLength:
   Max: 200
+ModuleLength:
+  Max: 200
 Style/PredicateName:
   Enabled: false
 Style/FrozenStringLiteralComment:

@@ -15,19 +15,15 @@ module PresentationsHelper
       return Presentation.none
     end
 
-    Presentation.joins(:users, :participations).where(
-      users: { id: user.id },
-      participations: { is_presenter: is_presenter }
-    ).distinct
+    Presentation.joins(:users, :participations).where(users: { id: user.id }, participations: { is_presenter: is_presenter }).distinct
   end
 
   #
   # Renders partial of Presentation table for admin users
   #
   def admin_table(user)
-    if user.is_admin
-      render partial: 'presentations/presentation_table', locals: { title: 'As Admin', presentations: @presentations, feedback_message: nil, panel_color: 'panel-warning' }
-    end
+    return unless user.is_admin
+    render partial: 'presentations/presentation_table', locals: { title: 'As Admin', presentations: @presentations, feedback_message: nil, panel_color: 'panel-warning' }
   end
 
   #
@@ -36,9 +32,8 @@ module PresentationsHelper
   #
   def general_user_table(user:, role:, title:, feedback_message:)
     panel_color = role == :presenter ? 'panel-info' : 'panel-default'
-    if presentations_as(role, user).any?
-      render partial: 'presentations/presentation_table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message, panel_color: panel_color }
-    end
+    return unless presentations_as(role, user).any?
+    render partial: 'presentations/presentation_table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message, panel_color: panel_color }
   end
 
   #
@@ -54,13 +49,7 @@ module PresentationsHelper
   def display_description(presentation)
     if presentation.description.length > 30
       description = content_tag(:span, presentation.description_short(30))
-      view_link = content_tag(:a, '(more)', tabindex: '0', role: 'button',
-                                            data: {
-                                              toggle: 'popover',
-                                              placement: 'bottom',
-                                              trigger: 'focus',
-                                              content: presentation.description
-                                            })
+      view_link = content_tag(:a, '(more)', tabindex: '0', role: 'button', data: { toggle: 'popover', placement: 'bottom', trigger: 'focus', content: presentation.description })
       description + view_link
     else
       presentation.description
@@ -71,7 +60,7 @@ module PresentationsHelper
   # Sets variables for Presentation feedback options/links
   # Handles differences between admin, presenter, and/or attendee users
   #
-  def feedback_content(user:, presentation:, feedback_message:)
+  def feedback_content(user:, presentation:)
     if user.is_admin
       survey_link = survey_link_for(presentation)
       edit_link = link_to 'Edit', edit_presentation_path(presentation), class: 'btn btn-primary'
@@ -84,19 +73,51 @@ module PresentationsHelper
   end
 
   #
-  # Renders provide feedback button
-  # Handles if user is presenter or attendee
+  # Handles params for feedback button
   #
   def feedback_button(user, presentation)
-    if (presentation.date - Time.now).positive?
-      unless params[:controller] == 'presentations' && params[:action] == 'show'
-        link_to 'Available after Presentation', '#', class: 'btn btn-default disabled'
-      end
-    elsif user.is_presenter?(presentation) || user.is_admin
-      link_to 'See Feedback', presentation_responses_path(presentation), class: 'btn btn-success'
+    if is_in_future?(presentation)
+      return if params[:controller] == 'presentations' && params[:action] == 'show'
+      build_feedback_button('Available after Presentation', '#', 'btn btn-default disabled')
+    elsif user_is_not_attendee?(user, presentation)
+      build_feedback_button('See Feedback', presentation_responses_path(presentation), 'btn btn-success')
+    elsif has_provided_feedback?(user, presentation)
+      build_feedback_button('Feedback Submitted', '#', 'btn btn-success disabled')
     else
-      provide_feedback_button(user, presentation)
+      build_feedback_button('Provide Feedback', new_presentation_response_path(presentation), 'btn btn-warning')
     end
+  end
+
+  #
+  # Determine if user is an attendee (versus presenter or admin)
+  #
+  def user_is_not_attendee?(user, presentation)
+    return true if user.is_presenter?(presentation) || user.is_admin
+    false
+  end
+
+  #
+  # Determine if a presentation is set in the future
+  #
+  def is_in_future?(presentation)
+    return true if (presentation.date - Time.now).positive?
+    false
+  end
+
+  #
+  # Check if a user has provided feedback for a given presentation
+  #
+  def has_provided_feedback?(user, presentation)
+    participation = Participation.where(user_id: user.id, presentation_id: presentation.id).first
+    return unless participation.valid?
+    participation.feedback_provided
+  end
+
+  #
+  # Renders button for feedback based on params passed from feedback_button
+  #
+  def build_feedback_button(link_text, path, link_class)
+    link_to link_text, path, class: link_class
   end
 
   #
