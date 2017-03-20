@@ -55,13 +55,12 @@ module PresentationsHelper
     if presentation.description.length > 30
       description = content_tag(:span, presentation.description_short(30))
       view_link = content_tag(:a, '(more)', tabindex: '0', role: 'button',
-        data: {
-          toggle: 'popover',
-          placement: 'bottom',
-          trigger: 'focus',
-          content: presentation.description
-        }
-      )
+                                            data: {
+                                              toggle: 'popover',
+                                              placement: 'bottom',
+                                              trigger: 'focus',
+                                              content: presentation.description
+                                            })
       description + view_link
     else
       presentation.description
@@ -89,11 +88,11 @@ module PresentationsHelper
   # Handles if user is presenter or attendee
   #
   def feedback_button(user, presentation)
-    if (presentation.date - Time.now > 0)
-      unless params[:controller] == "presentations" && params[:action] == "show"
-          link_to "Available after Presentation", '#', class: 'btn btn-default disabled'
+    if (presentation.date - Time.now).positive?
+      unless params[:controller] == 'presentations' && params[:action] == 'show'
+        link_to 'Available after Presentation', '#', class: 'btn btn-default disabled'
       end
-    elsif (user.is_presenter?(presentation) || user.is_admin)
+    elsif user.is_presenter?(presentation) || user.is_admin
       link_to 'See Feedback', presentation_responses_path(presentation), class: 'btn btn-success'
     else
       provide_feedback_button(user, presentation)
@@ -129,19 +128,14 @@ module PresentationsHelper
   # Renders options/links for Presentation show page
   #
   def presentation_admin_options(user, presentation)
-    if user.is_admin
-      content_tag :div, class: 'admin-options' do
-        edit_details_link = link_to 'Edit Details', edit_presentation_path(presentation), class: 'btn btn-primary'
-        edit_participants_link = content_tag :button, 'Edit Participants', class: 'btn btn-primary',
-          data: {
-            toggle: 'modal',
-            target: '.bs-example-modal-sm'
-          }
-        view_surveys_link = link_to 'View Surveys', presentation_surveys_path(presentation), class: 'btn btn-primary'
-        delete_link = link_to 'Delete', presentation_path(presentation), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }
+    return unless user.is_admin
+    content_tag :div, class: 'admin-options' do
+      edit_details_link = link_to 'Edit Details', edit_presentation_path(presentation), class: 'btn btn-primary'
+      edit_participants_link = content_tag :button, 'Edit Participants', class: 'btn btn-primary', data: { toggle: 'modal', target: '.bs-example-modal-sm' }
+      view_surveys_link = link_to 'View Surveys', presentation_surveys_path(presentation), class: 'btn btn-primary'
+      delete_link = link_to 'Delete', presentation_path(presentation), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }
 
-        edit_details_link + edit_participants_link + view_surveys_link + delete_link
-      end
+      edit_details_link + edit_participants_link + view_surveys_link + delete_link
     end
   end
 
@@ -149,7 +143,7 @@ module PresentationsHelper
   # Renders partial of Participation table
   # Handles if user is presenter or attendee
   #
-  def participation_table(user:, role:, participations:)
+  def participation_table(role:, participations:)
     panel_color = role == :presenter ? 'panel-info' : 'panel-default'
     render partial: 'presentations/participation_table', locals: {
       title: set_participation_title(role, participations),

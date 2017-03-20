@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   # Protect admin-only paths
   #
   def authenticate_admin
-    return if current_user && current_user.is_admin
+    return if current_user&.is_admin
     redirect_to presentations_path
   end
 
