@@ -6,3 +6,5 @@ AllCops:
     - script/**
 Metrics/LineLength:
   Enabled: false
+ClassLength:
+  Max: 200
