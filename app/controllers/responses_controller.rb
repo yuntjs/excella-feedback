@@ -25,16 +25,12 @@ class ResponsesController < ApplicationController
   #
   def create
     set_instance_variables
-    @feedback.set_responses(form_inputs: response_params[:question_id])
+    @feedback.set_responses(form_input: response_params[:question_id])
 
     if @feedback.valid?
       @feedback.save
       flash[:success] = "Your responses have beeen successfully recorded."
-      participation = Participation.where(
-        user_id: current_user.id,
-        presentation_id: @presentation.id
-      ).first
-      participation.set_feedback_provided
+      mark_participation(@presentation)
       redirect_to presentation_path(@presentation)
     else
       flash.now[:error] = 'We ran into some errors while trying to save your responses. Please try again.'
@@ -58,6 +54,18 @@ class ResponsesController < ApplicationController
     @presentation = Presentation.find(params[:presentation_id])
     @surveys = @presentation.position_surveys
     @feedback = Feedback.new(current_user, @surveys)
+  end
+
+  #
+  # Find participation & set feedback as provided
+  #
+  def mark_participation(presentation)
+    participation = Participation.where(
+      user_id: current_user.id,
+      presentation_id: presentation.id
+    ).first
+
+    participation.set_feedback_provided
   end
 
   #
