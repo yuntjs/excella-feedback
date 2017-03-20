@@ -59,7 +59,7 @@ class ResponsesController < ApplicationController
   def set_instance_variables
     @presentation = Presentation.find(params[:presentation_id])
     @surveys = @presentation.position_surveys
-    @feedback = Feedback.new(@surveys)
+    @feedback = Feedback.new(current_user, @surveys)
   end
 
   #

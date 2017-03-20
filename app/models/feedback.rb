@@ -1,14 +1,14 @@
 #
 # Feedback PORO
-# A feedback object is just an object that holds multiple surveys
+# A feedback object is a wrapper for a given user's feedback submission
 #
 class Feedback
-  attr_reader :surveys
+  attr_reader :user, :feedback
 
-  def initialize(surveys)
-    @surveys = surveys
+  def initialize(user, surveys)
+    @user = user
 
-    @surveys = @surveys.map do |survey|
+    @feedback = surveys.map do |survey|
       {
       title: "#{survey.subject}",
       questions: survey.questions
@@ -16,12 +16,12 @@ class Feedback
     end
   end
 
-  def set_responses(user: nil, responses: nil)
-    @surveys.each do |survey|
+  def set_responses(responses: nil)
+    @feedback.each do |survey_info|
       survey[:responses] = survey[:questions].map do |question|
         response = question.responses.new
 
-        response.user_id = user&.id
+        response.user_id = @user.id
         response.value = responses.try(:question_id).try("#{question.id.to_s}")
 
         response
@@ -30,7 +30,7 @@ class Feedback
   end
 
   def valid?
-    @surveys.each do |survey|
+    @feedbacks.each do |survey_info|
       survey[:responses].each do |response|
         return false unless response.valid?
       end
@@ -40,7 +40,7 @@ class Feedback
   end
 
   def save
-    @surveys.each do |survey|
+    @feedbacks.each do |survey_info|
       survey[:responses].each do |response|
         response.save
       end
