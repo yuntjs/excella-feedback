@@ -15,7 +15,7 @@
       <% elsif question.response_type == 'text' %>
         <ul class="list-group">
           <% @responses.where(question_id: question.id).each do |response| %>
-            <li class="list-group-item"><%= response.value %></li>
+            <%= render_comment(response) %>
           <% end %>
         </ul>
       <% end %>
