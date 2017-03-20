@@ -3,9 +3,6 @@
 # Wraps a user's feedback submission into one object
 #
 class Feedback
-  #
-  # Provide outside read access to user & survey_data
-  #
   attr_reader :user, :survey_data
 
   #
