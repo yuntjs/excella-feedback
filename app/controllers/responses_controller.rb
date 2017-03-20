@@ -18,44 +18,19 @@ class ResponsesController < ApplicationController
   #
   def new
     set_instance_variables
-
-    @feedback.each do |survey|
-      survey[:responses] = survey[:questions].map do |question|
-        question.responses.new(user_id: current_user.id)
-      end
-    end
+    @feedback.set_responses(user: current_user)
   end
 
   #
   # Create
   # Saves valid responses, re-renders invalid submissions
   #
-  def create # TODO: requires cleanup
+  def create
     set_instance_variables
+    @feedback.set_responses(user: current_user, responses: response_params)
 
-    @feedback.each do |survey|
-      survey[:responses] = survey[:questions].map do |question|
-        question.responses.new(
-          user_id: current_user.id,
-          value: response_params[:question_id]["#{question.id.to_s}"])
-      end
-    end
-
-    all_valid = true
-
-    @feedback.each do |survey|
-      survey[:responses].each do |response|
-        next if response.valid?
-        all_valid = false
-      end
-    end
-
-    if all_valid
-      @feedback.each do |survey|
-        survey[:responses].each do |response|
-          response.save
-        end
-      end
+    if @feedback.valid?
+      @feedback.save
       flash[:success] = "Your responses have beeen successfully recorded."
       participation = Participation.where(
         user_id: current_user.id,
@@ -84,15 +59,8 @@ class ResponsesController < ApplicationController
   def set_instance_variables
     @presentation = Presentation.find(params[:presentation_id])
     @surveys = @presentation.position_surveys
-    @feedback = @surveys.map do |survey|
-      {
-      title: "#{survey.subject}",
-      questions: survey.questions
-      }
-    end
+    @feedback = Feedback.new(@surveys)
   end
-
-  private
 
   #
   # Set data for scale (number) question charts
