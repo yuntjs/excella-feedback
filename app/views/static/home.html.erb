@@ -10,7 +10,12 @@
           that allows organizers to improve their content for future classes. As we all know,
           you can't improve what you don't measure!
         </p>
+        <% if current_user %>
         <p><%= link_to "View Presentations", presentations_path, class: "btn btn-primary btn-lg" %></p>
+        <% else %>
+        <p><%= link_to "Log In", new_user_session_path, class: "btn btn-primary btn-lg" %></p>
+        <i>Don't have a profile? <%= link_to "Sign Up", new_user_registration_path %></i>
+        <% end %>
       </div>
     </div>
   </div>

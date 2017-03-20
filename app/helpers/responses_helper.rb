@@ -52,4 +52,12 @@ module ResponsesHelper
     end
     result.html_safe
   end
+
+  #
+  # Renders response to text question
+  #
+  def render_comment(response)
+    return if response.value.empty?
+    content_tag(:li, response.value, class: 'list-group-item')
+  end
 end

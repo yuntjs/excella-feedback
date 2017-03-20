@@ -10,17 +10,17 @@
           <th class="col-md-2">Date</th>
           <th class="col-md-1">Location</th>
           <th class="col-md-3">Description</th>
-          <th class="col-md-3"><%= feedback_header(current_user) %></th>
+          <th class="col-md-3"><%= feedback_header(title) %></th>
         </tr>
-        <% presentations.each do |pre| %>
+        <% presentations.each do |presentation| %>
         <tr>
-          <td><%= link_to pre.title, pre %></td>
-          <td><%= display_date(pre.date) %></td>
-          <td><%= pre.location %></td>
-          <td><%= display_description(pre) %></td>
+          <td><%= link_to presentation.title, presentation %></td>
+          <td><%= display_date(presentation.date) %></td>
+          <td><%= presentation.location %></td>
+          <td><%= display_description(presentation) %></td>
           <td><%= feedback_content(
                 user: current_user,
-                presentation: pre
+                presentation: presentation
               ) %></td>
         </tr>
         <% end %>
