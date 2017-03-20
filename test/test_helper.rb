@@ -4,6 +4,9 @@ require 'rails/test_help'
 require 'minitest/spec'
 require 'minitest/reporters'
 
+# Add FactoryGirl methods
+include FactoryGirl::Syntax::Methods
+
 # To add Capybara feature tests add `gem 'minitest-rails-capybara'`
 # to the test group in the Gemfile and uncomment the following:
 require 'minitest/rails/capybara'
@@ -19,10 +22,5 @@ module ActiveSupport
   end
 end
 
-module Minitest
-  class Spec
-    include FactoryGirl::Syntax::Methods
-  end
-end
 
 Minitest::Reporters.use!

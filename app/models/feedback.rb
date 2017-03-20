@@ -1,6 +1,6 @@
 #
 # Feedback PORO
-# Wraps a user's feedback submission in one object
+# Wraps a user's feedback submission into one object
 #
 class Feedback
   #
@@ -23,19 +23,6 @@ class Feedback
   end
 
   #
-  # Return array of all responses associated with feedback
-  #
-  def responses
-    resps = []
-
-    @survey_data.each do |survey|
-      resps << survey[:responses]
-    end
-
-    resps.flatten
-  end
-
-  #
   # Create unsaved responses from form inputs
   #
   def set_responses(form_input: nil)
@@ -53,6 +40,7 @@ class Feedback
 
   #
   # Checks whether feedback is valid by checking if all responses are valid
+  # Calling response.invalid? sets errors on the response object
   #
   def valid?
     all_valid = true

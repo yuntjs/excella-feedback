@@ -18,7 +18,12 @@ class ResponsesControllerTest < ActionController::TestCase
       get :new, params: { presentation_id: @presentation.id }
       feedback = assigns(:feedback)
 
-      assert_equal @questions.length, feedback.responses.count
+      num_responses = 0
+      feedback.survey_data.each do |survey|
+        num_responses += survey[:responses].count
+      end
+
+      assert_equal @questions.length, num_responses, 'Did not create the correct number of unsaved responses'
     end
   end
 
