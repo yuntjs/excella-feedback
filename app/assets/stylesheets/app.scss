@@ -119,6 +119,14 @@ body {
   .dropdown-menu {
     border-radius: 0;
   }
+
+  .navbar-toggle {
+    background: $secondary-blue;
+
+    .icon-bar {
+      background: #FFFFFF;
+    }
+  }
 }
 
 //
