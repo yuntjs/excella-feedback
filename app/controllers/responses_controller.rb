@@ -17,7 +17,7 @@ class ResponsesController < ApplicationController
   #
   def new
     set_instance_variables
-    @feedback.set_responses
+    @feedback.add_responses
   end
 
   #
@@ -25,11 +25,11 @@ class ResponsesController < ApplicationController
   #
   def create
     set_instance_variables
-    @feedback.set_responses(form_input: response_params[:question_id])
+    @feedback.add_responses(form_input: response_params[:question_id])
 
     if @feedback.valid?
       @feedback.save
-      flash[:success] = "Your responses have beeen successfully recorded."
+      flash[:success] = 'Your responses have beeen successfully recorded.'
       mark_participation(@presentation)
       redirect_to presentation_path(@presentation)
     else

@@ -16,8 +16,8 @@ class Feedback
 
     @survey_data = surveys.map do |survey|
       {
-      title: "#{survey.subject}",
-      questions: survey.questions
+        title: survey.subject,
+        questions: survey.questions
       }
     end
   end
@@ -25,7 +25,7 @@ class Feedback
   #
   # Create unsaved responses from form inputs
   #
-  def set_responses(form_input: nil)
+  def add_responses(form_input: nil)
     @survey_data.each do |survey|
       survey[:responses] = survey[:questions].map do |question|
         value = form_input ? form_input[question.id.to_s] : nil
@@ -40,7 +40,7 @@ class Feedback
 
   #
   # Checks whether feedback is valid by checking if all responses are valid
-  # Calling response.invalid? sets errors on the response object
+  # Note: calling response.invalid? sets errors on the response object
   #
   def valid?
     all_valid = true
@@ -59,9 +59,7 @@ class Feedback
   #
   def save
     @survey_data.each do |survey|
-      survey[:responses].each do |response|
-        response.save
-      end
+      survey[:responses].each(&:save)
     end
   end
 end
