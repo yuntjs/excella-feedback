@@ -23,10 +23,7 @@ class Presentation < ApplicationRecord
   # Shorten long presentation descriptions for Presentation#index
   #
   def description_short(length)
-    if length < 1
-      raise ArgumentError
-    else
-      description[0..length].gsub(/\s\w+\s*$/, '...')
-    end
+    return raise ArgumentError if length < 1
+    description[0..length].gsub(/\s\w+\s*$/, '...')
   end
 end

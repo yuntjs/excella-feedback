@@ -16,7 +16,7 @@ class Question < ApplicationRecord
   # Values for Presentation survey questions
   #
   def self.default_presentation_questions
-    questions = [
+    [
       { prompt: 'I thought this course effectively taught the subject matter.',
         response_type: 'number' }, {
           prompt: 'I thought this course was relevant to my future projects.',
@@ -32,7 +32,7 @@ class Question < ApplicationRecord
   # Values for Presenter survey questions
   #
   def self.default_presenter_questions(presenter)
-    questions = [
+    [
       { prompt: "I thought #{presenter.full_name} effectively taught the subject matter.",
         response_type: 'number' }, {
           prompt: "I thought #{presenter.full_name} answered questions effectively.",

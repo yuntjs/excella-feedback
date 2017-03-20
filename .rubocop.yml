@@ -1,8 +1,19 @@
 AllCops:
+  TargetRubyVersion: 2.3
   Excludes:
     - db/**
     - db/migrate/**
     - config/**
     - script/**
 Metrics/LineLength:
+  Enabled: false
+ClassLength:
+  Max: 200
+ModuleLength:
+  Max: 200
+MethodLength:
+  Max: 20
+Style/PredicateName:
+  Enabled: false
+Style/FrozenStringLiteralComment:
   Enabled: false
