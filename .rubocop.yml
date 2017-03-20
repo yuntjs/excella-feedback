@@ -8,3 +8,5 @@ Metrics/LineLength:
   Enabled: false
 ClassLength:
   Max: 200
+Style/PredicateName:
+  Enabled: false
