@@ -4,27 +4,29 @@
       <div class="panel-heading">
         <h4><%= title %></h4>
       </div>
-      <table class="table">
-        <tr>
-          <th class="col-md-3">Title</th>
-          <th class="col-md-2">Date</th>
-          <th class="col-md-1">Location</th>
-          <th class="col-md-3">Description</th>
-          <th class="col-md-3"><%= feedback_header(title) %></th>
-        </tr>
-        <% presentations.each do |presentation| %>
-        <tr>
-          <td><%= link_to presentation.title, presentation %></td>
-          <td><%= display_date(presentation.date) %></td>
-          <td><%= presentation.location %></td>
-          <td><%= display_description(presentation) %></td>
-          <td><%= feedback_content(
-                user: current_user,
-                presentation: presentation
-              ) %></td>
-        </tr>
-        <% end %>
-      </table>
+      <div class="table-responsive">
+        <table class="table">
+          <tr>
+            <th class="col-md-3">Title</th>
+            <th class="col-md-2">Date</th>
+            <th class="col-md-1">Location</th>
+            <th class="col-md-3">Description</th>
+            <th class="col-md-3"><%= feedback_header(title) %></th>
+          </tr>
+          <% presentations.each do |presentation| %>
+          <tr>
+            <td><%= link_to presentation.title, presentation %></td>
+            <td><%= display_date(presentation.date) %></td>
+            <td><%= presentation.location %></td>
+            <td><%= display_description(presentation) %></td>
+            <td><%= feedback_content(
+                  user: current_user,
+                  presentation: presentation
+                ) %></td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
     <% end %>
   </div>
 </div>
