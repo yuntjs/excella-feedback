@@ -1,17 +1,48 @@
+//
 // Variables
-$light-blue: #5C86C0;
-$orange: #DC5C29;
-$red-warning: #a94442;
+//
 
+// Excella Colors
+$primary-navy: #002D62;
+$primary-red: #E31837;
+$secondary-green: #808A02;
+$secondary-blue: #5C86C0;
+$secondary-orange: #DC5C29;
+$secondary-yellow: #F9B800;
+
+// Other Colors
+$text-gray: #404040;
+$flat-red: #A94442;
+
+// Step Percentage
+$step: 16%;
+
+// Spacing
 $small-space: 1em;
 $medium-space: 1.83em;
 $large-space: 2.6em;
 
-
+//
 // General
+//
 body {
-  padding-top: 70px;
-  font-family: "Lato","Helvetica Neue", sans-serif;
+  margin-top: 50px; // Height of navbar
+  padding-top: $small-space;
+  background: #fbfbfc;
+  color: $text-gray;
+  font-family: "Lato", "Helvetica Neue", sans-serif;
+
+  .content {
+    min-height: 100vh;
+  }
+
+  a {
+    color: $secondary-blue;
+
+    &:hover {
+      color: darken($secondary-blue, $step);
+    }
+  }
 }
 
 .spaceSmRight {
@@ -26,7 +57,7 @@ body {
     content: "\e174";
     font-family: 'Glyphicons Halflings';
     font-size: 1em;
-    color: $red-warning;
+    color: $flat-red;
     padding-right: .3em;
 }
 
@@ -34,10 +65,35 @@ body {
   list-style-type: none;
 }
 
+//
+// Bootstrap Overrides
+//
+.btn-primary {
+  background: $secondary-blue;
+  border-color: $secondary-blue;
+
+  &:hover {
+    background: darken($secondary-blue, $step/2);
+    border-color: darken($secondary-blue, $step);
+  }
+}
+
+.btn-warning {
+  background: $secondary-yellow;
+  border-color: $secondary-yellow;
+
+  &:hover {
+    background: darken($secondary-yellow, $step/2);
+    border-color: darken($secondary-yellow, $step);
+  }
+}
+
+//
 // Navigation
+//
 .navbar {
   border: 0;
-  padding-top: 1em;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
   background: #ffffff;
 
   .navbar-brand {
@@ -48,27 +104,15 @@ body {
     }
   }
 
-  a {
-    color: #404040;
-    transition: 0.25s;
-  }
-
-  .button {
-    border-radius: 3px;
-    padding: 1em;
-    background: $light-blue;
-    color: #fafafa;
-
-    &:hover {
-      background: darken($light-blue, 12%);
-      color: #fafafa;
-    }
-  }
-
   li {
-    a:hover {
-      background: none;
-      color: $light-blue;
+    a {
+      color: $secondary-blue;
+      transition: 0.25s;
+
+      &:hover {
+        color: darken($secondary-blue, 16%);
+        // color: #fafafa;
+      }
     }
   }
 
@@ -76,8 +120,26 @@ body {
     border-radius: 0;
   }
 
-  .icon-bar {
-    background: $light-blue;
+  .navbar-toggle {
+    background: $secondary-blue;
+
+    .icon-bar {
+      background: #FFFFFF;
+    }
+  }
+}
+
+//
+// Footer
+//
+.footer {
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+  padding: $large-space;
+  background: $text-gray;
+  color: #ffffff;
+
+  a {
+    color: #ffffff !important;
   }
 }
 
@@ -99,10 +161,10 @@ form {
 }
 .admin-link a {
   text-decoration: none;
-  color: $orange;
+  color: $secondary-orange;
 
   &:hover {
-    color: lighten($orange, 12%);
+    color: lighten($secondary-orange, 12%);
   }
 }
 

@@ -1,0 +1,31 @@
+<div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <h4>Site Map</h4>
+        <ul>
+          <li><%= link_to 'Home', root_path %></li>
+          <% if current_user %>
+          <li><%= link_to 'Presentations', presentations_path %></li>
+          <% else %>
+          <li><%= link_to "Log In", new_user_session_path %></li>
+          <li><%= link_to "Sign Up", new_user_registration_path %></li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="col-sm-4">
+        <h4>Follow us:</h4>
+        <ul>
+          <li><%= link_to 'LinkedIn', 'https://www.linkedin.com/company/excella-consulting' %></li>
+          <li><%= link_to 'Twitter', 'https://twitter.com/ExcellaCo' %></li>
+          <li><%= link_to 'Facebook', 'https://www.facebook.com/excellaconsulting/' %></li>
+        </ul>
+      </div>
+      <div class="col-sm-4">
+        <h4><%= link_to 'Excella Consulting', 'https://www.excella.com/' %></h4>
+        <p>2300 Wilson Boulevard, Suite 630<br />Arlington, VA 22201</p>
+        <h5>&copy; Excella Consulting, 2017</h5>
+      </div>
+    </div>
+  </div>
+</div>

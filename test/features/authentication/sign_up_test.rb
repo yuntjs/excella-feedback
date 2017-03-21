@@ -4,7 +4,9 @@ class SignUpTest < Capybara::Rails::TestCase
   feature 'Sign Up' do
     before do
       visit root_path
-      click_on 'Sign Up'
+      within('nav') do
+        click_on 'Sign Up'
+      end
     end
 
     scenario 'has valid content' do

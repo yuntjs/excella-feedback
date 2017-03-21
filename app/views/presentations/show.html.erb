@@ -3,7 +3,7 @@
   <%= back_button(presentations_path) %>
 
   <div class="row">
-    <div class="col-lg-6 col-lg-offset-3 text-center">
+    <div class="col-lg-6 col-lg-offset-3 col-xs-12 text-center">
       <%= presentation_admin_options(current_user, @presentation) %>
       <h1><%= @presentation.title %></h1>
       <h4><strong>Location:&nbsp;</strong><%= @presentation.location %></h4>
@@ -21,13 +21,11 @@
     <div class="col-lg-8 col-lg-offset-2">
 
       <%= participation_table(
-        user: current_user,
         role: :presenter,
         participations: @presenters
       ) %>
 
       <%= participation_table(
-        user: current_user,
         role: :attendee,
         participations: @attendees
       ) %>
