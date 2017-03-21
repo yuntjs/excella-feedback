@@ -30,20 +30,36 @@ class ApplicationController < ActionController::Base
   end
 
   #
+  # Assign params for new default survey
+  #
+  def new_default_survey(subject)
+    # Assign survey and questions based on subject type
+    if subject.class == Presentation
+      survey = @presentation.surveys.create(subject: 'Overall Presentation')
+    elsif subject.class == User
+      survey = Presentation.find(@participation.presentation_id).surveys.create(subject: "Feedback for #{subject.full_name}", presenter_id: subject.id)
+    end
+    questions = assign_default_questions(subject)
+    create_default_survey(survey, questions)
+  end
+
+  #
+  # Create survey questions based on survey subject (presenter or presentation)
+  #
+  def assign_default_questions(subject)
+    if subject.class == Presentation
+      Question.default_presentation_questions
+    elsif subject.class == User
+      Question.default_presenter_questions(subject)
+    end
+  end
+
+  #
   # Create default survey and populate with default questions
   # for either a Presentation or an individual Presenter
   # Default questions are in Question Model
   #
-  def create_default_survey(subject)
-    # Assign survey and questions based on subject type
-    if subject.class == Presentation
-      survey = @presentation.surveys.create(subject: 'Overall Presentation')
-      questions = Question.default_presentation_questions
-    elsif subject.class == User
-      survey = Presentation.find(@participation.presentation_id).surveys.create(subject: "Feedback for #{subject.full_name}", presenter_id: subject.id)
-      questions = Question.default_presenter_questions(subject)
-    end
-    # Create default questions in new survey
+  def create_default_survey(survey, questions)
     questions.each do |question|
       survey.questions.create(prompt: question[:prompt], response_type: question[:response_type])
     end

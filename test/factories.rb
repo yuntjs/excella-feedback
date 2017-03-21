@@ -42,8 +42,8 @@ FactoryGirl.define do
   end
 
   factory :survey do
-    position 1
-    subject 'Git'
+    sequence(:position) { |n| n }
+    sequence(:subject) { |n| "Survey #{n}" }
     presentation
   end
 

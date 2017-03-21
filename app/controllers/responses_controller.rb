@@ -3,7 +3,7 @@
 #
 class ResponsesController < ApplicationController
   #
-  # Index route
+  # Render response data
   #
   def index
     @presentation = Presentation.find(params[:presentation_id])
@@ -13,58 +13,24 @@ class ResponsesController < ApplicationController
   end
 
   #
-  # New route
-  # creates a feedback object with unsaved responses
+  # Create a feedback object with unsaved responses
   #
   def new
     set_instance_variables
-
-    @feedback.each do |survey|
-      survey[:responses] = []
-
-      survey[:questions].each do |question|
-        survey[:responses] << question.responses.new(user_id: current_user.id)
-      end
-    end
+    @feedback.add_responses
   end
 
   #
-  # Create route
-  # saves valid responses, re-renders invalid submissions
+  # Save valid feedback & re-render invalid feedback
   #
-  def create # TODO: requires cleanup
+  def create
     set_instance_variables
+    @feedback.add_responses(form_input: response_params[:question_id])
 
-    @feedback.each do |survey|
-      survey[:responses] = []
-
-      survey[:questions].each do |question|
-        survey[:responses] << question.responses.new(
-          user_id: current_user.id,
-          value: response_params[:question_id][question.id.to_s]
-        )
-      end
-    end
-
-    all_valid = true
-
-    @feedback.each do |survey|
-      survey[:responses].each do |response|
-        next if response.valid?
-        all_valid = false
-      end
-    end
-
-    if all_valid
-      @feedback.each do |survey|
-        survey[:responses].each(&:save)
-      end
+    if @feedback.valid?
+      @feedback.save
       flash[:success] = 'Your responses have beeen successfully recorded.'
-      participation = Participation.where(
-        user_id: current_user.id,
-        presentation_id: @presentation.id
-      ).first
-      participation.set_feedback_provided
+      mark_participation(@presentation)
       redirect_to presentation_path(@presentation)
     else
       flash.now[:error] = 'We ran into some errors while trying to save your responses. Please try again.'
@@ -87,12 +53,19 @@ class ResponsesController < ApplicationController
   def set_instance_variables
     @presentation = Presentation.find(params[:presentation_id])
     @surveys = @presentation.position_surveys
-    @feedback = @surveys.map do |survey|
-      {
-        title: survey.subject.to_s,
-        questions: survey.questions
-      }
-    end
+    @feedback = Feedback.new(current_user, @surveys)
+  end
+
+  #
+  # Find participation & set feedback as provided
+  #
+  def mark_participation(presentation)
+    participation = Participation.where(
+      user_id: current_user.id,
+      presentation_id: presentation.id
+    ).first
+
+    participation.set_feedback_provided
   end
 
   #
