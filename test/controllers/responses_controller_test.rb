@@ -17,7 +17,13 @@ class ResponsesControllerTest < ActionController::TestCase
     it 'creates multiple unsaved response objects from questions for the view' do
       get :new, params: { presentation_id: @presentation.id }
       feedback = assigns(:feedback)
-      assert_equal @questions.length, feedback.first[:responses].length
+
+      num_responses = 0
+      feedback.data.each do |d|
+        num_responses += d[:survey_responses].count
+      end
+
+      assert_equal @questions.length, num_responses, 'Did not create the correct number of unsaved responses'
     end
   end
 
@@ -50,7 +56,7 @@ class ResponsesControllerTest < ActionController::TestCase
         }
       }
 
-      assert_equal @questions.length, Response.all.length, 'Did not create a response for each question'
+      assert_equal @questions.length, Response.count, 'Did not create a response for each question'
       assert_redirected_to presentation_path(@presentation), 'No redirect to presentation_path'
     end
 
