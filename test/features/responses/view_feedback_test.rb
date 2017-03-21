@@ -68,7 +68,7 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
     scenario 'presenter can see feedback for surveys about themselves' do
       presenter_survey = create(:survey, presentation_id: @presentation.id, presenter_id: @user.id)
       create_list(:question, 1, :text, :required, survey_id: presenter_survey.id) do |question|
-        create(:response, value: 'Response for presenter only', question_id: question.id, user_id: @user.id, )
+        create(:response, value: 'Response for presenter only', question_id: question.id, user_id: @user.id)
       end
       visit presentation_responses_path(@presentation)
       assert page.has_content?('Response for presenter only')
@@ -78,7 +78,7 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
       another_user = create(:user)
       presenter_survey = create(:survey, presentation_id: @presentation.id, presenter_id: another_user.id)
       create_list(:question, 1, :text, :required, survey_id: presenter_survey.id) do |question|
-        create(:response, value: 'Response for presenter only', question_id: question.id, user_id: @user.id, )
+        create(:response, value: 'Response for presenter only', question_id: question.id, user_id: @user.id)
       end
       visit presentation_responses_path(@presentation)
       refute page.has_content?('Response for presenter only')
@@ -89,7 +89,7 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
       another_user = create(:user)
       presenter_survey = create(:survey, presentation_id: @presentation.id, presenter_id: another_user.id)
       create_list(:question, 1, :text, :required, survey_id: presenter_survey.id) do |question|
-        create(:response, value: 'Response for presenter only', question_id: question.id, user_id: @user.id, )
+        create(:response, value: 'Response for presenter only', question_id: question.id, user_id: @user.id)
       end
       login_as(admin)
       visit presentation_responses_path(@presentation)
