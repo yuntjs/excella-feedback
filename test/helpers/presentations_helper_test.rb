@@ -96,14 +96,14 @@ class PresentationsHelperTest < ActionView::TestCase
   describe '#display_description' do
     let(:char_limit) { 30 }
 
-    it 'returns the entire presentation description if its length is less than the char limit' do
+    it 'returns the presentation description if its length is less than the char limit' do
       @presentation_as_attendee.description = 'a' * (char_limit - 1)
 
       assert_equal display_description(@presentation_as_attendee), @presentation_as_attendee.description,
                    'Expected the entire presentation description'
     end
 
-    it 'returns the entire presentation description if its length equals the char limit' do
+    it 'returns the presentation description if its length equals the char limit' do
       @presentation_as_attendee.description = 'a' * char_limit
 
       assert_equal display_description(@presentation_as_attendee), @presentation_as_attendee.description,
@@ -232,14 +232,35 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#presentation_admin_options' do
-    it 'tests pending...'
+    let(:link) { presentation_admin_options(@admin, @presentation_as_attendee) }
+
+    it 'returns a link to edit presentation if user is an admin' do
+      assert_includes link, edit_presentation_path(@presentation_as_attendee), 'Does not include link to edit presentation'
+    end
+
+    it 'returns a link to edit participants if user is an admin' do
+      assert_includes link, 'Edit Participants', 'Does not include link to edit participants'
+    end
+
+    it 'returns a link to view surveys if user is an admin' do
+      assert_includes link, presentation_surveys_path(@presentation_as_attendee), 'Does not include link to view surveys'
+    end
+
+    it 'returns a link to delete presentation if user is an admin' do
+      assert_includes link, 'Delete', 'The word "Delete" is not in the delete link'
+      assert_includes link, presentation_path(@presentation_as_attendee), 'Does not include link to delete presentation'
+    end
+
+    it 'returns nil if user is not an admin' do
+      assert_nil presentation_admin_options(@user, @presentation_as_attendee), 'Expected nil if user is not an admin'
+    end
   end
 
   describe '#participation_table' do
     it 'tests pending...'
   end
 
-  describe '#set_participation_table' do
+  describe '#set_participation_title' do
     it 'tests pending...'
   end
 end
