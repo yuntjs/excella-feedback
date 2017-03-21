@@ -68,7 +68,13 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#general_user_table' do
-    it 'tests pending...'
+    it 'renders a partial if user is involved in presentations as a given role'
+
+    it 'renders nil if user is not involved in presentations as a given role' do
+      another_user = create(:user)
+
+      assert_nil general_user_table(user: another_user, role: :presenter, title: 'Title', feedback_message: 'Feedback Message'), 'Expected to return nil'
+    end
   end
 
   describe '#feedback_header' do
@@ -88,7 +94,41 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#display_description' do
-    it 'tests pending...'
+    let(:char_limit) { 30 }
+
+    it 'returns the entire presentation description if its length is less than the char limit' do
+      @presentation_as_attendee.description = 'a' * (char_limit - 1)
+
+      assert_equal display_description(@presentation_as_attendee), @presentation_as_attendee.description,
+                   'Expected the entire presentation description'
+    end
+
+    it 'returns the entire presentation description if its length equals the char limit' do
+      @presentation_as_attendee.description = 'a' * char_limit
+
+      assert_equal display_description(@presentation_as_attendee), @presentation_as_attendee.description,
+                   'Expected the entire presentation description'
+    end
+
+    it 'returns a shortened presentation description if its length exceeds the char limit' do
+      @presentation_as_attendee.description = 'a' * (char_limit + 1)
+
+      description = display_description(@presentation_as_attendee)
+      short_span_description = '<span>' + @presentation_as_attendee.description[0..char_limit] + '</span>'
+
+      assert_includes description, short_span_description, 'Expected output does not include shortened description'
+      assert_includes description, '(more)', 'Expected output does not include "(more)"'
+    end
+
+    it 'returns a shortened presentation description if its length greatly exceeds the char limit' do
+      @presentation_as_attendee.description = 'a' * (char_limit + 10)
+
+      description = display_description(@presentation_as_attendee)
+      short_span_description = '<span>' + @presentation_as_attendee.description[0..char_limit] + '</span>'
+
+      assert_includes description, short_span_description, 'Expected output does not include shortened description'
+      assert_includes description, '(more)', 'Expected output does not include "(more)"'
+    end
   end
 
   describe '#feedback_content' do
