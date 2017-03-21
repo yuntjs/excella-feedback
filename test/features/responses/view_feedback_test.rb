@@ -5,30 +5,53 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
   Warden.test_mode!
 
   before do
+    @admin = create(:user, :admin)
     @user = create(:user)
+    @presenter1 = create(:user,
+                         first_name: 'Burton',
+                         last_name: 'White')
+    @presenter2 = create(:user,
+                         first_name: 'Steve',
+                         last_name: 'Cooper')
     @presentation = create(:presentation)
-    create(:participation,
-           user_id: @user.id,
+    create(:participation, :presenter,
+           user_id: @presenter1.id,
            presentation_id: @presentation.id)
-
-    @survey = create(:survey, presentation_id: @presentation.id)
-    create_list(:question, 5, :number, :required, survey_id: @survey.id) do |question|
+    create(:participation, :presenter,
+           user_id: @presenter2.id,
+           presentation_id: @presentation.id)
+    @survey1 = create(:survey,
+                      presentation_id: @presentation.id,
+                      presenter_id: @presenter1.id,
+                      subject: "#{@presenter1.first_name} #{@presenter1.last_name}")
+    create_list(:question, 2, :number, :required, survey_id: @survey1.id) do |question|
       create(:response, :number, question_id: question.id, user_id: @user.id)
     end
-    create_list(:question, 5, :text, :required, survey_id: @survey.id) do |question|
+    create_list(:question, 2, :text, :required, survey_id: @survey1.id) do |question|
       create(:response, :text, question_id: question.id, user_id: @user.id)
     end
-
-    login_as(@user, scope: :user)
-
-    visit presentation_responses_path(@presentation)
+    @survey2 = create(:survey,
+                      presentation_id: @presentation.id,
+                      presenter_id: @presenter2.id,
+                      subject: "#{@presenter2.first_name} #{@presenter2.last_name}")
+    create_list(:question, 2, :number, :required, survey_id: @survey2.id) do |question|
+      create(:response, :number, question_id: question.id, user_id: @user.id)
+    end
+    create_list(:question, 2, :text, :required, survey_id: @survey2.id) do |question|
+      create(:response, :text, question_id: question.id, user_id: @user.id)
+    end
   end
 
   after do
     Warden.test_reset!
   end
 
-  feature 'viewing feedback' do
+  feature 'viewing feedback as presenter' do
+    before do
+      login_as(@presenter1, scope: :user)
+
+      visit presentation_responses_path(@presentation)
+    end
     scenario 'feedback for scale (number) responses render properly as chart' do
       number_question_ids = Question.where(response_type: 'number').pluck(:id)
 
@@ -62,6 +85,19 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
         assert page.has_content?('Average: 3'),
                'Average was not rendered properly'
       end
+    end
+  end
+
+  feature 'viewing feedback as admin' do
+    before do
+      login_as(@admin, scope: :user)
+
+      visit presentation_responses_path(@presentation)
+    end
+
+    scenario 'admin user can see feedback for all presenters' do
+      assert page.has_content?("#{@presenter1.first_name} #{@presenter1.last_name}"), 'Admin unable to see first presenter'
+      assert page.has_content?("#{@presenter2.first_name} #{@presenter2.last_name}"), 'Admin unable to see second presenter.'
     end
   end
 end
