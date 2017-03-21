@@ -71,19 +71,17 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
       @admin = create(:user, :admin)
       @presentation_with_presenters = create(:presentation)
       @presenter1 = create(:user,
-                          first_name: 'Burton',
-                          last_name: 'White')
+                           first_name: 'Burton',
+                           last_name: 'White')
       @presenter2 = create(:user,
-                          first_name: 'Steve',
-                          last_name: 'Cooper')
+                           first_name: 'Steve',
+                           last_name: 'Cooper')
       create(:participation, :presenter,
              user_id: @presenter1.id,
-             presentation_id: @presentation_with_presenters.id
-             )
+             presentation_id: @presentation_with_presenters.id)
       create(:participation, :presenter,
-            user_id: @presenter2.id,
-            presentation_id: @presentation_with_presenters.id
-            )
+             user_id: @presenter2.id,
+             presentation_id: @presentation_with_presenters.id)
       @survey1 = create(:survey,
                         presentation_id: @presentation_with_presenters.id,
                         presenter_id: @presenter1.id,
@@ -104,15 +102,14 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
       create_list(:question, 2, :text, :required, survey_id: @survey2.id) do |question|
         create(:response, :text, question_id: question.id, user_id: @user.id)
       end
-
     end
-    
+
     scenario 'admin user can see feedback for all presenters' do
       login_as(@admin, scope: :user)
 
       visit presentation_responses_path(@presentation_with_presenters)
 
-      assert page.has_content?("#{@presenter1.first_name} #{@presenter1.last_name}") && page.has_content?("#{@presenter2.first_name} #{@presenter2.last_name}"), "Admin unable to see both presenters."
+      assert page.has_content?("#{@presenter1.first_name} #{@presenter1.last_name}") && page.has_content?("#{@presenter2.first_name} #{@presenter2.last_name}"), 'Admin unable to see both presenters.'
     end
   end
 end
