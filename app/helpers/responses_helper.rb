@@ -60,4 +60,13 @@ module ResponsesHelper
     return if response.value.empty?
     content_tag(:li, response.value, class: 'list-group-item')
   end
+
+  #
+  # Filter based on user permissions (admin, presenter)
+  # Presenters can only see overall data and their own surveys
+  # Admins can see all
+  #
+  def can_see_survey_results(survey, user)
+    survey.presenter_id.nil? || user.is_admin || survey.presenter_id == user.id
+  end
 end

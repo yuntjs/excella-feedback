@@ -16,7 +16,9 @@
   <!-- /.row -->
 
   <% @presentation.surveys.each do |survey| %>
-    <%= render 'results', survey: survey %>
+    <% if can_see_survey_results(survey, current_user) %>
+      <%= render 'results', survey: survey %>
+    <% end %>
   <% end %>
 
 </div>
