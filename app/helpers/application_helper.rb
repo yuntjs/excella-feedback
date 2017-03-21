@@ -23,8 +23,7 @@ module ApplicationHelper
   # Renders error messages for login
   #
   def login_errors(flash)
-    if flash.alert
-      content_tag(:div, flash.alert, class: 'has-error text-danger')
-    end
+    return unless flash.alert
+    content_tag(:div, flash.alert, class: 'has-error text-danger')
   end
 end
