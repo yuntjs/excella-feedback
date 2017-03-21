@@ -1,5 +1,0 @@
-#
-# StaticHelper
-#
-module StaticHelper
-end

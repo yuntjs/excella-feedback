@@ -4,6 +4,10 @@
     <div class="col-md-4 col-md-offset-4">
       <h2>Log In</h2>
 
+      <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, id: "flash_#{name}" %>
+      <% end %>
+
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="form-group">
           <%= f.label :email %><br />
@@ -21,7 +25,6 @@
             <%= f.label :remember_me %>
           </div>
         <% end -%>
-
         <%= f.submit "Log In", class: "btn btn-default" %>
       <% end %>
 
