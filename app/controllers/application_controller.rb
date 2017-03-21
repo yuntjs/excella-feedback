@@ -34,13 +34,24 @@ class ApplicationController < ActionController::Base
   #
   def new_default_survey(subject)
     # Assign survey and questions based on subject type
-    survey = Presentation.find(@participation.presentation_id).surveys.create(subject: "Feedback for #{subject.full_name}", presenter_id: subject.id)
-    questions = Question.default_presenter_questions(subject)
     if subject.class == Presentation
       survey = @presentation.surveys.create(subject: 'Overall Presentation')
-      questions = Question.default_presentation_questions
+    elsif subject.class == User
+      survey = Presentation.find(@participation.presentation_id).surveys.create(subject: "Feedback for #{subject.full_name}", presenter_id: subject.id)
     end
+    questions = assign_default_questions(subject)
     create_default_survey(survey, questions)
+  end
+
+  #
+  # Create survey questions based on survey subject (presenter or presentation)
+  #
+  def assign_default_questions(subject)
+    if subject.class == Presentation
+      Question.default_presentation_questions
+    elsif subject.class == User
+      Question.default_presenter_questions(subject)
+    end
   end
 
   #
