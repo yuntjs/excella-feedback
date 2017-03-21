@@ -22,5 +22,4 @@ module ActiveSupport
   end
 end
 
-
 Minitest::Reporters.use!
