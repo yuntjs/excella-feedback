@@ -22,25 +22,25 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
            user_id: @presenter2.id,
            presentation_id: @presentation.id)
     @survey1 = create(:survey,
-                       presentation_id: @presentation.id,
-                       presenter_id: @presenter1.id,
-                       subject: "#{@presenter1.first_name} #{@presenter1.last_name}")
-     create_list(:question, 2, :number, :required, survey_id: @survey1.id) do |question|
-       create(:response, :number, question_id: question.id, user_id: @user.id)
-     end
-     create_list(:question, 2, :text, :required, survey_id: @survey1.id) do |question|
-       create(:response, :text, question_id: question.id, user_id: @user.id)
-     end
-     @survey2 = create(:survey,
-                       presentation_id: @presentation.id,
-                       presenter_id: @presenter2.id,
-                       subject: "#{@presenter2.first_name} #{@presenter2.last_name}")
-     create_list(:question, 2, :number, :required, survey_id: @survey2.id) do |question|
-       create(:response, :number, question_id: question.id, user_id: @user.id)
-     end
-     create_list(:question, 2, :text, :required, survey_id: @survey2.id) do |question|
-       create(:response, :text, question_id: question.id, user_id: @user.id)
-     end
+                      presentation_id: @presentation.id,
+                      presenter_id: @presenter1.id,
+                      subject: "#{@presenter1.first_name} #{@presenter1.last_name}")
+    create_list(:question, 2, :number, :required, survey_id: @survey1.id) do |question|
+      create(:response, :number, question_id: question.id, user_id: @user.id)
+    end
+    create_list(:question, 2, :text, :required, survey_id: @survey1.id) do |question|
+      create(:response, :text, question_id: question.id, user_id: @user.id)
+    end
+    @survey2 = create(:survey,
+                      presentation_id: @presentation.id,
+                      presenter_id: @presenter2.id,
+                      subject: "#{@presenter2.first_name} #{@presenter2.last_name}")
+    create_list(:question, 2, :number, :required, survey_id: @survey2.id) do |question|
+      create(:response, :number, question_id: question.id, user_id: @user.id)
+    end
+    create_list(:question, 2, :text, :required, survey_id: @survey2.id) do |question|
+      create(:response, :text, question_id: question.id, user_id: @user.id)
+    end
   end
 
   after do
