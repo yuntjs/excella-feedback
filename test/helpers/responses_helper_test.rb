@@ -99,4 +99,22 @@ class ResponsesHelperTest < ActionView::TestCase
       assert_equal number_errors.length, number_list_length, 'Number errors do not match resulting list'
     end
   end
+
+  describe '#can_see_survey_results' do
+    it 'returns true if a survey is not associated to a presenter' do
+      survey = create(:survey)
+      assert can_see_survey_results(survey, @user), 'survey.presenter_id is not nil'
+    end
+
+    it 'returns true if a user\'s id is not equal to the survey\'s presenter_id' do
+      survey = create(:survey, presenter_id: @user.id)
+      assert can_see_survey_results(survey, @user), 'survey.presenter_id does not match user.id'
+    end
+
+    it 'returns true if a user is an admin' do
+      admin = create(:user, :admin)
+      survey = create(:survey, presenter_id: @user.id)
+      assert can_see_survey_results(survey, admin), 'user is not an admin'
+    end
+  end
 end

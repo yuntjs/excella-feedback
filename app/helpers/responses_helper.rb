@@ -66,7 +66,7 @@ module ResponsesHelper
   # Presenters can only see overall data and their own surveys
   # Admins can see all
   #
-  def can_see_survey_results(survey)
-    survey.presenter_id.nil? || current_user.is_admin || survey.presenter_id == current_user.id
+  def can_see_survey_results(survey, user)
+    survey.presenter_id.nil? || user.is_admin || survey.presenter_id == user.id
   end
 end
