@@ -60,7 +60,11 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#admin_table' do
-    it 'tests pending...'
+    it 'renders a partial if user is an admin'
+
+    it 'returns nil if user is not an admin' do
+      assert_nil admin_table(@user), 'Expected to return nil if user is not admin'
+    end
   end
 
   describe '#general_user_table' do
@@ -68,16 +72,18 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#feedback_header' do
-    it 'returns "Admin" for header of feedback (right-most) column when user is Admin' do
-      text = feedback_header(@admin)
+    it 'returns "Admin" when argument is not "As Presenter" or "As Attendee"' do
+      text = feedback_header('As Admin')
 
       assert_equal text, 'Admin', 'Returns something other than "Admin"'
     end
 
-    it 'returns "Feedback" for header of feedback (right-most) column when user is General User' do
-      text = feedback_header(@user)
+    it 'returns "Feedback" when argument is "As Presenter" or "As Attendee"' do
+      text_1 = feedback_header('As Presenter')
+      text_2 = feedback_header('As Attendee')
 
-      assert_equal text, 'Feedback', 'Returns something other than "Feedback"'
+      assert_equal text_1, 'Feedback', 'Returns something other than "Feedback"'
+      assert_equal text_2, 'Feedback', 'Returns something other than "Feedback"'
     end
   end
 
