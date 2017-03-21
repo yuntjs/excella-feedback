@@ -1,5 +1,4 @@
 require 'test_helper'
-include FactoryGirl::Syntax::Methods
 
 class ViewFeedbackTest < Capybara::Rails::TestCase
   include Warden::Test::Helpers

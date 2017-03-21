@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ResponsesControllerTest < ActionController::TestCase
-  # include FactoryGirl::Syntax::Methods
   include Devise::Test::ControllerHelpers
 
   before do
