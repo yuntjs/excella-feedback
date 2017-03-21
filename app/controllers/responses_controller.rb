@@ -108,6 +108,9 @@ class ResponsesController < ApplicationController
     question_data
   end
 
+  #
+  # Define and format data for number (scale) questions
+  #
   def get_question_data(question)
     return unless question.response_type == 'number'
     question_data = format_question_data(question)
