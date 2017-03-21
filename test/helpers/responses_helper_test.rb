@@ -24,18 +24,31 @@ class ResponsesHelperTest < ActionView::TestCase
   end
 
   describe '#display_question' do
-    it 'renders text form partial if response type is "text"' do
-    end
+    it 'renders text form partial if response type is "text"'
 
     it 'renders scale form partial if response type is "number"'
 
-    it 'raises an error if response type is not valid'
+    it 'raises an error if response type is not valid' do
+      invalid_question = create(:question, response_type: 'invalid')
+      invalid_response = create(:response, question_id: invalid_question.id )
+
+      assert_raises(ArgumentError) { display_question(invalid_response) }
+    end
   end
 
   describe '#scale_response_match' do
-    it 'returns true if response.value matches value'
+    before do
+      @number_response.value = "3"
+      @number_response.save
+    end
 
-    it 'returns false if response.value does not match value'
+    it 'returns true if response.value matches value' do
+      assert scale_response_match(@number_response, "3")
+    end
+
+    it 'returns false if response.value does not match value' do
+      refute scale_response_match(@number_response, "4")
+    end
   end
 
   describe '#error_class' do
