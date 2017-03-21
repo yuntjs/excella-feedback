@@ -3,19 +3,18 @@
 #
 class SurveysController < ApplicationController
   before_action :authenticate_admin, except: [:show]
+  before_action :set_presentation
 
   #
   # Index route
   #
   def index
-    @presentation = Presentation.find(params[:presentation_id])
   end
 
   #
   # New route
   #
   def new
-    @presentation = Presentation.find(params[:presentation_id])
     @survey = @presentation.surveys.new
   end
 
@@ -23,23 +22,14 @@ class SurveysController < ApplicationController
   # Create route
   #
   def create
-    @presentation = Presentation.find(params[:presentation_id])
     @survey = @presentation.surveys.new(survey_params)
-
-    if @survey.save
-      flash[:success] = success_message(@survey, :create)
-      redirect_to presentation_survey_path(@presentation.id, @survey.id)
-    else
-      flash.now[:error] = error_message(@survey, :create)
-      render :new
-    end
+    save_survey
   end
 
   #
   # Show route
   #
   def show
-    @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:id])
   end
 
@@ -47,7 +37,6 @@ class SurveysController < ApplicationController
   # Edit route
   #
   def edit
-    @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:id])
   end
 
@@ -55,25 +44,15 @@ class SurveysController < ApplicationController
   # Update route
   #
   def update
-    @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:id])
-
-    if @survey.update(survey_params)
-      flash[:success] = success_message(@survey, :update)
-      redirect_to presentation_survey_path(@presentation.id, @survey.id)
-    else
-      flash.now[:error] = error_message(@survey, :create)
-      render :edit
-    end
+    update_survey
   end
 
   #
   # Destroy route
   #
   def destroy
-    @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:id])
-
     if @survey.destroy
       flash[:success] = success_message(@survey, :delete)
       redirect_to presentation_surveys_path
@@ -90,5 +69,40 @@ class SurveysController < ApplicationController
   #
   def survey_params
     params.require(:survey).permit(:presentation_id, :subject, :position)
+  end
+
+  #
+  # Set presentation to be used in routes
+  #
+  def set_presentation
+    @presentation = Presentation.find(params[:presentation_id])
+  end
+
+  #
+  # Save helper for create action
+  # Extrapolated into new method to appease Rubocop
+  #
+  def save_survey
+    if @survey.save
+      flash[:success] = success_message(@survey, :create)
+      redirect_to presentation_survey_path(@presentation.id, @survey.id)
+    else
+      flash.now[:error] = error_message(@survey, :create)
+      render :new
+    end
+  end
+
+  #
+  # Update helper for update action
+  # Extrapolated into new method to appease Rubocop
+  #
+  def update_survey
+    if @survey.update(survey_params)
+      flash[:success] = success_message(@survey, :update)
+      redirect_to presentation_survey_path(@presentation.id, @survey.id)
+    else
+      flash.now[:error] = error_message(@survey, :create)
+      render :edit
+    end
   end
 end

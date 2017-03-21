@@ -18,14 +18,7 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
     @question.survey_id = params[:survey_id]
-
-    if @question.save
-      flash[:success] = success_message(@question, :create)
-      redirect_to presentation_survey_path(@presentation.id, @question.survey_id)
-    else
-      flash.now[:error] = error_message(@question, :create)
-      render :new
-    end
+    save_question
   end
 
   #
@@ -94,5 +87,19 @@ class QuestionsController < ApplicationController
     @presentation = Presentation.find(params[:presentation_id])
     @survey = Survey.find(params[:survey_id])
     @question = @survey.questions.find(params[:id])
+  end
+
+  #
+  # Save helper for create action
+  # Extrapolated into new method to appease Rubocop
+  #
+  def save_question
+    if @question.save
+      flash[:success] = success_message(@question, :create)
+      redirect_to presentation_survey_path(@presentation.id, @question.survey_id)
+    else
+      flash.now[:error] = error_message(@question, :create)
+      render :new
+    end
   end
 end
