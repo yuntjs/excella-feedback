@@ -8,14 +8,17 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
   before do
     @user = create(:user)
     @presentation = create(:presentation)
+    
     create(:participation,
            user_id: @user.id,
            presentation_id: @presentation.id)
 
     @survey = create(:survey, presentation_id: @presentation.id)
+    
     create_list(:question, 5, :number, :required, survey_id: @survey.id) do |question|
       create(:response, :number, question_id: question.id, user_id: @user.id)
     end
+    
     create_list(:question, 5, :text, :required, survey_id: @survey.id) do |question|
       create(:response, :text, question_id: question.id, user_id: @user.id)
     end
@@ -67,20 +70,26 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
 
     scenario 'presenter can see feedback for surveys about themselves' do
       presenter_survey = create(:survey, presentation_id: @presentation.id, presenter_id: @user.id)
+      
       create_list(:question, 1, :text, :required, survey_id: presenter_survey.id) do |question|
         create(:response, value: 'Response for presenter only', question_id: question.id, user_id: @user.id)
       end
+      
       visit presentation_responses_path(@presentation)
+
       assert page.has_content?('Response for presenter only')
     end
 
     scenario 'presenter cannot see feedback for surveys about another presenter' do
       another_user = create(:user)
       presenter_survey = create(:survey, presentation_id: @presentation.id, presenter_id: another_user.id)
+      
       create_list(:question, 1, :text, :required, survey_id: presenter_survey.id) do |question|
         create(:response, value: 'Response for presenter only', question_id: question.id, user_id: @user.id)
       end
+      
       visit presentation_responses_path(@presentation)
+      
       refute page.has_content?('Response for presenter only')
     end
 
@@ -88,11 +97,15 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
       admin = create(:user, :admin)
       another_user = create(:user)
       presenter_survey = create(:survey, presentation_id: @presentation.id, presenter_id: another_user.id)
+      
       create_list(:question, 1, :text, :required, survey_id: presenter_survey.id) do |question|
         create(:response, value: 'Response for presenter only', question_id: question.id, user_id: @user.id)
       end
+      
       login_as(admin)
+      
       visit presentation_responses_path(@presentation)
+      
       assert page.has_content?('Response for presenter only')
     end
   end
