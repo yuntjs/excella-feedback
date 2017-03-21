@@ -29,7 +29,7 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
       create(:response, :number, question_id: question.id, user_id: @user.id)
     end
     create_list(:question, 2, :text, :required, survey_id: @survey1.id) do |question|
-      create(:response, :text, question_id: question.id, user_id: @user.id)
+      create(:response, value: "Response for #{@presenter1.first_name} #{@presenter1.last_name}", question_id: question.id, user_id: @user.id)
     end
     @survey2 = create(:survey,
                       presentation_id: @presentation.id,
@@ -39,7 +39,7 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
       create(:response, :number, question_id: question.id, user_id: @user.id)
     end
     create_list(:question, 2, :text, :required, survey_id: @survey2.id) do |question|
-      create(:response, :text, question_id: question.id, user_id: @user.id)
+      create(:response, value: "Response for #{@presenter2.first_name} #{@presenter2.last_name}", question_id: question.id, user_id: @user.id)
     end
   end
 
@@ -47,12 +47,13 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
     Warden.test_reset!
   end
 
-  feature 'viewing feedback as presenter' do
+  feature 'viewing feedback as admin' do
     before do
-      login_as(@presenter1, scope: :user)
+      login_as(@admin, scope: :user)
 
       visit presentation_responses_path(@presentation)
     end
+
     scenario 'feedback for scale (number) responses render properly as chart' do
       number_question_ids = Question.where(response_type: 'number').pluck(:id)
 
@@ -88,58 +89,24 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
       end
     end
 
-    scenario 'presenter can see feedback for surveys about themselves' do
-      presenter_survey = create(:survey, presentation_id: @presentation.id, presenter_id: @user.id)
-
-      create_list(:question, 1, :text, :required, survey_id: presenter_survey.id) do |question|
-        create(:response, value: 'Response for presenter only', question_id: question.id, user_id: @user.id)
-      end
-
-      visit presentation_responses_path(@presentation)
-
-      assert page.has_content?('Response for presenter only')
-    end
-
-    scenario 'presenter cannot see feedback for surveys about another presenter' do
-      another_user = create(:user)
-      presenter_survey = create(:survey, presentation_id: @presentation.id, presenter_id: another_user.id)
-
-      create_list(:question, 1, :text, :required, survey_id: presenter_survey.id) do |question|
-        create(:response, value: 'Response for presenter only', question_id: question.id, user_id: @user.id)
-      end
-
-      visit presentation_responses_path(@presentation)
-
-      refute page.has_content?('Response for presenter only')
-    end
-
-    scenario 'admin can see feedback for all surveys' do
-      admin = create(:user, :admin)
-      another_user = create(:user)
-      presenter_survey = create(:survey, presentation_id: @presentation.id, presenter_id: another_user.id)
-
-      create_list(:question, 1, :text, :required, survey_id: presenter_survey.id) do |question|
-        create(:response, value: 'Response for presenter only', question_id: question.id, user_id: @user.id)
-      end
-
-      login_as(admin)
-
-      visit presentation_responses_path(@presentation)
-
-      assert page.has_content?('Response for presenter only')
-    end
-  end
-
-  feature 'viewing feedback as admin' do
-    before do
-      login_as(@admin, scope: :user)
-
-      visit presentation_responses_path(@presentation)
-    end
-
     scenario 'admin user can see feedback for all presenters' do
       assert page.has_content?("#{@presenter1.first_name} #{@presenter1.last_name}"), 'Admin unable to see first presenter'
       assert page.has_content?("#{@presenter2.first_name} #{@presenter2.last_name}"), 'Admin unable to see second presenter.'
+    end
+  end
+
+  feature 'viewing feedback as presenter' do
+    before do
+      login_as(@presenter1, scope: :user)
+
+      visit presentation_responses_path(@presentation)
+    end
+
+    scenario 'presenter can see feedback for surveys only about themselves' do
+      visit presentation_responses_path(@presentation)
+
+      assert page.has_content?("Response for #{@presenter1.first_name} #{@presenter1.last_name}")
+      refute page.has_content?("Response for #{@presenter2.first_name} #{@presenter2.last_name}")
     end
   end
 end
