@@ -18,4 +18,13 @@ module ApplicationHelper
       content_tag(:span, '', class: 'glyphicon glyphicon-chevron-left', aria_hidden: 'true') + '&nbsp;Back'.html_safe
     end
   end
+
+  #
+  # Renders error messages for login
+  #
+  def login_errors(flash)
+    if flash.alert
+      content_tag(:div, flash.alert, class: 'has-error text-danger')
+    end
+  end
 end
