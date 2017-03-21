@@ -77,7 +77,7 @@ module PresentationsHelper
   #
   def feedback_button(user, presentation)
     if is_in_future?(presentation)
-      return if params[:controller] == 'presentations' && params[:action] == 'show'
+      return if in_presentation_show?
       build_feedback_button('Available after Presentation', '#', 'btn btn-default disabled')
     elsif user_is_not_attendee?(user, presentation)
       build_feedback_button('See Feedback', presentation_responses_path(presentation), 'btn btn-success')
@@ -86,6 +86,13 @@ module PresentationsHelper
     else
       build_feedback_button('Provide Feedback', new_presentation_response_path(presentation), 'btn btn-warning')
     end
+  end
+
+  #
+  # Determine if in Presentations#show
+  #
+  def in_presentation_show?
+    params[:controller] == 'presentations' && params[:action] == 'show'
   end
 
   #
