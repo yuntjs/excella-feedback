@@ -13,7 +13,7 @@ class ParticipationsController < ApplicationController
     presenter = User.find(@participation.user_id)
     # If creating new presenter, create a survey for the presenter
     if participation_params[:is_presenter] == 'true' # Why is this a string?
-      create_default_survey(presenter)
+      new_default_survey(presenter)
     elsif presentation.surveys.where(presenter_id: presenter.id).exists?
       # Otherwise, delete the presenter's survey(s)
       survey = presentation.surveys.where(presenter_id: presenter.id) # Returns array
