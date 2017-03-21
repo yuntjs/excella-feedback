@@ -64,5 +64,9 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
                'Average was not rendered properly'
       end
     end
+
+    scenario 'admin user can see all feedback including responses for presenters' do
+      
+    end
   end
 end
