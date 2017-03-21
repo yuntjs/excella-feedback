@@ -91,6 +91,7 @@ class QuestionsController < ApplicationController
 
   #
   # Save helper for create action
+  # Extrapolated into new method to appease Rubocop
   #
   def save_question
     if @question.save
