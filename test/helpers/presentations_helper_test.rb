@@ -68,7 +68,17 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#feedback_header' do
-    it 'tests pending...'
+    it 'returns "Admin" for header of feedback (right-most) column when user is Admin' do
+      text = feedback_header(@admin)
+
+      assert_equal text, 'Admin', 'Returns something other than "Admin"'
+    end
+
+    it 'returns "Feedback" for header of feedback (right-most) column when user is General User' do
+      text = feedback_header(@user)
+
+      assert_equal text, 'Feedback', 'Returns something other than "Feedback"'
+    end
   end
 
   describe '#display_description' do
@@ -155,7 +165,24 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#survey_link_for' do
-    it 'tests pending...'
+    it 'renders link to see surveys if presentation already has surveys created' do
+      presentation = create(:presentation)
+      create(:survey, presentation_id: presentation.id)
+
+      link_text = survey_link_for(presentation)
+
+      assert link_text.include?('See Surveys'), 'Link does not contain "See Surveys"'
+      refute link_text.include?('Create Survey'), 'Link contains "Create Survey"'
+    end
+
+    it 'renders link to create surveys if presentation has no surveys' do
+      presentation = create(:presentation)
+
+      link_text = survey_link_for(presentation)
+
+      assert link_text.include?('Create Survey'), 'Link does not contain "Create Survey"'
+      refute link_text.include?('See Surveys'), 'Link contains "See Survyes "'
+    end
   end
 
   describe '#presentation_admin_options' do
