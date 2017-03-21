@@ -3,18 +3,20 @@
 # Wraps a user's feedback submission into one object
 #
 class Feedback
-  attr_reader :user, :survey_data
+  attr_reader :user, :data
 
   #
-  # Set user, then extract survey details into survey_data array
+  # Set user
+  # Extract survey details into 'data' array, which stores 1 object for each survey
+  # Each object in 'data' stores a given survey's title, questions, and (later) responses
   #
   def initialize(user, surveys)
     @user = user
 
-    @survey_data = surveys.map do |survey|
+    @data = surveys.map do |survey|
       {
-        title: survey.subject,
-        questions: survey.questions
+        survey_title: survey.subject,
+        survey_questions: survey.questions
       }
     end
   end
@@ -23,8 +25,8 @@ class Feedback
   # Create unsaved responses from form inputs
   #
   def add_responses(form_input: nil)
-    @survey_data.each do |survey|
-      survey[:responses] = survey[:questions].map do |question|
+    @data.each do |d|
+      d[:survey_responses] = d[:survey_questions].map do |question|
         value = form_input ? form_input[question.id.to_s] : nil
 
         question.responses.new(
@@ -42,8 +44,8 @@ class Feedback
   def valid?
     all_valid = true
 
-    @survey_data.each do |survey|
-      survey[:responses].each do |response|
+    @data.each do |d|
+      d[:survey_responses].each do |response|
         all_valid = false if response.invalid?
       end
     end
@@ -52,11 +54,11 @@ class Feedback
   end
 
   #
-  # Saves all responses in survey_data
+  # Saves all responses in data
   #
   def save
-    @survey_data.each do |survey|
-      survey[:responses].each(&:save)
+    @data.each do |d|
+      d[:survey_responses].each(&:save)
     end
   end
 end
