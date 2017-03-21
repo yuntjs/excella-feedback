@@ -67,7 +67,7 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
   end
 
   feature 'viewing feedback as admin' do
-    scenario 'admin user can see feedback for all presenters' do
+    before do
       @admin = create(:user, :admin)
       @presentation_with_presenters = create(:presentation)
       @presenter1 = create(:user,
@@ -105,6 +105,9 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
         create(:response, :text, question_id: question.id, user_id: @user.id)
       end
 
+    end
+    
+    scenario 'admin user can see feedback for all presenters' do
       login_as(@admin, scope: :user)
 
       visit presentation_responses_path(@presentation_with_presenters)
