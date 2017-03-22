@@ -18,7 +18,7 @@
         </tr>
         <% @presentation.surveys.order(:position).each do |survey| %>
         <tr>
-          <td><%= link_to "#{survey.subject} (#{survey.position})", presentation_survey_path(@presentation.id, survey.id) %></td>
+          <td><%= link_to "#{survey.title} (#{survey.position})", presentation_survey_path(@presentation.id, survey.id) %></td>
           <!-- <td><%= survey.position %></td> -->
           <td>
             <%= link_to "Edit", edit_presentation_survey_path(@presentation.id, survey.id), class: "btn btn-primary" %>

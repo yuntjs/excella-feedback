@@ -15,7 +15,7 @@ class Feedback
 
     @data = surveys.map do |survey|
       {
-        survey_title: survey.subject,
+        survey_title: survey.title,
         survey_questions: survey.questions
       }
     end

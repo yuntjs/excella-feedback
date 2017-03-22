@@ -43,7 +43,7 @@ FactoryGirl.define do
 
   factory :survey do
     sequence(:position) { |n| n }
-    sequence(:subject) { |n| "Survey #{n}" }
+    sequence(:title) { |n| "Survey #{n}" }
     presentation
   end
 
