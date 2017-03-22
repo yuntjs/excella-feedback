@@ -7,5 +7,13 @@ class SurveyTemplatesController < ApplicationController
   # Render Survey Template data
   #
   def index
+    @survey_templates = SurveyTemplate.all
+  end
+
+  #
+  # Show route
+  #
+  def show
+    @survey_template = SurveyTemplate.find(params[:id])
   end
 end

@@ -1,1 +1,4 @@
 <h1>Survey Template Index</h1>
+<% @survey_templates.each do |survey_template| %>
+  <%= link_to survey_template.name, survey_template_path(survey_template) %>
+<% end %>

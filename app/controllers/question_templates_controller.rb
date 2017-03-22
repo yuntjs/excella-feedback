@@ -32,6 +32,7 @@ class QuestionTemplatesController < ApplicationController
   end
 
   private
+
   #
   # Set params for question_template
   #
@@ -51,7 +52,7 @@ class QuestionTemplatesController < ApplicationController
   # Extrapolated into new method to appease Rubocop
   #
   def save_question_template
-    if @question.save
+    if @question_template.save
       flash[:success] = success_message(@question_template, :create)
       redirect_to survey_template_path(@survey_template)
     else
