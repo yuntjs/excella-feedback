@@ -2,7 +2,6 @@ require 'test_helper'
 
 class QuestionsControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers
-  include FactoryGirl::Syntax::Methods
 
   before do
     @admin = create :user, :admin

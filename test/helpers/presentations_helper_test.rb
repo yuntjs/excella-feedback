@@ -60,29 +60,75 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#admin_table' do
-    it 'tests pending...'
+    it 'renders a partial if user is an admin'
+
+    it 'returns nil if user is not an admin' do
+      assert_nil admin_table(@user), 'Expected to return nil if user is not admin'
+    end
   end
 
   describe '#general_user_table' do
-    it 'tests pending...'
+    it 'renders a partial if user is involved in presentations as a given role'
+
+    it 'renders nil if user is not involved in presentations as a given role' do
+      another_user = create(:user)
+
+      assert_nil general_user_table(user: another_user, role: :presenter, title: 'Title', feedback_message: 'Feedback Message'), 'Expected to return nil'
+    end
   end
 
   describe '#feedback_header' do
-    it 'returns "Admin" for header of feedback (right-most) column when user is Admin' do
-      text = feedback_header(@admin)
+    it 'returns "Admin" when argument is not "As Presenter" or "As Attendee"' do
+      text = feedback_header('As Admin')
 
       assert_equal text, 'Admin', 'Returns something other than "Admin"'
     end
 
-    it 'returns "Feedback" for header of feedback (right-most) column when user is General User' do
-      text = feedback_header(@user)
+    it 'returns "Feedback" when argument is "As Presenter" or "As Attendee"' do
+      text1 = feedback_header('As Presenter')
+      text2 = feedback_header('As Attendee')
 
-      assert_equal text, 'Feedback', 'Returns something other than "Feedback"'
+      assert_equal text1, 'Feedback', 'Returns something other than "Feedback"'
+      assert_equal text2, 'Feedback', 'Returns something other than "Feedback"'
     end
   end
 
   describe '#display_description' do
-    it 'tests pending...'
+    let(:char_limit) { 30 }
+
+    it 'returns the presentation description if its length is less than the char limit' do
+      @presentation_as_attendee.description = 'a' * (char_limit - 1)
+
+      assert_equal display_description(@presentation_as_attendee), @presentation_as_attendee.description,
+                   'Expected the entire presentation description'
+    end
+
+    it 'returns the presentation description if its length equals the char limit' do
+      @presentation_as_attendee.description = 'a' * char_limit
+
+      assert_equal display_description(@presentation_as_attendee), @presentation_as_attendee.description,
+                   'Expected the entire presentation description'
+    end
+
+    it 'returns a shortened presentation description if its length exceeds the char limit' do
+      @presentation_as_attendee.description = 'a' * (char_limit + 1)
+
+      description = display_description(@presentation_as_attendee)
+      short_span_description = '<span>' + @presentation_as_attendee.description[0..char_limit] + '</span>'
+
+      assert_includes description, short_span_description, 'Expected output does not include shortened description'
+      assert_includes description, '(more)', 'Expected output does not include "(more)"'
+    end
+
+    it 'returns a shortened presentation description if its length greatly exceeds the char limit' do
+      @presentation_as_attendee.description = 'a' * (char_limit + 10)
+
+      description = display_description(@presentation_as_attendee)
+      short_span_description = '<span>' + @presentation_as_attendee.description[0..char_limit] + '</span>'
+
+      assert_includes description, short_span_description, 'Expected output does not include shortened description'
+      assert_includes description, '(more)', 'Expected output does not include "(more)"'
+    end
   end
 
   describe '#feedback_content' do
@@ -99,11 +145,7 @@ class PresentationsHelperTest < ActionView::TestCase
 
     it 'shows disabled feedback button when feedback completed' do
       presentation = create(:presentation)
-      create(:participation,
-             user_id: @user.id,
-             presentation_id: presentation.id,
-             is_presenter: false,
-             feedback_provided: true)
+      create(:participation, user_id: @user.id, presentation_id: presentation.id, is_presenter: false, feedback_provided: true)
 
       link_string = provide_feedback_button(@user, presentation)
 
@@ -120,10 +162,7 @@ class PresentationsHelperTest < ActionView::TestCase
       @disabled_css = 'disabled'
 
       @future_presentation = create(:presentation, :in_the_future)
-      create(:participation,
-             user_id: @user.id,
-             presentation_id: @future_presentation.id,
-             is_presenter: false)
+      create(:participation, user_id: @user.id, presentation_id: @future_presentation.id, is_presenter: false)
     end
     it 'shows disabled button before presentation start time' do
       link_string = feedback_button(@user, @future_presentation)
@@ -186,14 +225,42 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#presentation_admin_options' do
-    it 'tests pending...'
+    let(:link) { presentation_admin_options(@admin, @presentation_as_attendee) }
+
+    it 'returns a link to edit presentation if user is an admin' do
+      assert_includes link, edit_presentation_path(@presentation_as_attendee), 'Does not include link to edit presentation'
+    end
+
+    it 'returns a link to edit participants if user is an admin' do
+      assert_includes link, 'Edit Participants', 'Does not include link to edit participants'
+    end
+
+    it 'returns a link to view surveys if user is an admin' do
+      assert_includes link, presentation_surveys_path(@presentation_as_attendee), 'Does not include link to view surveys'
+    end
+
+    it 'returns a link to delete presentation if user is an admin' do
+      assert_includes link, 'Delete', 'The word "Delete" is not in the delete link'
+      assert_includes link, presentation_path(@presentation_as_attendee), 'Does not include link to delete presentation'
+    end
+
+    it 'returns nil if user is not an admin' do
+      assert_nil presentation_admin_options(@user, @presentation_as_attendee), 'Expected nil if user is not an admin'
+    end
   end
 
   describe '#participation_table' do
     it 'tests pending...'
   end
 
-  describe '#set_participation_table' do
-    it 'tests pending...'
+  describe '#set_participation_title' do
+    it 'returns the singular for a given role if the number of participants equals 1' do
+      assert_equal set_participation_title(:presenter, 1), 'presenter', 'Expected method to return "presenter"'
+    end
+
+    it 'returns the plural for a given role if the number of participants is not 1' do
+      assert_equal set_participation_title(:presenter, 0), 'presenters', 'Expected method to return "presenters"'
+      assert_equal set_participation_title(:presenter, 3), 'presenters', 'Expected method to return "presenters"'
+    end
   end
 end

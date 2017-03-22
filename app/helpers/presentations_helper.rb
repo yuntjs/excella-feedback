@@ -31,8 +31,8 @@ module PresentationsHelper
   # Handles difference between presenter and attendee users
   #
   def general_user_table(user:, role:, title:, feedback_message:)
-    panel_color = role == :presenter ? 'panel-info' : 'panel-default'
     return unless presentations_as(role, user).any?
+    panel_color = role == :presenter ? 'panel-info' : 'panel-default'
     render partial: 'presentations/presentation_table', locals: { title: title, presentations: presentations_as(role, user), feedback_message: feedback_message, panel_color: panel_color }
   end
 

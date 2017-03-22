@@ -1,5 +1,4 @@
 require 'test_helper'
-include FactoryGirl::Syntax::Methods
 
 describe Presentation do
   before do

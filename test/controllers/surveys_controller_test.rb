@@ -2,7 +2,6 @@ require 'test_helper'
 
 class SurveysControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers
-  include FactoryGirl::Syntax::Methods
 
   describe '#create' do
     it 'should create a new survey if User is an Admin' do

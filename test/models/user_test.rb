@@ -1,5 +1,4 @@
 require 'test_helper'
-include FactoryGirl::Syntax::Methods
 
 describe User do
   before do
