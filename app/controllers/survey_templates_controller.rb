@@ -26,27 +26,43 @@ class SurveyTemplatesController < ApplicationController
   end
 
   #
+  # Create route
+  #
+  def create
+    @survey_template = SurveyTemplate.new(survey_template_params)
+    save_survey_template
+  end
+
+  #
   # Edit route
   #
   def edit
   end
 
   #
-  # Create route
-  #
-  def create
-  end
-
-  #
   # Update route
   #
   def update
+    if @survey_template.update(survey_template_params)
+      flash[:success] = success_message(@survey_template, :update)
+      redirect_to @survey_template, notice: 'Survey Template was successfully updated.'
+    else
+      flash.now[:error] = error_message(@survey_template, :update)
+      render :edit
+    end
   end
 
   #
   # Destroy route
   #
   def destroy
+    if @survey_template.destroy
+      flash[:success] = success_message(@survey_template, :delete)
+      redirect_to survey_templates_url, notice: 'Survey Template was successfully destroyed.'
+    else
+      flash[:error] = error_message(@survey_template, :delete)
+      redirect_back fallback_location: survey_templates_path
+    end
   end
 
   private
@@ -63,5 +79,19 @@ class SurveyTemplatesController < ApplicationController
   #
   def survey_template_params
     params.require(:survey_template).permit(:title, :name)
+  end
+
+  #
+  # Save helper for create action
+  # Extrapolated into new method to appease Rubocop
+  #
+  def save_survey_template
+    if @survey_template.save
+      flash[:success] = success_message(@survey_template, :create)
+      redirect_to survey_template_path(@survey_template)
+    else
+      flash.now[:error] = error_message(@survey_template, :create)
+      render :new
+    end
   end
 end
