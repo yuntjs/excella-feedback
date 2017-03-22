@@ -14,7 +14,7 @@ class SurveysControllerTest < ActionController::TestCase
         presentation_id: presentation.id,
         survey: {
           order: 1,
-          subject: 'Git'
+          title: 'Git'
         }
       }
 
@@ -26,9 +26,9 @@ class SurveysControllerTest < ActionController::TestCase
     it 'should allow Admin user to Update surveys' do
       admin = create :user, :admin
       presentation = create :presentation
-      survey = create :survey, subject: 'Git', presentation_id: presentation.id
+      survey = create :survey, title: 'Git', presentation_id: presentation.id
 
-      updated_subject = 'Git 2'
+      updated_title = 'Git 2'
       updated_position = 2
 
       sign_in admin
@@ -38,12 +38,12 @@ class SurveysControllerTest < ActionController::TestCase
         id: survey.id,
         survey: {
           position: updated_position,
-          subject: updated_subject
+          title: updated_title
         }
       }
 
       survey.reload
-      assert_equal [updated_subject, updated_position], [survey.subject, survey.position], 'Survey subject & position was not updated properly'
+      assert_equal [updated_title, updated_position], [survey.title, survey.position], 'Survey title & position was not updated properly'
       assert_redirected_to presentation_survey_path(presentation.id, survey.id), 'No redirect to presentation_survey_path'
     end
   end

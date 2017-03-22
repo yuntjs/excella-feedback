@@ -21,7 +21,7 @@ class CreateSurveyTest < Capybara::Rails::TestCase
 
       within('form') do
         fill_in 'Position', with: 1
-        fill_in 'Subject', with: 'Testing'
+        fill_in 'Title', with: 'Testing'
         click_button 'Submit'
       end
 
@@ -39,7 +39,7 @@ class CreateSurveyTest < Capybara::Rails::TestCase
       refute_equal current_path, new_presentation_survey_path(pres), 'Page did not redirect for non-admin'
     end
 
-    scenario 'does not create survey with empty subject' do
+    scenario 'does not create survey with empty title' do
       admin = create(:user, :admin)
       login_as(admin, scope: :user)
 

@@ -12,7 +12,7 @@ class Survey < ApplicationRecord
   has_many :questions, dependent: :destroy
 
   # validates :order, presence: false
-  validates :subject, presence: true
+  validates :title, presence: true
 
   # TODO: remove order from schema
   def position_questions

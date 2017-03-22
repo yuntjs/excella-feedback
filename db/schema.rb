@@ -75,11 +75,11 @@ ActiveRecord::Schema.define(version: 20170322180727) do
 
   create_table "surveys", force: :cascade do |t|
     t.integer  "presentation_id"
-    t.string   "subject"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "position"
     t.integer  "presenter_id"
+    t.string   "title"
     t.index ["presentation_id"], name: "index_surveys_on_presentation_id", using: :btree
   end
 
