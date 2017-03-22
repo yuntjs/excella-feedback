@@ -3,7 +3,7 @@
 #
 class SurveyTemplatesController < ApplicationController
   before_action :authenticate_admin
-  before_action :set_survey_template, only: [:show]
+  before_action :set_survey_template, only: [:show, :edit, :update, :destroy]
 
   #
   # Render Survey Template data
@@ -16,6 +16,37 @@ class SurveyTemplatesController < ApplicationController
   # Show route
   #
   def show
+  end
+
+  #
+  # New route
+  #
+  def new
+    @survey_template = SurveyTemplate.new
+  end
+
+  #
+  # Edit route
+  #
+  def edit
+  end
+
+  #
+  # Create route
+  #
+  def create
+  end
+
+  #
+  # Update route
+  #
+  def update
+  end
+
+  #
+  # Destroy route
+  #
+  def destroy
   end
 
   private
