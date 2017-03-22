@@ -158,7 +158,6 @@ survey_templates.each do |template_title|
     title: template_title
   )
 end
-
 SurveyTemplate.all.each do |survey|
   number_questions.each do |question|
     QuestionTemplate.create(
