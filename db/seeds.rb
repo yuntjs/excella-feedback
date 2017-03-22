@@ -180,5 +180,3 @@ end
 
 puts "Done!"
 puts "Note: all users have the password \"#{PASSWORD}\""
-
-byebug
