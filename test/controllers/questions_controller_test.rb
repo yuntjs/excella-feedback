@@ -5,6 +5,9 @@ class QuestionsControllerTest < ActionController::TestCase
 
   before do
     @admin = create :user, :admin
+
+    sign_in @admin
+
     @presentation = create :presentation
     @survey = create :survey, position: 1, title: 'Git', presentation_id: @presentation.id
     @question = create :question, survey_id: @survey.id
@@ -13,8 +16,6 @@ class QuestionsControllerTest < ActionController::TestCase
   describe '#create' do
     it 'should create a new question if User is an Admin' do
       question = create :question
-
-      sign_in @admin
 
       post :create, params: {
         presentation_id: @presentation.id,
@@ -34,8 +35,6 @@ class QuestionsControllerTest < ActionController::TestCase
     it 'should allow admin to update questions' do
       updated_prompt = 'Feedback is an internal application that allows?'
 
-      sign_in @admin
-
       patch :update, params: {
         presentation_id: @presentation.id,
         survey_id: @survey.id,
@@ -52,8 +51,6 @@ class QuestionsControllerTest < ActionController::TestCase
 
     it 'should redirect to correct path after an update' do
       updated_prompt = 'Feedback is an internal application that allows?'
-
-      sign_in @admin
 
       patch :update, params: {
         presentation_id: @presentation.id,
