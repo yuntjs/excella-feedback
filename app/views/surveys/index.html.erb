@@ -12,15 +12,13 @@
       </div>
       <table class="table">
         <tr>
-          <th>Subject</th>
-          <!-- <th>Order</th> -->
+          <th>Title</th>
           <th>Actions</th>
         </tr>
         <% @presentation.surveys.order(:position).each do |survey| %>
         <tr>
-          <td><%= link_to "#{survey.subject} (#{survey.position})", presentation_survey_path(@presentation.id, survey.id) %></td>
-          <!-- <td><%= survey.position %></td> -->
-          <td>
+          <td><%= link_to "#{survey.title} (#{survey.position})", presentation_survey_path(@presentation.id, survey.id) %></td>
+          <td>b
             <%= link_to "Edit", edit_presentation_survey_path(@presentation.id, survey.id), class: "btn btn-primary" %>
             <%= link_to "Delete", presentation_survey_path(@presentation.id, survey.id), class: "btn  btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
           </td>

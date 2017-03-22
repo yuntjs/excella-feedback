@@ -102,7 +102,7 @@ presentations.each do |pres_name|
   surveys.each_with_index do |survey_name, index|
     survey = pres.surveys.create(
       position: index,
-      subject: survey_name
+      title: survey_name
     )
     number_questions.each_with_index do |question, index|
       ques = survey.questions.create(

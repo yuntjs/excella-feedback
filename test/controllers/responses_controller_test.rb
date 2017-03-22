@@ -6,7 +6,7 @@ class ResponsesControllerTest < ActionController::TestCase
   before do
     @user = create :user
     @presentation = create :presentation
-    @survey = create :survey, position: 1, subject: 'Git', presentation_id: @presentation.id
+    @survey = create :survey, position: 1, title: 'Git', presentation_id: @presentation.id
     @questions = create_list :question, 5, :required, :number, survey_id: @survey.id
 
     sign_in @user
