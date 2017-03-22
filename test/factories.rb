@@ -1,4 +1,24 @@
 FactoryGirl.define do
+  factory :question_template do
+    prompt 'question_template prompt'
+    response_type 'text'
+    response_required false
+    survey_template
+
+    trait :text do
+      response_type 'text'
+    end
+
+    trait :number do
+      response_type 'number'
+    end
+  end
+
+  factory :survey_template do
+    title 'My new survey_template title'
+    name 'My new survey_template name'
+  end
+
   factory :user do
     sequence(:email) { |n| "email#{n}@example.com" }
     password 'password'

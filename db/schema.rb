@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322180452) do
+ActiveRecord::Schema.define(version: 20170322180727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,16 @@ ActiveRecord::Schema.define(version: 20170322180452) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "question_templates", force: :cascade do |t|
+    t.string   "prompt"
+    t.string   "response_type"
+    t.boolean  "response_required"
+    t.integer  "survey_template_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["survey_template_id"], name: "index_question_templates_on_survey_template_id", using: :btree
+  end
+
   create_table "questions", force: :cascade do |t|
     t.integer  "survey_id"
     t.string   "prompt"
@@ -54,6 +64,13 @@ ActiveRecord::Schema.define(version: 20170322180452) do
     t.datetime "updated_at",  null: false
     t.index ["question_id"], name: "index_responses_on_question_id", using: :btree
     t.index ["user_id"], name: "index_responses_on_user_id", using: :btree
+  end
+
+  create_table "survey_templates", force: :cascade do |t|
+    t.string   "title"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "surveys", force: :cascade do |t|
@@ -88,6 +105,7 @@ ActiveRecord::Schema.define(version: 20170322180452) do
 
   add_foreign_key "participations", "presentations"
   add_foreign_key "participations", "users"
+  add_foreign_key "question_templates", "survey_templates"
   add_foreign_key "questions", "surveys"
   add_foreign_key "responses", "questions"
   add_foreign_key "responses", "users"

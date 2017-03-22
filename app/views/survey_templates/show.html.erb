@@ -1,0 +1,10 @@
+<%= back_button(survey_templates_path) %>
+
+<h2>SURVEY SHOW</h2>
+<%= @survey_template.title %>
+<%= @survey_template.name %>
+
+<h3>MY QUESTIONS</h3>
+<% @survey_template.question_templates.each do |question_template| %>
+  <%= question_template.prompt %>
+<% end %>
