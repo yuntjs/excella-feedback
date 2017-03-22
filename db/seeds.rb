@@ -55,21 +55,13 @@ survey_templates = [
 
 unless Rails.env.production?
   puts "Destroying everything..."
-  puts "...Users"
   User.destroy_all
-  puts "...Presentations"
   Presentation.destroy_all
-  puts "...Participtions"
   Participation.destroy_all
-  puts "...Surveys"
   Survey.destroy_all
-  puts "...Questions"
   Question.destroy_all
-  puts "...Responses"
   Response.destroy_all
-  puts "...SurveyTemplates"
   SurveyTemplate.destroy_all
-  puts "...QuestionTemplates"
   QuestionTemplate.destroy_all
 end
 
