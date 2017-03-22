@@ -85,11 +85,11 @@ class PresentationsHelperTest < ActionView::TestCase
     end
 
     it 'returns "Feedback" when argument is "As Presenter" or "As Attendee"' do
-      text_1 = feedback_header('As Presenter')
-      text_2 = feedback_header('As Attendee')
+      text1 = feedback_header('As Presenter')
+      text2 = feedback_header('As Attendee')
 
-      assert_equal text_1, 'Feedback', 'Returns something other than "Feedback"'
-      assert_equal text_2, 'Feedback', 'Returns something other than "Feedback"'
+      assert_equal text1, 'Feedback', 'Returns something other than "Feedback"'
+      assert_equal text2, 'Feedback', 'Returns something other than "Feedback"'
     end
   end
 
@@ -145,11 +145,7 @@ class PresentationsHelperTest < ActionView::TestCase
 
     it 'shows disabled feedback button when feedback completed' do
       presentation = create(:presentation)
-      create(:participation,
-             user_id: @user.id,
-             presentation_id: presentation.id,
-             is_presenter: false,
-             feedback_provided: true)
+      create(:participation, user_id: @user.id, presentation_id: presentation.id, is_presenter: false, feedback_provided: true)
 
       link_string = provide_feedback_button(@user, presentation)
 
@@ -166,10 +162,7 @@ class PresentationsHelperTest < ActionView::TestCase
       @disabled_css = 'disabled'
 
       @future_presentation = create(:presentation, :in_the_future)
-      create(:participation,
-             user_id: @user.id,
-             presentation_id: @future_presentation.id,
-             is_presenter: false)
+      create(:participation, user_id: @user.id, presentation_id: @future_presentation.id, is_presenter: false)
     end
     it 'shows disabled button before presentation start time' do
       link_string = feedback_button(@user, @future_presentation)
