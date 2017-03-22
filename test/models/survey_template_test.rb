@@ -1,9 +1,11 @@
 require 'test_helper'
 
 describe SurveyTemplate do
-  let(:survey_template) { SurveyTemplate.new }
+  before do
+    @survey_template = create(:survey_template)
+  end
 
   it 'must be valid' do
-    value(survey_template).must_be :valid?
+    value(@survey_template).must_be :valid?
   end
 end
