@@ -1,4 +1,31 @@
-<h1>Survey Template Index</h1>
-<% @survey_templates.each do |survey_template| %>
-  <%= link_to survey_template.name, survey_template_path(survey_template) %>
-<% end %>
+<div class="container">
+  <%= back_button %>
+
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+      <h1 class="text-center">Survey Templates</h1>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>All Templates</h4>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tr>
+              <th>Template Name</th>
+              <th>Actions</th>
+            </tr>
+            <% @survey_templates.each do |survey_template| %>
+            <tr>
+              <td><%= link_to survey_template.name, survey_template_path(survey_template) %></td>
+              <td><%= action_buttons(survey_template) %></td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
+
+</div>
+<!--- /.container -->
