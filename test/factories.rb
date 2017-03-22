@@ -1,4 +1,8 @@
 FactoryGirl.define do
+  factory :survey_template do
+    title "MyString"
+    name "MyString"
+  end
   factory :user do
     sequence(:email) { |n| "email#{n}@example.com" }
     password 'password'
