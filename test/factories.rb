@@ -22,7 +22,7 @@ FactoryGirl.define do
     end
 
     trait :long_description do
-      description 'description description description description description description'
+      description 'description ' * 100
     end
   end
 
@@ -52,8 +52,6 @@ FactoryGirl.define do
     sequence(:prompt) { |n| "Question #{n}" }
     position 1
     survey
-    response_type 'text'
-    response_required false
 
     trait :text do
       response_type 'text'
@@ -83,14 +81,6 @@ FactoryGirl.define do
     trait :number do
       value 3
     end
-
-    trait :invalid do
-      question nil
-      user nil
-      question_id nil
-      user_id nil
-      value nil
-    end
   end
 
   factory :survey_template do
@@ -100,8 +90,6 @@ FactoryGirl.define do
 
   factory :question_template do
     prompt 'question_template prompt'
-    response_type 'text'
-    response_required false
     survey_template
 
     trait :text do
@@ -110,6 +98,14 @@ FactoryGirl.define do
 
     trait :number do
       response_type 'number'
+    end
+
+    trait :optional do
+      response_required false
+    end
+
+    trait :required do
+      response_required true
     end
   end
 end

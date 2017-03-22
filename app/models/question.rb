@@ -12,6 +12,10 @@ class Question < ApplicationRecord
   has_many :responses, dependent: :destroy
   has_many :users, through: :responses, dependent: :destroy
 
+  validates :prompt, presence: true
+  validates :response_type, presence: true
+  validates :response_required, presence: true
+
   #
   # Values for Presentation survey questions
   #

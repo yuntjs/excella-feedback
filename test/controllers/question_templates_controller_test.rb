@@ -9,8 +9,8 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
     sign_in(@admin)
 
     @survey_template = create(:survey_template)
-    @question_template_number = create(:question_template, :number, survey_template_id: @survey_template.id)
-    @question_template_text = create(:question_template, :text, survey_template_id: @survey_template.id)
+    @question_template_number = create(:question_template, :number, :required, survey_template_id: @survey_template.id)
+    @question_template_text = create(:question_template, :text, :required, survey_template_id: @survey_template.id)
   end
 
   describe '#create' do
@@ -27,7 +27,18 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
       assert QuestionTemplate.count > 0, 'Expected question template count to be greater than zero'
     end
 
-    it 'rejects invalid question templates'
+    it 'rejects invalid question templates' do
+      post(:create, params: {
+        survey_template_id: @survey_template.id,
+        question_template: {
+          prompt: nil,
+          response_type: nil,
+          response_required: false
+        }
+      })
+
+      assert QuestionTemplate.count == 0, 'Expected question template count to be zero'
+    end
 
     it 'redirects to the survey template path'
   end

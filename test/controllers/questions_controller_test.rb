@@ -10,7 +10,7 @@ class QuestionsControllerTest < ActionController::TestCase
 
     @presentation = create(:presentation)
     @survey = create(:survey, position: 1, title: 'Git', presentation_id: @presentation.id)
-    @question = create(:question, survey_id: @survey.id)
+    @question = create(:question, :number, :required, survey_id: @survey.id)
   end
 
   describe '#create' do
