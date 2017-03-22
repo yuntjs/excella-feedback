@@ -15,19 +15,18 @@ class QuestionsControllerTest < ActionController::TestCase
 
   describe '#create' do
     it 'should create a new question if User is an Admin' do
-      question = create(:question)
-
       post(:create, params: {
         presentation_id: @presentation.id,
         survey_id: @survey.id,
         question: {
-          position: question.position,
-          prompt: question.prompt,
-          response_type: question.response_type
+          position: 1,
+          prompt: 'prompt',
+          response_type: 'number',
+          response_required: false
         }
       })
 
-      assert_redirected_to presentation_survey_path(@presentation.id, @survey.id), 'No redirect to presentation_survey_path'
+      assert_redirected_to(presentation_survey_path(@presentation.id, @survey.id), 'No redirect to presentation_survey_path')
     end
   end
 
@@ -61,7 +60,7 @@ class QuestionsControllerTest < ActionController::TestCase
         }
       })
 
-      assert_redirected_to presentation_survey_path(@presentation.id, @survey.id), 'No redirection to presentation_survey_path'
+      assert_redirected_to(presentation_survey_path(@presentation.id, @survey.id), 'No redirection to presentation_survey_path')
     end
   end
 end

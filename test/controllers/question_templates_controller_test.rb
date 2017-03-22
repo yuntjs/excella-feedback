@@ -14,6 +14,7 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
   end
 
   describe '#create' do
+    
   end
 
   describe '#update' do
