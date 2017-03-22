@@ -1,4 +1,10 @@
 FactoryGirl.define do
+  factory :question_template do
+    prompt "MyString"
+    response_type "MyString"
+    response_required false
+    survey_template nil
+  end
   factory :survey_template do
     title "MyString"
     name "MyString"
