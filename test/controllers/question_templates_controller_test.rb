@@ -14,12 +14,31 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
   end
 
   describe '#create' do
-    
+    it 'saves valid question templates' do
+      post(:create, params: {
+        survey_template_id: @survey_template.id,
+        question_template: {
+          prompt: 'prompt',
+          response_type: 'number',
+          response_required: false
+        }
+      })
+
+      assert QuestionTemplate.count > 0, 'Expected question template count to be greater than zero'
+    end
+
+    it 'rejects invalid question templates'
+
+    it 'redirects to the survey template path'
   end
 
   describe '#update' do
+    it 'updates a question template if update data is valid'
+    it 'does not update a question template if update data is invalid'
   end
 
   describe '#destroy' do
+    it 'destroys a question template if it is valid'
+    it 'does not destroy a question template if it is invalid'
   end
 end
