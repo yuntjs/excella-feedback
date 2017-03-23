@@ -17,7 +17,7 @@ class QuestionTemplatesController < ApplicationController
   # Update
   #
   def update
-    @question_template = @survey_template.question_templates.find(params[:question_template_id])
+    @question_template = @survey_template.question_templates.find(params[:id])
     update_question_template
   end
 
