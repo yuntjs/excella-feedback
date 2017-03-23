@@ -16,15 +16,15 @@ class QuestionsControllerTest < ActionController::TestCase
   describe '#create' do
     it 'should create a new question if User is an Admin' do
       post(:create, params: {
-        presentation_id: @presentation.id,
-        survey_id: @survey.id,
-        question: {
-          position: 1,
-          prompt: 'prompt',
-          response_type: 'number',
-          response_required: false
-        }
-      })
+             presentation_id: @presentation.id,
+             survey_id: @survey.id,
+             question: {
+               position: 1,
+               prompt: 'prompt',
+               response_type: 'number',
+               response_required: false
+             }
+           })
 
       assert_redirected_to(presentation_survey_path(@presentation.id, @survey.id), 'No redirect to presentation_survey_path')
     end
@@ -35,13 +35,13 @@ class QuestionsControllerTest < ActionController::TestCase
       updated_prompt = 'Feedback is an internal application that allows?'
 
       patch(:update, params: {
-        presentation_id: @presentation.id,
-        survey_id: @survey.id,
-        id: @question.id,
-        question: {
-          prompt: updated_prompt
-        }
-      })
+              presentation_id: @presentation.id,
+              survey_id: @survey.id,
+              id: @question.id,
+              question: {
+                prompt: updated_prompt
+              }
+            })
 
       @question.reload
 
@@ -52,13 +52,13 @@ class QuestionsControllerTest < ActionController::TestCase
       updated_prompt = 'Feedback is an internal application that allows?'
 
       patch(:update, params: {
-        presentation_id: @presentation.id,
-        survey_id: @survey.id,
-        id: @question.id,
-        question: {
-          prompt: updated_prompt
-        }
-      })
+              presentation_id: @presentation.id,
+              survey_id: @survey.id,
+              id: @question.id,
+              question: {
+                prompt: updated_prompt
+              }
+            })
 
       assert_redirected_to(presentation_survey_path(@presentation.id, @survey.id), 'No redirection to presentation_survey_path')
     end

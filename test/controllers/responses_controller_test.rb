@@ -49,11 +49,11 @@ class ResponsesControllerTest < ActionController::TestCase
       end
 
       post(:create, params: {
-        presentation_id: @presentation.id,
-        responses: {
-          question_id: question_value_pairs
-        }
-      })
+             presentation_id: @presentation.id,
+             responses: {
+               question_id: question_value_pairs
+             }
+           })
 
       assert_equal(@questions.length, Response.count, 'Did not create a response for each question')
       assert_redirected_to(presentation_path(@presentation), 'No redirect to presentation_path')
