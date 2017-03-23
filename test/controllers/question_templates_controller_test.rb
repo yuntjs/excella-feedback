@@ -11,6 +11,8 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
     @survey_template = create(:survey_template)
     @question_template_number = create(:question_template, :number, :required, survey_template_id: @survey_template.id)
     @question_template_text = create(:question_template, :text, :required, survey_template_id: @survey_template.id)
+
+    @initial_count = QuestionTemplate.count
   end
 
   describe '#create' do
@@ -24,7 +26,7 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
         }
       })
 
-      assert QuestionTemplate.count > 0, 'Expected question template count to be greater than zero'
+      assert QuestionTemplate.count > @initial_count, 'Expected question template count to be greater than initial count'
     end
 
     it 'rejects invalid question templates' do
@@ -37,7 +39,7 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
         }
       })
 
-      assert QuestionTemplate.count == 0, 'Expected question template count to be zero'
+      assert QuestionTemplate.count == @initial_count, 'Expected question template count to be equal to the initial count'
     end
 
     it 'redirects to the survey template path'
