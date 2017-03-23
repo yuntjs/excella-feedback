@@ -69,6 +69,21 @@ class SurveyTemplatesControllerTest < ActionController::TestCase
       assert_equal [updated_title, updated_name], [survey_template.title, survey_template.name], 'Update method unsuccessful. Values do not match'
       assert_redirected_to survey_template_path(survey_template.id), 'Redirect to survey_template_path failed'
     end
+
+    it 'should not update with invalid params' do
+      admin = create :user, :admin
+      survey_template = create :survey_template
+
+      updated_title = ''
+      updated_name = ''
+
+      sign_in admin
+
+      patch :update, params: { id: survey_template.id, survey_template: { title: '', name: '' } }
+      survey_template.reload
+
+      assert_equal(SurveyTemplate.first, survey_template, 'SurveyTemplate was not created')
+    end
   end
 
   describe '#destroy' do
