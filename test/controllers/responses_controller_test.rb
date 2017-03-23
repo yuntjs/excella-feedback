@@ -1,5 +1,5 @@
-require 'test_helper'
 
+require 'test_helper'
 class ResponsesControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers
 
@@ -18,8 +18,8 @@ class ResponsesControllerTest < ActionController::TestCase
       feedback = assigns(:feedback)
 
       num_responses = 0
+      num_responses += d[:survey_responses].count
       feedback.data.each do |d|
-        num_responses += d[:survey_responses].count
       end
 
       assert_equal(@questions.length, num_responses, 'Did not create the correct number of unsaved responses')
