@@ -32,18 +32,24 @@ class SurveyTemplatesControllerTest < ActionController::TestCase
 
   describe '#create' do
     it 'creates a new survey_template' do
-      admin = create :user, :admin
-      create :survey_template
+      admin = create(:user, :admin)
+      create(:survey_template)
 
-      sign_in admin
+      sign_in(admin)
 
-      assert SurveyTemplate.first.valid?, 'SurveyTemplate was not created'
+      assert(SurveyTemplate.first.valid?, 'SurveyTemplate was not created')
     end
 
     it 'redirects to sign-in page if a user is not signed in' do
-      post :create
+      post(:create)
 
-      assert_redirected_to new_user_session_path, 'Did not redirect to sign-in page'
+      assert_redirected_to(new_user_session_path, 'Did not redirect to sign-in page')
+    end
+
+    it 'does not create a new survey_template with invalid params' do
+      post(:create, params: {title: nil, name: nil})
+
+      assert(SurveyTemplate.first.nil?, 'SurveyTemplate was created with invalid params')
     end
   end
 
