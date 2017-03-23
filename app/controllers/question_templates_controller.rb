@@ -25,7 +25,7 @@ class QuestionTemplatesController < ApplicationController
   # Destroy
   #
   def destroy
-    @question_template = @survey_template.question_templates.find(params[:question_template_id])
+    @question_template = @survey_template.question_templates.find(params[:id])
     delete_question_template
   end
 
@@ -75,7 +75,9 @@ class QuestionTemplatesController < ApplicationController
   # Delete helper for destroy action
   #
   def delete_question_template
-    if @question_template.destroy
+    @question_template.destroy
+
+    if @question_template.destroyed?
       flash[:success] = success_message(@question_template, :delete)
     else
       flash[:error] = error_message(@question_template, :delete)

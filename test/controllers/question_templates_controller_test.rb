@@ -65,7 +65,8 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
   end
 
   describe '#update' do
-    let(:new_prompt) { 'new prompt' }
+    let(:old_prompt) { @question_template_text.prompt }
+    let(:new_prompt) { '3' }
 
     let(:success_params) do
       {
@@ -98,11 +99,44 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
       assert_equal @question_template_text.prompt, new_prompt, 'Question template has not been updated'
     end
 
-    it 'does not update a question template if update data is invalid'
+    it 'does not update a question template if update data is invalid' do
+      patch(:update, params: error_params)
+
+      @question_template_text.reload
+
+      assert_equal @question_template_text.prompt, old_prompt, 'Question template has been updated with invalid parameters'
+    end
+
+    it 'redirects to the survey template path when updated correctly' do
+      patch(:update, params: success_params)
+
+      assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
+    end
+
+    it 'redirects to the survey template path when update fails' do
+      patch(:update, params: error_params)
+
+      assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
+    end
   end
 
   describe '#destroy' do
-    it 'destroys a question template if it is valid'
-    it 'does not destroy a question template if it is invalid'
+    let(:params) do
+      {
+        survey_template_id: @survey_template.id,
+        id: @question_template_text.id
+      }
+    end
+
+    before do
+      @initial_count = QuestionTemplate.count
+    end
+
+    it 'destroys a question template' do
+      delete(:destroy, params: params)
+
+      assert_equal QuestionTemplate.count, @initial_count - 1, 'Expected question template count to decrease by 1'
+      assert_raises { QuestionTemplate.find(@question_template_text.id) }, 'Expected QuestionTemplate.find to raise an error'
+    end
   end
 end
