@@ -14,8 +14,6 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
   end
 
   describe '#create' do
-    let(:initial_count) { QuestionTemplate.count }
-
     let(:success_params) do
       {
         survey_template_id: @survey_template.id,
@@ -37,16 +35,20 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
       }
     end
 
+    before do
+      @initial_count = QuestionTemplate.count
+    end
+
     it 'saves valid question templates' do
       post(:create, params: success_params)
 
-      assert QuestionTemplate.count > initial_count, 'Expected question template count to be greater than initial count'
+      assert QuestionTemplate.count > @initial_count, "Expected question template count (#{QuestionTemplate.count}) to be greater than initial count (#{@initial_count})"
     end
 
     it 'rejects invalid question templates' do
       post(:create, params: error_params)
 
-      assert QuestionTemplate.count == initial_count, 'Expected question template count to be equal to the initial count'
+      assert_equal QuestionTemplate.count, @initial_count, "Expected question template count (#{QuestionTemplate.count}) to equal initial count (#{@initial_count})"
     end
 
     it 'redirects to the survey template path when saves correctly' do
