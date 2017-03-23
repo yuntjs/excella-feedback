@@ -1,10 +1,41 @@
-<%= back_button(survey_templates_path) %>
+<div class="container">
+  <div class="row">
+    <%= back_button(survey_templates_path) %>
+    <h1 class="text-center"><%= @survey_template.name %></h1>
+  </div>
+  <!-- /.row -->
 
-<h2>SURVEY SHOW</h2>
-<%= @survey_template.title %>
-<%= @survey_template.name %>
+  <div class="row">
+    <div class="col-md-2">
+      <div class="alert alert-info">
+        <i>From this screen, you can view and edit your Survey Template: <strong>&quot;<%= @survey_template.name %>&quot;</strong>.</i>
+        <hr />
+        <i>Note that &quot;Survey Title&quot; represents what the End User will see when filling out this survey.</i>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4><strong>Survey Title:</strong> <%= @survey_template.title %></h4>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tr>
+              <th>Questions on Survey</th>
+              <th>Actions</th>
+            </tr>
+            <% @survey_template.question_templates.each do |question_template| %>
+            <tr>
+              <td><%= question_template.prompt %></td>
+              <td><%= action_buttons(question_template) %></td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
 
-<h3>MY QUESTIONS</h3>
-<% @survey_template.question_templates.each do |question_template| %>
-  <%= question_template.prompt %>
-<% end %>
+</div>
+<!--- /.container -->
