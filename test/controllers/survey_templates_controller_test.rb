@@ -47,7 +47,7 @@ class SurveyTemplatesControllerTest < ActionController::TestCase
     end
 
     it 'does not create a new survey_template with invalid params' do
-      post(:create, params: {title: nil, name: nil})
+      post(:create, params: { title: nil, name: nil })
 
       assert(SurveyTemplate.first.nil?, 'SurveyTemplate was created with invalid params')
     end
