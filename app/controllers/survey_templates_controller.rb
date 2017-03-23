@@ -2,6 +2,7 @@
 # SurveyTemplatesController
 #
 class SurveyTemplatesController < ApplicationController
+  before_action :authenticate_user!
   before_action :authenticate_admin
   before_action :set_survey_template, only: [:show, :edit, :update, :destroy]
 

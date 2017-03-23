@@ -29,4 +29,51 @@ class SurveyTemplatesControllerTest < ActionController::TestCase
       assert_equal(survey_template_instance, survey_template, 'Did not return survey_templates')
     end
   end
+
+  describe '#create' do
+    it 'creates a new survey_template' do
+      admin = create :user, :admin
+      create :survey_template
+
+      sign_in admin
+
+      assert SurveyTemplate.first.valid?, 'SurveyTemplate was not created'
+    end
+
+    it 'redirects to sign-in page if a user is not signed in' do
+      post :create
+
+      assert_redirected_to new_user_session_path, 'Did not redirect to sign-in page'
+    end
+  end
+
+  describe '#update' do
+    it 'should allow admins to update survey_template' do
+      admin = create :user, :admin
+      survey_template = create :survey_template
+
+      updated_title = 'New Title'
+      updated_name = 'New Name'
+
+      sign_in admin
+
+      patch :update, params: { id: survey_template.id, survey_template: { title: updated_title, name: updated_name } }
+      survey_template.reload
+
+      assert_equal [updated_title, updated_name], [survey_template.title, survey_template.name], 'Update method unsuccessful. Values do not match'
+      assert_redirected_to survey_template_path(survey_template.id), 'Redirect to survey_template_path failed'
+    end
+  end
+
+  describe '#destroy' do
+    it 'should allow admins to delete presentations' do
+      admin = create :user, :admin
+      survey_template = create :survey_template
+
+      sign_in admin
+
+      delete :destroy, params: { id: survey_template.id }
+      assert_equal SurveyTemplate.count, 0, 'SurveyTemplate was not deleted'
+    end
+  end
 end
