@@ -11,13 +11,13 @@ describe Response do
 
   describe '#unique_response' do
     it 'passes validation if response is unique' do
-      response = build(:response, :text)
+      response = build(:response, :text, question_id: @question.id)
 
       assert_nil response.unique_response
     end
 
     it 'adds errors to response if it was already recorded' do
-      response = create(:response, :text)
+      response = create(:response, :text, question_id: @question.id)
       duplicate_response = build(:response,
                                  user_id: response.user_id,
                                  question_id: response.question_id)
@@ -30,7 +30,8 @@ describe Response do
 
   describe '#require_question' do
     it 'passes validation if response is not required for question' do
-      response = build(:response, :text)
+      question = create(:question, :text, :optional)
+      response = build(:response, :text, question_id: question.id)
 
       assert_nil response.require_question
     end
