@@ -136,7 +136,7 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
       delete(:destroy, params: params)
 
       assert_equal QuestionTemplate.count, @initial_count - 1, 'Expected question template count to decrease by 1'
-      assert_raises { QuestionTemplate.find(@question_template_text.id) }, 'Expected QuestionTemplate.find to raise an error'
+      assert_raises { QuestionTemplate.find(@question_template_text.id) }
     end
   end
 end
