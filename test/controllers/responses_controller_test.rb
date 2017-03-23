@@ -18,8 +18,8 @@ class ResponsesControllerTest < ActionController::TestCase
       feedback = assigns(:feedback)
 
       num_responses = 0
-      num_responses += d[:survey_responses].count
-      feedback.data.each do |d|
+      feedback.data.each do |data|
+        num_responses += data[:survey_responses].count
       end
 
       assert_equal(@questions.length, num_responses, 'Did not create the correct number of unsaved responses')

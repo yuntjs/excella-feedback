@@ -54,25 +54,44 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
     it 'redirects to the survey template path when saves correctly' do
       post(:create, params: success_params)
 
-      assert_redirected_to survey_template_path(@survey_template)
+      assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
     end
 
     it 'redirects to the survey template path when save fails' do
       post(:create, params: error_params)
 
-      assert_redirected_to survey_template_path(@survey_template)
+      assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
     end
   end
 
   describe '#update' do
-    it 'updates a question template if update data is valid' do
-      new_prompt = 'new prompt'
+    let(:new_prompt) { 'new prompt' }
 
-      patch(:update, params: {
+    let(:success_params) do
+      {
         survey_template_id: @survey_template.id,
         id: @question_template_text.id,
-        question_template: { prompt: new_prompt }
-      })
+        question_template: {
+          prompt: new_prompt,
+          response_type: 'number',
+          response_required: true
+        }
+      }
+    end
+    let(:error_params) do
+      {
+        survey_template_id: @survey_template.id,
+        id: @question_template_text.id,
+        question_template: {
+          prompt: nil,
+          response_type: nil,
+          response_required: nil
+        }
+      }
+    end
+
+    it 'updates a question template if update data is valid' do
+      patch(:update, params: success_params)
 
       @question_template_text.reload
 
