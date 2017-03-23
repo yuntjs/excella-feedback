@@ -79,7 +79,7 @@ class SurveyTemplatesControllerTest < ActionController::TestCase
 
       sign_in admin
 
-      patch :update, params: { id: survey_template.id, survey_template: { title: '', name: '' } }
+      patch :update, params: { id: survey_template.id, survey_template: { title: updated_title, name: updated_name } }
       survey_template.reload
 
       assert_equal(SurveyTemplate.first, survey_template, 'SurveyTemplate was not created')
