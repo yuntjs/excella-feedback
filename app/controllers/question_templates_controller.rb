@@ -70,7 +70,6 @@ class QuestionTemplatesController < ApplicationController
       flash[:error] = error_message(@question_template, :create)
       render :new
     end
-
   end
 
   #
@@ -84,7 +83,6 @@ class QuestionTemplatesController < ApplicationController
       flash[:error] = error_message(@question_template, :update)
       render :edit
     end
-
   end
 
   #

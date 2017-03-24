@@ -30,7 +30,7 @@ module ApplicationHelper
   #
   # Add css error class if object has errors
   #
-  def error_class(object, attribute=nil)
+  def error_class(object, attribute = nil)
     error_class = 'has-error'
 
     if attribute

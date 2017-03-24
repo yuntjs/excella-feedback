@@ -16,7 +16,7 @@ class CreateQuestionTemplateTest < Capybara::Rails::TestCase
 
     scenario 'question template form is valid' do
       fill_in('Prompt', with: 'prompt')
-      select("Text")
+      select('Text')
       choose('question_template_response_required_true')
       click_button('Submit')
 

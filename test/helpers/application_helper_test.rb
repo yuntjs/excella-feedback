@@ -127,5 +127,4 @@ class ApplicationHelperTest < ActionView::TestCase
       assert_equal number_errors.length, number_list_length, 'Number errors do not match resulting list'
     end
   end
-
 end
