@@ -6,7 +6,8 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
 
   feature 'viewing Survey Templates as admin' do
     before do
-      login_as(@admin, scope: :user)
+      admin = create :user, :admin
+      login_as(admin, scope: :user)
 
       visit(root_path)
     end
@@ -19,5 +20,4 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
       assert_equal(current_path, survey_templates_path, 'Did not route to survey_templates_path')
     end
   end
-
 end
