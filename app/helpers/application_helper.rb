@@ -26,4 +26,36 @@ module ApplicationHelper
     return unless flash.alert
     content_tag(:div, flash.alert, class: 'has-error text-danger')
   end
+
+  #
+  # Add error class if object has errors
+  #
+  def error_class(object)
+    object.errors.any? ? 'has-error' : ''
+  end
+
+  #
+  # Add list of errors below response
+  #
+  def error_messages(object)
+    return unless object.errors.any?
+    content_tag(:div,
+                content_tag(:ul,
+                            render_list(object.errors.full_messages),
+                            class: 'error-list'),
+                class: 'has-error text-danger')
+  end
+
+  #
+  # Provides all messages from an array as <li>
+  # TODO: refactor with .inject
+  #
+  def render_list(messages)
+    result = ''
+    messages.each do |msg|
+      result += content_tag(:li, msg)
+    end
+    result.html_safe
+  end
+
 end
