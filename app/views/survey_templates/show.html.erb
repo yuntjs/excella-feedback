@@ -1,7 +1,10 @@
 <div class="container">
+  <%= back_button(survey_templates_path) %>
   <div class="row">
-    <%= back_button(survey_templates_path) %>
-    <h1 class="text-center"><%= @survey_template.name %></h1>
+    <div class="col-md-12 text-center">
+      <%= survey_template_options %>
+      <h1 class="text-center"><%= @survey_template.name %></h1>
+    </div>
   </div>
   <!-- /.row -->
 
