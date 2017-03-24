@@ -57,5 +57,4 @@ module ApplicationHelper
     end
     result.html_safe
   end
-
 end

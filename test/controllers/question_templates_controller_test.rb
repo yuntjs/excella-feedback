@@ -71,17 +71,13 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
       assert_equal QuestionTemplate.count, @initial_count, "Expected question template count (#{QuestionTemplate.count}) to equal initial count (#{@initial_count})"
     end
 
-    it 'redirects to the survey template path when saves correctly' do
+    it 'redirects to the survey template path when save succeeds' do
       post(:create, params: success_params)
 
       assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
     end
 
-    it 'redirects to the survey template path when save fails' do
-      post(:create, params: error_params)
-
-      assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
-    end
+    it 'renders new question template form if save fails'
   end
 
   describe '#edit' do
@@ -148,17 +144,13 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
       assert_equal @question_template_text.prompt, old_prompt, 'Question template has been updated with invalid parameters'
     end
 
-    it 'redirects to the survey template path when updated correctly' do
+    it 'redirects to the survey template path when update succeeds' do
       patch(:update, params: success_params)
 
       assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
     end
 
-    it 'redirects to the survey template path when update fails' do
-      patch(:update, params: error_params)
-
-      assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
-    end
+    it 'renders edit question template form if update fails'
   end
 
   describe '#destroy' do
