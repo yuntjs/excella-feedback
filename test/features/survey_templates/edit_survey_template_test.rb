@@ -30,5 +30,17 @@ class EditSurveyTemplateTest < Capybara::Rails::TestCase
       page.must_have_content('Foo')
       page.must_have_content('Bar')
     end
+
+    scenario 'does not update survey_template with invalid data' do
+      click_on('Edit Survey')
+
+      within 'form' do
+        fill_in('Name', with: nil)
+        fill_in('Title', with: nil)
+        click_button('Submit')
+      end
+
+      page.must_have_content('Warning!')
+    end
   end
 end
