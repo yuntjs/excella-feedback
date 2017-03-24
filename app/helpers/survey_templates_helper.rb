@@ -13,6 +13,13 @@ module SurveyTemplatesHelper
   end
 
   #
+  # Checks if questions_template is required and returns formatted response for table
+  #
+  def required_check(questions_template)
+    questions_template.response_required ? '✓' : ''
+  end
+
+  #
   # Renders link to create new survey template
   #
   def new_survey_template_link
