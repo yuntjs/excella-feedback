@@ -10,7 +10,7 @@ class QuestionTemplatesController < ApplicationController
   #
   def create
     @question_template = @survey_template.question_templates.new(question_template_params)
-    save_question_template
+    create_question_template
   end
 
   #
@@ -46,9 +46,9 @@ class QuestionTemplatesController < ApplicationController
   end
 
   #
-  # Save helper for create action
+  # Logic helper for create action
   #
-  def save_question_template
+  def create_question_template
     if @question_template.save
       flash[:success] = success_message(@question_template, :create)
     else
@@ -59,7 +59,7 @@ class QuestionTemplatesController < ApplicationController
   end
 
   #
-  # Update helper for update action
+  # Logic helper for update action
   #
   def update_question_template
     if @question_template.update(question_template_params)
@@ -72,7 +72,7 @@ class QuestionTemplatesController < ApplicationController
   end
 
   #
-  # Delete helper for destroy action
+  # Logic helper for destroy action
   #
   def delete_question_template
     @question_template.destroy
