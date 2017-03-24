@@ -75,9 +75,7 @@ class QuestionTemplatesController < ApplicationController
   # Delete helper for destroy action
   #
   def delete_question_template
-    @question_template.destroy
-
-    if @question_template.destroyed?
+    if @question_template.destroy
       flash[:success] = success_message(@question_template, :delete)
     else
       flash[:error] = error_message(@question_template, :delete)
