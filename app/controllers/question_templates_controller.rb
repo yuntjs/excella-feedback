@@ -4,31 +4,29 @@
 class QuestionTemplatesController < ApplicationController
   before_action :authenticate_admin
   before_action :set_survey_template
-  #
-  # Render Survey Template data
-  #
-  def new
-    @question_template = QuestionTemplate.new
-  end
 
   #
-  # Create route
+  # Create
   #
   def create
     @question_template = @survey_template.question_templates.new(question_template_params)
-    save_question_template
+    create_question_template
   end
 
   #
-  # Update route
+  # Update
   #
   def update
+    @question_template = @survey_template.question_templates.find(params[:id])
+    update_question_template
   end
 
   #
-  # Destroy route
+  # Destroy
   #
   def destroy
+    @question_template = @survey_template.question_templates.find(params[:id])
+    delete_question_template
   end
 
   private
@@ -48,16 +46,41 @@ class QuestionTemplatesController < ApplicationController
   end
 
   #
-  # Save helper for create action
-  # Extrapolated into new method to appease Rubocop
+  # Logic helper for create action
   #
-  def save_question_template
+  def create_question_template
     if @question_template.save
       flash[:success] = success_message(@question_template, :create)
-      redirect_to survey_template_path(@survey_template)
     else
-      flash.now[:error] = error_message(@question_template, :create)
-      render :new
+      flash[:error] = error_message(@question_template, :create)
     end
+
+    redirect_to survey_template_path(@survey_template)
+  end
+
+  #
+  # Logic helper for update action
+  #
+  def update_question_template
+    if @question_template.update(question_template_params)
+      flash[:success] = success_message(@question_template, :update)
+    else
+      flash[:error] = error_message(@question_template, :update)
+    end
+
+    redirect_to survey_template_path(@survey_template)
+  end
+
+  #
+  # Logic helper for destroy action
+  #
+  def delete_question_template
+    if @question_template.destroy
+      flash[:success] = success_message(@question_template, :delete)
+    else
+      flash[:error] = error_message(@question_template, :delete)
+    end
+
+    redirect_to survey_template_path(@survey_template)
   end
 end

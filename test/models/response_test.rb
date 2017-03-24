@@ -6,18 +6,18 @@ require 'test_helper'
 describe Response do
   before do
     @user = create(:user)
-    @question = create(:question) # response not required by default
+    @question = create(:question, :text, :required)
   end
 
   describe '#unique_response' do
     it 'passes validation if response is unique' do
-      response = build(:response)
+      response = build(:response, :text, question_id: @question.id)
 
       assert_nil response.unique_response
     end
 
     it 'adds errors to response if it was already recorded' do
-      response = create(:response)
+      response = create(:response, :text, question_id: @question.id)
       duplicate_response = build(:response,
                                  user_id: response.user_id,
                                  question_id: response.question_id)
@@ -30,20 +30,21 @@ describe Response do
 
   describe '#require_question' do
     it 'passes validation if response is not required for question' do
-      response = build(:response)
+      question = create(:question, :text, :optional)
+      response = build(:response, :text, question_id: question.id)
 
       assert_nil response.require_question
     end
 
     it 'passes validation if response is required but has a value' do
-      question_required = create(:question, :required)
+      question_required = create(:question, :text, :required)
       response = build(:response, value: 'exists', question_id: question_required.id)
 
       assert_nil response.require_question
     end
 
     it 'adds errors to response if it is required and does not have a value' do
-      question_required = create(:question, :required)
+      question_required = create(:question, :text, :required)
       response = build(:response, value: nil, question_id: question_required.id)
 
       response.require_question

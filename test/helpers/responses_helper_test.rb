@@ -4,8 +4,8 @@ class ResponsesHelperTest < ActionView::TestCase
   before do
     @user = create(:user)
 
-    @text_question = create(:question, :text)
-    @number_question = create(:question, :number)
+    @text_question = create(:question, :text, :required)
+    @number_question = create(:question, :number, :required)
 
     @text_response = build(:response, :text, question_id: @text_question.id)
     @number_response = build(:response, :number, question_id: @number_question.id)
@@ -29,8 +29,8 @@ class ResponsesHelperTest < ActionView::TestCase
     it 'renders scale form partial if response type is "number"'
 
     it 'raises an error if response type is not valid' do
-      invalid_question = create(:question, response_type: 'invalid')
-      invalid_response = create(:response, question_id: invalid_question.id)
+      invalid_question = create(:question, :required, response_type: 'invalid')
+      invalid_response = create(:response, :text, question_id: invalid_question.id)
 
       assert_raises(ArgumentError) { display_question(invalid_response) }
     end

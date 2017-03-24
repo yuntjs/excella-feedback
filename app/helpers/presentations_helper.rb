@@ -141,7 +141,6 @@ module PresentationsHelper
 
   #
   # Renders proper link to survey and results based on user type (presenter or attendee)
-  # TODO Handle case where attendee has already completed survey
   #
   def survey_link_for(presentation)
     if presentation.surveys.any?
