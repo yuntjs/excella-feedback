@@ -21,10 +21,17 @@ class QuestionTemplatesController < ApplicationController
   end
 
   #
+  # Edit
+  #
+  def edit
+    @question_template = @survey_template.question_templates.find_by(id: params[:id])
+  end
+
+  #
   # Update
   #
   def update
-    @question_template = @survey_template.question_templates.find(params[:id])
+    @question_template = @survey_template.question_templates.find_by(id: params[:id])
     update_question_template
   end
 

@@ -13,6 +13,6 @@ class QuestionTemplate < ApplicationRecord
   private
 
   def lowercase_response_type
-    self.response_type.downcase!
+    response_type.downcase!
   end
 end

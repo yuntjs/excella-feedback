@@ -19,13 +19,13 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
       get(:new, params: { survey_template_id: @survey_template.id })
     end
 
-    it 'gets a survey template' do
+    it 'sets survey template as an instance varialbe' do
       survey_template = assigns(:survey_template)
 
       assert_equal survey_template, @survey_template, 'Expected to set survey template as instance variable'
     end
 
-    it 'creates an unsaved question template' do
+    it 'sets an unsaved question template as an instance variable' do
       question_template = assigns(:question_template)
 
       refute_nil question_template, 'Expected question template instance variable to exist'
@@ -81,6 +81,27 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
       post(:create, params: error_params)
 
       assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
+    end
+  end
+
+  describe '#edit' do
+    before do
+      get(:edit, params: {
+            survey_template_id: @survey_template.id,
+            id: @question_template_number.id
+          })
+    end
+
+    it 'sets survey template as an instance variable' do
+      survey_template = assigns(:survey_template)
+
+      assert_equal survey_template, @survey_template, 'Expected to set survey template as instance variable'
+    end
+
+    it 'sets question template as an instance variable' do
+      question_template = assigns(:question_template)
+
+      refute_nil question_template, 'Expected question template instance variable to exist'
     end
   end
 
