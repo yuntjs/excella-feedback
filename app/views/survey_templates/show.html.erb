@@ -27,7 +27,7 @@
             <% @survey_template.question_templates.each do |question_template| %>
             <tr>
               <td><%= question_template.prompt %></td>
-              <td><%= action_buttons(question_template) %></td>
+              <td><%# action_buttons(question_template) %></td>
             </tr>
             <% end %>
           </table>
