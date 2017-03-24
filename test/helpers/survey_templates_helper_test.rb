@@ -26,4 +26,13 @@ class SurveyTemplatesHelperTest < ActionView::TestCase
       assert_equal expected_not_required, actual_not_required
     end
   end
+
+  describe '#new_survey_template_link' do
+    it 'shows new actions for survey templates' do
+      link_string = new_survey_template_link
+
+      assert link_string.include?('New'), 'Link does not include "New"'
+      assert link_string.include?(new_survey_template_path), 'Link does not include correct path'
+    end
+  end
 end
