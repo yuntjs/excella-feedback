@@ -9,8 +9,28 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
     sign_in(@admin)
 
     @survey_template = create(:survey_template)
+
     @question_template_number = create(:question_template, :number, :required, survey_template_id: @survey_template.id)
     @question_template_text = create(:question_template, :text, :required, survey_template_id: @survey_template.id)
+  end
+
+  describe '#new' do
+    before do
+      get(:new, params: { survey_template_id: @survey_template.id })
+    end
+
+    it 'gets a survey template' do
+      survey_template = assigns(:survey_template)
+
+      assert_equal survey_template, @survey_template, 'Expected to set survey template as instance variable'
+    end
+
+    it 'creates an unsaved question template' do
+      question_template = assigns(:question_template)
+
+      refute_nil question_template, 'Expected question template instance variable to exist'
+      assert question_template.new_record?, 'Expected question template to be a new record'
+    end
   end
 
   describe '#create' do
