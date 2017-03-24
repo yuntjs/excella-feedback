@@ -30,6 +30,44 @@ class ApplicationHelperTest < ActionView::TestCase
       assert_equal number_response, @error_class, 'Number response with error does not return correct css error class'
     end
 
+    it 'returns a css class as a string when object has error & attribute is provided' do
+      text_response = error_class(@invalid_text_response, :require_question)
+      number_response = error_class(@invalid_number_response, :require_question)
+
+      assert_equal text_response, @error_class, 'Text response with error does not return correct css error class.'
+      assert_equal number_response, @error_class, 'Number response with error does not return correct css error class'
+    end
+
+    it 'returns an empty string when response does not contain an error' do
+      text_response = error_class(@text_question)
+      number_response = error_class(@number_question)
+
+      assert text_response.empty?, "Does not return an empty string for a valid text response. Got: #{text_response}"
+      assert number_response.empty?, "Does not return an empty string for a valid number response. Got: #{number_response}"
+    end
+
+    it 'returns an empty string when response does not contain an error & attribute is provided' do
+      text_response = error_class(@text_question, :require_question)
+      number_response = error_class(@number_question, :require_question)
+
+      assert text_response.empty?, "Does not return an empty string for a valid text response. Got: #{text_response}"
+      assert number_response.empty?, "Does not return an empty string for a valid number response. Got: #{number_response}"
+    end
+  end
+
+  #
+  # Test for #error_class
+  # Tested with a response object, but should work for any model instance
+  #
+  describe '#error_class' do
+    it 'returns a css class as a string when object has an error' do
+      text_response = error_class(@invalid_text_response)
+      number_response = error_class(@invalid_number_response)
+
+      assert_equal text_response, @error_class, 'Text response with error does not return correct css error class.'
+      assert_equal number_response, @error_class, 'Number response with error does not return correct css error class'
+    end
+
     it 'returns an empty string when response does not contain an error' do
       text_response = error_class(@text_question)
       number_response = error_class(@number_question)

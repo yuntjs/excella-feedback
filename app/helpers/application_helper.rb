@@ -28,10 +28,16 @@ module ApplicationHelper
   end
 
   #
-  # Add error class if object has errors
+  # Add css error class if object has errors
   #
-  def error_class(object)
-    object.errors.any? ? 'has-error' : ''
+  def error_class(object, attribute=nil)
+    error_class = 'has-error'
+
+    if attribute
+      object.errors[attribute].any? ? error_class : ''
+    else
+      object.errors.any? ? error_class : ''
+    end
   end
 
   #
