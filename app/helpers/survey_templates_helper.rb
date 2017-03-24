@@ -11,4 +11,11 @@ module SurveyTemplatesHelper
 
     edit_link + delete_link
   end
+
+  #
+  # Renders link to create new survey template
+  #
+  def new_survey_template_link
+    link_to 'New Survey Template', new_survey_template_path, class: 'btn btn-success'
+  end
 end
