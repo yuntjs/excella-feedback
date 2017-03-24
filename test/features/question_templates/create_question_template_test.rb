@@ -34,6 +34,8 @@ class CreateQuestionTemplateTest < Capybara::Rails::TestCase
       assert page.has_content?('Warning!')
       assert_equal QuestionTemplate.count, 0, 'Did not expect a question template to be created'
       assert page.has_content?('New Question for'), 'Expected question template form to be rendered'
+      assert page.has_content?('Prompt can\'t be blank'), 'Expected error message for blank prompt'
+      assert page.has_content?('Response type can\'t be blank'), 'Expected error message for blank response type'
     end
   end
 end
