@@ -65,11 +65,12 @@ class QuestionTemplatesController < ApplicationController
   def create_question_template
     if @question_template.save
       flash[:success] = success_message(@question_template, :create)
+      redirect_to survey_template_path(@survey_template)
     else
       flash[:error] = error_message(@question_template, :create)
+      render :new
     end
 
-    redirect_to survey_template_path(@survey_template)
   end
 
   #
@@ -78,11 +79,12 @@ class QuestionTemplatesController < ApplicationController
   def update_question_template
     if @question_template.update(question_template_params)
       flash[:success] = success_message(@question_template, :update)
+      redirect_to survey_template_path(@survey_template)
     else
       flash[:error] = error_message(@question_template, :update)
+      render :edit
     end
 
-    redirect_to survey_template_path(@survey_template)
   end
 
   #
