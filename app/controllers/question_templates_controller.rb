@@ -6,6 +6,13 @@ class QuestionTemplatesController < ApplicationController
   before_action :set_survey_template
 
   #
+  # New
+  #
+  def new
+    @question_template = @survey_template.question_templates.new
+  end
+
+  #
   # Create
   #
   def create
@@ -14,10 +21,17 @@ class QuestionTemplatesController < ApplicationController
   end
 
   #
+  # Edit
+  #
+  def edit
+    @question_template = @survey_template.question_templates.find_by(id: params[:id])
+  end
+
+  #
   # Update
   #
   def update
-    @question_template = @survey_template.question_templates.find(params[:id])
+    @question_template = @survey_template.question_templates.find_by(id: params[:id])
     update_question_template
   end
 
@@ -51,11 +65,11 @@ class QuestionTemplatesController < ApplicationController
   def create_question_template
     if @question_template.save
       flash[:success] = success_message(@question_template, :create)
+      redirect_to survey_template_path(@survey_template)
     else
       flash[:error] = error_message(@question_template, :create)
+      render :new
     end
-
-    redirect_to survey_template_path(@survey_template)
   end
 
   #
@@ -64,11 +78,11 @@ class QuestionTemplatesController < ApplicationController
   def update_question_template
     if @question_template.update(question_template_params)
       flash[:success] = success_message(@question_template, :update)
+      redirect_to survey_template_path(@survey_template)
     else
       flash[:error] = error_message(@question_template, :update)
+      render :edit
     end
-
-    redirect_to survey_template_path(@survey_template)
   end
 
   #

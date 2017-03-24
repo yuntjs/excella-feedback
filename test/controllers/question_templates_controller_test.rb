@@ -9,8 +9,28 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
     sign_in(@admin)
 
     @survey_template = create(:survey_template)
+
     @question_template_number = create(:question_template, :number, :required, survey_template_id: @survey_template.id)
     @question_template_text = create(:question_template, :text, :required, survey_template_id: @survey_template.id)
+  end
+
+  describe '#new' do
+    before do
+      get(:new, params: { survey_template_id: @survey_template.id })
+    end
+
+    it 'sets survey template as an instance varialbe' do
+      survey_template = assigns(:survey_template)
+
+      assert_equal survey_template, @survey_template, 'Expected to set survey template as instance variable'
+    end
+
+    it 'sets an unsaved question template as an instance variable' do
+      question_template = assigns(:question_template)
+
+      refute_nil question_template, 'Expected question template instance variable to exist'
+      assert question_template.new_record?, 'Expected question template to be a new record'
+    end
   end
 
   describe '#create' do
@@ -51,16 +71,33 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
       assert_equal QuestionTemplate.count, @initial_count, "Expected question template count (#{QuestionTemplate.count}) to equal initial count (#{@initial_count})"
     end
 
-    it 'redirects to the survey template path when saves correctly' do
+    it 'redirects to the survey template path when save succeeds' do
       post(:create, params: success_params)
 
       assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
     end
 
-    it 'redirects to the survey template path when save fails' do
-      post(:create, params: error_params)
+    it 'renders new question template form if save fails'
+  end
 
-      assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
+  describe '#edit' do
+    before do
+      get(:edit, params: {
+            survey_template_id: @survey_template.id,
+            id: @question_template_number.id
+          })
+    end
+
+    it 'sets survey template as an instance variable' do
+      survey_template = assigns(:survey_template)
+
+      assert_equal survey_template, @survey_template, 'Expected to set survey template as instance variable'
+    end
+
+    it 'sets question template as an instance variable' do
+      question_template = assigns(:question_template)
+
+      refute_nil question_template, 'Expected question template instance variable to exist'
     end
   end
 
@@ -107,17 +144,13 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
       assert_equal @question_template_text.prompt, old_prompt, 'Question template has been updated with invalid parameters'
     end
 
-    it 'redirects to the survey template path when updated correctly' do
+    it 'redirects to the survey template path when update succeeds' do
       patch(:update, params: success_params)
 
       assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
     end
 
-    it 'redirects to the survey template path when update fails' do
-      patch(:update, params: error_params)
-
-      assert_redirected_to survey_template_path(@survey_template), 'Expected to redirect to survey_template_path'
-    end
+    it 'renders edit question template form if update fails'
   end
 
   describe '#destroy' do
