@@ -6,6 +6,13 @@ class QuestionTemplatesController < ApplicationController
   before_action :set_survey_template
 
   #
+  # New
+  #
+  def new
+    @question_template = @survey_template.question_templates.new
+  end
+
+  #
   # Create
   #
   def create
