@@ -16,8 +16,8 @@ class SurveyTemplatesHelperTest < ActionView::TestCase
     it 'checks if a questions_template is required and returns a formatted response' do
       question_required = create(:question_template, :text, :required)
       question_not_required = create(:question_template, :text, :optional)
-      expected_required = "✓"
-      expected_not_required = ""
+      expected_required = '✓'
+      expected_not_required = ''
 
       actual_required = required_check(question_required)
       actual_not_required = required_check(question_not_required)

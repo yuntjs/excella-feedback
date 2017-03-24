@@ -16,6 +16,6 @@ module SurveyTemplatesHelper
   # Checks if questions_template is required and returns formatted response for table
   #
   def required_check(questions_template)
-    questions_template.response_required ? "✓" : ""
+    questions_template.response_required ? '✓' : ''
   end
 end
