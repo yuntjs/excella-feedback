@@ -41,7 +41,8 @@
               <td><%= question_template.prompt %></td>
               <td><%= question_template.response_type %></td>
               <td><%= required_check(question_template) %></td>
-              <td><%# action_buttons(question_template) %></td>
+              <td><%= action_buttons(edit_path: edit_survey_template_question_template_path(@survey_template, question_template),
+                                     delete_path: survey_template_question_template_path(@survey_template, question_template)) %></td>
             </tr>
             <% end %>
           </table>
