@@ -15,7 +15,7 @@
         <%= question.prompt %>
         <%= question.response_type %>
         <%= link_to "Edit", edit_presentation_survey_question_path(@presentation.id, @survey.id, question.id) %>
-        <%= link_to "Delete", presentation_survey_question_path(@presentation.id, @survey.id, question.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= link_to "Delete", presentation_survey_question_path(@presentation.id, @survey.id, question.id), method: :delete, data: { confirm: 'Are you sure you want to delete this question?' } %>
         </li>
       </ul>
 

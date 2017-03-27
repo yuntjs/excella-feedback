@@ -7,7 +7,7 @@ module SurveyTemplatesHelper
   #
   def action_buttons(edit_path:, delete_path:)
     edit_link = link_to 'Edit', edit_path, class: 'btn btn-primary'
-    delete_link = link_to 'Delete', delete_path, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }
+    delete_link = link_to 'Delete', delete_path, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure you want to delete this item?' }
 
     edit_link + delete_link
   end
@@ -32,7 +32,7 @@ module SurveyTemplatesHelper
   def survey_template_options
     content_tag :div, class: 'admin-options' do
       edit_link = link_to 'Edit Survey', edit_survey_template_path(@survey_template), class: 'btn btn-primary'
-      delete_link = link_to 'Delete Survey', survey_template_path(@survey_template), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }
+      delete_link = link_to 'Delete Survey', survey_template_path(@survey_template), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure you want to delete this item?' }
 
       edit_link + delete_link
     end
