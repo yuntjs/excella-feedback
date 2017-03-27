@@ -1,10 +1,10 @@
 require 'test_helper'
 
-class CreateQuestionTemplateTest < Capybara::Rails::TestCase
+class EditQuestionTemplateTest < Capybara::Rails::TestCase
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  feature 'updating question templates for a survey' do
+  feature 'editing question templates' do
     let(:survey_template) { create(:survey_template) }
     let(:question_template) { create(:question_template, :text, :optional, survey_template_id: survey_template.id) }
 

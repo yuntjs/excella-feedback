@@ -4,7 +4,7 @@ class CreateQuestionTemplateTest < Capybara::Rails::TestCase
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  feature 'creating question templates for a survey' do
+  feature 'creating question templates' do
     let(:survey_template) { create(:survey_template) }
 
     before do
