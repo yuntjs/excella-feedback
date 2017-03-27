@@ -141,7 +141,6 @@ module PresentationsHelper
 
   #
   # Renders proper link to survey and results based on user type (presenter or attendee)
-  # TODO Handle case where attendee has already completed survey
   #
   def survey_link_for(presentation)
     if presentation.surveys.any?
@@ -160,7 +159,7 @@ module PresentationsHelper
       edit_details_link = link_to 'Edit Details', edit_presentation_path(presentation), class: 'btn btn-primary'
       edit_participants_link = content_tag :button, 'Edit Participants', class: 'btn btn-primary', data: { toggle: 'modal', target: '.bs-example-modal-sm' }
       view_surveys_link = link_to 'View Surveys', presentation_surveys_path(presentation), class: 'btn btn-primary'
-      delete_link = link_to 'Delete', presentation_path(presentation), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }
+      delete_link = link_to 'Delete', presentation_path(presentation), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure you want to delete this presentation?' }
 
       edit_details_link + edit_participants_link + view_surveys_link + delete_link
     end

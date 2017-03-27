@@ -2,6 +2,8 @@
 # Question model
 #
 class Question < ApplicationRecord
+  include QuestionHelper
+
   belongs_to :survey
 
   #

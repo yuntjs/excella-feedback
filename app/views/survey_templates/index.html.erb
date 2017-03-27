@@ -1,0 +1,39 @@
+<div class="container">
+  <%= back_button(presentations_path) %>
+
+  <div class="row">
+    <div class="col-md-12 text-center spaceMdBtm">
+      <h1>Survey Templates</h1>
+      <%= new_survey_template_link %>
+    </div>
+  </div>
+  <!-- /.row -->
+
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>All Templates</h4>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tr>
+              <th>Template Name</th>
+              <th>Actions</th>
+            </tr>
+            <% @survey_templates.each do |survey_template| %>
+            <tr>
+              <td><%= link_to survey_template.name, survey_template_path(survey_template) %></td>
+              <td><%= action_buttons(edit_path: edit_survey_template_path(survey_template),
+                                     delete_path: survey_template_path(survey_template)) %></td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
+
+</div>
+<!--- /.container -->

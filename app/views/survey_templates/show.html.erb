@@ -1,0 +1,56 @@
+<div class="container">
+  <%= back_button(survey_templates_path) %>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <%= survey_template_options %>
+      <h1 class="text-center"><%= @survey_template.name %></h1>
+    </div>
+  </div>
+  <!-- /.row -->
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 text-center">
+      <%= link_to 'Add a Question', new_survey_template_question_template_path(@survey_template), class: "btn btn-success"%>
+      <hr />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+      <div class="alert alert-info">
+        <i>From this screen, you can view and edit your Survey Template: <strong>&quot;<%= @survey_template.name %>&quot;</strong>.</i>
+        <hr />
+        <i>Note that &quot;Survey Title&quot; represents what the End User will see when filling out this survey.</i>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4><strong>Survey Title:</strong> <%= @survey_template.title %></h4>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tr>
+              <th>Questions on Survey</th>
+              <th>Response Type</th>
+              <th>Required?</th>
+              <th>Actions</th>
+            </tr>
+            <% @survey_template.question_templates.each do |question_template| %>
+            <tr>
+              <td><%= question_template.prompt %></td>
+              <td><%= question_template.response_type.capitalize %></td>
+              <td><%= required_check(question_template) %></td>
+              <td><%= action_buttons(edit_path: edit_survey_template_question_template_path(@survey_template, question_template),
+                                     delete_path: survey_template_question_template_path(@survey_template, question_template)) %></td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
+
+</div>
+<!--- /.container -->

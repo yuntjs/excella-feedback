@@ -47,6 +47,11 @@ text_questions = [
   "Additional Comments"
 ]
 
+survey_templates = [
+  "Technical Overall",
+  "Non-Technical Overall"
+]
+
 
 unless Rails.env.production?
   puts "Destroying everything..."
@@ -56,6 +61,8 @@ unless Rails.env.production?
   Survey.destroy_all
   Question.destroy_all
   Response.destroy_all
+  SurveyTemplate.destroy_all
+  QuestionTemplate.destroy_all
 end
 
 puts "Creating basic users..."
@@ -142,6 +149,32 @@ Presentation.all.each do |pres|
     presentation_id: pres.id,
     is_presenter: true
   )
+end
+
+puts "Creating Survey Templates and Question Templates..."
+survey_templates.each do |template_title|
+  SurveyTemplate.create(
+    name: "Template Name for #{template_title}",
+    title: template_title
+  )
+end
+SurveyTemplate.all.each do |survey|
+  number_questions.each do |question|
+    QuestionTemplate.create(
+      prompt: question,
+      response_type: 'number',
+      response_required: true,
+      survey_template_id: survey.id
+    )
+  end
+  text_questions.each do |question|
+    QuestionTemplate.create(
+      prompt: question,
+      response_type: 'text',
+      response_required: false,
+      survey_template_id: survey.id
+    )
+  end
 end
 
 puts "Done!"

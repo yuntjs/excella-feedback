@@ -1,0 +1,10 @@
+<div class="container">
+  <%= back_button(survey_template_path(@survey_template)) %>
+
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+      <h1>Edit Question for <%= @survey_template.title %></h1>
+      <%= render 'form', survey_template: @survey_template, question_template: @question_template, submit_path: survey_template_question_template_path(@survey_template, @question_template) %>
+    </div>
+  </div>
+</div>

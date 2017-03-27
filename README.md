@@ -29,7 +29,10 @@ In a matter of beautiful irony, if you have feedback for this application (e.g. 
     * `bundle install`
     * `rake db:create db:migrate` to create database and run migrations
     * _optionally_ `rake db:seed` to seed sample data
-  * Run tests using `rake test`
+  * Run tests using `rake test` or just `rake`
+    * Run specific test files using `m test/<path_to_test>`
+    * Run specific tests using `m test/<path_to_test>:<line_number>`
+  * Run static analysis using `rubocop`
   * Visit the application's [trello][1] board to find a feature to implement
   * Work on your feature, committing code as you go to github
   * Ensure any new feature is well documented and tested

@@ -24,36 +24,6 @@ module ResponsesHelper
   end
 
   #
-  # Add error class if response has errors
-  #
-  def error_class(response)
-    response.errors.any? ? 'has-error' : ''
-  end
-
-  #
-  # Add list of errors below response
-  #
-  def error_messages(response)
-    return unless response.errors.any?
-    content_tag(:div,
-                content_tag(:ul,
-                            render_list(response.errors.full_messages),
-                            class: 'error-list'),
-                class: 'has-error text-danger')
-  end
-
-  #
-  # Provides all messages from an array as <li>
-  #
-  def render_list(messages)
-    result = ''
-    messages.each do |msg|
-      result += content_tag(:li, msg)
-    end
-    result.html_safe
-  end
-
-  #
   # Renders response to text question
   #
   def render_comment(response)

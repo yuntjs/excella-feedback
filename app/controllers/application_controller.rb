@@ -15,10 +15,20 @@ class ApplicationController < ActionController::Base
   end
 
   #
+  # Protect presenter paths from general users
+  #
+  def authenticate_admin_or_presenter
+    @presentation = Presentation.find(params[:presentation_id])
+    return if current_user&.is_admin || current_user&.is_presenter?(@presentation)
+    redirect_to presentations_path
+  end
+
+  #
   # Define success message for notices
+  # TODO: accomodate this for actions that don't end with the letter 'e'
   #
   def success_message(object, action)
-    "#{object.class.name} has been successfully #{action}d."
+    "#{object.class.name.underscore.humanize} has been successfully #{action}d."
   end
 
   #
@@ -26,7 +36,7 @@ class ApplicationController < ActionController::Base
   #
   def error_message(object, action)
     "We ran into some errors while trying to #{action} this"\
-    " #{object.class.name.downcase}. Please try again."
+    " #{object.class.name.underscore.humanize.downcase}. Please try again."
   end
 
   #
