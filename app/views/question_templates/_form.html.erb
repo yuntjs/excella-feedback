@@ -1,6 +1,6 @@
 <%= error_messages(question_template) %>
 
-<%= form_for(question_template, url: survey_template_question_templates_path(survey_template)) do |f| %>
+<%= form_for(question_template, url: submit_path) do |f| %>
   <div class="form-group <%= error_class(question_template, :prompt) %>">
     <%= f.label :prompt %>
     <%= f.text_field :prompt, class: "form-control" %>

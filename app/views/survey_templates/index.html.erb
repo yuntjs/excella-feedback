@@ -24,7 +24,8 @@
             <% @survey_templates.each do |survey_template| %>
             <tr>
               <td><%= link_to survey_template.name, survey_template_path(survey_template) %></td>
-              <td><%= action_buttons(survey_template) %></td>
+              <td><%= action_buttons(edit_path: edit_survey_template_path(survey_template),
+                                     delete_path: survey_template_path(survey_template)) %></td>
             </tr>
             <% end %>
           </table>
