@@ -11,6 +11,6 @@ Rails.application.routes.draw do
   end
 
   resources :survey_templates do
-    resources :question_templates, except: [:index]
+    resources :question_templates
   end
 end
