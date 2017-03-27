@@ -5,7 +5,7 @@ module SurveyTemplatesHelper
   #
   # Renders controller action links for index table
   #
-  def action_buttons(survey_template)
+  def survey_template_action_buttons(survey_template)
     edit_link = link_to 'Edit', edit_survey_template_path(survey_template), class: 'btn btn-primary'
     delete_link = link_to 'Delete', survey_template_path(survey_template), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }
 

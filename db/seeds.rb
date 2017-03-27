@@ -49,7 +49,7 @@ text_questions = [
 
 survey_templates = [
   "Technical Overall",
-  "Non-technical Overall"
+  "Non-Technical Overall"
 ]
 
 
