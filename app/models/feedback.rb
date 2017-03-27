@@ -25,8 +25,8 @@ class Feedback
   # Create unsaved responses from form inputs
   #
   def add_responses(form_input: nil)
-    @data.each do |d|
-      d[:survey_responses] = d[:survey_questions].map do |question|
+    @data.each do |data|
+      data[:survey_responses] = data[:survey_questions].map do |question|
         value = form_input ? form_input[question.id.to_s] : nil
 
         question.responses.new(
@@ -44,8 +44,8 @@ class Feedback
   def valid?
     all_valid = true
 
-    @data.each do |d|
-      d[:survey_responses].each do |response|
+    @data.each do |data|
+      data[:survey_responses].each do |response|
         all_valid = false if response.invalid?
       end
     end
@@ -57,8 +57,8 @@ class Feedback
   # Saves all responses in data
   #
   def save
-    @data.each do |d|
-      d[:survey_responses].each(&:save)
+    @data.each do |data|
+      data[:survey_responses].each(&:save)
     end
   end
 end

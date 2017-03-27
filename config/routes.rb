@@ -3,12 +3,14 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { registrations: 'registrations' }
 
   resources :presentations do
-    resources :participations
+    resources :participations, only: [:update]
     resources :surveys do
-      resources :questions
+      resources :questions, except: [:index]
     end
-    resources :responses
+    resources :responses, only: [:index, :new, :create]
   end
 
-  resources :survey_templates
+  resources :survey_templates do
+    resources :question_templates
+  end
 end

@@ -1,9 +1,8 @@
 require 'test_helper'
 
 describe QuestionTemplate do
-  # let(:question_template) { QuestionTemplate.new }
   before do
-    @question_template = create(:question_template)
+    @question_template = create(:question_template, :text, :required)
   end
 
   it 'must be valid' do
