@@ -15,6 +15,15 @@ class ApplicationController < ActionController::Base
   end
 
   #
+  # Protect presenter paths from general users
+  #
+  def authenticate_admin_or_presenter
+    @presentation = Presentation.find(params[:presentation_id])
+    return if current_user&.is_admin || current_user&.is_presenter?(@presentation)
+    redirect_to presentations_path
+  end
+
+  #
   # Define success message for notices
   # TODO: accomodate this for actions that don't end with the letter 'e'
   #
