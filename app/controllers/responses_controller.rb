@@ -2,6 +2,7 @@
 # ResponsesController
 #
 class ResponsesController < ApplicationController
+  before_action :authenticate_admin_or_presenter, only: [:index]
   #
   # Render response data
   #

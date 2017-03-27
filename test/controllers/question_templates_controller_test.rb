@@ -14,6 +14,22 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
     @question_template_text = create(:question_template, :text, :required, survey_template_id: @survey_template.id)
   end
 
+  describe '#index' do
+    it 'should redirect to the survey template show page' do
+      get(:index, params: { survey_template_id: @survey_template.id })
+
+      assert_redirected_to survey_template_path(@survey_template)
+    end
+  end
+
+  describe '#show' do
+    it 'should redirect to the survey template show page' do
+      get(:show, params: { survey_template_id: @survey_template.id, id: 0 })
+
+      assert_redirected_to survey_template_path(@survey_template)
+    end
+  end
+
   describe '#new' do
     before do
       get(:new, params: { survey_template_id: @survey_template.id })

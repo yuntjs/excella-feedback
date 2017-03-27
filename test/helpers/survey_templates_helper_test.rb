@@ -4,7 +4,11 @@ class SurveyTemplatesHelperTest < ActionView::TestCase
   describe '#action_buttons' do
     it 'shows edit and delete actions for survey templates' do
       survey_template = create(:survey_template)
-      link_string = action_buttons(survey_template)
+
+      edit_path = edit_survey_template_path(survey_template)
+      delete_path = survey_template_path(survey_template)
+
+      link_string = action_buttons(edit_path: edit_path, delete_path: delete_path)
 
       assert link_string.include?('Edit'), 'Link does not include "Edit"'
       assert link_string.include?('Delete'), 'Link does not include "Delete"'

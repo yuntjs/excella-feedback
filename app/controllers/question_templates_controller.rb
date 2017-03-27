@@ -6,6 +6,20 @@ class QuestionTemplatesController < ApplicationController
   before_action :set_survey_template
 
   #
+  # Index
+  #
+  def index
+    redirect_to survey_template_path(@survey_template)
+  end
+
+  #
+  # Show
+  #
+  def show
+    redirect_to survey_template_path(@survey_template)
+  end
+
+  #
   # New
   #
   def new
