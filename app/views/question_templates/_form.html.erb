@@ -9,8 +9,8 @@
   <div class="form-group <%= error_class(question_template, :response_type) %>">
     <%= f.label :response_type, "Response Type" %>
     <%= f.select :response_type,
-      options_for_select([['', ''], ['Number', 'number'], ['Text', 'text']], selected: f.object.response_type),
-      {}, class: "form-control"  %>
+      options_for_select([['Number', 'number'], ['Text', 'text']], selected: f.object.response_type),
+      { include_blank: true }, class: "form-control"  %>
   </div>
 
   <div class="form-group <%= error_class(question_template, :response_required) %>">
