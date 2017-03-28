@@ -35,27 +35,27 @@
         <h4>Survey Templates</h4>
       </div>
       <table class="table">
-        <% SurveyTemplate.all.each do |survey_template| %>
+        <% SurveyTemplate.all.each_with_index do |survey_template, index| %>
         <tr>
           <td class="survey-template-presentation">
             <div class="title">
-              <span class="icon glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              <a class="glyphicon glyphicon-chevron-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#questionTemplates<%= index %>" aria-expanded="false" aria-controls="questionTemplates"></a>
               <%= survey_template.title %>
             </div>
             <div class="action">
               <%= link_to "Add to Presentation", "" %>
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered collapse question-table" id="questionTemplates<%= index %>">
               <tr>
-                <th>Questions on Survey</th>
-                <th>Response Type</th>
-                <th>Required?</th>
+                <th class="col-xs-6">Questions on Survey</th>
+                <th class="col-xs-4">Response Type</th>
+                <th class="col-xs-2">Required?</th>
               </tr>
               <% survey_template.question_templates.each do |question_template| %>
               <tr>
-                <td><%= question_template.prompt %></td>
-                <td><%= question_template.response_type.capitalize %></td>
-                <td><%= required_check(question_template) %></td>
+                <td class="col-xs-6"><%= question_template.prompt %></td>
+                <td class="col-xs-4"><%= question_template.response_type.capitalize %></td>
+                <td class="col-xs-2"><%= required_check(question_template) %></td>
               </tr>
               <% end %>
             </table>
