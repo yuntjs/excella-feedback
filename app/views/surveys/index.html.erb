@@ -17,10 +17,9 @@
         </tr>
         <% @presentation.surveys.order(:position).each do |survey| %>
         <tr>
-          <td><%= link_to "#{survey.title} (#{survey.position})", presentation_survey_path(@presentation.id, survey.id) %></td>
+          <td><%= link_to "#{survey.title} (#{survey.position})", presentation_survey_path(@presentation.id, survey.id), class: disable_check(survey, current_user) %></td>
           <td>
-            <%= link_to "Edit", edit_presentation_survey_path(@presentation.id, survey.id), class: "btn btn-primary" %>
-            <%= link_to "Delete", presentation_survey_path(@presentation.id, survey.id), class: "btn  btn-danger", method: :delete, data: { confirm: 'Are you sure you want to delete this survey?' } %>
+            <%= survey_index_options(survey) %>
           </td>
         </tr>
         <% end %>
