@@ -272,7 +272,7 @@ class PresentationsHelperTest < ActionView::TestCase
     end
 
     it 'returns nil if presentation is in the past' do
-      assert_nil past_link, "Returns something other than nil when presentation in the past"
+      assert_nil past_link, 'Returns something other than nil when presentation in the past'
     end
   end
 
