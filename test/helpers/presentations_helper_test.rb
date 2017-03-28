@@ -263,21 +263,18 @@ class PresentationsHelperTest < ActionView::TestCase
     end
   end
 
-  # describe '#presenter_presentation_options' do
-  #   it 'returns a link to view surveys if presentation is in the future' do
-  #     let(:link) { presenter_presentation_options(@presentation_as_presenter) }
-  #
-  #     assert_includes presentation_surveys_path(@presentation_as_presenter), 'Does not include link to view surveys as a presenter'
-  #   end
-  #
-  #   it 'returns nil if presentation is in the past' do
-  #     past_presentation = create(:presentation)
-  #
-  #     let(:link) { presenter_presentation_options(past_presentation) }
-  #
-  #     assert_nil , "Returns something other than nil when presentation in the past"
-  #   end
-  # end
+  describe '#presenter_presentation_options' do
+    let(:future_link) { presenter_presentation_options(@future_presentation_as_presenter) }
+    let(:past_link) { presenter_presentation_options(@presentation_as_presenter) }
+
+    it 'returns a link to view surveys if presentation is in the future' do
+      assert_includes future_link, presentation_surveys_path(@future_presentation_as_presenter), 'Does not include link to view surveys as a presenter'
+    end
+
+    it 'returns nil if presentation is in the past' do
+      assert_nil past_link, "Returns something other than nil when presentation in the past"
+    end
+  end
 
   describe '#participation_table' do
     it 'tests pending...'
