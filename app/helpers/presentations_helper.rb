@@ -159,6 +159,9 @@ module PresentationsHelper
     user.is_admin ? admin_presentation_options(presentation) : presenter_presentation_options(presentation)
   end
 
+  #
+  # Renders controller action links for admin for Presentation show page
+  #
   def admin_presentation_options(presentation)
     content_tag :div, class: 'admin-options' do
       edit_details_link = link_to 'Edit Details', edit_presentation_path(presentation), class: 'btn btn-primary'
@@ -170,10 +173,13 @@ module PresentationsHelper
     end
   end
 
+  #
+  # Renders controller action links for presenter on presentation show page
+  #
   def presenter_presentation_options(presentation)
     return unless is_in_future?(presentation)
     content_tag :div, class: 'admin-options' do
-      view_surveys_link = link_to 'View Surveys', presentation_surveys_path(presentation), class: 'btn btn-primary'
+      link_to 'View Surveys', presentation_surveys_path(presentation), class: 'btn btn-primary'
     end
   end
 

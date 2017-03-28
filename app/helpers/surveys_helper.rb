@@ -27,6 +27,9 @@ module SurveysHelper
     end
   end
 
+  #
+  # Renders controller action links for index page
+  #
   def survey_index_options(survey)
     content_tag :div, class: 'admin-options' do
       edit_link = link_to 'Edit Survey', edit_presentation_survey_path(@presentation, survey), class: "btn btn-primary #{disable_check(survey, current_user)}"
@@ -36,11 +39,11 @@ module SurveysHelper
     end
   end
 
+  #
+  # Returns css class to disable links if survey is for a different presenter
+  #
   def disable_check(survey, user)
-    if survey.presenter_id.nil? || user.is_admin || survey.presenter_id == user.id
-      return
-    else
-      "disabled disabled-link"
-    end
+    return if survey.presenter_id.nil? || user.is_admin || survey.presenter_id == user.id
+    'disabled disabled-link'
   end
 end
