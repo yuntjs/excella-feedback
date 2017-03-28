@@ -235,8 +235,8 @@ class PresentationsHelperTest < ActionView::TestCase
       assert_includes link, 'Edit Participants', 'Does not include link to edit participants'
     end
 
-    it 'returns a link to view surveys if user is an admin' do
-      assert_includes link, presentation_surveys_path(@presentation_as_attendee), 'Does not include link to view surveys'
+    it 'returns a link to edit surveys if user is an admin' do
+      assert_includes link, presentation_surveys_path(@presentation_as_attendee), 'Does not include link to edit surveys'
     end
 
     it 'returns a link to delete presentation if user is an admin' do

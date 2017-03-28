@@ -39,7 +39,7 @@ class EditParticipationTest < Capybara::Rails::TestCase
         click_on 'Change to Presenter'
       end
 
-      click_on('View Surveys')
+      click_on('Edit Surveys')
 
       page.must_have_content "Feedback for #{admin.full_name}"
     end
@@ -76,7 +76,7 @@ class EditParticipationTest < Capybara::Rails::TestCase
         click_on 'Change to Attendee'
       end
 
-      click_on 'View Surveys'
+      click_on 'Edit Surveys'
 
       refute page.has_content? "Feedback for #{admin.full_name}"
     end
