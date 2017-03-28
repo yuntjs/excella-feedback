@@ -35,6 +35,7 @@ class SurveysHelperTest < ActionView::TestCase
 
   describe '#survey_options' do
     let(:options) { survey_options }
+
     it 'returns an edit survey link' do
       assert_includes options, edit_presentation_survey_path(@presentation, @survey), 'Does not include link to edit survey'
     end
@@ -47,6 +48,7 @@ class SurveysHelperTest < ActionView::TestCase
   describe '#survey_index_options' do
     let(:options) { survey_index_options(@survey) }
     let(:current_user) { @user }
+
     it 'returns an edit survey link' do
       assert_includes options, edit_presentation_survey_path(@presentation, @survey), 'Does not include link to edit survey'
     end
@@ -59,23 +61,25 @@ class SurveysHelperTest < ActionView::TestCase
   describe '#disable_check' do
     it 'returns nil if a survey is not associated with any presenter' do
       check = disable_check(@survey, @user)
+
       assert_nil check, 'Returns something other than nil when survey does not have a presenter'
     end
 
     it 'returns nil for admin' do
       check = disable_check(@presenter_survey, @admin)
+
       assert_nil check, 'Returns something other than nil when user is admin'
     end
 
     it 'returns nil when survey presenter is the user' do
       check = disable_check(@presenter_survey, @presenter)
+
       assert_nil check, 'Returns something other than nil when user is survey presenter'
     end
 
     it 'returns a css class to disable links when user is not admin nor the associated presenter for the survey' do
       css_class = 'disabled'
       different_presenter = create(:user)
-      # different_survey = create(:survey, presenter_id: different_presenter.id)
 
       check = disable_check(@presenter_survey, different_presenter)
 
