@@ -12,4 +12,16 @@ module SurveysHelper
       new_survey_link
     end
   end
+
+  #
+  # Renders controller action links for show page
+  #
+  def survey_options
+    content_tag :div, class: 'admin-options' do
+      edit_link = link_to 'Edit Survey', edit_presentation_survey_path(@presentation, @survey), class: 'btn btn-primary'
+      delete_link = link_to 'Delete Survey', presentation_survey_path(@presentation, @survey), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure you want to delete this item?' }
+
+      edit_link + delete_link
+    end
+  end
 end

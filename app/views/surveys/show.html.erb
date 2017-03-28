@@ -2,15 +2,18 @@
   <%= back_button(presentation_surveys_path(@presentation)) %>
   <div class="row">
     <div class="col-md-12 text-center">
-      <%#= survey_template_options %>
-      <h1 class="text-center"><%= @survey.title %></h1>
+      <%= survey_options %>
+      <h1 class="text-center"><%= @survey.title %> survey for '<%= @presentation.title %>'</h1>
     </div>
   </div>
   <!-- /.row -->
 
   <div class="row">
     <div class="col-md-8 col-md-offset-2 text-center">
-      <%= link_to 'Add a Question', new_presentation_survey_question_path(@presentation, @survey), class: "btn btn-success"%>
+      <%= link_to 'Add a Question',
+          new_presentation_survey_question_path(@presentation, @survey),
+          submit_path: presentation_survey_questions_path(@presentation, @survey),
+          class: "btn btn-success"%>
       <hr />
     </div>
   </div>
@@ -41,8 +44,8 @@
               <td><%= question.prompt %></td>
               <td><%= question.response_type.capitalize %></td>
               <td><%= required_check(question) %></td>
-              <td><%#= action_buttons(edit_path: edit_survey_template_question_template_path(@survey_template, question_template),
-                                     delete_path: survey_template_question_template_path(@survey_template, question_template)) %></td>
+              <td><%= action_buttons(edit_path: edit_presentation_survey_question_path(@presentation, @survey, question),
+                                     delete_path: presentation_survey_question_path(@presentation, @survey, question)) %></td>
             </tr>
             <% end %>
           </table>
