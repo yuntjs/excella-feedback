@@ -10,6 +10,7 @@ gem 'sass-rails', '>= 3.2'
 gem 'devise'
 gem 'acts_as_list', '~> 0.7.2'
 gem 'chartkick'
+gem 'figaro'
 
 group :development, :test do
   gem 'byebug', platform: :mri
