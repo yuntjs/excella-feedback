@@ -156,7 +156,7 @@ module PresentationsHelper
   def presentation_options(user, presentation)
     participation = Participation.where(user_id: user.id, presentation_id: presentation.id).first
     return unless user.is_admin || participation.is_presenter
-    presenter_presentation_options(presentation)
+    user.is_admin ? admin_presentation_options(presentation) : presenter_presentation_options(presentation)
   end
 
   def admin_presentation_options(presentation)
