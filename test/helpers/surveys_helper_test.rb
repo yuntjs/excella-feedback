@@ -73,7 +73,7 @@ class SurveysHelperTest < ActionView::TestCase
     end
 
     it 'returns a css class to disable links when user is not admin nor the associated presenter for the survey' do
-      css_class = "disabled"
+      css_class = 'disabled'
       different_presenter = create(:user)
       # different_survey = create(:survey, presenter_id: different_presenter.id)
 
