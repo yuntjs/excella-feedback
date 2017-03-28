@@ -38,7 +38,7 @@ class PresentationsController < ApplicationController
     if @presentation.save
       flash[:success] = success_message(@presentation, :create)
       new_default_survey(@presentation)
-      redirect_to presentations_path
+      redirect_to presentation_path(@presentation)
     else
       flash.now[:error] = error_message(@presentation, :create)
       render :new

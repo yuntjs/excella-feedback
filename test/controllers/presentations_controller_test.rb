@@ -5,11 +5,13 @@ class PresentationsControllerTest < ActionController::TestCase
 
   before do
     @params = {
-      title: 'Test Presentation',
-      location: 'ATX',
-      date: DateTime.new(2017, 2, 22),
-      description: 'Lorem ipsum',
-      is_published: true
+      presentation: {
+        title: 'Test Presentation',
+        location: 'ATX',
+        date: DateTime.new(2017, 2, 22),
+        description: 'Lorem ipsum',
+        is_published: true
+      }
     }
   end
 
@@ -42,14 +44,14 @@ class PresentationsControllerTest < ActionController::TestCase
   describe '#create' do
     it 'creates a new presentation' do
       admin = create :user, :admin
-      create :presentation
-
       sign_in admin
+
+      post :create, params: @params
 
       assert Presentation.first.valid?, 'Presentation was not created'
     end
 
-    it 'redirects to index page if logged in' do
+    it 'redirects to show page if logged in' do
       user = create :user
       sign_in user
 

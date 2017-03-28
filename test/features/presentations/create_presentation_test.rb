@@ -43,7 +43,6 @@ class CreatePresentationTest < Capybara::Rails::TestCase
         click_button 'Submit'
       end
 
-      click_on('Foo Bar')
       click_on('View Surveys')
 
       page.must_have_content('Overall Presentation')
