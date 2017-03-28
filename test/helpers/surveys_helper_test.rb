@@ -17,6 +17,7 @@ class SurveysHelperTest < ActionView::TestCase
            presentation_id: @presentation.id,
            is_presenter: true)
     @survey = create(:survey, presentation_id: @presentation.id)
+    @presenter_survey = create(:survey, presentation_id: @presentation.id, presenter_id: @presenter.id)
   end
 
   describe '#survey_admin_options' do
@@ -56,6 +57,29 @@ class SurveysHelperTest < ActionView::TestCase
   end
 
   describe '#disable_check' do
-    it 'PENDING'
+    it 'returns nil if a survey is not associated with any presenter' do
+      check = disable_check(@survey, @user)
+      assert_nil check, 'Returns something other than nil when survey does not have a presenter'
+    end
+
+    it 'returns nil for admin' do
+      check = disable_check(@presenter_survey, @admin)
+      assert_nil check, 'Returns something other than nil when user is admin'
+    end
+
+    it 'returns nil when survey presenter is the user' do
+      check = disable_check(@presenter_survey, @presenter)
+      assert_nil check, 'Returns something other than nil when user is survey presenter'
+    end
+
+    it 'returns a css class to disable links when user is not admin nor the associated presenter for the survey' do
+      css_class = "disabled"
+      different_presenter = create(:user)
+      # different_survey = create(:survey, presenter_id: different_presenter.id)
+
+      check = disable_check(@presenter_survey, different_presenter)
+
+      assert_equal css_class, check, "Does not return css class: #{css_class}"
+    end
   end
 end
