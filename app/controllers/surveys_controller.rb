@@ -2,7 +2,8 @@
 # SurveysController
 #
 class SurveysController < ApplicationController
-  before_action :authenticate_admin, except: [:show]
+  before_action :authenticate_admin, except: [:show, :index]
+  before_action :authenticate_admin_or_presenter, only: :index
   before_action :set_presentation
 
   #
