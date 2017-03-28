@@ -44,6 +44,6 @@ module SurveysHelper
   #
   def disable_check(survey, user)
     return if survey.presenter_id.nil? || user.is_admin || survey.presenter_id == user.id
-    'disabled disabled-link'
+    'disabled'
   end
 end
