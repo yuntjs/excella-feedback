@@ -224,8 +224,8 @@ class PresentationsHelperTest < ActionView::TestCase
     end
   end
 
-  describe '#presentation_admin_options' do
-    let(:link) { presentation_admin_options(@admin, @presentation_as_attendee) }
+  describe '#presentation_options' do
+    let(:link) { presentation_options(@admin, @presentation_as_attendee) }
 
     it 'returns a link to edit presentation if user is an admin' do
       assert_includes link, edit_presentation_path(@presentation_as_attendee), 'Does not include link to edit presentation'
@@ -245,7 +245,7 @@ class PresentationsHelperTest < ActionView::TestCase
     end
 
     it 'returns nil if user is not an admin' do
-      assert_nil presentation_admin_options(@user, @presentation_as_attendee), 'Expected nil if user is not an admin'
+      assert_nil presentation_options(@user, @presentation_as_attendee), 'Expected nil if user is not an admin'
     end
   end
 
