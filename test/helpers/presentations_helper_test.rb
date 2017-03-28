@@ -7,10 +7,10 @@ class PresentationsHelperTest < ActionView::TestCase
     @user = create(:user)
     @admin = create(:user, :admin)
 
-    @presentation_as_presenter = create(:presentation)
-    @presentation_as_attendee = create(:presentation)
-    @presentation_as_admin_attendee = create(:presentation)
-    @presentation_as_admin_presenter = create(:presentation)
+    @presentation_as_presenter = create(:presentation, :in_the_future)
+    @presentation_as_attendee = create(:presentation, :in_the_future)
+    @presentation_as_admin_attendee = create(:presentation, :in_the_future)
+    @presentation_as_admin_presenter = create(:presentation, :in_the_future)
 
     create(:participation,
            user_id: @user.id,
@@ -226,6 +226,7 @@ class PresentationsHelperTest < ActionView::TestCase
 
   describe '#presentation_options' do
     let(:link) { presentation_options(@admin, @presentation_as_attendee) }
+    let(:link2) { presentation_options(@user, @presentation_as_presenter) }
 
     it 'returns a link to edit presentation if user is an admin' do
       assert_includes link, edit_presentation_path(@presentation_as_attendee), 'Does not include link to edit presentation'
@@ -244,7 +245,11 @@ class PresentationsHelperTest < ActionView::TestCase
       assert_includes link, presentation_path(@presentation_as_attendee), 'Does not include link to delete presentation'
     end
 
-    it 'returns nil if user is not an admin' do
+    it 'returns a link to view surveys if user is a presenter' do
+      assert_includes link2, presentation_surveys_path(@presentation_as_presenter), 'Does not include link to view surveys as a presenter'
+    end
+
+    it 'returns nil if user is not an admin or presenter' do
       assert_nil presentation_options(@user, @presentation_as_attendee), 'Expected nil if user is not an admin'
     end
   end
