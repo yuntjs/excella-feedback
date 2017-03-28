@@ -45,6 +45,20 @@
             <div class="action">
               <%= link_to "Add to Presentation", "" %>
             </div>
+            <table class="table table-bordered">
+              <tr>
+                <th>Questions on Survey</th>
+                <th>Response Type</th>
+                <th>Required?</th>
+              </tr>
+              <% survey_template.question_templates.each do |question_template| %>
+              <tr>
+                <td><%= question_template.prompt %></td>
+                <td><%= question_template.response_type.capitalize %></td>
+                <td><%= required_check(question_template) %></td>
+              </tr>
+              <% end %>
+            </table>
           </td>
         </tr>
         <% end %>

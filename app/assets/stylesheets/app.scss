@@ -189,10 +189,13 @@ form {
 
   .title, .action {
     display: inline-block;
-    padding: 0 10px;
   }
 
   .action {
     float: right
+  }
+
+  .table {
+    margin: 10px 0;
   }
 }
