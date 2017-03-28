@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PresentationsHelperTest < ActionView::TestCase
+class SurveysHelperTest < ActionView::TestCase
   include Devise::Test::ControllerHelpers
 
   before do
@@ -19,8 +19,9 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#survey_admin_options' do
+    let(:x) { survey_admin_options(@user, @presentation) }
     it 'returns nil if user is not admin nor presenter' do
-      assert_nil survey_options(@user, @presentation), 'Returns something other than nil for basic user'
+      assert_nil x, 'Returns something other than nil for basic user'
     end
   end
 end
