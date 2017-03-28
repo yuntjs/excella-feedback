@@ -44,7 +44,15 @@ class SurveysHelperTest < ActionView::TestCase
   end
 
   describe '#survey_index_options' do
-    it 'PENDING'
+    let(:options) { survey_index_options(@survey) }
+    let(:current_user) { @user }
+    it 'returns an edit survey link' do
+      assert_includes options, edit_presentation_survey_path(@presentation, @survey), 'Does not include link to edit survey'
+    end
+
+    it 'returns a delete survey link' do
+      assert_includes options, presentation_survey_path(@presentation, @survey), 'Does not include link to delete survey'
+    end
   end
 
   describe '#disable_check' do
