@@ -19,9 +19,15 @@ class SurveysHelperTest < ActionView::TestCase
   end
 
   describe '#survey_admin_options' do
-    let(:x) { survey_admin_options(@user, @presentation) }
+    let(:no_options) { survey_admin_options(@user, @presentation) }
+    let(:presenter_options) { survey_admin_options(@presenter, @presentation) }
+
     it 'returns nil if user is not admin nor presenter' do
-      assert_nil x, 'Returns something other than nil for basic user'
+      assert_nil no_options, 'Returns something other than nil for basic user'
+    end
+
+    it 'returns a link to create new surveys for presenter' do
+      assert_includes presenter_options, new_presentation_survey_path(@presentation), 'Does not contain a link to create new surveys'
     end
   end
 end
