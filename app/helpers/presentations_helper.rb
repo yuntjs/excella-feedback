@@ -171,6 +171,7 @@ module PresentationsHelper
   end
 
   def presenter_presentation_options(presentation)
+    return unless is_in_future?(presentation)
     content_tag :div, class: 'admin-options' do
       view_surveys_link = link_to 'View Surveys', presentation_surveys_path(presentation), class: 'btn btn-primary'
     end
