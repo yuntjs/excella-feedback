@@ -180,3 +180,19 @@ form {
 .admin-options .btn:not(:last-child) {
   margin-right: 8px;
 }
+
+// Survey Template - Adding to Presentation
+.survey-template-presentation {
+  .icon {
+    font-size: 0.9em;
+  }
+
+  .title, .action {
+    display: inline-block;
+    padding: 0 10px;
+  }
+
+  .action {
+    float: right
+  }
+}

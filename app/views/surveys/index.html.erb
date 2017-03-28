@@ -3,7 +3,6 @@
 
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3 text-center">
-
       <%= survey_admin_options(current_user, @presentation) %>
       <h1 class="text-center">Surveys</h1>
       <%= content_tag :div, class: "panel panel-warning text-left" do %>
@@ -29,4 +28,28 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3 text-center">
+      <%= content_tag :div, class: "panel panel-info text-left" do %>
+      <div class="panel-heading">
+        <h4>Survey Templates</h4>
+      </div>
+      <table class="table">
+        <% SurveyTemplate.all.each do |survey_template| %>
+        <tr>
+          <td class="survey-template-presentation">
+            <div class="title">
+              <span class="icon glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              <%= survey_template.title %>
+            </div>
+            <div class="action">
+              <%= link_to "Add to Presentation", "" %>
+            </div>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+      <% end %>
+    </div>
+  </div>
 </div>
