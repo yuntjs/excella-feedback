@@ -12,7 +12,7 @@ class Presentation < ApplicationRecord
   validates :location, presence: true
 
   #
-  # Order surveys by :order
+  # Order surveys by position
   #
   def position_surveys
     surveys.order(:position)
