@@ -11,9 +11,9 @@ class CreateSurveyTest < Capybara::Rails::TestCase
   feature 'Create' do
     scenario 'creates a new survey if admin' do
       admin = create(:user, :admin)
-      login_as(admin, scope: :user)
-
       presentation = create(:presentation, title: 'Intro to Git')
+      
+      login_as(admin, scope: :user)
 
       visit presentation_surveys_path(presentation)
 
