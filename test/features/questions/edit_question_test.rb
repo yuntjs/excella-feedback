@@ -19,7 +19,7 @@ class EditQuestionTest < Capybara::Rails::TestCase
       admin = create(:user, :admin)
       presentation = create(:presentation, :in_the_future)
       survey = create(:survey, presentation_id: presentation.id)
-      question = create(:question, :text, :optional, survey_id: survey.id)
+      create(:question, :text, :optional, survey_id: survey.id)
 
       login_as(admin, scope: :user)
 

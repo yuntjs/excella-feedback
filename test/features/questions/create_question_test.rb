@@ -44,7 +44,7 @@ class CreateQuestionTest < Capybara::Rails::TestCase
       create(:participation, :presenter,
              user_id: presenter.id,
              presentation_id: presentation.id)
-             
+
       login_as(presenter, scope: :user)
 
       visit new_presentation_survey_question_path(presentation, survey)
