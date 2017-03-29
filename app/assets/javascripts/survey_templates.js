@@ -1,4 +1,7 @@
 $(function () {
+  //
+  // Toggle chevron glyphicon when clicked
+  //
   var changeGlyphicon = function changeGlyphicon($glyphicon) {
     if ($glyphicon.hasClass('glyphicon-chevron-right')) {
       $glyphicon.removeClass('glyphicon-chevron-right');
@@ -21,5 +24,5 @@ $(function () {
 
     changeGlyphicon($glyphicon);
     $questionTable.toggle();
-  })
-})
+  }); 
+});

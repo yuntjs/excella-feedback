@@ -12,6 +12,7 @@ class ParticipationsController < ApplicationController
   #
   def update
     handle_participation_survey
+
     if @participation.update(participation_params)
       redirect_to presentation_path(params[:presentation_id]), notice: 'Participation was successfully updated.'
     else
