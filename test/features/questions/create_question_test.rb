@@ -10,9 +10,9 @@ class CreateQuestionTest < Capybara::Rails::TestCase
 
   feature 'Create' do
     before do
-      @title = "Intro to Git"
-      @location = "ATX"
-      @description = "Lorem ipsum descriptum"
+      @title = 'Intro to Git'
+      @location = 'ATX'
+      @description = 'Lorem ipsum descriptum'
     end
     scenario 'admin can create a new presentation' do
       admin = create(:user, :admin)
@@ -20,7 +20,6 @@ class CreateQuestionTest < Capybara::Rails::TestCase
       login_as(admin, scope: :user)
 
       visit new_presentation_path
-
 
       within('form') do
         fill_in 'Title', with: @title
@@ -35,5 +34,4 @@ class CreateQuestionTest < Capybara::Rails::TestCase
       page.must_have_content @description
     end
   end
-
 end
