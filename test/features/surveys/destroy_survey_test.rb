@@ -22,6 +22,23 @@ class CreateSurveyTest < Capybara::Rails::TestCase
 
       refute(page.has_content?(survey.title))
     end
+
+    scenario 'clicking "Delete Survey" as presenter deletes the survey' do
+      presenter = create(:user)
+      presentation = create(:presentation)
+      create(:participation, :presenter,
+             user_id: presenter.id,
+             presentation_id: presentation.id)
+      survey = create(:survey, presentation_id: presentation.id)
+
+      login_as(presenter, scope: :user)
+
+      visit presentation_surveys_path(presentation)
+
+      click_on 'Delete Survey'
+
+      refute(page.has_content?(survey.title))
+    end
   end
 
 end
