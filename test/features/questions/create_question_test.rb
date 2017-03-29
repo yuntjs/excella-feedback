@@ -11,8 +11,8 @@ class CreateQuestionTest < Capybara::Rails::TestCase
   feature 'Create' do
     before do
       @prompt = 'Was this presentation excellent?'
-      @response_type = 'number'
-      @response_required = true
+      @response_type = 'Number'
+      @response_required = 'question_response_required_true'
     end
     scenario 'admin can create a new question for a survey' do
       admin = create(:user, :admin)
@@ -25,16 +25,15 @@ class CreateQuestionTest < Capybara::Rails::TestCase
 
       within('form') do
         fill_in 'Prompt', with: @prompt
-        select(@response_type)
-        # fill_in 'ResponseType', with: @response_type
-        # fill_in 'Response Required', with: @response_required
+        select(@response_type, from: 'question_response_type')
+        choose(@response_required)
         click_button 'Submit'
       end
 
       page.must_have_content 'Success'
-      # page.must_have_content @title
-      # page.must_have_content @location
-      # page.must_have_content @description
+      page.must_have_content @prompt
+      page.must_have_content @response_type
+      page.must_have_content '✓'
     end
   end
 end
