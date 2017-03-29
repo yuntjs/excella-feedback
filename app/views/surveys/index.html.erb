@@ -39,13 +39,13 @@
         <tr>
           <td class="survey-template-presentation">
             <div class="title">
-              <a class="glyphicon glyphicon-chevron-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#questionTemplates<%= index %>" aria-expanded="false" aria-controls="questionTemplates"></a>
+              <a class="glyphicon glyphicon-chevron-right" aria-hidden="true" role="button" data-id="<%= index %>"></a>
               <%= survey_template.title %>
             </div>
             <div class="action">
               <%= link_to "Add to Presentation", "" %>
             </div>
-            <table class="table table-bordered collapse question-table" id="questionTemplates<%= index %>">
+            <table class="table table-bordered question-table" data-id="<%= index %>">
               <tr>
                 <th class="col-xs-6">Questions on Survey</th>
                 <th class="col-xs-4">Response Type</th>

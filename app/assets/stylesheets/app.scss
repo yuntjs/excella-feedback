@@ -185,6 +185,9 @@ form {
 .survey-template-presentation {
   .glyphicon {
     font-size: 0.9em;
+    &:hover {
+      text-decoration: none; 
+    }
   }
 
   .title, .action {
@@ -196,6 +199,7 @@ form {
   }
 
   .question-table {
+    display: none; // default
     margin: 10px 0;
   }
 }
