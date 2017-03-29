@@ -1,23 +1,25 @@
-<%= form_for ([@presentation, @survey, @question]) do |f| %>
-  <p>
-    <%= f.label :position %>
-    <%= f.text_field :position %>
-  </p>
+<%= error_messages(question) %>
 
-  <p>
+<%= form_for(question, url: submit_path) do |f| %>
+  <div class="form-group <%= error_class(question, :prompt) %>">
     <%= f.label :prompt %>
-    <%= f.text_area :prompt %>
-  </p>
+    <%= f.text_field :prompt, class: "form-control" %>
+  </div>
 
-  <p>
-    <%= f.label :response_type %>:
-    <%= f.label :response_type, "Text" %>
-    <%= f.radio_button(:response_type, "text") %>
-    <%= f.label :response_type, "Number" %>
-    <%= f.radio_button(:response_type, "number") %>
-  </p>
+  <div class="form-group <%= error_class(question, :response_type) %>">
+    <%= f.label :response_type, "Response Type" %>
+    <%= f.select :response_type,
+      options_for_select([['Number', 'number'], ['Text', 'text']], selected: f.object.response_type),
+      { include_blank: true }, class: "form-control"  %>
+  </div>
 
-  <p>
-    <%= f.submit %>
-  </p>
+  <div class="form-group <%= error_class(question, :response_required) %>">
+    <%= f.label :response_required, "Response Required" %>
+    <br>
+    <%= f.radio_button :response_required, true %> True
+    <%= f.radio_button :response_required, false %> False
+  </div>
+
+  <%= f.submit "Submit", class: "btn btn-primary"  %>
+  <%= link_to "Cancel", :back, class: "btn btn-default" %>
 <% end %>

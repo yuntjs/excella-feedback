@@ -44,6 +44,7 @@ FactoryGirl.define do
   factory :survey do
     sequence(:position) { |n| n }
     sequence(:title) { |n| "Survey #{n}" }
+    presenter_id nil
     presentation
   end
 

@@ -93,6 +93,10 @@ body {
   }
 }
 
+.disabled {
+  pointer-events: none;
+}
+
 //
 // Navigation
 //
