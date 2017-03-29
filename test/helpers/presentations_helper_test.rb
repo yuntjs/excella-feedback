@@ -49,13 +49,17 @@ class PresentationsHelperTest < ActionView::TestCase
     it 'gets correct presentations when current user is presenter' do
       presentations = presentations_as(:presenter, @user)
 
-      assert_equal presentations, [@presentation_as_presenter, @future_presentation_as_presenter]
+      assert_equal presentations.length, 2
+      assert presentations.include?(@presentation_as_presenter)
+      assert presentations.include?(@future_presentation_as_presenter)
     end
 
     it 'gets correct presentations where current user is attendee' do
       presentations = presentations_as(:attendee, @user)
 
-      assert_equal presentations, [@presentation_as_attendee, @future_presentation_as_attendee]
+      assert_equal presentations.length, 2
+      assert presentations.include?(@presentation_as_attendee)
+      assert presentations.include?(@future_presentation_as_attendee)
     end
 
     it 'returns an empty relation is role is not specified as presenter or attendee' do
