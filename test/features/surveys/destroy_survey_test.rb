@@ -40,5 +40,4 @@ class DestroySurveyTest < Capybara::Rails::TestCase
       refute(page.has_content?(survey.title))
     end
   end
-
 end

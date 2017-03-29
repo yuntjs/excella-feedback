@@ -12,7 +12,7 @@ class EditSurveyTest < Capybara::Rails::TestCase
     scenario 'updates survey data with new data when admin' do
       admin = create(:user, :admin)
       presentation = create(:presentation, title: 'Intro to Git')
-      survey = create(:survey, presentation_id: presentation.id)
+      create(:survey, presentation_id: presentation.id)
 
       login_as(admin, scope: :user)
 
@@ -37,7 +37,7 @@ class EditSurveyTest < Capybara::Rails::TestCase
       create(:participation, :presenter,
              user_id: presenter.id,
              presentation_id: presentation.id)
-      survey = create(:survey, presentation_id: presentation.id)
+      create(:survey, presentation_id: presentation.id)
 
       login_as(presenter, scope: :user)
 

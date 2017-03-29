@@ -12,7 +12,7 @@ class DestroySurveyTest < Capybara::Rails::TestCase
     scenario 'admin can view surveys for a presentation' do
       admin = create(:user, :admin)
       presentation = create(:presentation)
-      survey = create(:survey, presentation_id: presentation.id)
+      create(:survey, presentation_id: presentation.id)
 
       login_as(admin, scope: :user)
 
@@ -33,7 +33,7 @@ class DestroySurveyTest < Capybara::Rails::TestCase
       create(:participation, :presenter,
              user_id: presenter.id,
              presentation_id: presentation.id)
-      survey = create(:survey, presentation_id: presentation.id)
+      create(:survey, presentation_id: presentation.id)
 
       login_as(presenter, scope: :user)
 
