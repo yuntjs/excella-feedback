@@ -40,6 +40,7 @@ class Feedback
   #
   # Checks whether feedback is valid by checking if all responses are valid
   # Note: calling response.invalid? sets errors on the response object
+  # TODO: reconfigure without the use of an all_valid flag
   #
   def valid?
     all_valid = true

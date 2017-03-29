@@ -22,7 +22,7 @@ class Survey < ApplicationRecord
   # end
 
   #
-  # Create survey from presentation & survey_template
+  # Create survey from presentation & survey template
   #
   def self.create_from_template(presentation:, survey_template:)
     presentation.surveys.new(
