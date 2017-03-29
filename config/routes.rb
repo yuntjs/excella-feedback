@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :questions, except: [:index]
     end
     resources :responses, only: [:index, :new, :create]
+    resources :survey_generations, only: [:create]
   end
 
   resources :survey_templates do

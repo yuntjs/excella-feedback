@@ -1,6 +1,6 @@
 require "test_helper"
 
-describe SurveyGenerateController do
+describe SurveyGenerationsController do
   # it "must be a real test" do
   #   flunk "Need real tests"
   # end
