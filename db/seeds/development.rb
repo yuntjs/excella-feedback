@@ -1,59 +1,58 @@
 NUM_USERS = 40
 NUM_PRESENTATIONS = 8
-PASSWORD = "testing"
+PASSWORD = 'testing'.freeze
 
 nest = [
-  { first_name: "Nick", last_name: "Oki" },
-  { first_name: "Pramod", last_name: "Jacob" },
-  { first_name: "Khoi", last_name: "Le" },
-  { first_name: "Drew", last_name: "Nickerson" }
+  { first_name: 'Nick', last_name: 'Oki' },
+  { first_name: 'Pramod', last_name: 'Jacob' },
+  { first_name: 'Khoi', last_name: 'Le' },
+  { first_name: 'Drew', last_name: 'Nickerson' }
 ]
 
 presenters = [
-  { first_name: "Starr", last_name: "Chen" },
-  { first_name: "Jen", last_name: "Pengelly" },
-  { first_name: "Alexis", last_name: "Johnson" },
-  { first_name: "Dan", last_name: "Davis" }
+  { first_name: 'Starr', last_name: 'Chen' },
+  { first_name: 'Jen', last_name: 'Pengelly' },
+  { first_name: 'Alexis', last_name: 'Johnson' },
+  { first_name: 'Dan', last_name: 'Davis' }
 ]
 
 presentations = [
-  "Intro to Git",
-  "Debugging/Refactoring",
-  "DevOps",
-  "Testing",
-  "Agile/Scrum"
+  'Intro to Git',
+  'Debugging/Refactoring',
+  'DevOps',
+  'Testing',
+  'Agile/Scrum'
 ]
 
 locations = [
-  "ATX A",
-  "ATX B",
-  "2300 Clarendon 3rd Floor",
-  "2300 Clarendon 9th Floor",
-  "Bench"
+  'ATX A',
+  'ATX B',
+  '2300 Clarendon 3rd Floor',
+  '2300 Clarendon 9th Floor',
+  'Bench'
 ]
 
-surveys = [
-  "Overall",
-  "Presenters",
-  "Material"
-]
+surveys = %w(
+  Overall
+  Presenters
+  Material
+)
 
 number_questions = [
-  "Rate this (A)",
-  "Rate this (B)"
+  'Rate this (A)',
+  'Rate this (B)'
 ]
 
 text_questions = [
-  "Additional Comments"
+  'Additional Comments'
 ]
 
 survey_templates = [
-  "Technical Overall",
-  "Non-Technical Overall"
+  'Technical Overall',
+  'Non-Technical Overall'
 ]
 
-
-puts "Destroying everything..."
+puts 'Destroying everything...'
 User.destroy_all
 Presentation.destroy_all
 Participation.destroy_all
@@ -63,39 +62,39 @@ Response.destroy_all
 SurveyTemplate.destroy_all
 QuestionTemplate.destroy_all
 
-puts "Creating basic users..."
+puts 'Creating basic users...'
 nest.each do |n|
   u = User.new(
-   first_name: "#{n[:first_name]}",
-   last_name: "#{n[:last_name]}",
-   password: PASSWORD,
-   is_admin: false
+    first_name: (n[:first_name]).to_s,
+    last_name: (n[:last_name]).to_s,
+    password: PASSWORD,
+    is_admin: false
   )
   u.email = "#{u[:first_name]}.#{u[:last_name]}@excella.com"
   u.save
 end
 presenters.each do |n|
   u = User.new(
-   first_name: "#{n[:first_name]}",
-   last_name: "#{n[:last_name]}",
-   password: PASSWORD,
-   is_admin: false
+    first_name: (n[:first_name]).to_s,
+    last_name: (n[:last_name]).to_s,
+    password: PASSWORD,
+    is_admin: false
   )
   u.email = "#{u[:first_name]}.#{u[:last_name]}@excella.com"
   u.save
 end
 
-puts "Creating admin..."
+puts 'Creating admin...'
 u = User.new(
-  first_name: "Admin",
-  last_name: "Admin",
+  first_name: 'Admin',
+  last_name: 'Admin',
   password: PASSWORD,
   is_admin: true
 )
-u.email = "admin@excella.com"
+u.email = 'admin@excella.com'
 u.save
 
-puts "Creating presentations, surveys, and questions..."
+puts 'Creating presentations, surveys, and questions...'
 presentations.each do |pres_name|
   pres = Presentation.create(
     title: pres_name,
@@ -109,18 +108,18 @@ presentations.each do |pres_name|
       position: index,
       title: survey_name
     )
-    number_questions.each_with_index do |question, index|
+    number_questions.each_with_index do |question, n_ind|
       ques = survey.questions.create(
-        position: index,
+        position: n_ind,
         prompt: question,
         response_type: 'number',
         response_required: true
       )
       ques.save
     end
-    text_questions.each_with_index do |question, index|
+    text_questions.each_with_index do |question, t_ind|
       ques = survey.questions.create(
-        position: index + number_questions.length,
+        position: t_ind + number_questions.length,
         prompt: question,
         response_type: 'text',
         response_required: false
@@ -130,7 +129,7 @@ presentations.each do |pres_name|
   end
 end
 
-puts "Creating participations..."
+puts 'Creating participations...'
 Presentation.all.each do |pres|
   nest.each do |person|
     user = User.find_by(email: "#{person[:first_name].downcase}.#{person[:last_name].downcase}@excella.com")
@@ -149,7 +148,7 @@ Presentation.all.each do |pres|
   )
 end
 
-puts "Creating Survey Templates and Question Templates..."
+puts 'Creating Survey Templates and Question Templates...'
 survey_templates.each do |template_title|
   SurveyTemplate.create(
     name: "Template Name for #{template_title}",
@@ -175,5 +174,5 @@ SurveyTemplate.all.each do |survey|
   end
 end
 
-puts "Done!"
+puts 'Done!'
 puts "Note: all users have the password \"#{PASSWORD}\""
