@@ -1,3 +1,5 @@
+<%= error_messages(@survey) %>
+
 <%= form_for ([@presentation, @survey]) do |f| %>
   <div class="form-group">
     <%= f.label :position %>
@@ -11,5 +13,4 @@
 
   <%= f.submit "Submit", class: "btn btn-primary" %>
   <%= link_to "Cancel", :back, class: "btn btn-default" %>
-
 <% end %>
