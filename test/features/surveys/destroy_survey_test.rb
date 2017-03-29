@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CreateSurveyTest < Capybara::Rails::TestCase
+class DestroySurveyTest < Capybara::Rails::TestCase
   include Warden::Test::Helpers
   Warden.test_mode!
 
