@@ -11,7 +11,7 @@ class DestroySurveyTest < Capybara::Rails::TestCase
   feature 'Show' do
     scenario 'admin can view surveys for a presentation' do
       admin = create(:user, :admin)
-      presentation = create(:presentation, title: 'Intro to Git')
+      presentation = create(:presentation)
       survey = create(:survey, presentation_id: presentation.id)
 
       login_as(admin, scope: :user)
@@ -29,7 +29,7 @@ class DestroySurveyTest < Capybara::Rails::TestCase
 
     scenario 'presenter can view surveys for a presentation' do
       presenter = create(:user)
-      presentation = create(:presentation, title: 'Intro to Git')
+      presentation = create(:presentation, :in_the_future)
       create(:participation, :presenter,
              user_id: presenter.id,
              presentation_id: presentation.id)
@@ -43,9 +43,8 @@ class DestroySurveyTest < Capybara::Rails::TestCase
         click_on('View Presentations')
       end
       click_on(presentation.title)
-      save_and_open_page
 
-      # click_on('View Surveys')
+      click_on('View Surveys')
 
       assert_equal(presentation_surveys_path(presentation), current_path)
     end
