@@ -12,14 +12,7 @@ class Survey < ApplicationRecord
   has_many :questions, dependent: :destroy
 
   # validates :order, presence: false
-  validates :title, presence: true
-
-  #
-  # Order questions by position
-  #
-  # def position_questions
-  #   questions.order(:position)
-  # end
+  validates :title, :position, presence: true
 
   #
   # Create survey from presentation & survey template

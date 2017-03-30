@@ -35,23 +35,6 @@ describe Presentation do
     refute result, 'Accepted presentation with invalid location'
   end
 
-  describe '#position_surveys' do
-    before do
-      @presentation2 = create(:presentation)
-    end
-
-    it "positions a presentation's surveys from 0 to n" do
-      survey3 = create(:survey, presentation_id: @presentation2.id, position: 3)
-      survey1 = create(:survey, presentation_id: @presentation2.id, position: 1)
-      survey2 = create(:survey, presentation_id: @presentation2.id, position: 2)
-
-      expected_position = [survey1, survey2, survey3]
-      actual_position = @presentation2.position_surveys
-
-      assert_equal expected_position, actual_position, 'Array not positioned correctly'
-    end
-  end
-
   describe '#description_short' do
     before do
       @presentation = create(:presentation, :long_description)

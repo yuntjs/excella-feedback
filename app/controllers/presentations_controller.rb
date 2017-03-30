@@ -17,8 +17,7 @@ class PresentationsController < ApplicationController
   # Show route
   #
   def show
-    @participations = Participation.where(presentation_id: @presentation)
-                                   .order(updated_at: :desc)
+    @participations = Participation.where(presentation_id: @presentation).order(updated_at: :desc)
     @presenters = @participations.where(is_presenter: true)
     @attendees = @participations.where(is_presenter: false)
   end

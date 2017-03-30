@@ -10,13 +10,6 @@ class Presentation < ApplicationRecord
   validates :title, :date, :location, presence: true
 
   #
-  # Order surveys by position
-  #
-  def position_surveys
-    surveys.order(:position)
-  end
-
-  #
   # Shorten long presentation descriptions for Presentation#index
   #
   def description_short(length)

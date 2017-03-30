@@ -14,6 +14,8 @@ class Question < ApplicationRecord
   has_many :responses, dependent: :destroy
   has_many :users, through: :responses, dependent: :destroy
 
+  validates :position, presence: true
+
   #
   # Values for Presentation survey questions
   #
@@ -75,8 +77,6 @@ class Question < ApplicationRecord
   # Save all questions in collection
   #
   def self.save_collection(questions)
-    questions.each do |question|
-      question.save!
-    end
+    questions.each(&:save!)
   end
 end
