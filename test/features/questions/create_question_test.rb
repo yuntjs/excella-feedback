@@ -9,11 +9,9 @@ class CreateQuestionTest < Capybara::Rails::TestCase
   end
 
   feature 'Create' do
-    before do
-      @prompt = 'Was this presentation excellent?'
-      @response_type = 'Number'
-      @response_required = 'question_response_required_true'
-    end
+    let(:prompt) { 'Was this presentation excellent?' }
+    let(:response_type) { 'Number' }
+    let(:response_required) { 'question_response_required_true' }  
 
     scenario 'admin can create a new question for a survey' do
       admin = create(:user, :admin)
@@ -25,15 +23,15 @@ class CreateQuestionTest < Capybara::Rails::TestCase
       visit new_presentation_survey_question_path(presentation, survey)
 
       within('form') do
-        fill_in 'Prompt', with: @prompt
-        select(@response_type, from: 'question_response_type')
-        choose(@response_required)
+        fill_in 'Prompt', with: prompt
+        select(response_type, from: 'question_response_type')
+        choose(response_required)
         click_button 'Submit'
       end
 
       page.must_have_content 'Success'
-      page.must_have_content @prompt
-      page.must_have_content @response_type
+      page.must_have_content prompt
+      page.must_have_content response_type
       page.must_have_content '✓'
     end
 
@@ -50,15 +48,15 @@ class CreateQuestionTest < Capybara::Rails::TestCase
       visit new_presentation_survey_question_path(presentation, survey)
 
       within('form') do
-        fill_in 'Prompt', with: @prompt
-        select(@response_type, from: 'question_response_type')
-        choose(@response_required)
+        fill_in 'Prompt', with: prompt
+        select(response_type, from: 'question_response_type')
+        choose(response_required)
         click_button 'Submit'
       end
 
       page.must_have_content 'Success'
-      page.must_have_content @prompt
-      page.must_have_content @response_type
+      page.must_have_content prompt
+      page.must_have_content response_type
       page.must_have_content '✓'
     end
   end

@@ -4,12 +4,10 @@ class SurveyGenerationsControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers
 
   before do
-    
   end
 
   describe '#create' do
     it 'saves a valid survey generated from a survey template' do
-
     end
 
     it 'saves valid questions generated from question templates'

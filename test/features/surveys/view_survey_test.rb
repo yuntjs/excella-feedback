@@ -22,7 +22,7 @@ class DestroySurveyTest < Capybara::Rails::TestCase
         click_on('View Presentations')
       end
       click_on(presentation.title)
-      click_on('View Surveys')
+      click_on('Edit Surveys')
 
       assert_equal(presentation_surveys_path(presentation), current_path)
     end
@@ -43,8 +43,7 @@ class DestroySurveyTest < Capybara::Rails::TestCase
         click_on('View Presentations')
       end
       click_on(presentation.title)
-
-      click_on('View Surveys')
+      click_on('Edit Surveys')
 
       assert_equal(presentation_surveys_path(presentation), current_path)
     end
