@@ -111,4 +111,24 @@ class QuestionsControllerTest < ActionController::TestCase
       assert_redirected_to(presentation_survey_path(@presentation.id, @survey.id), 'No redirection to presentation_survey_path')
     end
   end
+
+  describe '#destroy' do
+    let(:params) do
+      {
+        presentation_id: @presentation.id,
+        survey_id: @survey.id,
+        id: @question.id
+      }
+    end
+
+    before do
+      @initial_count = Question.count
+    end
+
+    it 'deletes a question' do
+      delete(:destroy, params: params)
+
+      assert_equal Question.count, @initial_count - 1, 'Failed to delete question'
+    end
+  end
 end
