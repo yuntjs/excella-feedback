@@ -69,9 +69,9 @@ class EditSurveyTest < Capybara::Rails::TestCase
              user_id: presenter2.id,
              presentation_id: presentation.id)
 
-      survey = create(:survey,
-                      presentation_id: presentation.id,
-                      presenter_id: presenter2.id)
+      create(:survey,
+             presentation_id: presentation.id,
+             presenter_id: presenter2.id)
 
       login_as(presenter1, scope: :user)
 
@@ -79,7 +79,7 @@ class EditSurveyTest < Capybara::Rails::TestCase
 
       button = find_link('Edit Survey')
 
-      assert(button[:class].include?("disabled"))
+      assert(button[:class].include?('disabled'))
     end
   end
 end
