@@ -28,10 +28,10 @@ class SurveysControllerTest < ActionController::TestCase
   end
 
   describe '#show' do
-    before do
-      @test_survey = create(:survey, presentation_id: @presentation.id)
+    let(:survey) { create(:survey, presentation_id: @presentation.id) }
 
-      get(:show, params: { presentation_id: @presentation.id, id: @test_survey.id })
+    before do
+      get(:show, params: { presentation_id: @presentation.id, id: survey.id })
     end
 
     it 'sets presentation as an instance variable' do
@@ -43,15 +43,17 @@ class SurveysControllerTest < ActionController::TestCase
     it 'sets survey as an instance variable' do
       assigned_survey = assigns(:survey)
 
-      assert_equal @test_survey, assigned_survey, 'Expected survey to be set as an instance variable'
+      assert_equal survey, assigned_survey, 'Expected survey to be set as an instance variable'
     end
   end
 
-  describe '#edi' do
+  describe '#edit' do
+    let(:survey) { create(:survey, presentation_id: @presentation.id) }
+
     before do
       @test_survey = create(:survey, presentation_id: @presentation.id)
 
-      get(:edit, params: { presentation_id: @presentation.id, id: @test_survey.id })
+      get(:edit, params: { presentation_id: @presentation.id, id: survey.id })
     end
 
     it 'sets presentation as an instance variable' do
@@ -63,7 +65,7 @@ class SurveysControllerTest < ActionController::TestCase
     it 'sets survey as an instance variable' do
       assigned_survey = assigns(:survey)
 
-      assert_equal @test_survey, assigned_survey, 'Expected survey to be set as an instance variable'
+      assert_equal survey, assigned_survey, 'Expected survey to be set as an instance variable'
     end
   end
 
@@ -114,8 +116,6 @@ class SurveysControllerTest < ActionController::TestCase
 
   # describe '#update' do
   #   it 'should allow Admin user to Update surveys' do
-  #     admin = create :user, :admin
-  #     presentation = create :presentation
   #     survey = create :survey, title: 'Git', presentation_id: presentation.id
   #
   #     updated_title = 'Git 2'
@@ -137,7 +137,7 @@ class SurveysControllerTest < ActionController::TestCase
   #     assert_redirected_to presentation_survey_path(presentation.id, survey.id), 'No redirect to presentation_survey_path'
   #   end
   # end
-  #
+
   # describe '#destroy' do
   #   it 'should allow Admin user to Delete surveys' do
   #     admin = create :user, :admin
