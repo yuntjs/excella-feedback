@@ -67,7 +67,6 @@ class SurveysControllerTest < ActionController::TestCase
     end
   end
 
-
   describe '#create' do
     let(:success_params) do
       {
