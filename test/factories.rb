@@ -42,13 +42,13 @@ FactoryGirl.define do
   end
 
   factory :survey do
-    sequence(:position) { |n| n + 1 }
+    sequence(:position) { |n| n }
     sequence(:title) { |n| "Survey #{n}" }
     presentation
   end
 
   factory :question do
-    sequence(:id) { |n| n + 1 }
+    sequence(:id) { |n| n }
     sequence(:prompt) { |n| "Question #{n}" }
     position 1
     survey

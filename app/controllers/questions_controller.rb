@@ -70,7 +70,7 @@ class QuestionsController < ApplicationController
   # Set and sanitize question params
   #
   def question_params
-    params.require(:question).permit(:order, :prompt, :response_type)
+    params.require(:question).permit(:position, :prompt, :response_type)
   end
 
   #

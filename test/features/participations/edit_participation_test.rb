@@ -14,8 +14,9 @@ class EditParticipationTest < Capybara::Rails::TestCase
       admin = create :user, :admin
       pres = create(:presentation, title: "user's presentation")
       create(:participation, user: admin, presentation: pres, is_presenter: false)
+
       login_as(admin, scope: :user)
-      # Must refresh page for login_as to take effect
+
       visit presentation_path(pres)
 
       within '.attendees' do
@@ -31,8 +32,9 @@ class EditParticipationTest < Capybara::Rails::TestCase
       admin = create :user, :admin
       pres = create(:presentation, title: "user's presentation")
       create(:participation, user: admin, presentation: pres, is_presenter: false)
+
       login_as(admin, scope: :user)
-      # Must refresh page for login_as to take effect
+
       visit presentation_path(pres)
 
       within('.attendees') do
@@ -49,8 +51,10 @@ class EditParticipationTest < Capybara::Rails::TestCase
       pres = create(:presentation, title: "user's presentation")
       create(:participation, user: admin, presentation: pres, is_presenter: true)
       login_as(admin, scope: :user)
-      # Must refresh page for login_as to take effect
+
+
       visit presentation_path(pres)
+
       within('.presenters') do
         click_on 'Change to Attendee'
       end
