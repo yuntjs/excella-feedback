@@ -39,6 +39,13 @@ class QuestionsControllerTest < ActionController::TestCase
 
       assert_equal survey, @survey, 'Does not set the survey instance variable'
     end
+
+    it 'sets an unsaved question as an instance variable' do
+      question = assigns(:question)
+
+      refute_nil question, 'Expected question instance variable to exist'
+      assert question.new_record?, 'Expected question to be a new record'
+    end
   end
 
   describe '#create' do
