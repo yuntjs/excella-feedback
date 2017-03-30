@@ -90,7 +90,7 @@ FactoryGirl.define do
   end
 
   factory :question_template do
-    prompt 'question_template prompt'
+    sequence(:prompt) { |n| "question_template prompt #{n}" }
     survey_template
 
     trait :text do

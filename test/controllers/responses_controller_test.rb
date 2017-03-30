@@ -1,5 +1,5 @@
-
 require 'test_helper'
+
 class ResponsesControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers
 

@@ -13,7 +13,8 @@ class SurveyGenerationsController < ApplicationController
     generate_survey
 
     if @survey.valid? && Question.valid_collection?(@questions)
-      save_survey
+      @survey.save
+      Question.save_collection(@questions)
       flash[:success] = 'A new survey has been added to the presentation.'
     else
       flash[:error] = 'The survey could not be added to the presentation.'
@@ -38,13 +39,5 @@ class SurveyGenerationsController < ApplicationController
   def generate_survey
     @survey = Survey.build_from_template(presentation: @presentation, survey_template: @survey_template)
     @questions = Question.build_from_templates(survey: @survey, question_templates: @survey_template.question_templates)
-  end
-
-  #
-  # Save survey & its questions
-  #
-  def save_survey
-    @survey.save
-    Question.save_collection(@questions)
   end
 end
