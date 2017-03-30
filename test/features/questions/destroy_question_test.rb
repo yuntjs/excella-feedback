@@ -26,7 +26,22 @@ class DeleteQuestionTest < Capybara::Rails::TestCase
     end
 
     scenario 'a presenter can delete a question' do
-      
+      presenter = create(:user)
+      presentation = create(:presentation, :in_the_future)
+      survey = create(:survey, presentation_id: presentation.id)
+      question = create(:question, :text, :optional, survey_id: survey.id)
+      create(:participation, :presenter,
+             user_id: presenter.id,
+             presentation_id: presentation.id)
+
+      login_as(presenter, scope: :user)
+
+      visit presentation_survey_path(presentation, survey)
+
+      click_on 'Delete'
+
+      refute(page.has_content?(question.prompt))
+      refute(page.has_content?(question.response_type))
     end
   end
 end
