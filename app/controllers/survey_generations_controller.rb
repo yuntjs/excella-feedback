@@ -12,8 +12,8 @@ class SurveyGenerationsController < ApplicationController
     presentation = Presentation.find_by(id: params[:presentation_id])
     survey_template = SurveyTemplate.find_by(id: params[:survey_template_id])
 
-    survey = Survey.create_from_template(presentation: presentation, survey_template: survey_template)
-    questions = Question.create_from_templates(survey: survey, question_templates: survey_template.question_templates)
+    survey = Survey.build_from_template(presentation: presentation, survey_template: survey_template)
+    questions = Question.build_from_templates(survey: survey, question_templates: survey_template.question_templates)
 
     if survey.valid? && Question.valid_collection?(questions)
       survey.save
@@ -21,9 +21,9 @@ class SurveyGenerationsController < ApplicationController
 
       flash[:success] = 'A new survey has been added to the presentation.'
     else
-      flash[:error] = 'A new survey could not be created from the selected template.'
+      flash[:error] = 'The survey could not be added to the presentation.'
     end
 
-    redirect_to presentation_surveys(presentation_id: params[:presentation_id])
+    redirect_to presentation_surveys_path(presentation_id: params[:presentation_id])
   end
 end

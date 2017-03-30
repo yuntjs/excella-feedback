@@ -23,11 +23,10 @@ class Survey < ApplicationRecord
   #
   # Create survey from presentation & survey template
   #
-  def self.create_from_template(presentation:, survey_template:)
+  def self.build_from_template(presentation:, survey_template:)
     presentation.surveys.new(
-      title: survey_template.id,
-      position: presentation.surveys.maximum(:position) + 1,
-      presenter_id: nil
+      title: survey_template.title,
+      position: Survey.highest_position(presentation) + 1
     )
   end
 end

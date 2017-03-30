@@ -58,13 +58,13 @@ class Question < ApplicationRecord
   #
   # Create questions from survey & question templates
   #
-  def self.create_from_templates(survey:, question_templates:)
-    question_templates.map do |question_template|
+  def self.build_from_templates(survey:, question_templates:)
+    question_templates.each_with_index do |question_template, index|
       survey.questions.new(
         prompt: question_template.prompt,
         response_type: question_template.response_type,
         response_required: question_template.response_required,
-        position: survey.questions.maximum(:position) + 1
+        position: index + 1
       )
     end
   end
@@ -72,7 +72,7 @@ class Question < ApplicationRecord
   #
   # Check if all questions are valid
   #
-  def self.vaid_collection?(questions)
+  def self.valid_collection?(questions)
     questions.each do |question|
       return false if question.invalid?
     end
