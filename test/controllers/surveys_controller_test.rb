@@ -156,20 +156,21 @@ class SurveysControllerTest < ActionController::TestCase
     end
   end
 
-  # describe '#destroy' do
-  #   it 'should allow Admin user to Delete surveys' do
-  #     admin = create :user, :admin
-  #     presentation = create :presentation
-  #     survey = create :survey, presentation_id: presentation.id
-  #
-  #     sign_in admin
-  #
-  #     delete :destroy, params: {
-  #       presentation_id: presentation.id,
-  #       id: survey.id
-  #     }
-  #
-  #     assert_equal Survey.count, 0, 'Delete method unsuccessful. Survey still exists.'
-  #   end
-  # end
+  describe '#destroy' do
+    let(:survey) { create(:survey, presentation_id: @presentation.id) }
+
+    before do
+      survey.reload
+      @initial_count = Survey.count
+    end
+
+    it 'should delete a survey' do
+      delete :destroy, params: {
+        presentation_id: @presentation.id,
+        id: survey.id
+      }
+
+      assert_equal Survey.count, @initial_count - 1, 'Delete method unsuccessful. Survey still exists.'
+    end
+  end
 end
