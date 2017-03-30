@@ -51,10 +51,10 @@ class QuestionsControllerTest < ActionController::TestCase
   describe '#edit' do
     before do
       get(:edit, params: {
-                          survey_id: @survey.id,
-                          presentation_id: @presentation.id,
-                          id: @question.id
-                          })
+            survey_id: @survey.id,
+            presentation_id: @presentation.id,
+            id: @question.id
+          })
     end
 
     it 'sets survey variable as an instance variable' do
@@ -134,7 +134,7 @@ class QuestionsControllerTest < ActionController::TestCase
         survey_id: @survey.id,
         id: @question.id,
         question: {
-          prompt: new_prompt,
+          prompt: new_prompt
         }
       }
     end
