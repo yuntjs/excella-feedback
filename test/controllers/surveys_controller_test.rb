@@ -10,6 +10,16 @@ class SurveysControllerTest < ActionController::TestCase
     sign_in @admin
   end
 
+  describe '#new' do
+    it 'sets survey as a new instance variable' do
+      get(:new, params: { presentation_id: @presentation.id })
+
+      survey = assigns(:survey)
+
+      assert survey.new_record?, 'Expected survey to be a new record'
+    end
+  end
+
   describe '#create' do
     let(:success_params) do
       {
@@ -39,13 +49,18 @@ class SurveysControllerTest < ActionController::TestCase
       post :create, params: success_params
 
       assert @initial_count < Survey.count, 'Did not save a valid survey'
-      # assert_redirected_to presentation_survey_path(presentation.id, presentation.surveys.first.id), 'No redirect to presentations_survey_path'
     end
 
-    it 'does not svae a survey with invalid params' do
+    it 'does not save a survey with invalid params' do
       post :create, params: error_params
 
       assert @initial_count == Survey.count, 'Saved an invalid survey'
+    end
+
+    it 'redirects to presentation surveys page after succesfully saving' do
+      post :create, params: success_params
+
+      assert_redirected_to presentation_survey_path(@presentation.id, @presentation.surveys.first.id), 'No redirect to presentations_survey_path'
     end
   end
 
