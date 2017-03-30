@@ -15,8 +15,7 @@ class User < ApplicationRecord
   has_many :responses, dependent: :nullify
   has_many :questions, through: :responses, dependent: :nullify
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  validates :first_name, :last_name, presence: true
 
   #
   # Provides full_name attribute for user

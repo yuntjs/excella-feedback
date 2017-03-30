@@ -7,9 +7,7 @@ class Presentation < ApplicationRecord
 
   has_many :surveys, dependent: :destroy
 
-  validates :title, presence: true
-  validates :date, presence: true
-  validates :location, presence: true
+  validates :title, :date, :location, presence: true
 
   #
   # Order surveys by position
