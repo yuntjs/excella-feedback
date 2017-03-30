@@ -52,7 +52,6 @@ class EditParticipationTest < Capybara::Rails::TestCase
       create(:participation, user: admin, presentation: pres, is_presenter: true)
       login_as(admin, scope: :user)
 
-
       visit presentation_path(pres)
 
       within('.presenters') do

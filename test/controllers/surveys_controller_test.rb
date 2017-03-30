@@ -22,7 +22,7 @@ class SurveysControllerTest < ActionController::TestCase
         presentation_id: presentation.id,
         survey: {
           title: 'Git',
-          position: 1,
+          position: 1
         }
       }
 
