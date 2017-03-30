@@ -11,12 +11,39 @@ class SurveysControllerTest < ActionController::TestCase
   end
 
   describe '#new' do
-    it 'sets survey as a new instance variable' do
+    before do
       get(:new, params: { presentation_id: @presentation.id })
+    end
+    it 'sets presentation as an instance variable' do
+      presentation = assigns(:presentation)
 
+      assert_equal @presentation, presentation, 'Expected presentation to be set as an instance variable'
+    end
+
+    it 'sets survey as a new instance variable' do
       survey = assigns(:survey)
 
       assert survey.new_record?, 'Expected survey to be a new record'
+    end
+  end
+
+  describe '#show' do
+    before do
+      @test_survey = create(:survey, presentation_id: @presentation.id)
+
+      get(:show, params: { presentation_id: @presentation.id, id: @test_survey.id })
+    end
+
+    it 'sets presentation as an instance variable' do
+      presentation = assigns(:presentation)
+
+      assert_equal @presentation, presentation, 'Expected presentation to be set as an instance variable'
+    end
+
+    it 'sets survey as an instance variable' do
+      assigned_survey = assigns(:survey)
+
+      assert_equal @test_survey, assigned_survey, 'Expected survey to be set as an instance variable'
     end
   end
 
