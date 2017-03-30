@@ -48,6 +48,34 @@ class QuestionsControllerTest < ActionController::TestCase
     end
   end
 
+  describe '#edit' do
+    before do
+      get(:edit, params: {
+                          survey_id: @survey.id,
+                          presentation_id: @presentation.id,
+                          id: @question.id
+                          })
+    end
+
+    it 'sets survey variable as an instance variable' do
+      survey = assigns(:survey)
+
+      assert_equal survey, @survey, 'Does not set the survey instance variable'
+    end
+
+    it 'sets survey variable as an instance variable' do
+      survey = assigns(:presentation)
+
+      assert_equal survey, @presentation, 'Does not set the presentation instance variable'
+    end
+
+    it 'sets survey variable as an instance variable' do
+      survey = assigns(:question)
+
+      assert_equal survey, @question, 'Does not set the survey instance variable'
+    end
+  end
+
   describe '#create' do
     let(:success_params) do
       {
