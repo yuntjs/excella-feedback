@@ -11,7 +11,7 @@ class CreateQuestionTest < Capybara::Rails::TestCase
   feature 'Create' do
     let(:prompt) { 'Was this presentation excellent?' }
     let(:response_type) { 'Number' }
-    let(:response_required) { 'question_response_required_true' }  
+    let(:response_required) { 'question_response_required_true' }
 
     scenario 'admin can create a new question for a survey' do
       admin = create(:user, :admin)
@@ -23,6 +23,7 @@ class CreateQuestionTest < Capybara::Rails::TestCase
       visit new_presentation_survey_question_path(presentation, survey)
 
       within('form') do
+        fill_in 'Position', with: 1
         fill_in 'Prompt', with: prompt
         select(response_type, from: 'question_response_type')
         choose(response_required)
@@ -48,6 +49,7 @@ class CreateQuestionTest < Capybara::Rails::TestCase
       visit new_presentation_survey_question_path(presentation, survey)
 
       within('form') do
+        fill_in 'Position', with: 1
         fill_in 'Prompt', with: prompt
         select(response_type, from: 'question_response_type')
         choose(response_required)
