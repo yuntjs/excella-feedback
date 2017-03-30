@@ -11,11 +11,11 @@ class CreateSurveyTest < Capybara::Rails::TestCase
   feature 'Create' do
     scenario 'creates a new survey if admin' do
       admin = create(:user, :admin)
+      presentation = create(:presentation, title: 'Intro to Git')
+
       login_as(admin, scope: :user)
 
-      pres = create(:presentation, title: 'Intro to Git')
-
-      visit presentation_surveys_path(pres)
+      visit presentation_surveys_path(presentation)
 
       click_on 'Create New Survey'
 
@@ -26,6 +26,29 @@ class CreateSurveyTest < Capybara::Rails::TestCase
       end
 
       page.must_have_content 'Testing'
+    end
+
+    scenario 'creates a new survey if user is presenter for the presentation' do
+      presenter = create(:user)
+      presentation = create(:presentation)
+      create(:participation, :presenter,
+             user_id: presenter.id,
+             presentation_id: presentation.id)
+
+      login_as(presenter, scope: :user)
+
+      visit presentation_surveys_path(presentation)
+      click_on 'Create New Survey'
+
+      title = 'Testing'
+
+      within('form') do
+        fill_in 'Position', with: 1
+        fill_in 'Title', with: title
+        click_button 'Submit'
+      end
+
+      page.must_have_content title
     end
 
     scenario 'cannot access survey#create if non-admin' do
@@ -43,9 +66,9 @@ class CreateSurveyTest < Capybara::Rails::TestCase
       admin = create(:user, :admin)
       login_as(admin, scope: :user)
 
-      pres = create(:presentation, title: 'Intro to Git')
+      presentation = create(:presentation, title: 'Intro to Git')
 
-      visit presentation_surveys_path(pres)
+      visit presentation_surveys_path(presentation)
 
       click_on('Create New Survey')
 

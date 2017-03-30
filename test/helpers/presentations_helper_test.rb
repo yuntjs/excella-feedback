@@ -11,6 +11,8 @@ class PresentationsHelperTest < ActionView::TestCase
     @presentation_as_attendee = create(:presentation)
     @presentation_as_admin_attendee = create(:presentation)
     @presentation_as_admin_presenter = create(:presentation)
+    @future_presentation_as_attendee = create(:presentation, :in_the_future)
+    @future_presentation_as_presenter = create(:presentation, :in_the_future)
 
     create(:participation,
            user_id: @user.id,
@@ -31,19 +33,33 @@ class PresentationsHelperTest < ActionView::TestCase
            user_id: @admin.id,
            presentation_id: @presentation_as_admin_presenter.id,
            is_presenter: true)
+
+    create(:participation,
+           user_id: @user.id,
+           presentation_id: @future_presentation_as_attendee.id,
+           is_presenter: false)
+
+    create(:participation,
+           user_id: @user.id,
+           presentation_id: @future_presentation_as_presenter.id,
+           is_presenter: true)
   end
 
   describe '#presentations_as' do
     it 'gets correct presentations when current user is presenter' do
       presentations = presentations_as(:presenter, @user)
 
-      assert_equal presentations, [@presentation_as_presenter]
+      assert_equal presentations.length, 2
+      assert presentations.include?(@presentation_as_presenter)
+      assert presentations.include?(@future_presentation_as_presenter)
     end
 
     it 'gets correct presentations where current user is attendee' do
       presentations = presentations_as(:attendee, @user)
 
-      assert_equal presentations, [@presentation_as_attendee]
+      assert_equal presentations.length, 2
+      assert presentations.include?(@presentation_as_attendee)
+      assert presentations.include?(@future_presentation_as_attendee)
     end
 
     it 'returns an empty relation is role is not specified as presenter or attendee' do
@@ -160,12 +176,9 @@ class PresentationsHelperTest < ActionView::TestCase
       @submitted_text = 'Feedback Submitted'
       @too_early_text = 'Available after Presentation'
       @disabled_css = 'disabled'
-
-      @future_presentation = create(:presentation, :in_the_future)
-      create(:participation, user_id: @user.id, presentation_id: @future_presentation.id, is_presenter: false)
     end
     it 'shows disabled button before presentation start time' do
-      link_string = feedback_button(@user, @future_presentation)
+      link_string = feedback_button(@user, @future_presentation_as_presenter)
 
       refute link_string.include?(@see_feedback_text), "Link contains '#{@see_feedback_text}'"
       refute link_string.include?(@submitted_text), "Link contains '#{@submitted_text}'"
@@ -177,7 +190,7 @@ class PresentationsHelperTest < ActionView::TestCase
       params[:controller] = 'presentations'
       params[:action] = 'show'
 
-      link_string = feedback_button(@user, @future_presentation)
+      link_string = feedback_button(@user, @future_presentation_as_attendee)
 
       assert link_string.nil?, 'Displaying link when on presentation#show page before presentation start date'
     end
@@ -224,8 +237,9 @@ class PresentationsHelperTest < ActionView::TestCase
     end
   end
 
-  describe '#presentation_admin_options' do
-    let(:link) { presentation_admin_options(@admin, @presentation_as_attendee) }
+  describe '#presentation_options' do
+    let(:link) { presentation_options(@admin, @presentation_as_attendee) }
+    let(:link2) { presentation_options(@user, @future_presentation_as_presenter) }
 
     it 'returns a link to edit presentation if user is an admin' do
       assert_includes link, edit_presentation_path(@presentation_as_attendee), 'Does not include link to edit presentation'
@@ -244,8 +258,25 @@ class PresentationsHelperTest < ActionView::TestCase
       assert_includes link, presentation_path(@presentation_as_attendee), 'Does not include link to delete presentation'
     end
 
-    it 'returns nil if user is not an admin' do
-      assert_nil presentation_admin_options(@user, @presentation_as_attendee), 'Expected nil if user is not an admin'
+    it 'returns a link to view surveys if user is a presenter' do
+      assert_includes link2, presentation_surveys_path(@future_presentation_as_presenter), 'Does not include link to view surveys as a presenter'
+    end
+
+    it 'returns nil if user is not an admin or presenter' do
+      assert_nil presentation_options(@user, @presentation_as_attendee), 'Expected nil if user is not an admin'
+    end
+  end
+
+  describe '#presenter_presentation_options' do
+    let(:future_link) { presenter_presentation_options(@future_presentation_as_presenter) }
+    let(:past_link) { presenter_presentation_options(@presentation_as_presenter) }
+
+    it 'returns a link to view surveys if presentation is in the future' do
+      assert_includes future_link, presentation_surveys_path(@future_presentation_as_presenter), 'Does not include link to view surveys as a presenter'
+    end
+
+    it 'returns nil if presentation is in the past' do
+      assert_nil past_link, 'Returns something other than nil when presentation in the past'
     end
   end
 

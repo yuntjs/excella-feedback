@@ -16,15 +16,24 @@ class QuestionsController < ApplicationController
   # Create route
   #
   def create
+    @survey = Survey.find(params[:survey_id])
     @question = Question.new(question_params)
     @question.survey_id = params[:survey_id]
     save_question
   end
 
   #
-  # Show route
+  # Show route - fringe case: invalid edit submission followed by cancel attempts to render showpage
   #
   def show
+    redirect_to presentation_survey_path(params[:presentation_id], params[:survey_id])
+  end
+
+  #
+  # Index route - fringe case: invalid new submission followed by cancel attempts to render indexpage
+  #
+  def index
+    redirect_to presentation_survey_path(params[:presentation_id], params[:survey_id])
   end
 
   #
@@ -70,7 +79,7 @@ class QuestionsController < ApplicationController
   # Set and sanitize question params
   #
   def question_params
-    params.require(:question).permit(:position, :prompt, :response_type)
+    params.require(:question).permit(:position, :prompt, :response_type, :response_required)
   end
 
   #

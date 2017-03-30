@@ -153,8 +153,16 @@ module PresentationsHelper
   #
   # Renders options/links for Presentation show page
   #
-  def presentation_admin_options(user, presentation)
-    return unless user.is_admin
+  def presentation_options(user, presentation)
+    participation = Participation.where(user_id: user.id, presentation_id: presentation.id).first
+    return unless user.is_admin || participation.is_presenter
+    user.is_admin ? admin_presentation_options(presentation) : presenter_presentation_options(presentation)
+  end
+
+  #
+  # Renders controller action links for admin for Presentation show page
+  #
+  def admin_presentation_options(presentation)
     content_tag :div, class: 'admin-options' do
       edit_details_link = link_to 'Edit Details', edit_presentation_path(presentation), class: 'btn btn-primary'
       edit_participants_link = content_tag :button, 'Edit Participants', class: 'btn btn-primary', data: { toggle: 'modal', target: '.bs-example-modal-sm' }
@@ -162,6 +170,16 @@ module PresentationsHelper
       delete_link = link_to 'Delete', presentation_path(presentation), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure you want to delete this presentation?' }
 
       edit_details_link + edit_participants_link + edit_surveys_link + delete_link
+    end
+  end
+
+  #
+  # Renders controller action links for presenter on presentation show page
+  #
+  def presenter_presentation_options(presentation)
+    return unless is_in_future?(presentation)
+    content_tag :div, class: 'admin-options' do
+      link_to 'View Surveys', presentation_surveys_path(presentation), class: 'btn btn-primary'
     end
   end
 
