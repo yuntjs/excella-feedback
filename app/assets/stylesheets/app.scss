@@ -10,6 +10,7 @@ $secondary-blue: #5C86C0;
 $secondary-orange: #DC5C29;
 $secondary-yellow: #F9B800;
 
+
 // Other Colors
 $text-gray: #404040;
 $flat-red: #A94442;
@@ -90,6 +91,10 @@ body {
     background: darken($secondary-yellow, $step/2);
     border-color: darken($secondary-yellow, $step);
   }
+}
+
+.disabled {
+  pointer-events: none;
 }
 
 //
