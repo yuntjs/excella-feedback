@@ -49,6 +49,13 @@ class Question < ApplicationRecord
   end
 
   #
+  # Get the highest question position for a survey
+  #
+  def self.highest_position(survey)
+    survey.questions.maximum(:position) || 0
+  end
+
+  #
   # Create questions from survey & question templates
   #
   def self.create_from_templates(survey:, question_templates:)
