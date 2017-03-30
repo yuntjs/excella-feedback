@@ -13,6 +13,14 @@ class QuestionsControllerTest < ActionController::TestCase
     @question = create(:question, :number, :required, survey_id: @survey.id)
   end
 
+  describe '#index' do
+    it 'redirects to the presentation survey show page' do
+      get(:index, params: { presentation_id: @presentation.id, survey_id: @survey.id })
+
+      assert_redirected_to presentation_survey_path(@presentation, @survey)
+    end
+  end
+
   describe '#create' do
     let(:success_params) do
       {
