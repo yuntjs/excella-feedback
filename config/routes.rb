@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :presentations do
     resources :participations, only: [:update]
     resources :surveys do
-      resources :questions, except: [:index]
+      resources :questions
     end
     resources :responses, only: [:index, :new, :create]
   end
