@@ -25,6 +25,8 @@ class DeleteQuestionTest < Capybara::Rails::TestCase
       refute(page.has_content?(question.response_type))
     end
 
-    scenario 'a presenter can delete a question'
+    scenario 'a presenter can delete a question' do
+      
+    end
   end
 end

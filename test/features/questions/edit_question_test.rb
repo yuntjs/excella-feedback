@@ -39,5 +39,33 @@ class EditQuestionTest < Capybara::Rails::TestCase
       page.must_have_content @response_type
       page.must_have_content '✓'
     end
+
+    scenario 'a presenter can edit a question' do
+      presenter = create(:user)
+      presentation = create(:presentation, :in_the_future)
+      survey = create(:survey, presentation_id: presentation.id)
+      create(:question, :text, :optional, survey_id: survey.id)
+      create(:participation, :presenter,
+             user_id: presenter.id,
+             presentation_id: presentation.id)
+
+      login_as(presenter, scope: :user)
+
+      visit presentation_survey_path(presentation, survey)
+
+      click_on 'Edit'
+
+      within('form') do
+        fill_in 'Prompt', with: @prompt
+        select(@response_type, from: 'question_response_type')
+        choose(@response_required)
+        click_button 'Submit'
+      end
+
+      page.must_have_content 'Success'
+      page.must_have_content @prompt
+      page.must_have_content @response_type
+      page.must_have_content '✓'
+    end
   end
 end
