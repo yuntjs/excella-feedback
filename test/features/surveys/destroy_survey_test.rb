@@ -39,5 +39,31 @@ class DestroySurveyTest < Capybara::Rails::TestCase
 
       refute(page.has_content?(survey.title))
     end
+
+    scenario 'a presenter cannot delete another presenters survey' do
+      presenter1 = create(:user)
+      presenter2 = create(:user)
+
+      presentation = create(:presentation)
+
+      create(:participation, :presenter,
+             user_id: presenter1.id,
+             presentation_id: presentation.id)
+      create(:participation, :presenter,
+             user_id: presenter2.id,
+             presentation_id: presentation.id)
+
+      survey = create(:survey,
+                      presentation_id: presentation.id,
+                      presenter_id: presenter2.id)
+
+      login_as(presenter1, scope: :user)
+
+      visit presentation_surveys_path(presentation)
+
+      button = find_link('Delete Survey')
+
+      assert(button[:class].include?("disabled"))
+    end
   end
 end
