@@ -51,8 +51,6 @@ class SurveysControllerTest < ActionController::TestCase
     let(:survey) { create(:survey, presentation_id: @presentation.id) }
 
     before do
-      @test_survey = create(:survey, presentation_id: @presentation.id)
-
       get(:edit, params: { presentation_id: @presentation.id, id: survey.id })
     end
 
@@ -114,29 +112,49 @@ class SurveysControllerTest < ActionController::TestCase
     end
   end
 
-  # describe '#update' do
-  #   it 'should allow Admin user to Update surveys' do
-  #     survey = create :survey, title: 'Git', presentation_id: presentation.id
-  #
-  #     updated_title = 'Git 2'
-  #     updated_position = 2
-  #
-  #     sign_in admin
-  #
-  #     patch :update, params: {
-  #       presentation_id: presentation.id,
-  #       id: survey.id,
-  #       survey: {
-  #         position: updated_position,
-  #         title: updated_title
-  #       }
-  #     }
-  #
-  #     survey.reload
-  #     assert_equal [updated_title, updated_position], [survey.title, survey.position], 'Survey title & position was not updated properly'
-  #     assert_redirected_to presentation_survey_path(presentation.id, survey.id), 'No redirect to presentation_survey_path'
-  #   end
-  # end
+  describe '#update' do
+    let(:survey) { create(:survey, presentation_id: @presentation.id) }
+    let(:new_position) { survey.position + 1 }
+    let(:new_title) { 'Updated Title' }
+
+    let(:success_params) do
+      {
+        presentation_id: @presentation.id,
+        id: survey.id,
+        survey: {
+          position: new_position,
+          title: new_title
+        }
+      }
+    end
+    let(:error_params) do
+      {
+        presentation_id: @presentation.id,
+        id: survey.id,
+        survey: {
+          position: nil,
+          title: nil
+        }
+      }
+    end
+
+    it 'updates question with valid params' do
+      patch :update, params: success_params
+
+      survey.reload
+
+      assert_equal [new_title, new_position], [survey.title, survey.position], 'Survey title & position were not updated properly'
+      assert_redirected_to presentation_survey_path(@presentation.id, survey.id), 'No redirect to presentation_survey_path'
+    end
+
+    it 'does not update questions with invalid params' do
+      patch :update, params: error_params
+
+      survey.reload
+
+      refute_equal [new_title, new_position], [survey.title, survey.position], 'Survey title & position were updated with incorrect params'
+    end
+  end
 
   # describe '#destroy' do
   #   it 'should allow Admin user to Delete surveys' do
