@@ -3,6 +3,14 @@ require 'test_helper'
 class SurveysControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers
 
+  describe '#index' do
+    it 'tests pending...'
+  end
+
+  describe '#new' do
+    it 'tests pending...'
+  end
+
   describe '#create' do
     it 'should create a new survey if User is an Admin' do
       admin = create(:user, :admin)
@@ -20,6 +28,14 @@ class SurveysControllerTest < ActionController::TestCase
 
       assert_redirected_to presentation_survey_path(presentation.id, presentation.surveys.first.id), 'No redirect to presentations_survey_path'
     end
+  end
+
+  describe '#show' do
+    it 'tests pending...'
+  end
+
+  describe '#edit' do
+    it 'tests pending...'
   end
 
   describe '#update' do

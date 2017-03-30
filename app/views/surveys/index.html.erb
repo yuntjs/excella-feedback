@@ -14,7 +14,7 @@
           <th>Title</th>
           <th>Actions</th>
         </tr>
-        <% @presentation.surveys.order(:position).each do |survey| %>
+        <% @surveys.each do |survey| %>
         <tr>
           <td><%= link_to "#{survey.title} (#{survey.position})", presentation_survey_path(@presentation.id, survey.id) %></td>
           <td>

@@ -9,6 +9,7 @@ class SurveysController < ApplicationController
   # Index route
   #
   def index
+    @surveys = @presentation.surveys.order(:position)
   end
 
   #

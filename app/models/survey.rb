@@ -11,7 +11,6 @@ class Survey < ApplicationRecord
 
   has_many :questions, dependent: :destroy
 
-  # validates :order, presence: false
   validates :title, :position, presence: true
 
   #
