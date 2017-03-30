@@ -47,6 +47,27 @@ class SurveysControllerTest < ActionController::TestCase
     end
   end
 
+  describe '#edi' do
+    before do
+      @test_survey = create(:survey, presentation_id: @presentation.id)
+
+      get(:edit, params: { presentation_id: @presentation.id, id: @test_survey.id })
+    end
+
+    it 'sets presentation as an instance variable' do
+      presentation = assigns(:presentation)
+
+      assert_equal @presentation, presentation, 'Expected presentation to be set as an instance variable'
+    end
+
+    it 'sets survey as an instance variable' do
+      assigned_survey = assigns(:survey)
+
+      assert_equal @test_survey, assigned_survey, 'Expected survey to be set as an instance variable'
+    end
+  end
+
+
   describe '#create' do
     let(:success_params) do
       {
