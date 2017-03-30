@@ -14,6 +14,26 @@ class QuestionsControllerTest < ActionController::TestCase
   end
 
   describe '#create' do
+    let(:success_params) do
+      {
+        survey_id: @survey_template.id,
+        question_template: {
+          prompt: 'prompt',
+          response_type: 'number',
+          response_required: false
+        }
+      }
+    end
+    let(:error_params) do
+      {
+        survey_template_id: @survey_template.id,
+        question_template: {
+          prompt: nil,
+          response_type: nil,
+          response_required: false
+        }
+      }
+    end
     it 'should create a new question if User is an Admin' do
       post(:create, params: {
              presentation_id: @presentation.id,
@@ -27,6 +47,10 @@ class QuestionsControllerTest < ActionController::TestCase
            })
 
       assert_redirected_to(presentation_survey_path(@presentation.id, @survey.id), 'No redirect to presentation_survey_path')
+    end
+
+    it 'should' do
+
     end
   end
 
