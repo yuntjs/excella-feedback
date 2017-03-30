@@ -27,7 +27,7 @@ class DestroySurveyTest < Capybara::Rails::TestCase
       assert_equal(presentation_surveys_path(presentation), current_path)
     end
 
-    scenario 'presenter can view surveys for a presentation' do
+    scenario 'presenter can view surveys for their presentation' do
       presenter = create(:user)
       presentation = create(:presentation, :in_the_future)
       create(:participation, :presenter,
@@ -47,6 +47,32 @@ class DestroySurveyTest < Capybara::Rails::TestCase
       click_on('View Surveys')
 
       assert_equal(presentation_surveys_path(presentation), current_path)
+    end
+
+    scenario 'a presenter cannot view surveys for a presentation where they are an attendee' do
+      presenter = create(:user)
+      presentation1 = create(:presentation, :in_the_future)
+      create(:participation, :presenter,
+             user_id: presenter.id,
+             presentation_id: presentation1.id)
+      create(:survey, presentation_id: presentation1.id)
+
+      presentation2 = create(:presentation, :in_the_future)
+      create(:participation,
+             user_id: presenter.id,
+             presentation_id: presentation2.id)
+      create(:survey, presentation_id: presentation2.id)
+
+      login_as(presenter, scope: :user)
+
+      visit(root_path)
+
+      within('.navbar-left') do
+        click_on('View Presentations')
+      end
+      click_on(presentation2.title)
+
+      refute(page.has_content?('See Surveys'))
     end
 
     scenario 'general participant cannot view surveys' do
