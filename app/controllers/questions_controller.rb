@@ -16,6 +16,7 @@ class QuestionsController < ApplicationController
   # Create route
   #
   def create
+    @survey = Survey.find(params[:survey_id])
     @question = Question.new(question_params)
     @question.survey_id = params[:survey_id]
     save_question
