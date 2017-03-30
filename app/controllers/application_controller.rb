@@ -44,21 +44,35 @@ class ApplicationController < ActionController::Base
   #
   def new_default_survey(subject)
     if subject.class == Presentation
-      survey = @presentation.surveys.create(
-        title: 'Overall Presentation',
-        position: Survey.highest_position(@presentation) + 1
-      )
+      survey = create_overall_survey(@presentation)
     elsif subject.class == User
       presentation = Presentation.find(@participation.presentation_id)
-      survey = presentation.surveys.create(
-        title: "Feedback for #{subject.full_name}",
-        position: Survey.highest_position(presentation) + 1,
-        presenter_id: subject.id
-      )
+      survey = create_presenter_survey(presentation, subject)
     end
 
     questions = assign_default_questions(subject)
     create_default_survey(survey, questions)
+  end
+
+  #
+  # Create 'Overall Presentation' Survey
+  #
+  def create_overall_survey(presentation)
+    presentation.surveys.create(
+      title: 'Overall Presentation',
+      position: Survey.highest_position(presentation) + 1
+    )
+  end
+
+  #
+  # Create feedback survey for a specific user
+  #
+  def create_presenter_survey(presentation, presenter)
+    presentation.surveys.create(
+      title: "Feedback for #{presenter.full_name}",
+      position: Survey.highest_position(presentation) + 1,
+      presenter_id: presenter.id
+    )
   end
 
   #
