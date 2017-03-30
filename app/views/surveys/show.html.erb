@@ -32,9 +32,9 @@
               <th>Required?</th>
               <th>Actions</th>
             </tr>
-            <% @survey.questions.each do |question| %>
+            <% @questions.each do |question| %>
             <tr>
-              <td><%= question.prompt %></td>
+              <td>(<%= question.position %>) <%= question.prompt %></td>
               <td><%= question.response_type.capitalize %></td>
               <td><%= required_check(question) %></td>
               <td><%= action_buttons(edit_path: edit_presentation_survey_question_path(@presentation, @survey, question),

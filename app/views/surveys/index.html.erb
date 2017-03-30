@@ -16,7 +16,7 @@
         </tr>
         <% @surveys.each do |survey| %>
         <tr>
-          <td><%= link_to "#{survey.title} (#{survey.position})", presentation_survey_path(@presentation.id, survey.id), class: disable_check(survey, current_user) %></td>
+          <td><%= link_to "(#{survey.position}) #{survey.title}", presentation_survey_path(@presentation.id, survey.id), class: disable_check(survey, current_user) %></td>
           <td>
             <%= survey_index_options(survey) %>
           </td>
