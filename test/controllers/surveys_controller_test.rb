@@ -72,8 +72,8 @@ class SurveysControllerTest < ActionController::TestCase
       {
         presentation_id: @presentation.id,
         survey: {
-          order: 1,
-          title: 'Git'
+          title: 'Git',
+          position: 1
         }
       }
     end

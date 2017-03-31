@@ -4,6 +4,5 @@
 class SurveyTemplate < ApplicationRecord
   has_many :question_templates, dependent: :destroy
 
-  validates :title, presence: true
-  validates :name, presence: true
+  validates :title, :name, presence: true
 end

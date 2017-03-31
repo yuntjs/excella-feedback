@@ -1,20 +1,38 @@
+#
+# Survey model test
+#
 require 'test_helper'
 
 describe Survey do
-  before do
-    @survey = create(:survey)
+  let(:presentation) { create(:presentation) }
+
+  describe '.highest_position' do
+    it 'returns the highest survey position for a given presentation' do
+      survey_count = 5
+      create_list(:survey, survey_count, presentation_id: presentation.id)
+
+      highest_position = Survey.highest_position(presentation)
+
+      assert_equal highest_position, survey_count, 'Expected the highest survey position to equal the survey count'
+    end
+
+    it 'returns zero if a presentation has no surveys' do
+      highest_position = Survey.highest_position(presentation)
+
+      assert_equal highest_position, 0, 'Expected the highest survey position to equal zero'
+    end
   end
 
-  describe '#position_questions' do
-    it 'orders questions from 0 to n' do
-      question1 = create(:question, :text, :required, survey_id: @survey.id, position: 1)
-      question2 = create(:question, :text, :required, survey_id: @survey.id, position: 2)
-      question3 = create(:question, :text, :required, survey_id: @survey.id, position: 3)
+  describe '.create_from_template' do
+    let(:survey_template) { create(:survey_template) }
 
-      expected_position = [question1, question2, question3]
-      actual_position = @survey.position_questions
+    it 'creates survey from a survey_template' do
+      survey_template = create(:survey_template)
 
-      assert_equal expected_position, actual_position, 'Array not positioned correctly'
+      survey = Survey.create_from_template(presentation: presentation, survey_template: survey_template)
+
+      assert_equal Survey.count, 1, 'Expected to create a survey from the survey template'
+      assert_equal survey.title, survey_template.title, 'Expected survey title to match survey template title'
     end
   end
 end

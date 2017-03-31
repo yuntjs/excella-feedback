@@ -3,10 +3,9 @@
 
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3 text-center">
-
       <%= survey_admin_options(current_user, @presentation) %>
       <h1 class="text-center">Surveys</h1>
-      <%= content_tag :div, class: "panel panel-warning text-left" do %>
+      <%= content_tag :div, id: 'survey-presentations', class: "panel panel-warning text-left" do %>
       <div class="panel-heading">
         <h4><%= @presentation.title %></h4>
       </div>
@@ -15,9 +14,9 @@
           <th>Title</th>
           <th>Actions</th>
         </tr>
-        <% @presentation.surveys.order(:position).each do |survey| %>
+        <% @surveys.each do |survey| %>
         <tr>
-          <td><%= link_to "#{survey.title} (#{survey.position})", presentation_survey_path(@presentation.id, survey.id), class: disable_check(survey, current_user) %></td>
+          <td><%= link_to "(#{survey.position}) #{survey.title}", presentation_survey_path(@presentation.id, survey.id), class: disable_check(survey, current_user) %></td>
           <td>
             <%= survey_index_options(survey) %>
           </td>
@@ -28,4 +27,42 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3 text-center">
+      <%= content_tag :div, class: "panel panel-info text-left" do %>
+      <div class="panel-heading">
+        <h4>Survey Templates</h4>
+      </div>
+      <table class="table">
+        <% SurveyTemplate.all.each_with_index do |survey_template, index| %>
+        <tr>
+          <td class="survey-template-presentation">
+            <div class="title">
+              <a class="glyphicon glyphicon-chevron-right" aria-hidden="true" role="button" data-id="<%= index %>"></a>
+              <%= survey_template.title %>
+            </div>
+            <div class="action">
+              <%= link_to "Add to Presentation", presentation_survey_generations_path(@presentation, survey_template_id: survey_template.id), method: :post  %>
+            </div>
+            <table class="table table-bordered question-table" data-id="<%= index %>">
+              <tr>
+                <th class="col-xs-6">Questions on Survey</th>
+                <th class="col-xs-4">Response Type</th>
+                <th class="col-xs-2">Required?</th>
+              </tr>
+              <% survey_template.question_templates.each do |question_template| %>
+              <tr>
+                <td class="col-xs-6"><%= question_template.prompt %></td>
+                <td class="col-xs-4"><%= question_template.response_type.capitalize %></td>
+                <td class="col-xs-2"><%= required_check(question_template) %></td>
+              </tr>
+              <% end %>
+            </table>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+      <% end %>
+    </div>
+  </div>
 </div>

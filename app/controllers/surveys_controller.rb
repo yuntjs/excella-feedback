@@ -9,6 +9,7 @@ class SurveysController < ApplicationController
   # Index route
   #
   def index
+    @surveys = @presentation.surveys.order(:position)
   end
 
   #
@@ -31,6 +32,7 @@ class SurveysController < ApplicationController
   #
   def show
     @survey = Survey.find(params[:id])
+    @questions = @survey.questions.order(:position)
   end
 
   #

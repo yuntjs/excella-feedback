@@ -1,11 +1,12 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-
 $(function () {
-  // Bootstrap helper for Presentation long Description popover
+  //
+  // Bootstrap helper for a presentation's long description popover
+  //
   $('[data-toggle="popover"]').popover()
 
-  // Event listener for participation form submit
+  //
+  // Event listener for participation form submission
+  //
   $('#participation-form-submit').on('click', function() {
     $('#participation-form').submit()
   })

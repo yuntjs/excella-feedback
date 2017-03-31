@@ -14,6 +14,8 @@ class Question < ApplicationRecord
   has_many :responses, dependent: :destroy
   has_many :users, through: :responses, dependent: :destroy
 
+  validates :position, presence: true
+
   #
   # Values for Presentation survey questions
   #
@@ -44,5 +46,30 @@ class Question < ApplicationRecord
           response_type: 'text'
         }
     ]
+  end
+
+  #
+  # Get the highest question position for a survey
+  #
+  def self.highest_position(survey)
+    survey.questions.maximum(:position) || 0
+  end
+
+  #
+  # Create questions from survey & question templates
+  #
+  def self.create_from_templates(survey:, question_templates:)
+    count = 0
+
+    question_templates.map do |question_template|
+      count += 1
+
+      survey.questions.create(
+        prompt: question_template.prompt,
+        response_type: question_template.response_type,
+        response_required: question_template.response_required,
+        position: count
+      )
+    end
   end
 end

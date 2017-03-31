@@ -11,12 +11,22 @@ class Survey < ApplicationRecord
 
   has_many :questions, dependent: :destroy
 
-  # validates :order, presence: false
-  validates :title, presence: true
+  validates :title, :position, presence: true
 
-  # TODO: remove order from schema
-  def position_questions
-    questions.sort_by(&:position)
-    #   questions.sort_by(&:order)
+  #
+  # Get the highest survey position for a presentation
+  #
+  def self.highest_position(presentation)
+    presentation.surveys.maximum(:position) || 0
+  end
+
+  #
+  # Create survey from presentation & survey template
+  #
+  def self.create_from_template(presentation:, survey_template:)
+    presentation.surveys.create(
+      title: survey_template.title,
+      position: Survey.highest_position(presentation) + 1
+    )
   end
 end

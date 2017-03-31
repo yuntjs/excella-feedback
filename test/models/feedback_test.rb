@@ -38,8 +38,8 @@ describe Feedback do
       @feedback.data.each do |data|
         assert data[:survey_responses].first.new_record?, 'The newly-created response object is not a new record'
         assert_equal data[:survey_responses].count, data[:survey_questions].count, 'The number of unsaved responses does not match the number of questions'
-        assert_equal data[:survey_responses][0].value, @test_num, 'The value was not set for a numerical response'
-        assert_equal data[:survey_responses][1].value, @test_text, 'The value was not set for a textual response'
+        assert_includes [data[:survey_responses][0].value, data[:survey_responses][1].value], @test_num, 'The value was not set for a numerical response'
+        assert_includes [data[:survey_responses][0].value, data[:survey_responses][1].value], @test_text, 'The value was not set for a textual response'
       end
     end
 

@@ -7,17 +7,7 @@ class Presentation < ApplicationRecord
 
   has_many :surveys, dependent: :destroy
 
-  validates :title, presence: true
-  validates :date, presence: true
-  validates :location, presence: true
-
-  #
-  # Order surveys by :order
-  # TODO remove and use acts_as_list
-  #
-  def position_surveys
-    surveys.sort_by(&:position)
-  end
+  validates :title, :date, :location, presence: true
 
   #
   # Shorten long presentation descriptions for Presentation#index

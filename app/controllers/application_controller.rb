@@ -43,14 +43,36 @@ class ApplicationController < ActionController::Base
   # Assign params for new default survey
   #
   def new_default_survey(subject)
-    # Assign survey and questions based on subject type
     if subject.class == Presentation
-      survey = @presentation.surveys.create(title: 'Overall Presentation')
+      survey = create_overall_survey(@presentation)
     elsif subject.class == User
-      survey = Presentation.find(@participation.presentation_id).surveys.create(title: "Feedback for #{subject.full_name}", presenter_id: subject.id)
+      presentation = Presentation.find(@participation.presentation_id)
+      survey = create_presenter_survey(presentation, subject)
     end
+
     questions = assign_default_questions(subject)
     create_default_survey(survey, questions)
+  end
+
+  #
+  # Create 'Overall Presentation' Survey
+  #
+  def create_overall_survey(presentation)
+    presentation.surveys.create(
+      title: 'Overall Presentation',
+      position: Survey.highest_position(presentation) + 1
+    )
+  end
+
+  #
+  # Create feedback survey for a specific user
+  #
+  def create_presenter_survey(presentation, presenter)
+    presentation.surveys.create(
+      title: "Feedback for #{presenter.full_name}",
+      position: Survey.highest_position(presentation) + 1,
+      presenter_id: presenter.id
+    )
   end
 
   #
@@ -71,7 +93,12 @@ class ApplicationController < ActionController::Base
   #
   def create_default_survey(survey, questions)
     questions.each do |question|
-      survey.questions.create(prompt: question[:prompt], response_type: question[:response_type])
+      survey.questions.create(
+        prompt: question[:prompt],
+        response_type: question[:response_type],
+        response_required: true,
+        position: Question.highest_position(survey) + 1
+      )
     end
   end
 end

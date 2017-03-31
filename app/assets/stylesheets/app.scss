@@ -185,3 +185,26 @@ form {
 .admin-options .btn:not(:last-child) {
   margin-right: 8px;
 }
+
+// Survey Template - Adding to Presentation
+.survey-template-presentation {
+  .glyphicon {
+    font-size: 0.9em;
+    &:hover {
+      text-decoration: none; 
+    }
+  }
+
+  .title, .action {
+    display: inline-block;
+  }
+
+  .action {
+    float: right
+  }
+
+  .question-table {
+    display: none; // default
+    margin: 10px 0;
+  }
+}

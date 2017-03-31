@@ -103,23 +103,23 @@ presentations.each do |pres_name|
     description: Faker::HarryPotter.quote,
     is_published: true
   )
-  surveys.each_with_index do |survey_name, index|
+  surveys.each_with_index do |survey_name, s_ind|
     survey = pres.surveys.create(
-      position: index,
+      position: s_ind,
       title: survey_name
     )
-    number_questions.each_with_index do |question, n_ind|
+    number_questions.each_with_index do |question, q_ind|
       ques = survey.questions.create(
-        position: n_ind,
+        position: q_ind,
         prompt: question,
         response_type: 'number',
         response_required: true
       )
       ques.save
     end
-    text_questions.each_with_index do |question, t_ind|
+    text_questions.each_with_index do |question, q_ind|
       ques = survey.questions.create(
-        position: t_ind + number_questions.length,
+        position: q_ind + number_questions.length,
         prompt: question,
         response_type: 'text',
         response_required: false

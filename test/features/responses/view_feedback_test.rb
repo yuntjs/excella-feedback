@@ -7,37 +7,47 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
   before do
     @admin = create(:user, :admin)
     @user = create(:user)
+
     @presenter1 = create(:user,
                          first_name: 'Burton',
                          last_name: 'White')
     @presenter2 = create(:user,
                          first_name: 'Steve',
                          last_name: 'Cooper')
+
     @presentation = create(:presentation)
+
     create(:participation, :presenter,
            user_id: @presenter1.id,
            presentation_id: @presentation.id)
     create(:participation, :presenter,
            user_id: @presenter2.id,
            presentation_id: @presentation.id)
+
     @survey1 = create(:survey,
                       presentation_id: @presentation.id,
                       presenter_id: @presenter1.id,
-                      title: "#{@presenter1.first_name} #{@presenter1.last_name}")
-    create_list(:question, 2, :number, :required, survey_id: @survey1.id) do |question|
+                      title: "#{@presenter1.first_name} #{@presenter1.last_name}",
+                      position: 1)
+
+    create_list(:question, 2, :number, :required, survey_id: @survey1.id, position: @survey1.questions.count + 1) do |question|
       create(:response, :number, question_id: question.id, user_id: @user.id)
     end
-    create_list(:question, 2, :text, :required, survey_id: @survey1.id) do |question|
+    create_list(:question, 2, :text, :required, survey_id: @survey1.id, position: @survey1.questions.count + 1) do |question|
       create(:response, value: "Response for #{@presenter1.first_name} #{@presenter1.last_name}", question_id: question.id, user_id: @user.id)
     end
+
     @survey2 = create(:survey,
                       presentation_id: @presentation.id,
                       presenter_id: @presenter2.id,
-                      title: "#{@presenter2.first_name} #{@presenter2.last_name}")
-    create_list(:question, 2, :number, :required, survey_id: @survey2.id) do |question|
+                      title: "#{@presenter2.first_name} #{@presenter2.last_name}",
+                      position: 2)
+
+    create_list(:question, 2, :number, :required, survey_id: @survey2.id, position: @survey2.questions.count + 1) do |question|
       create(:response, :number, question_id: question.id, user_id: @user.id)
     end
-    create_list(:question, 2, :text, :required, survey_id: @survey2.id) do |question|
+
+    create_list(:question, 2, :text, :required, survey_id: @survey2.id, position: @survey2.questions.count + 1) do |question|
       create(:response, value: "Response for #{@presenter2.first_name} #{@presenter2.last_name}", question_id: question.id, user_id: @user.id)
     end
   end
@@ -68,7 +78,6 @@ class ViewFeedbackTest < Capybara::Rails::TestCase
       text_question_ids.each do |question_id|
         assert page.has_content?("Question #{question_id}"),
                'Page does not have proper prompts for text questions'
-
         assert page.has_content?(Response.where(question_id: question_id, user_id: @user.id).first.value),
                'Page does not have proper responses for text questions'
       end

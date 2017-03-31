@@ -1,6 +1,13 @@
 <%= error_messages(question) %>
 
 <%= form_for(question, url: submit_path) do |f| %>
+  <% if question.methods.include?(:position) %>
+  <div class="form-group">
+    <%= f.label :position %>
+    <%= f.number_field :position, class: "form-control" %>
+  </div>
+  <% end %>
+
   <div class="form-group <%= error_class(question, :prompt) %>">
     <%= f.label :prompt %>
     <%= f.text_field :prompt, class: "form-control" %>

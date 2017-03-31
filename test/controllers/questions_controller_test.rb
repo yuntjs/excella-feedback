@@ -87,6 +87,7 @@ class QuestionsControllerTest < ActionController::TestCase
         presentation_id: @presentation.id,
         survey_id: @survey.id,
         question: {
+          position: 1,
           prompt: 'prompt',
           response_type: 'number',
           response_required: false
@@ -99,6 +100,7 @@ class QuestionsControllerTest < ActionController::TestCase
         presentation_id: @presentation.id,
         survey_id: @survey.id,
         question: {
+          position: nil,
           prompt: nil,
           response_type: nil,
           response_required: false
