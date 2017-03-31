@@ -20,6 +20,20 @@ module ApplicationHelper
   end
 
   #
+  # Creates single button that performs an action
+  #
+  def action_button()
+
+  end
+
+  #
+  # Builds out action buttons for options
+  #
+  def option_buttons()
+
+  end
+
+  #
   # Renders error messages for login
   #
   def login_errors(flash)
