@@ -169,7 +169,7 @@ module PresentationsHelper
   end
 
   #
-  # Renders link to edit Participation based on user type (presenter or attendee)
+  # Renders link to edit Participation as presenter or attendee based on user type
   #
   def toggle_participation_link(participation)
     if participation.is_presenter
@@ -187,7 +187,7 @@ module PresentationsHelper
   end
 
   #
-  # Determine if user is an attendee (versus presenter or admin)
+  # Determine if user a presenter or admin
   #
   def user_is_not_attendee?(user, presentation)
     user.is_presenter?(presentation) || user.is_admin
