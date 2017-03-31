@@ -22,15 +22,15 @@ module ApplicationHelper
   #
   # Creates single button that performs an action
   #
-  def action_button()
-
+  def action_button(:link_text, :path, :link_class)
+    link_to link_text, path, class: link_class
   end
 
   #
   # Builds out action buttons for options
   #
   def option_buttons()
-
+    
   end
 
   #
