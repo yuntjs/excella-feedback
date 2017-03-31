@@ -13,6 +13,10 @@ class QuestionsControllerTest < ActionController::TestCase
     @question = create(:question, :number, :required, survey_id: @survey.id)
   end
 
+  describe '#new' do
+    it 'tests pending...'
+  end
+
   describe '#create' do
     it 'should create a new question if User is an Admin' do
       post(:create, params: {
@@ -28,6 +32,18 @@ class QuestionsControllerTest < ActionController::TestCase
 
       assert_redirected_to(presentation_survey_path(@presentation.id, @survey.id), 'No redirect to presentation_survey_path')
     end
+  end
+
+  describe '#show' do
+    it 'tests pending...'
+  end
+
+  describe '#index' do
+    it 'tests pending...'
+  end
+
+  describe '#edit' do
+    it 'tests pending...'
   end
 
   describe '#update' do
@@ -62,5 +78,9 @@ class QuestionsControllerTest < ActionController::TestCase
 
       assert_redirected_to(presentation_survey_path(@presentation.id, @survey.id), 'No redirection to presentation_survey_path')
     end
+  end
+
+  describe '#destroy' do
+    it 'tests pending...'
   end
 end
