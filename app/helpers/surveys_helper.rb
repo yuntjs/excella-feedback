@@ -10,8 +10,13 @@ module SurveysHelper
 
     return unless user.is_admin || participation.is_presenter
     content_tag :div, class: 'admin-options' do
-      new_survey_link = link_to 'Create New Survey', new_presentation_survey_path(presentation), class: 'btn btn-primary'
-      new_survey_link
+      # new_survey_link = link_to 'Create New Survey', new_presentation_survey_path(presentation), class: 'btn btn-primary'
+      # new_survey_link
+      action_button(
+                    link_text: 'Create New Survey',
+                    path: new_presentation_survey_path(presentation),
+                    link_class: 'btn btn-primary'
+                  )
     end
   end
 
