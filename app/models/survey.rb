@@ -23,8 +23,8 @@ class Survey < ApplicationRecord
   #
   # Create survey from presentation & survey template
   #
-  def self.build_from_template(presentation:, survey_template:)
-    presentation.surveys.new(
+  def self.create_from_template(presentation:, survey_template:)
+    presentation.surveys.create(
       title: survey_template.title,
       position: Survey.highest_position(presentation) + 1
     )

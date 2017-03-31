@@ -10,16 +10,9 @@ class SurveyGenerationsController < ApplicationController
   #
   def create
     set_instance_variables
-    generate_survey
+    generate_survey_and_questions
 
-    if @survey.valid? && Question.valid_collection?(@questions)
-      @survey.save
-      Question.save_collection(@questions)
-      flash[:success] = 'A new survey has been added to the presentation.'
-    else
-      flash[:error] = 'The survey could not be added to the presentation.'
-    end
-
+    flash[:success] = 'A new survey has been added to the presentation.'
     redirect_to presentation_surveys_path(@presentation)
   end
 
@@ -36,8 +29,8 @@ class SurveyGenerationsController < ApplicationController
   #
   # Generate unsaved survey & its questions from templates
   #
-  def generate_survey
-    @survey = Survey.build_from_template(presentation: @presentation, survey_template: @survey_template)
-    @questions = Question.build_from_templates(survey: @survey, question_templates: @survey_template.question_templates)
+  def generate_survey_and_questions
+    @survey = Survey.create_from_template(presentation: @presentation, survey_template: @survey_template)
+    @questions = Question.create_from_templates(survey: @survey, question_templates: @survey_template.question_templates)
   end
 end

@@ -58,32 +58,18 @@ class Question < ApplicationRecord
   #
   # Create questions from survey & question templates
   #
-  def self.build_from_templates(survey:, question_templates:)
-    question_templates.each_with_index do |question_template, index|
-      survey.questions.new(
+  def self.create_from_templates(survey:, question_templates:)
+    count = 0
+
+    question_templates.map do |question_template|
+      count += 1
+
+      survey.questions.create(
         prompt: question_template.prompt,
         response_type: question_template.response_type,
         response_required: question_template.response_required,
-        position: index + 1
+        position: count
       )
     end
-  end
-
-  #
-  # Check if all questions are valid
-  #
-  def self.valid_collection?(questions)
-    questions.each do |question|
-      return false if question.invalid?
-    end
-
-    true
-  end
-
-  #
-  # Save all questions in collection
-  #
-  def self.save_collection(questions)
-    questions.each(&:save!)
   end
 end
