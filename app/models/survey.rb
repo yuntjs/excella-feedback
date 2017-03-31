@@ -3,6 +3,8 @@
 #
 class Survey < ApplicationRecord
   belongs_to :presentation
+  before_create :normalize_position
+  before_update :normalize_position
 
   #
   # acts_as_list gem handles Survey order based on parent Presentation
@@ -12,6 +14,15 @@ class Survey < ApplicationRecord
   has_many :questions, dependent: :destroy
 
   validates :title, :position, presence: true
+
+  #
+  # Ensure that position is not too high
+  #
+  def normalize_position
+    if self.position > self.presentation.surveys.count
+      self.position = self.presentation.surveys.count
+    end
+  end
 
   #
   # Get the highest survey position for a presentation
