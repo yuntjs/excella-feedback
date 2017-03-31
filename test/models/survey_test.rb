@@ -23,15 +23,13 @@ describe Survey do
     end
   end
 
-  describe '.create_from_template' do
+  describe '.build_from_template' do
     let(:survey_template) { create(:survey_template) }
 
     it 'creates survey from a survey_template' do
-      survey_template = create(:survey_template)
+      survey = Survey.build_from_template(survey_template, presentation)
 
-      survey = Survey.create_from_template(presentation: presentation, survey_template: survey_template)
-
-      assert_equal Survey.count, 1, 'Expected to create a survey from the survey template'
+      assert survey.new_record?, 'Expected to create an unsaved survey'
       assert_equal survey.title, survey_template.title, 'Expected survey title to match survey template title'
     end
   end
