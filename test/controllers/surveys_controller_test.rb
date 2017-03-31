@@ -10,16 +10,6 @@ class SurveysControllerTest < ActionController::TestCase
     sign_in @admin
   end
 
-  describe '#index' do
-    it 'sets a presentation as an instance variable'
-    it 'sets the surveys for a presentation as an instance variable'
-  end
-
-  describe '#new' do
-    it 'sets a presentation as an instance variable'
-    it 'sets an unsaved survey for a presentation as an instance variable'
-  end
-
   describe '#create' do
     it 'should create a new survey if User is an Admin' do
       post :create, params: {
@@ -32,17 +22,6 @@ class SurveysControllerTest < ActionController::TestCase
 
       assert_redirected_to presentation_survey_path(@presentation.id, @presentation.surveys.first.id), 'No redirect to presentations_survey_path'
     end
-  end
-
-  describe '#show' do
-    it 'sets a presentation as an instance variable'
-    it 'sets a specific survey for a presentation as an instance variable'
-    it 'sets the questions for a specific survey as an instance variable'
-  end
-
-  describe '#edit' do
-    it 'sets presentation as an instance variable'
-    it 'sets a specific survey for a presentation as an instance variable'
   end
 
   describe '#update' do
