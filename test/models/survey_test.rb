@@ -31,7 +31,7 @@ describe Survey do
 
       survey = Survey.create_from_template(presentation: presentation, survey_template: survey_template)
 
-      assert_equal Survey.count, 1, "Expected to create a survey from the survey template"
+      assert_equal Survey.count, 1, 'Expected to create a survey from the survey template'
       assert_equal survey.title, survey_template.title, 'Expected survey title to match survey template title'
     end
   end

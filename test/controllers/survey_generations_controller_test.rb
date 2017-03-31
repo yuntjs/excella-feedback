@@ -23,7 +23,6 @@ class SurveyGenerationsControllerTest < ActionController::TestCase
     end
 
     it 'creates a survey from a survey template' do
-      survey = Survey.first
       assert_equal(Survey.count, 1, 'A survey was not generated from a survey template')
     end
 
