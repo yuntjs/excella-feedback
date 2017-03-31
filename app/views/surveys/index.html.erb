@@ -42,7 +42,7 @@
               <%= survey_template.title %>
             </div>
             <div class="action">
-              <%= link_to "Add to Presentation", presentation_survey_generations_path(@presentation, survey_template_id: survey_template.id), method: :post  %>
+              <%= link_to "Add to Presentation", presentation_survey_generations_path(@presentation, survey_template_id: survey_template.id), method: :post, data: duplicate_confirm(survey_template, @surveys) %>
             </div>
             <table class="table table-bordered question-table" data-id="<%= index %>">
               <tr>
