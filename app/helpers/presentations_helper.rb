@@ -90,7 +90,7 @@ module PresentationsHelper
     if user.is_admin
       surveys_link = see_surveys_action_button(presentation)
       edit_link = link_to 'Edit', edit_presentation_path(presentation), class: 'btn btn-primary'
-      delete_link = link_to 'Delete', presentation_path(presentation), class: 'btn btn-danger', method: :delete
+      delete_link = link_to 'Delete', presentation_path(presentation), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure you want to delete this presentation?' }
 
       surveys_link + edit_link + delete_link
     else

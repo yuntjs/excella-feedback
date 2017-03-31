@@ -30,7 +30,6 @@ module ApplicationHelper
   # Builds out action buttons for options
   #
   def option_buttons(button_array, *method)
-
   end
 
   #
