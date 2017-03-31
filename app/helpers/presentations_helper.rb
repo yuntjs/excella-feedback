@@ -88,18 +88,29 @@ module PresentationsHelper
   #
   def presentation_table_buttons(user:, presentation:)
     if user.is_admin
-      survey_link = survey_link_for(presentation)
+      surveys_link = see_surveys_action_button(presentation)
       edit_link = link_to 'Edit', edit_presentation_path(presentation), class: 'btn btn-primary'
       delete_link = link_to 'Delete', presentation_path(presentation), class: 'btn btn-danger', method: :delete
 
-      survey_link + edit_link + delete_link
+      surveys_link + edit_link + delete_link
     else
       presentation_action_button(user, presentation)
     end
   end
 
   #
-  # Handles params for feedback button
+  # Renders link to see surveys or create new survey if none exist
+  #
+  def see_surveys_action_button(presentation)
+    if presentation.surveys.any?
+      link_to 'See Surveys', presentation_surveys_path(presentation), class: 'btn btn-default'
+    else
+      link_to 'Create Survey', new_presentation_survey_path(presentation), class: 'btn btn-default'
+    end
+  end
+
+  #
+  # Returns an action button for feedback on a presentation
   #
   def presentation_action_button(user, presentation)
     if is_in_future?(presentation)
@@ -114,60 +125,59 @@ module PresentationsHelper
     end
   end
 
-    #
-    # Renders proper link to survey and results based on user type (presenter or attendee)
-    #
-    def survey_link_for(presentation)
-      if presentation.surveys.any?
-        link_to 'See Surveys', presentation_surveys_path(presentation), class: 'btn btn-default'
-      else
-        link_to 'Create Survey', new_presentation_survey_path(presentation), class: 'btn btn-default'
-      end
-    end
+  #
+  # Renders options/links for Presentation show page
+  #
+  def presentation_options(user, presentation)
+    participation = Participation.where(user_id: user.id, presentation_id: presentation.id).first
+    return unless user.is_admin || participation.is_presenter
+    user.is_admin ? admin_presentation_options(presentation) : presenter_presentation_options(presentation)
+  end
 
-    #
-    # Renders options/links for Presentation show page
-    #
-    def presentation_options(user, presentation)
-      participation = Participation.where(user_id: user.id, presentation_id: presentation.id).first
-      return unless user.is_admin || participation.is_presenter
-      user.is_admin ? admin_presentation_options(presentation) : presenter_presentation_options(presentation)
-    end
+  #
+  # Renders controller action links for admin for Presentation show page
+  #
+  def admin_presentation_options(presentation)
+    content_tag :div, class: 'admin-options' do
+      edit_details_button = link_to 'Edit Details',
+                                    edit_presentation_path(presentation),
+                                    class: 'btn btn-primary'
+      edit_participants_button = content_tag :button, 'Edit Participants',
+                                             class: 'btn btn-primary',
+                                             data: { toggle: 'modal', target: '.bs-example-modal-sm' }
+      edit_surveys_button = link_to 'Edit Surveys',
+                                    presentation_surveys_path(presentation),
+                                    class: 'btn btn-primary'
+      delete_button = link_to 'Delete',
+                              presentation_path(presentation),
+                              class: 'btn btn-danger',
+                              method: :delete,
+                              data: { confirm: 'Are you sure you want to delete this presentation?' }
 
-    #
-    # Renders controller action links for admin for Presentation show page
-    #
-    def admin_presentation_options(presentation)
-      content_tag :div, class: 'admin-options' do
-        edit_details_link = link_to 'Edit Details', edit_presentation_path(presentation), class: 'btn btn-primary'
-        edit_participants_link = content_tag :button, 'Edit Participants', class: 'btn btn-primary', data: { toggle: 'modal', target: '.bs-example-modal-sm' }
-        edit_surveys_link = link_to 'Edit Surveys', presentation_surveys_path(presentation), class: 'btn btn-primary'
-        delete_link = link_to 'Delete', presentation_path(presentation), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure you want to delete this presentation?' }
-
-        edit_details_link + edit_participants_link + edit_surveys_link + delete_link
-      end
+      edit_details_button + edit_participants_button + edit_surveys_button + delete_button
     end
+  end
 
-    #
-    # Renders controller action links for presenter on presentation show page
-    #
-    def presenter_presentation_options(presentation)
-      return unless is_in_future?(presentation)
-      content_tag :div, class: 'admin-options' do
-        link_to 'Edit Surveys', presentation_surveys_path(presentation), class: 'btn btn-primary'
-      end
+  #
+  # Renders controller action links for presenter on presentation show page
+  #
+  def presenter_presentation_options(presentation)
+    return unless is_in_future?(presentation)
+    content_tag :div, class: 'admin-options' do
+      link_to 'Edit Surveys', presentation_surveys_path(presentation), class: 'btn btn-primary'
     end
+  end
 
-    #
-    # Renders link to edit Participation based on user type (presenter or attendee)
-    #
-    def toggle_participation_link(participation)
-      if participation.is_presenter
-        link_to 'Change to Attendee', presentation_participation_path(@presentation, participation, participation: { is_presenter: false }), method: :put
-      else
-        link_to 'Change to Presenter', presentation_participation_path(@presentation, participation, participation: { is_presenter: true }), method: :put
-      end
+  #
+  # Renders link to edit Participation based on user type (presenter or attendee)
+  #
+  def toggle_participation_link(participation)
+    if participation.is_presenter
+      link_to 'Change to Attendee', presentation_participation_path(@presentation, participation, participation: { is_presenter: false }), method: :put
+    else
+      link_to 'Change to Presenter', presentation_participation_path(@presentation, participation, participation: { is_presenter: true }), method: :put
     end
+  end
 
   #
   # Determine if in Presentations#show
