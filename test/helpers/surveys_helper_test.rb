@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'test_helper' 
 
 class SurveysHelperTest < ActionView::TestCase
   include Devise::Test::ControllerHelpers
