@@ -35,7 +35,7 @@ class QuestionTemplatesControllerTest < ActionController::TestCase
       get(:new, params: { survey_template_id: @survey_template.id })
     end
 
-    it 'sets survey template as an instance varialbe' do
+    it 'sets survey template as an instance variable' do
       survey_template = assigns(:survey_template)
 
       assert_equal survey_template, @survey_template, 'Expected to set survey template as instance variable'
