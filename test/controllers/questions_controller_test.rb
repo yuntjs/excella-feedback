@@ -23,7 +23,12 @@ class QuestionsControllerTest < ActionController::TestCase
 
   describe '#show' do
     it 'redirects to the presentation survey show page' do
-      get(:index, params: { presentation_id: @presentation.id, survey_id: @survey.id })
+      get(:show, params:
+                      {
+                        presentation_id: @presentation.id,
+                        survey_id: @survey.id,
+                        id: @question.id
+                      })
 
       assert_redirected_to presentation_survey_path(@presentation, @survey)
     end
@@ -63,16 +68,16 @@ class QuestionsControllerTest < ActionController::TestCase
       assert_equal survey, @survey, 'Does not set the survey instance variable'
     end
 
-    it 'sets survey variable as an instance variable' do
-      survey = assigns(:presentation)
+    it 'sets presentation variable as an instance variable' do
+      presentation = assigns(:presentation)
 
-      assert_equal survey, @presentation, 'Does not set the presentation instance variable'
+      assert_equal presentation, @presentation, 'Does not set the presentation instance variable'
     end
 
-    it 'sets survey variable as an instance variable' do
-      survey = assigns(:question)
+    it 'sets question variable as an instance variable' do
+      question = assigns(:question)
 
-      assert_equal survey, @question, 'Does not set the survey instance variable'
+      assert_equal question, @question, 'Does not set the survey instance variable'
     end
   end
 
@@ -114,7 +119,7 @@ class QuestionsControllerTest < ActionController::TestCase
     it 'rejects invalid new questions' do
       post(:create, params: error_params)
 
-      assert @initial_count == Question.count, "Expected Question count(#{Question.count}) to be equal to initial count(#{@initial_count})."
+      assert_equal @initial_count, Question.count, "Expected Question count(#{Question.count}) to be equal to initial count(#{@initial_count})."
     end
 
     it 'redirects to presentation_survey_path after saving' do
