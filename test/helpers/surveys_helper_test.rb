@@ -86,4 +86,36 @@ class SurveysHelperTest < ActionView::TestCase
       assert_equal css_class, check, "Does not return css class: #{css_class}"
     end
   end
+
+  describe '#duplicate_confirm' do
+    let(:title) { 'Title' }
+
+    let(:surveys) { create_list(:survey, 5, title: title) }
+    let(:survey_template_dup) { create(:survey_template, title: title) }
+    let(:survey_template_uniq) { create(:survey_template, title: "Not #{title}") }
+
+    it 'returns a confirm object if survey template title is among survey titles' do
+      expected = { confirm: 'Are you sure you want to add a duplicate survey?' }
+      actual = duplicate_confirm(survey_template_dup, surveys)
+
+      assert_equal expected, actual, "Expected #duplicate_confirm to return an object with a 'confirm' key with value '#{expected[:confirm]}'"
+    end
+
+    it 'returns a confirm object for a duplicate survey template title that is lowercase or uppercase' do
+      title.downcase!
+      survey_template_dup.title.upcase!
+      survey_template_dup.save
+
+      expected = { confirm: 'Are you sure you want to add a duplicate survey?' }
+      actual = duplicate_confirm(survey_template_dup, surveys)
+
+      assert_equal expected, actual, "Expected #duplicate_confirm to account for different-case survey titles"
+    end
+
+    it 'returns nil if a survey template title is not among survey titles' do
+      result = duplicate_confirm(survey_template_uniq, surveys)
+
+      assert_nil result, 'Expected #duplicate_confirm to return nil when survey template title is not present among surveys'
+    end
+  end
 end

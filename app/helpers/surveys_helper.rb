@@ -50,8 +50,10 @@ module SurveysHelper
   #
   # Return a confirmation message data object if a survey template title matches a survey
   #
-  def duplicate_confirm(survey_template, survey)
-    if survey.pluck(:title).include?(survey_template.title)
+  def duplicate_confirm(survey_template, surveys)
+    survey_titles = surveys.pluck(:title).map(&:downcase)
+
+    if survey_titles.include?(survey_template.title.downcase)
       { confirm: 'Are you sure you want to add a duplicate survey?' }
     end
   end
