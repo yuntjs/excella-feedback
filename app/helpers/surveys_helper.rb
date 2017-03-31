@@ -53,8 +53,7 @@ module SurveysHelper
   def duplicate_confirm(survey_template, surveys)
     survey_titles = surveys.pluck(:title).map(&:downcase)
 
-    if survey_titles.include?(survey_template.title.downcase)
-      { confirm: 'Are you sure you want to add a duplicate survey?' }
-    end
+    return unless survey_titles.include?(survey_template.title.downcase)
+    { confirm: 'Are you sure you want to add a duplicate survey?' }
   end
 end

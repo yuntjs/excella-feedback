@@ -109,7 +109,7 @@ class SurveysHelperTest < ActionView::TestCase
       expected = { confirm: 'Are you sure you want to add a duplicate survey?' }
       actual = duplicate_confirm(survey_template_dup, surveys)
 
-      assert_equal expected, actual, "Expected #duplicate_confirm to account for different-case survey titles"
+      assert_equal expected, actual, 'Expected #duplicate_confirm to account for different-case survey titles'
     end
 
     it 'returns nil if a survey template title is not among survey titles' do
