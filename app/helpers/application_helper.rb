@@ -20,19 +20,6 @@ module ApplicationHelper
   end
 
   #
-  # Creates single button that performs an action
-  #
-  def action_button(link_text:, path:, link_class:)
-    link_to link_text, path, class: link_class
-  end
-
-  #
-  # Builds out action buttons for options
-  #
-  def option_buttons(button_array, *method)
-  end
-
-  #
   # Renders error messages for login
   #
   def login_errors(flash)
