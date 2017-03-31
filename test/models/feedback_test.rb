@@ -14,7 +14,7 @@ describe Feedback do
       create(:question, :text, :required, survey_id: survey.id)
     end
 
-    @feedback = Feedback.new(@user, surveys) 
+    @feedback = Feedback.new(@user, surveys)
 
     @test_num = '3'
     @test_text = 'Text'
