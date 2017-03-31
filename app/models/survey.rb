@@ -21,10 +21,10 @@ class Survey < ApplicationRecord
   end
 
   #
-  # Create survey from presentation & survey template
+  # Build unsaved survey from presentation & survey template
   #
-  def self.create_from_template(presentation:, survey_template:)
-    presentation.surveys.create(
+  def self.build_from_template(survey_template, presentation)
+    presentation.surveys.new(
       title: survey_template.title,
       position: Survey.highest_position(presentation) + 1
     )

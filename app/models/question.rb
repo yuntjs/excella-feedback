@@ -56,20 +56,43 @@ class Question < ApplicationRecord
   end
 
   #
-  # Create questions from survey & question templates
+  # Build unsaved questions from survey & question templates
   #
-  def self.create_from_templates(survey:, question_templates:)
+  def self.build_from_templates(question_templates)
     count = 0
 
     question_templates.map do |question_template|
       count += 1
 
-      survey.questions.create(
+      Question.new(
         prompt: question_template.prompt,
         response_type: question_template.response_type,
         response_required: question_template.response_required,
         position: count
       )
+    end
+  end
+
+  #
+  # Check if any of the unsaved questions are invalid
+  #
+  def self.valid_collection?(questions)
+    questions.each do |question|
+      if question.invalid? && question.errors.full_messages != ['Survey must exist']
+        return false
+      end
+    end
+
+    true
+  end
+
+  #
+  # Save unsaved questions & attach to given survey
+  #
+  def self.save_collection(questions, survey)
+    questions.each do |question|
+      question.survey_id = survey.id
+      question.save
     end
   end
 end
