@@ -10,8 +10,6 @@ module SurveysHelper
 
     return unless user.is_admin || participation.is_presenter
     content_tag :div, class: 'admin-options' do
-      # new_survey_link = link_to 'Create New Survey', new_presentation_survey_path(presentation), class: 'btn btn-primary'
-      # new_survey_link
       action_button(
                     link_text: 'Create New Survey',
                     path: new_presentation_survey_path(presentation),
@@ -37,6 +35,17 @@ module SurveysHelper
   #
   def survey_index_options(survey)
     content_tag :div, class: 'admin-options' do
+      # x = action_button(
+      #               link_text: 'Edit Survey',
+      #               path: edit_presentation_survey_path(@presentation, survey),
+      #               link_class: "btn btn-primary #{disable_check(survey, current_user)}"
+      #              )
+      # y = action_button(
+      #               link_text: 'Delete Survey',
+      #               path: presentation_survey_path(@presentation, survey),
+      #               link_class: "btn btn-danger #{disable_check(survey, current_user)}"
+      #              )
+      #              x + y
       edit_link = link_to 'Edit Survey', edit_presentation_survey_path(@presentation, survey), class: "btn btn-primary #{disable_check(survey, current_user)}"
       delete_link = link_to 'Delete Survey', presentation_survey_path(@presentation, survey), class: "btn btn-danger #{disable_check(survey, current_user)}", method: :delete, data: { confirm: 'Are you sure you want to delete this item?' }
 

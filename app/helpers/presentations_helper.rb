@@ -86,7 +86,7 @@ module PresentationsHelper
   # Sets variables for Presentation feedback options/links
   # Handles differences between admin, presenter, and/or attendee users
   #
-  def feedback_content(user:, presentation:)
+  def presentation_table_buttons(user:, presentation:)
     if user.is_admin
       survey_link = survey_link_for(presentation)
       edit_link = link_to 'Edit', edit_presentation_path(presentation), class: 'btn btn-primary'
@@ -94,46 +94,25 @@ module PresentationsHelper
 
       survey_link + edit_link + delete_link
     else
-      feedback_button(user, presentation)
+      presentation_action_button(user, presentation)
     end
   end
 
   #
   # Handles params for feedback button
   #
-  def feedback_button(user, presentation)
+  def presentation_action_button(user, presentation)
     if is_in_future?(presentation)
       return if in_presentation_show?
-      build_feedback_button('Available after Presentation', '#', 'btn btn-default disabled')
+      link_to 'Available after Presentation', '#', class: 'btn btn-default disabled'
     elsif user_is_not_attendee?(user, presentation)
-      build_feedback_button('See Feedback', presentation_responses_path(presentation), 'btn btn-success')
+      link_to 'See Feedback', presentation_responses_path(presentation), class: 'btn btn-success'
     elsif has_provided_feedback?(user, presentation)
-      build_feedback_button('Feedback Submitted', '#', 'btn btn-success disabled')
+      link_to 'Feedback Submitted', '#', class: 'btn btn-success disabled'
     else
-      build_feedback_button('Provide Feedback', new_presentation_response_path(presentation), 'btn btn-warning')
+      link_to 'Provide Feedback', new_presentation_response_path(presentation), class: 'btn btn-warning'
     end
   end
-
-
-    #
-    # Renders button for feedback based on params passed from feedback_button
-    #
-    def build_feedback_button(link_text, path, link_class)
-      link_to link_text, path, class: link_class
-    end
-
-    #
-    # Display link based on whether presentation surveys have been completed
-    #
-    def provide_feedback_button(user, presentation)
-      participation = Participation.where(user_id: user.id, presentation_id: presentation.id).first
-
-      if participation.feedback_provided
-        link_to 'Feedback Submitted', '#', class: 'btn btn-success disabled'
-      else
-        link_to 'Provide Feedback', new_presentation_response_path(presentation), class: 'btn btn-warning'
-      end
-    end
 
     #
     # Renders proper link to survey and results based on user type (presenter or attendee)
