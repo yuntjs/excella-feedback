@@ -18,7 +18,7 @@ describe Question do
 
       positions = Question.all.pluck(:position)
 
-      assert_equal [1,2,3,4,5], positions, 'Expected question positions to be in sequential order'
+      assert_equal [1, 2, 3, 4, 5], positions, 'Expected question positions to be in sequential order'
     end
   end
 

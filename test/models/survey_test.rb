@@ -18,7 +18,7 @@ describe Survey do
 
       positions = Survey.all.pluck(:position)
 
-      assert_equal [1,2,3,4,5], positions, 'Expected survey positions to be in sequential order'
+      assert_equal [1, 2, 3, 4, 5], positions, 'Expected survey positions to be in sequential order'
     end
   end
 
