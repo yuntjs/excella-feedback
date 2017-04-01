@@ -19,9 +19,8 @@ class Survey < ApplicationRecord
   # Ensure that position is not too high
   #
   def normalize_position
-    if self.position > self.presentation.surveys.count
-      self.position = self.presentation.surveys.count
-    end
+    return unless position > presentation.surveys.count
+    self.position = presentation.surveys.count
   end
 
   #
