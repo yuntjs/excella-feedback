@@ -6,6 +6,22 @@ require 'test_helper'
 describe Survey do
   let(:presentation) { create(:presentation) }
 
+  describe '.normalize_position' do
+    it 'sets survey positions so they are in sequential order' do
+      create(:survey, position: 1, presentation_id: presentation.id)
+      create(:survey, position: 5, presentation_id: presentation.id)
+      create(:survey, position: 10, presentation_id: presentation.id)
+      create(:survey, position: 2, presentation_id: presentation.id)
+      create(:survey, position: 4, presentation_id: presentation.id)
+
+      Survey.normalize_position(presentation)
+
+      positions = Survey.all.pluck(:position)
+
+      assert_equal [1,2,3,4,5], positions, 'Expected survey positions to be in sequential order'
+    end
+  end
+
   describe '.highest_position' do
     it 'returns the highest survey position for a given presentation' do
       survey_count = 5

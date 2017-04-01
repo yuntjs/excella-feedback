@@ -113,7 +113,6 @@ class SurveysControllerTest < ActionController::TestCase
 
   describe '#update' do
     let(:survey) { create(:survey, presentation_id: @presentation.id) }
-    let(:new_position) { survey.position + 1 }
     let(:new_title) { 'Updated Title' }
 
     let(:success_params) do
@@ -121,7 +120,6 @@ class SurveysControllerTest < ActionController::TestCase
         presentation_id: @presentation.id,
         id: survey.id,
         survey: {
-          position: new_position,
           title: new_title
         }
       }
@@ -142,7 +140,7 @@ class SurveysControllerTest < ActionController::TestCase
 
       survey.reload
 
-      assert_equal [new_title, new_position], [survey.title, survey.position], 'Survey title & position were not updated properly'
+      assert_equal new_title, survey.title, 'Survey title & position were not updated properly'
       assert_redirected_to presentation_survey_path(@presentation.id, survey.id), 'No redirect to presentation_survey_path'
     end
 
@@ -151,7 +149,7 @@ class SurveysControllerTest < ActionController::TestCase
 
       survey.reload
 
-      refute_equal [new_title, new_position], [survey.title, survey.position], 'Survey title & position were updated with incorrect params'
+      refute_equal new_title, survey.title, 'Survey title & position were updated with incorrect params'
     end
   end
 

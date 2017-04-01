@@ -52,7 +52,7 @@ class Question < ApplicationRecord
   # Normalize question positions for a survey so they are in sequential order
   #
   def self.normalize_position(survey)
-    survey.questionss.order(:position).each_with_index do |question, index|
+    survey.questions.order(:position).each_with_index do |question, index|
       question.position = index + 1
       question.save
     end
