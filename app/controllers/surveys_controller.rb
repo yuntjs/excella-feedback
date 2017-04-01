@@ -79,6 +79,8 @@ class SurveysController < ApplicationController
   #
   def save_survey
     if @survey.save
+      Survey.normalize_position(@presentation)
+
       flash[:success] = success_message(@survey, :create)
       redirect_to presentation_survey_path(@presentation.id, @survey.id)
     else
@@ -92,6 +94,8 @@ class SurveysController < ApplicationController
   #
   def update_survey
     if @survey.update(survey_params)
+      Survey.normalize_position(@presentation)
+
       flash[:success] = success_message(@survey, :update)
       redirect_to presentation_survey_path(@presentation.id, @survey.id)
     else

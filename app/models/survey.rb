@@ -14,6 +14,16 @@ class Survey < ApplicationRecord
   validates :title, :position, presence: true
 
   #
+  # Normalize survey positions for a presentation so they are in sequential order
+  #
+  def self.normalize_position(presentation)
+    presentation.surveys.order(:position).each_with_index do |survey, index|
+      survey.position = index + 1
+      survey.save
+    end
+  end
+
+  #
   # Get the highest survey position for a presentation
   #
   def self.highest_position(presentation)

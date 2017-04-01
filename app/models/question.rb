@@ -49,6 +49,16 @@ class Question < ApplicationRecord
   end
 
   #
+  # Normalize question positions for a survey so they are in sequential order
+  #
+  def self.normalize_position(survey)
+    survey.questionss.order(:position).each_with_index do |question, index|
+      question.position = index + 1
+      question.save
+    end
+  end
+
+  #
   # Get the highest question position for a survey
   #
   def self.highest_position(survey)
