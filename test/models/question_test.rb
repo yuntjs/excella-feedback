@@ -16,7 +16,7 @@ describe Question do
 
       Question.normalize_position(survey)
 
-      positions = Question.all.pluck(:position)
+      positions = Question.all..order(:position).pluck(:position)
 
       assert_equal [1, 2, 3, 4, 5], positions, 'Expected question positions to be in sequential order'
     end
