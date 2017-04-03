@@ -20,13 +20,13 @@ module SurveysHelper
   def survey_option_buttons(survey)
     content_tag :div, class: 'admin-options' do
       edit_button = link_to 'Edit Survey',
-                          edit_presentation_survey_path(@presentation, survey),
-                          class: "btn btn-primary #{disable_check(survey, current_user)}"
+                            edit_presentation_survey_path(@presentation, survey),
+                            class: "btn btn-primary #{disable_check(survey, current_user)}"
       delete_button = link_to 'Delete Survey',
-                            presentation_survey_path(@presentation, survey),
-                            class: "btn btn-danger #{disable_check(survey, current_user)}",
-                            method: :delete,
-                            data: { confirm: 'Are you sure you want to delete this item?' }
+                              presentation_survey_path(@presentation, survey),
+                              class: "btn btn-danger #{disable_check(survey, current_user)}",
+                              method: :delete,
+                              data: { confirm: 'Are you sure you want to delete this item?' }
 
       edit_button + delete_button
     end
