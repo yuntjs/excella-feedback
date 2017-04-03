@@ -22,3 +22,6 @@
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore seeds file with admin names
+/db/seeds/admins.rb
