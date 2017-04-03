@@ -19,7 +19,7 @@
             <td><%= display_date(presentation.date) %></td>
             <td><%= presentation.location %></td>
             <td><%= display_description(presentation) %></td>
-            <td><%= feedback_content(
+            <td><%= presentation_table_buttons(
                   user: current_user,
                   presentation: presentation
                 ) %></td>

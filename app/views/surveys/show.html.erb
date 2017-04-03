@@ -2,7 +2,7 @@
   <%= back_button(presentation_surveys_path(@presentation)) %>
   <div class="row">
     <div class="col-md-12 text-center">
-      <%= survey_options %>
+      <%= survey_option_buttons(@survey) %>
       <h1 class="text-center"><%= @survey.title %> Survey for '<%= @presentation.title %>'</h1>
     </div>
   </div>

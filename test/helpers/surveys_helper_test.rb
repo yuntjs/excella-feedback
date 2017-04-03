@@ -20,9 +20,9 @@ class SurveysHelperTest < ActionView::TestCase
     @presenter_survey = create(:survey, presentation_id: @presentation.id, presenter_id: @presenter.id)
   end
 
-  describe '#survey_admin_options' do
-    let(:no_options) { survey_admin_options(@user, @presentation) }
-    let(:presenter_options) { survey_admin_options(@presenter, @presentation) }
+  describe '#new_survey_action_button' do
+    let(:no_options) { new_survey_action_button(@user, @presentation) }
+    let(:presenter_options) { new_survey_action_button(@presenter, @presentation) }
 
     it 'returns nil if user is not admin nor presenter' do
       assert_nil no_options, 'Returns something other than nil for basic user'
@@ -33,8 +33,9 @@ class SurveysHelperTest < ActionView::TestCase
     end
   end
 
-  describe '#survey_options' do
-    let(:options) { survey_options }
+  describe '#survey_option_buttons' do
+    let(:options) { survey_option_buttons(@survey) }
+    let(:current_user) { @admin }
 
     it 'returns an edit survey link' do
       assert_includes options, edit_presentation_survey_path(@presentation, @survey), 'Does not include link to edit survey'
@@ -45,8 +46,8 @@ class SurveysHelperTest < ActionView::TestCase
     end
   end
 
-  describe '#survey_index_options' do
-    let(:options) { survey_index_options(@survey) }
+  describe '#survey_option_buttons' do
+    let(:options) { survey_option_buttons(@survey) }
     let(:current_user) { @user }
 
     it 'returns an edit survey link' do
