@@ -267,10 +267,6 @@ class PresentationsHelperTest < ActionView::TestCase
     end
   end
 
-  describe '#participation_table' do
-    it 'tests pending...'
-  end
-
   describe '#set_participation_title' do
     it 'returns the singular for a given role if the number of participants equals 1' do
       assert_equal set_participation_title(:presenter, 1), 'presenter', 'Expected method to return "presenter"'
