@@ -147,30 +147,17 @@ class PresentationsHelperTest < ActionView::TestCase
     end
   end
 
-  describe '#feedback_content' do
-    it 'tests pending...'
-  end
+  describe '#presentation_table_buttons' do
+    it 'renders survey, edit and delete buttons for Admin' do
+      link_text = presentation_table_buttons(user: @admin, presentation: @future_presentation_as_attendee)
 
-  describe '#provide_feedback_button' do
-    it 'shows provide feedback button if feedback has not been completed' do
-      link_string = provide_feedback_button(@user, @presentation_as_attendee)
-
-      assert link_string.include?('Provide Feedback'), 'Link does not include "Provide Feedback"'
-      assert link_string.include?(new_presentation_response_path(@presentation_as_attendee)), 'Link does not include correct path'
-    end
-
-    it 'shows disabled feedback button when feedback completed' do
-      presentation = create(:presentation)
-      create(:participation, user_id: @user.id, presentation_id: presentation.id, is_presenter: false, feedback_provided: true)
-
-      link_string = provide_feedback_button(@user, presentation)
-
-      assert link_string.include?('disabled'), 'Link does not contain "disabled" class'
-      assert link_string.include?('Feedback Submitted'), 'Link does not contain "Feedback Submitted"'
+      assert_includes link_text, 'Edit'
+      assert_includes link_text, 'Delete'
+      assert_includes link_text, 'Survey'
     end
   end
 
-  describe '#feedback_button' do
+  describe '#presentation_action_button' do
     before do
       @see_feedback_text = 'See Feedback'
       @submitted_text = 'Feedback Submitted'
@@ -178,7 +165,7 @@ class PresentationsHelperTest < ActionView::TestCase
       @disabled_css = 'disabled'
     end
     it 'shows disabled button before presentation start time' do
-      link_string = feedback_button(@user, @future_presentation_as_presenter)
+      link_string = presentation_action_button(@user, @future_presentation_as_presenter)
 
       refute link_string.include?(@see_feedback_text), "Link contains '#{@see_feedback_text}'"
       refute link_string.include?(@submitted_text), "Link contains '#{@submitted_text}'"
@@ -190,50 +177,29 @@ class PresentationsHelperTest < ActionView::TestCase
       params[:controller] = 'presentations'
       params[:action] = 'show'
 
-      link_string = feedback_button(@user, @future_presentation_as_attendee)
+      link_string = presentation_action_button(@user, @future_presentation_as_attendee)
 
       assert link_string.nil?, 'Displaying link when on presentation#show page before presentation start date'
     end
 
     it 'shows "See Feedback" button if user is presenter' do
-      link_string = feedback_button(@user, @presentation_as_presenter)
+      link_string = presentation_action_button(@user, @presentation_as_presenter)
 
       assert link_string.include?(@see_feedback_text), "Link does not contain '#{@see_feedback_text}'"
       assert link_string.include?(presentation_responses_path(@presentation_as_presenter)), 'Link does not include correct path'
     end
 
     it 'shows "See Feedback" button if admin is presenter' do
-      link_string = feedback_button(@admin, @presentation_as_admin_presenter)
+      link_string = presentation_action_button(@admin, @presentation_as_admin_presenter)
 
       assert link_string.include?('See Feedback'), 'Link does not contain "See Feedback"'
       assert link_string.include?(presentation_responses_path(@presentation_as_admin_presenter)), 'Link does not include correct path'
     end
 
     it 'does not show "See Feedback" button if user is not presenter' do
-      link_string = feedback_button(@user, @presentation_as_attendee)
+      link_string = presentation_action_button(@user, @presentation_as_attendee)
 
       refute link_string.include?(@see_feedback_text), "Link should not contain '#{@see_feedback_text}' "
-    end
-  end
-
-  describe '#survey_link_for' do
-    it 'renders link to see surveys if presentation already has surveys created' do
-      presentation = create(:presentation)
-      create(:survey, presentation_id: presentation.id)
-
-      link_text = survey_link_for(presentation)
-
-      assert link_text.include?('See Surveys'), 'Link does not contain "See Surveys"'
-      refute link_text.include?('Create Survey'), 'Link contains "Create Survey"'
-    end
-
-    it 'renders link to create surveys if presentation has no surveys' do
-      presentation = create(:presentation)
-
-      link_text = survey_link_for(presentation)
-
-      assert link_text.include?('Create Survey'), 'Link does not contain "Create Survey"'
-      refute link_text.include?('See Surveys'), 'Link contains "See Survyes "'
     end
   end
 
@@ -278,10 +244,6 @@ class PresentationsHelperTest < ActionView::TestCase
     it 'returns nil if presentation is in the past' do
       assert_nil past_link, 'Returns something other than nil when presentation in the past'
     end
-  end
-
-  describe '#participation_table' do
-    it 'tests pending...'
   end
 
   describe '#set_participation_title' do

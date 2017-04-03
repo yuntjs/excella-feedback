@@ -3,7 +3,7 @@
 
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3 text-center">
-      <%= survey_admin_options(current_user, @presentation) %>
+      <%= new_survey_action_button(current_user, @presentation) %>
       <h1 class="text-center">Surveys</h1>
       <%= content_tag :div, id: 'survey-presentations', class: "panel panel-warning text-left" do %>
       <div class="panel-heading">
@@ -18,7 +18,7 @@
         <tr>
           <td><%= link_to "(#{survey.position}) #{survey.title}", presentation_survey_path(@presentation.id, survey.id), class: disable_check(survey, current_user) %></td>
           <td>
-            <%= survey_index_options(survey) %>
+            <%= survey_option_buttons(survey) %>
           </td>
         </tr>
         <% end %>
