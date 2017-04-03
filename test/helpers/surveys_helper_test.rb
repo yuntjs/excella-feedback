@@ -1,4 +1,4 @@
-require 'test_helper' 
+require 'test_helper'
 
 class SurveysHelperTest < ActionView::TestCase
   include Devise::Test::ControllerHelpers
@@ -34,7 +34,8 @@ class SurveysHelperTest < ActionView::TestCase
   end
 
   describe '#survey_option_buttons' do
-    let(:options) { survey_option_buttons }
+    let(:options) { survey_option_buttons(@survey) }
+    let(:current_user) { @admin }
 
     it 'returns an edit survey link' do
       assert_includes options, edit_presentation_survey_path(@presentation, @survey), 'Does not include link to edit survey'
