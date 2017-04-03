@@ -96,7 +96,7 @@ class SurveysHelperTest < ActionView::TestCase
     let(:survey_template_uniq) { create(:survey_template, title: "Not #{title}") }
 
     it 'returns a confirm object if survey template title is among survey titles' do
-      expected = { confirm: 'Are you sure you want to add a duplicate survey?' }
+      expected = { confirm: "A survey with this title already exists. Are you sure you want to add another \"#{survey_template_dup.title}\"?" }
       actual = duplicate_confirm(survey_template_dup, surveys)
 
       assert_equal expected, actual, "Expected #duplicate_confirm to return an object with a 'confirm' key with value '#{expected[:confirm]}'"
@@ -107,7 +107,7 @@ class SurveysHelperTest < ActionView::TestCase
       survey_template_dup.title.upcase!
       survey_template_dup.save
 
-      expected = { confirm: 'Are you sure you want to add a duplicate survey?' }
+      expected = { confirm: "A survey with this title already exists. Are you sure you want to add another \"#{survey_template_dup.title}\"?" }
       actual = duplicate_confirm(survey_template_dup, surveys)
 
       assert_equal expected, actual, 'Expected #duplicate_confirm to account for different-case survey titles'

@@ -47,6 +47,6 @@ module SurveysHelper
     survey_titles = surveys.pluck(:title).map(&:downcase)
 
     return unless survey_titles.include?(survey_template.title.downcase)
-    { confirm: 'Are you sure you want to add a duplicate survey?' }
+    { confirm: "A survey with this title already exists. Are you sure you want to add another \"#{survey_template.title}\"?" }
   end
 end
