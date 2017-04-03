@@ -1,5 +1,4 @@
 puts 'Creating an admin...'
-User.find_by(email: 'admin@excella.com').destroy
 User.create(
   first_name: 'Excella',
   last_name: 'Admin',
