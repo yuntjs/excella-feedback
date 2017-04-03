@@ -203,27 +203,6 @@ class PresentationsHelperTest < ActionView::TestCase
     end
   end
 
-  describe '#survey_link_for' do
-    it 'renders link to see surveys if presentation already has surveys created' do
-      presentation = create(:presentation)
-      create(:survey, presentation_id: presentation.id)
-
-      link_text = survey_link_for(presentation)
-
-      assert link_text.include?('See Surveys'), 'Link does not contain "See Surveys"'
-      refute link_text.include?('Create Survey'), 'Link contains "Create Survey"'
-    end
-
-    it 'renders link to create surveys if presentation has no surveys' do
-      presentation = create(:presentation)
-
-      link_text = survey_link_for(presentation)
-
-      assert link_text.include?('Create Survey'), 'Link does not contain "Create Survey"'
-      refute link_text.include?('See Surveys'), 'Link contains "See Survyes "'
-    end
-  end
-
   describe '#presentation_options' do
     let(:link) { presentation_options(@admin, @presentation_as_attendee) }
     let(:link2) { presentation_options(@user, @future_presentation_as_presenter) }
