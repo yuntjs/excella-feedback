@@ -55,13 +55,7 @@ class SurveysController < ApplicationController
   #
   def destroy
     @survey = Survey.find(params[:id])
-    if @survey.destroy
-      flash[:success] = success_message(@survey, :delete)
-      redirect_to presentation_surveys_path
-    else
-      flash[:error] = error_message(@question, :delete)
-      redirect_back fallback_location: presentation_survey_path(@presentation.id, @survey.id)
-    end
+    destroy_survey
   end
 
   private
@@ -82,10 +76,11 @@ class SurveysController < ApplicationController
 
   #
   # Save helper for create action
-  # Extrapolated into new method to appease Rubocop
   #
   def save_survey
     if @survey.save
+      Survey.normalize_position(@presentation)
+
       flash[:success] = success_message(@survey, :create)
       redirect_to presentation_survey_path(@presentation.id, @survey.id)
     else
@@ -96,15 +91,29 @@ class SurveysController < ApplicationController
 
   #
   # Update helper for update action
-  # Extrapolated into new method to appease Rubocop
   #
   def update_survey
     if @survey.update(survey_params)
+      Survey.normalize_position(@presentation)
+
       flash[:success] = success_message(@survey, :update)
       redirect_to presentation_survey_path(@presentation.id, @survey.id)
     else
       flash.now[:error] = error_message(@survey, :create)
       render :edit
+    end
+  end
+
+  #
+  # Destroy helper for destroy action
+  #
+  def destroy_survey
+    if @survey.destroy
+      flash[:success] = success_message(@survey, :delete)
+      redirect_to presentation_surveys_path
+    else
+      flash[:error] = error_message(@question, :delete)
+      redirect_back fallback_location: presentation_survey_path(@presentation.id, @survey.id)
     end
   end
 end

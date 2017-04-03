@@ -39,4 +39,14 @@ module SurveysHelper
     return if survey.presenter_id.nil? || user.is_admin || survey.presenter_id == user.id
     'disabled'
   end
+
+  #
+  # Return a confirmation message data object if a survey template title matches a survey
+  #
+  def duplicate_confirm(survey_template, surveys)
+    survey_titles = surveys.pluck(:title).map(&:downcase)
+
+    return unless survey_titles.include?(survey_template.title.downcase)
+    { confirm: "A survey with this title already exists. Are you sure you want to add another \"#{survey_template.title}\"?" }
+  end
 end

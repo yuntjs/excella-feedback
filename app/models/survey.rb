@@ -14,6 +14,16 @@ class Survey < ApplicationRecord
   validates :title, :position, presence: true
 
   #
+  # Normalize survey positions for a presentation so they are in sequential order
+  #
+  def self.normalize_position(presentation)
+    presentation.surveys.order(:position).each_with_index do |survey, index|
+      survey.position = index + 1
+      survey.save
+    end
+  end
+
+  #
   # Get the highest survey position for a presentation
   #
   def self.highest_position(presentation)
@@ -21,10 +31,10 @@ class Survey < ApplicationRecord
   end
 
   #
-  # Create survey from presentation & survey template
+  # Build unsaved survey from presentation & survey template
   #
-  def self.create_from_template(presentation:, survey_template:)
-    presentation.surveys.create(
+  def self.build_from_template(survey_template, presentation)
+    presentation.surveys.new(
       title: survey_template.title,
       position: Survey.highest_position(presentation) + 1
     )
