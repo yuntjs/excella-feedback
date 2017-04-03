@@ -148,7 +148,13 @@ class PresentationsHelperTest < ActionView::TestCase
   end
 
   describe '#presentation_table_buttons' do
-    it 'tests pending...'
+    it 'renders survey, edit and delete buttons for Admin' do
+      link_text = presentation_table_buttons(user: @admin, presentation: @future_presentation_as_attendee)
+
+      assert_includes link_text, 'Edit'
+      assert_includes link_text, 'Delete'
+      assert_includes link_text, 'Survey'
+    end
   end
 
   describe '#presentation_action_button' do
