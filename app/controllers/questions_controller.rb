@@ -48,14 +48,7 @@ class QuestionsController < ApplicationController
   #
   def update
     set_instance_variables
-
-    if @question.update(question_params)
-      flash[:success] = success_message(@question, :update)
-      redirect_to presentation_survey_path(@presentation.id, @survey.id)
-    else
-      flash.now[:error] = error_message(@question, :update)
-      render :edit
-    end
+    update_question
   end
 
   #
@@ -63,14 +56,7 @@ class QuestionsController < ApplicationController
   #
   def destroy
     set_instance_variables
-
-    if @question.destroy
-      flash[:success] = success_message(@question, :delete)
-      redirect_to presentation_survey_path(@presentation.id, @survey.id)
-    else
-      flash[:error] = error_message(@question, :delete)
-      redirect_back fallback_location: presentations_path
-    end
+    destroy_question
   end
 
   private
@@ -100,15 +86,44 @@ class QuestionsController < ApplicationController
 
   #
   # Save helper for create action
-  # Extrapolated into new method to appease Rubocop
   #
   def save_question
     if @question.save
+      Question.normalize_position(@survey)
+
       flash[:success] = success_message(@question, :create)
       redirect_to presentation_survey_path(@presentation.id, @question.survey_id)
     else
       flash.now[:error] = error_message(@question, :create)
       render :new
+    end
+  end
+
+  #
+  # Update helper for update action
+  #
+  def update_question
+    if @question.update(question_params)
+      Question.normalize_position(@survey)
+
+      flash[:success] = success_message(@question, :update)
+      redirect_to presentation_survey_path(@presentation.id, @survey.id)
+    else
+      flash.now[:error] = error_message(@question, :update)
+      render :edit
+    end
+  end
+
+  #
+  # Destroy helper for destroy action
+  #
+  def destroy_question
+    if @question.destroy
+      flash[:success] = success_message(@question, :delete)
+      redirect_to presentation_survey_path(@presentation.id, @survey.id)
+    else
+      flash[:error] = error_message(@question, :delete)
+      redirect_back fallback_location: presentations_path
     end
   end
 end
