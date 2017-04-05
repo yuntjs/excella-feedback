@@ -6,6 +6,13 @@ class UserGenerationsController < ApplicationController
   before_action :authenticate_admin
 
   #
+  # Index
+  #
+  def index
+    redirect_to root_path
+  end
+
+  #
   # New
   #
   def new

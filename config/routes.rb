@@ -15,5 +15,5 @@ Rails.application.routes.draw do
     resources :question_templates
   end
 
-  resources :user_generations, only: [:new, :create]
+  resources :user_generations, only: [:index, :new, :create]
 end
