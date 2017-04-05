@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class UserGenerationsControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers
@@ -25,9 +25,9 @@ class UserGenerationsControllerTest < ActionController::TestCase
     it 'creates a new user from valid parameters' do
       post :create, params: {
         user: {
-          first_name: "First",
-          last_name: "Last",
-          email: "email@example.com"
+          first_name: 'First',
+          last_name: 'Last',
+          email: 'email@example.com'
         }
       }
 
@@ -37,9 +37,9 @@ class UserGenerationsControllerTest < ActionController::TestCase
     it 'does not create a new user from invalid parameters' do
       post :create, params: {
         user: {
-          first_name: "",
-          last_name: "",
-          email: ""
+          first_name: '',
+          last_name: '',
+          email: ''
         }
       }
 
