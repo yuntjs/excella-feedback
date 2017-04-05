@@ -46,13 +46,11 @@ module ApplicationHelper
   def error_messages(object, attribute = nil)
     return unless object.errors.any?
 
-    if attribute
-      list = object.errors[attribute].map do |item|
-        "#{attribute.to_s.humanize} #{item}"
-      end
-    else
-      list = object.errors.full_messages
-    end
+    list = if attribute
+             object.errors[attribute].map { |item| "#{attribute.to_s.humanize} #{item}" }
+           else
+             object.errors.full_messages
+           end
 
     content_tag(:div,
                 content_tag(
