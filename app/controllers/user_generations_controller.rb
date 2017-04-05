@@ -35,10 +35,11 @@ class UserGenerationsController < ApplicationController
 
   #
   # Set temporary password
+  # TODO: remove after test run!
   #
   def set_temp_password
+    return if @user.first_name.empty? || @user.last_name.empty?
     @user.password = "excella-feedback-#{@user.first_name[0] + @user.last_name}"
-    p @user.password
   end
 
   #
