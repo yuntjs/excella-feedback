@@ -3,15 +3,23 @@
     <h1>Feedback for "<%= @presentation.title %>"</h1>
   </div>
 </div>
-<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
-  <%= form_tag presentation_responses_path(@presentation), method: :post do %>
-    <% @feedback.data.each do |data| %>
-    <h3><%= data[:survey_title] %></h3>
-    <% data[:survey_responses].each do |response| %>
-      <%= display_question(response) %>
-    <% end %>
+<div class="row">
+  <div class="col-md-2 spaceMdTop">
+    <div class="alert alert-info text-center">
+      <i>We respect your opinions. <br> Your responses for this survey will be submitted <strong>anonymously</strong></i>
+    </div>
+  </div>
 
+  <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+    <%= form_tag presentation_responses_path(@presentation), method: :post do %>
+      <% @feedback.data.each do |data| %>
+      <h3><%= data[:survey_title] %></h3>
+      <% data[:survey_responses].each do |response| %>
+        <%= display_question(response) %>
+      <% end %>
+
+      <% end %>
+    <%= submit_tag("Submit", class: "btn btn-primary col-lg-12") %>
     <% end %>
-  <%= submit_tag("Submit", class: "btn btn-primary col-lg-12") %>
-  <% end %>
+  </div>
 </div>
