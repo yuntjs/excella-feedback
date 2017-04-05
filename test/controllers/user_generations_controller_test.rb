@@ -31,7 +31,7 @@ class UserGenerationsControllerTest < ActionController::TestCase
         }
       }
 
-      assert User.count > @initial_count, 'Expected a new user to be created'
+      assert_equal User.count, @initial_count + 1, 'Expected a new user to be created'
     end
 
     it 'does not create a new user from invalid parameters' do
