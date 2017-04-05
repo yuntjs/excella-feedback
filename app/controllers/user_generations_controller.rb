@@ -18,7 +18,10 @@ class UserGenerationsController < ApplicationController
   def create
     @user = User.new(user_generation_params)
 
-    # redirect_to user_registration_path(@user)
+    set_temp_password
+    set_admin
+
+    save_user
   end
 
   private
@@ -27,6 +30,34 @@ class UserGenerationsController < ApplicationController
   # User generation params
   #
   def user_generation_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :email)
+  end
+
+  #
+  # Set temporary password
+  #
+  def set_temp_password
+    @user.password = "excella-feedback-#{@user.first_name[0] + @user.last_name}"
+    p @user.password
+  end
+
+  #
+  # Set admin
+  #
+  def set_admin
+    @user.is_admin = false
+  end
+
+  #
+  # Save user
+  #
+  def save_user
+    if @user.save
+      flash[:success] = success_message(@user, :create)
+      redirect_to new_user_generation_path
+    else
+      flash[:error] = error_message(@user, :create)
+      render :new
+    end
   end
 end
