@@ -58,6 +58,10 @@ body {
   padding-bottom: $medium-space;
 }
 
+.spaceMdTop {
+  padding-top: $medium-space;
+}
+
 .error-list li:before {
     content: "\e174";
     font-family: 'Glyphicons Halflings';
@@ -191,7 +195,7 @@ form {
   .glyphicon {
     font-size: 0.9em;
     &:hover {
-      text-decoration: none; 
+      text-decoration: none;
     }
   }
 
