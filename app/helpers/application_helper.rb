@@ -43,12 +43,23 @@ module ApplicationHelper
   #
   # Add list of errors below response
   #
-  def error_messages(object)
+  def error_messages(object, attribute = nil)
     return unless object.errors.any?
+
+    if attribute
+      list = object.errors[attribute].map do |item|
+        "#{attribute.to_s.humanize} #{item}"
+      end
+    else
+      list = object.errors.full_messages
+    end
+
     content_tag(:div,
-                content_tag(:ul,
-                            render_list(object.errors.full_messages),
-                            class: 'error-list'),
+                content_tag(
+                  :ul,
+                  render_list(list),
+                  class: 'error-list'
+                ),
                 class: 'has-error text-danger')
   end
 

@@ -8,17 +8,20 @@
 
         <div class="form-group">
           <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "email@address.com" %>
+          <%= f.email_field :email, autofocus: true, class: "form-control #{error_class(@user, :email)}", placeholder: "email@address.com" %>
+          <%= error_messages(@user, :email) %>
         </div>
 
         <div class="form-group">
           <%= f.label :first_name %><br />
-          <%= f.text_field :first_name, class: "form-control", placeholder: "First" %>
+          <%= f.text_field :first_name, class: "form-control #{error_class(@user, :first_name)}", placeholder: "First" %>
+          <%= error_messages(@user, :first_name) %>
         </div>
 
         <div class="form-group">
           <%= f.label :last_name %><br />
-          <%= f.text_field :last_name, class: "form-control", placeholder: "Last" %>
+          <%= f.text_field :last_name, class: "form-control #{error_class(@user, :last_name)}", placeholder: "Last" %>
+          <%= error_messages(@user, :last_name) %>
         </div>
 
         <%= f.submit "Create User", class: "btn btn-default" %>
