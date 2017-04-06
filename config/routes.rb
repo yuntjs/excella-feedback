@@ -14,4 +14,6 @@ Rails.application.routes.draw do
   resources :survey_templates do
     resources :question_templates
   end
+
+  resources :user_generations, only: [:index, :new, :create]
 end
