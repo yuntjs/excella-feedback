@@ -3,6 +3,8 @@
 #
 class ResponsesController < ApplicationController
   before_action :authenticate_admin_or_presenter, only: [:index]
+  before_action :authenticate_user!
+
   #
   # Render response data
   #

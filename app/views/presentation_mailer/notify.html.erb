@@ -1,5 +1,17 @@
 <p> Hi, <%= @user.first_name %>!</p>
 
 <p>
-  Thank you for attending the <em>"<%= @presentation.title %>"</em> presentation!
+  Thank you for attending the <em>"<%= @presentation.title %>"</em> presentation! Please fill out a quick survey on the presentation by following the link below:
+</p>
+
+<p>
+  <strong><%= link_to "Click here to complete the survey!", new_presentation_response_url(@presentation) %></strong>
+</p>
+
+<p>
+  Your feedback is anonymous, and it will allow us to improve presentations for the future! Thank you for your time!
+</p>
+
+<p>
+  - The Excella Feedback App Team
 </p>
