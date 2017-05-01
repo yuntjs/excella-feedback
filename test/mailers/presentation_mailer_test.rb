@@ -11,13 +11,7 @@ class PresentationMailerTest < ActionMailer::TestCase
   describe '.notify' do
     let(:email) { PresentationMailer.notify(user: @user, presentation: @presentation) }
 
-    it 'adds email to the queue when sent' do
-      assert_emails 1 do
-        email.deliver_now
-      end
-    end
-
-    it 'sends to user email' do
+    it 'sends an email to the user' do
       assert_equal [@user.email], email.to, 'Expected email to be sent to user email'
     end
 
