@@ -11,10 +11,18 @@ class PresentationMailerTest < ActionMailer::TestCase
   describe '.notify' do
     let(:email) { PresentationMailer.notify(user: @user, presentation: @presentation) }
 
-    it 'is added to the queue when sent' do
+    it 'adds email to the queue when sent' do
       assert_emails 1 do
         email.deliver_now
       end
+    end
+
+    it 'sends to user email' do
+      assert_equal [@user.email], email.to, 'Expected email to be sent to user email'
+    end
+
+    it 'contains the proper subject line' do
+      assert_equal "Excella Onboarding - Quick Survey on #{@presentation.title}!", email.subject
     end
   end
 end
