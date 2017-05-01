@@ -11,7 +11,6 @@ class ResponsesController < ApplicationController
   def index
     @presentation = Presentation.find(params[:presentation_id])
     @responses = Response.all
-    # Save response data for integer responses
     build_chart_data(@presentation)
   end
 
@@ -20,6 +19,13 @@ class ResponsesController < ApplicationController
   #
   def new
     set_instance_variables
+
+    unless current_user.has_participation?(@presentation)
+      flash[:error] = 'You were not signed up to take this survey. Please log in before taking the survey.'
+      sign_out current_user
+      redirect_to new_user_session_path
+    end
+
     @feedback.add_responses
   end
 
