@@ -1,0 +1,20 @@
+---
+version: '3'
+services:
+  viz:
+    image: clarenceb/visualizer
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    ports:
+      - "8090:8080"
+    deploy:
+      placement:
+        constraints:
+          - node.role==manager
+
+  web:
+    image: taejunyun/excella-fb:latest
+    environment:
+      - RAILS_ENV=production
+    ports:
+      - "3000:3000"
