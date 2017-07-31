@@ -25,6 +25,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'rails-controller-testing'
   gem 'launchy'
+  gem 'dotenv-rails'
 end
 
 group :development do
