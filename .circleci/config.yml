@@ -11,7 +11,6 @@ general:
 jobs:
   build:
     docker:
-      # specify the version you desire here
       - image: circleci/ruby:2.4.1-node-browsers
         environment:
           - PG: localhost
@@ -50,8 +49,8 @@ jobs:
           name: Run test
           command: rake test
 
-    deployment:
-      staging:
-        branch: development
-        heroku:
-          appname: ancient-sea-94054
+      deployment:
+        staging:
+          branch: development
+          heroku:
+            appname: ancient-sea-94054
