@@ -47,6 +47,7 @@ jobs:
     #   - run:
     #       name: Run test
     #       command: rake test
+
 deployment:
   staging:
     branch: development
