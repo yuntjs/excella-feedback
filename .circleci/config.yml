@@ -54,4 +54,5 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "development" ]; then
               ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
               git push git@heroku.com:ancient-sea-94054 $CIRCLE_SHA1:development
+              - heroku run rake db:migrate --app ancient-sea-94054
             fi
