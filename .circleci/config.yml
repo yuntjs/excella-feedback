@@ -56,26 +56,36 @@ jobs:
       - run:
           name: Install Docker client
           command: |
-            set -x
-            VER="17.03.0-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            sudo rm -rf /usr/bin/completion
-            sudo mv -f /tmp/docker/* /usr/bin
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              set -x
+              VER="17.03.0-ce"
+              curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+              tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+              sudo rm -rf /usr/bin/completion
+              sudo mv -f /tmp/docker/* /usr/bin
+            fi
 
       - run:
           name: Build and push new image
           command: |
-            TAG=0.1.$CIRCLE_BUILD_NUM
-            docker build -t taejunyun/excella-feedback:$TAG .
-            docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push taejunyun/excella-feedback:$TAG
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              TAG=0.1.$CIRCLE_BUILD_NUM
+              docker build -t taejunyun/excella-feedback:$TAG .
+              docker login -u $DOCKER_USER -p $DOCKER_PASS
+              docker push taejunyun/excella-feedback:$TAG
+            fi
 
+      - run:
+          name: run heroku script for deployment preparation
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "development" ]; then
+              bash .circleci/setup-heroku.sh
+            fi
 
-      - run: bash .circleci/setup-heroku.sh
       - add_ssh_keys:
           fingerprints:
             - "48:a0:87:54:ca:75:32:12:c6:9e:a2:77:a4:7a:08:a4"
+
       - deploy:
           name: Deploy development to Heroku
           command: |
@@ -87,7 +97,7 @@ jobs:
           name: Deploy development to AWS
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ssh -o "StrictHostKeyChecking no" ubuntu@$AWS_IP env TAG=0.1.$CIRCLE_BUILD_NUM DOCKER_USER=$DOCKER_USER DOCKER_PASS=$DOCKER_PASS 'bash -s' <<'ENDSSH'
+              ssh -o "StrictHostKeyChecking no" ubuntu@$AWS_IP env TAG=0.1.$CIRCLE_BUILD_NUM DOCKER_USER=$DOCKER_USER DOCKER_PASS=$DOCKER_PASS 'bash -s' <<'ENDSSH' \
                 docker login -u $DOCKER_USER -p $DOCKER_PASS
                 docker stop excella-feedback
                 docker rm excella-feedback
