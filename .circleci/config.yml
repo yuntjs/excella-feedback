@@ -37,9 +37,9 @@ jobs:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-      - run:
-          name: Install System Dependencies
-          command: sudo apt-get update -qq && apt-get install -y build-essential postgresql libpq-dev nodejs rake
+      # - run:
+          # name: Install System Dependencies
+          # command: sudo apt-get update -qq && apt-get install -y build-essential postgresql libpq-dev nodejs rake
       - run:
           name: install dependencies
           command: |
