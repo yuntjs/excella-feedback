@@ -57,5 +57,4 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "development" ]; then
               git push heroku master              
-              heroku restart
             fi
