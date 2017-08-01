@@ -1,10 +1,5 @@
 version: 2
 
-general:
-  branches:
-    only:
-      - development
-
 jobs:
   build:
     docker:
@@ -77,6 +72,20 @@ jobs:
 workflows:
   version: 2
   jobs:
-    - build
-    - test1
-    - deploy-staging
+    - build:
+        filters:
+          branches:
+            only:
+              - development
+
+    - test1:
+        filters:
+          branches:
+            only:
+              - development
+
+    - deploy-staging:
+        filters:
+          branches:
+            only:
+              - development
