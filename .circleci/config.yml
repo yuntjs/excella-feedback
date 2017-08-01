@@ -49,14 +49,17 @@ jobs:
           name: Run test
           command: rake test
 
+      - run:
+          name: add user to docker group
+          command: sudo usermod -aG docker $USER
 
       - run:
           name: Build and push new image
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
-            docker build -t taejunyun/excella-feedback:$CIRCLE_BUILD_NUM .
+            docker build -t taejunyun/excella-feedback:$TAG
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push taejunyun/excella-feedback:$CIRCLE_BUILD_NUM
+            docker push taejunyun/excella-feedback:$TAG
 
 
       - run: bash .circleci/setup-heroku.sh
@@ -78,7 +81,7 @@ jobs:
                 docker login -u $DOCKER_USER -p $DOCKER_PASS
                 docker stop excella-feedback
                 docker rm excella-feedback
-                docker run -d -p 3000:3000 --name excella-feedback -e "RAILS_ENV=production" taejunyun/excella-fb:$CIRCLE_BUILD_NUM
-                docker service update --image taejunyun/excella-fb:$CIRCLE_BUILD_NUM --force app_web
+                docker run -d -p 3000:3000 --name excella-feedback -e "RAILS_ENV=production" taejunyun/excella-fb:$TAG
+                docker service update --image taejunyun/excella-fb:$TAG --force app_web
               ENDSSH
             fi
