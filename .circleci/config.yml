@@ -38,16 +38,16 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-      - run:
-          name: Set up DB
-          command: |
-            bundle exec rake db:create db:schema:load --trace
-            bundle exec rake db:migrate
-          environment:
-            DATABASE_URL: "postgres://postgres@localhost:5432/feedback_app_test"
-      - run:
-          name: Run test
-          command: rake test
+      # - run:
+      #     name: Set up DB
+      #     command: |
+      #       bundle exec rake db:create db:schema:load --trace
+      #       bundle exec rake db:migrate
+      #     environment:
+      #       DATABASE_URL: "postgres://postgres@localhost:5432/feedback_app_test"
+      # - run:
+      #     name: Run test
+      #     command: rake test
 
 
       - setup_remote_docker   # (2)
