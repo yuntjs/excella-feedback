@@ -39,7 +39,7 @@ jobs:
           - v1-dependencies-
       - run:
           name: Install System Dependencies
-          command: apt-get update -qq && apt-get install -y build-essential postgresql libpq-dev nodejs rake
+          command: sudo apt-get update -qq && apt-get install -y build-essential postgresql libpq-dev nodejs rake
       - run:
           name: install dependencies
           command: |
