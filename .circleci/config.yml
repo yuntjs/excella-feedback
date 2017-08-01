@@ -23,33 +23,35 @@ jobs:
 
     working_directory: ~/repo
 
-    # steps:
-    #   - checkout
-    #   - restore_cache:
-    #       keys:
-    #       - v1-dependencies-{{ checksum "Gemfile.lock" }}
-    #       - v1-dependencies-
-    #   - run:
-    #       name: install dependencies
-    #       command: |
-    #         bundle install --jobs=4 --retry=3 --path vendor/bundle
-    #   - save_cache:
-    #       paths:
-    #         - ./venv
-    #       key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-    #   - run:
-    #       name: Set up DB
-    #       command: |
-    #         bundle exec rake db:create db:schema:load --trace
-    #         bundle exec rake db:migrate
-    #       environment:
-    #         DATABASE_URL: "postgres://postgres@localhost:5432/feedback_app_test"
-    #   - run:
-    #       name: Run test
-    #       command: rake test
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Set up DB
+          command: |
+            bundle exec rake db:create db:schema:load --trace
+            bundle exec rake db:migrate
+          environment:
+            DATABASE_URL: "postgres://postgres@localhost:5432/feedback_app_test"
+      - run:
+          name: Run test
+          command: rake test
 
-deployment:
-  staging:
-    branch: development
-    heroku:
-      appname: ancient-sea-94054
+      - deploy:
+          name: Deploy to development
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "development" ]; then
+              echo 'heroku.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCn0hPDLc1Vy1mm0azHc5bW1mOWnieoyDHr1TSvMKJZHchfmp1zSDtKxYa3XQk7wUwhh19ztCy/HuXY0JM7JBbjSj7apo6azdHZi2lgkUMkROFWTAGGnmAQ0QPghfwg7OuE8vY/9o6EJADeO5IkaRe+D7if1w38iKG5s5suCvfMloW8hKfODYVyApKttp6odKflTFPnAM+HRUuh0Of1rFViy6IwBgMpw/0uExY4326DFVZXFx68PzgQ3wYjHPd7fvca4KHjgkGJwmu4BcYDv0ZboIjdEq4ErZD3RMlsvGEq2W6K7YMaRfMbaCKeEdG/77jrlt3rDWFUND+8MXB83F+R' >> ~/.ssh/known_hosts
+              git push git@heroku.com:ancient-sea-94054.git
+            fi
