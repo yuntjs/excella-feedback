@@ -102,5 +102,5 @@ jobs:
           name: Deploy development to AWS
           command: |
             if [ "${CIRCLE_BRANCH}" == "production" ]; then
-              .circleci//deploy.sh
+              .circleci/deploy.sh
             fi
