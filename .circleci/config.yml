@@ -95,7 +95,7 @@ jobs:
           name: Deploy development to Heroku
           command: |
             if [ "${CIRCLE_BRANCH}" == "development" ]; then
-              git push heroku production
+              git push heroku master
             fi
 
       - deploy:
