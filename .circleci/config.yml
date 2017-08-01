@@ -1,10 +1,12 @@
 version: 2
-general:
-  branches:
-    only:
-      - development
 jobs:
   build:
+
+  filters:
+    branches:
+      only:
+        - development
+
     docker:
       - image: circleci/ruby:2.4.1-node-browsers
         environment:
@@ -20,6 +22,11 @@ jobs:
       - checkout
 
   test1:
+  filters:
+    branches:
+      only:
+        - development
+
     docker:
       - image: circleci/ruby:2.4.1-node-browsers
         environment:
@@ -61,11 +68,21 @@ jobs:
           fingerprints:
             - "48:a0:87:54:ca:75:32:12:c6:9e:a2:77:a4:7a:08:a4"
   hold:
+  filters:
+    branches:
+      only:
+        - development
+
     type: approval
     requires:
       - test1
 
   deploy-staging:
+  filters:
+    branches:
+      only:
+        - development
+
     requires: hold
     command: |
       if [ "${CIRCLE_BRANCH}" == "development" ]; then
@@ -74,9 +91,6 @@ jobs:
 
 workflows:
   version: 2
-  branches:
-    only:
-      - development
   jobs:
     - build
     - test1
