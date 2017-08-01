@@ -1,13 +1,12 @@
 workflows:
   version: 2
+  branches:
+    only:
+      - development
+
   build-n-deploy:
     jobs:
       - build:
-          filters:
-            branches:
-              only:
-                - development
-
           docker:
             - image: circleci/ruby:2.4.1-node-browsers
           environment:
@@ -24,34 +23,30 @@ workflows:
           - checkout
 
       - test:
-        filters:
-          branches:
-            only:
-              - development
-        requires:
-          - build
-        steps:
-          - restore_cache:
-              keys:
-              - v1-dependencies-{{ checksum "Gemfile.lock" }}
-              - v1-dependencies-
-          - run:
-              name: install dependencies
-              command: |
-                bundle install --jobs=4 --retry=3 --path vendor/bundle
-          - save_cache:
-              paths:
-                - ./venv
-              key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+          requires:
+            - build
+          steps:
+            - restore_cache:
+                keys:
+                - v1-dependencies-{{ checksum "Gemfile.lock" }}
+                - v1-dependencies-
+            - run:
+                name: install dependencies
+                command: |
+                  bundle install --jobs=4 --retry=3 --path vendor/bundle
+            - save_cache:
+                paths:
+                  - ./venv
+                key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
-          - run:
-              name: Set up DB
-              command: |
-                bundle exec rake db:create db:schema:load --trace
-                bundle exec rake db:migrate
-              environment:
-                DATABASE_URL: "postgres://postgres@localhost:5432/feedback_app_test"
+            - run:
+                name: Set up DB
+                command: |
+                  bundle exec rake db:create db:schema:load --trace
+                  bundle exec rake db:migrate
+                environment:
+                  DATABASE_URL: "postgres://postgres@localhost:5432/feedback_app_test"
 
-          - run:
-              name: Run test
-              command: rake test
+            - run:
+                name: Run test
+                command: rake test
