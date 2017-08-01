@@ -52,9 +52,7 @@ jobs:
 
 
       - setup_remote_docker   # (2)
-      - run:
-          name: add user to docker group
-          command: sudo usermod -aG root $USER
+
       - run:
           name: Install Docker client
           command: |
