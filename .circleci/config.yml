@@ -74,6 +74,9 @@ jobs:
 
 workflows:
   version: 2
+  branches:
+    only:
+      - development
   jobs:
     - build
     - test1
