@@ -1,5 +1,8 @@
 version: 2
-
+general:
+  branches:
+    only:
+      - development
 jobs:
   build:
     docker:
@@ -71,10 +74,6 @@ jobs:
 
 workflows:
   version: 2
-  general:
-    branches:
-      only:
-        - development
   jobs:
     - build
     - test1
