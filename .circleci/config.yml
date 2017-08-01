@@ -71,10 +71,3 @@ jobs:
       if [ "${CIRCLE_BRANCH}" == "development" ]; then
         git push heroku master
       fi
-
-workflows:
-  version: 2
-  jobs:
-    - build
-    - test1
-    - deploy-staging
