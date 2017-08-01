@@ -18,21 +18,6 @@ jobs:
           - POSTGRES_DB: feedback_app_test
     steps:
       - checkout
-
-  test1:
-    docker:
-      - image: circleci/ruby:2.4.1-node-browsers
-        environment:
-          - PG: localhost
-          - POSTGRES: postgres
-          - RAILS_ENV: test
-          - RACK_ENV: test
-      - image: postgres:9.6
-        environment:
-          - POSTGRES_USER: postgres
-          - POSTGRES_DB: feedback_app_test
-    steps:
-      - checkout
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
@@ -60,14 +45,24 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "48:a0:87:54:ca:75:32:12:c6:9e:a2:77:a4:7a:08:a4"
-    hold:
-      type: approval
-      requires:
-        - test1
+      - hold:
+          type: approval
 
-    deploy-staging:
-      requires: hold
-      command: |
-        if [ "${CIRCLE_BRANCH}" == "development" ]; then
-          git push heroku master
-        fi
+      - deploy:
+          requires: hold
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "development" ]; then
+              git push heroku master
+            fi
+
+    # hold:
+    #   type: approval
+    #   requires:
+    #     - test1
+    #
+    # deploy-staging:
+    #   requires: hold
+    #   command: |
+    #     if [ "${CIRCLE_BRANCH}" == "development" ]; then
+    #       git push heroku master
+    #     fi
