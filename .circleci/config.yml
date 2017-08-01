@@ -52,6 +52,7 @@ jobs:
           name: Deploy to development
           command: |
             if [ "${CIRCLE_BRANCH}" == "development" ]; then
+              ssh-add "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDXn+Pa6CK0QpNte8OpW+1xop8tMmReJVfi+ceDwShmvW6Ehrpm6rPDfj2e0tkywZx4YSkzY0Vu/zLB1R+omJGfJsf0UjxsybfI0Ssb3PJQasT52LLcrQW8LGmuRxHx/A3L7+z1mLVLX5LVJPB/yCTCLeMPpyLBDuTSU9GJ/XLqDh9VdpETU8b/lsvecJkWU3dWsy7lT/trNbMl7xFcA/UoOVM6eWAQVmaNdyxF0+iWEGshaHBTYpA6LlKcWbnaVx+GPdWlIflYEpkzpx7I3dpBqYDkxYnhXUtJBUi7Mp1Z5l2j8E/qoM+TfdgpAikhTuk7NuDmZlsdEjO+bLqqJDCX yuntjs@circleci.com"
               git push git@heroku.com:ancient-sea-94054 $CIRCLE_SHA1:development
               heroku run rake db:migrate --app ancient-sea-94054
             fi
