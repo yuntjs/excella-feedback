@@ -1,97 +1,57 @@
-version: 2
-jobs:
-  build:
-
-  filters:
-    branches:
-      only:
-        - development
-
-    docker:
-      - image: circleci/ruby:2.4.1-node-browsers
-        environment:
-          - PG: localhost
-          - POSTGRES: postgres
-          - RAILS_ENV: test
-          - RACK_ENV: test
-      - image: postgres:9.6
-        environment:
-          - POSTGRES_USER: postgres
-          - POSTGRES_DB: feedback_app_test
-    steps:
-      - checkout
-
-  test1:
-  filters:
-    branches:
-      only:
-        - development
-
-    docker:
-      - image: circleci/ruby:2.4.1-node-browsers
-        environment:
-          - PG: localhost
-          - POSTGRES: postgres
-          - RAILS_ENV: test
-          - RACK_ENV: test
-      - image: postgres:9.6
-        environment:
-          - POSTGRES_USER: postgres
-          - POSTGRES_DB: feedback_app_test
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          - v1-dependencies-
-      - run:
-          name: install dependencies
-          command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-      - run:
-          name: Set up DB
-          command: |
-            bundle exec rake db:create db:schema:load --trace
-            bundle exec rake db:migrate
-          environment:
-            DATABASE_URL: "postgres://postgres@localhost:5432/feedback_app_test"
-      - run:
-          name: Run test
-          command: rake test
-
-      - run: bash .circleci/setup-heroku.sh
-      - add_ssh_keys:
-          fingerprints:
-            - "48:a0:87:54:ca:75:32:12:c6:9e:a2:77:a4:7a:08:a4"
-  hold:
-  filters:
-    branches:
-      only:
-        - development
-
-    type: approval
-    requires:
-      - test1
-
-  deploy-staging:
-  filters:
-    branches:
-      only:
-        - development
-
-    requires: hold
-    command: |
-      if [ "${CIRCLE_BRANCH}" == "development" ]; then
-        git push heroku master
-      fi
-
 workflows:
   version: 2
-  jobs:
-    - build
-    - test1
-    - deploy-staging
+  build-n-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - development
+
+          docker:
+            - image: circleci/ruby:2.4.1-node-browsers
+          environment:
+            - PG: localhost
+            - POSTGRES: postgres
+            - RAILS_ENV: test
+            - RACK_ENV: test
+            - image: postgres:9.6
+          environment:
+            - POSTGRES_USER: postgres
+            - POSTGRES_DB: feedback_app_test
+
+          steps:
+          - checkout
+
+      - test:
+        filters:
+          branches:
+            only:
+              - development
+        requires:
+          - build
+        steps:
+          - restore_cache:
+              keys:
+              - v1-dependencies-{{ checksum "Gemfile.lock" }}
+              - v1-dependencies-
+          - run:
+              name: install dependencies
+              command: |
+                bundle install --jobs=4 --retry=3 --path vendor/bundle
+          - save_cache:
+              paths:
+                - ./venv
+              key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+          - run:
+              name: Set up DB
+              command: |
+                bundle exec rake db:create db:schema:load --trace
+                bundle exec rake db:migrate
+              environment:
+                DATABASE_URL: "postgres://postgres@localhost:5432/feedback_app_test"
+
+          - run:
+              name: Run test
+              command: rake test
