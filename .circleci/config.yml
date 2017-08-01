@@ -47,8 +47,8 @@ jobs:
     #   - run:
     #       name: Run test
     #       command: rake test
-  deployment:
-    staging:
-      branch: development
-      heroku:
-        appname: ancient-sea-94054
+deployment:
+  staging:
+    branch: development
+    heroku:
+      appname: ancient-sea-94054
