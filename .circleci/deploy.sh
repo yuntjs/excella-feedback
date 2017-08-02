@@ -12,7 +12,7 @@ DEVISE_SECRET_KEY=$DEVISE_SECRET_KEY \
 SECRET_KEY_BASE=$SECRET_KEY_BASE \
 'bash -s' <<ENDSSH
 docker login -u $DOCKER_USER -p $DOCKER_PASS
-if [$(docker ps -q | wc | awk '{ print $1 }') -gt 0]
+if [ $(docker ps -q | wc | awk '{ print $1 }') -gt 0 ]
 then
   docker rm -f $(docker ps -aq)
 fi
