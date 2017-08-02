@@ -32,6 +32,8 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
+  config.ssl_options = {redirect: {host: "ec2-54-67-67-165.us-west-1.compute.amazonaws.com", port: 3000} }
+
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
