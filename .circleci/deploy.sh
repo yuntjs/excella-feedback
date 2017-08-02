@@ -24,3 +24,4 @@ ssh -o "StrictHostKeyChecking no" ubuntu@$AWS_IP env \
       -e "RDS_PORT=$RDS_PORT" \
       -e "SECRET_KEY_BASE=$SECRET_KEY_BASE" \
       taejunyun/excella-fb:$TAG
+    ENDSSH
