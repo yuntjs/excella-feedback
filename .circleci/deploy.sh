@@ -14,7 +14,7 @@ SECRET_KEY_BASE=$SECRET_KEY_BASE \
 docker login -u $DOCKER_USER -p $DOCKER_PASS
 docker stop excella-feedback
 docker rm excella-feedback
-docker run -d -p 80:3000 --name excella-feedback \
+docker run -d -p 3000:3000 --name excella-feedback \
 -e "RAILS_ENV=production" \
 -e "DEVISE_SECRET_KEY=$DEVISE_SECRET_KEY" \
 -e "RDS_DB_NAME=$RDS_DB_NAME" \
