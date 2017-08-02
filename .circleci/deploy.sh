@@ -16,6 +16,10 @@ if [ $(docker ps -q | wc | awk '{ print $1 }') -gt 0 ]
 then
   docker rm -f $(docker ps -aq)
 fi
+if [ $(docker images -q | wc | awk '{ print $1 }') -gt 0 ]
+then
+  docker rmi -f $(docker images -q)
+fi
 docker run -d -p 80:3000 --name excella-feedback \
 -e "RAILS_ENV=production" \
 -e "DEVISE_SECRET_KEY=$DEVISE_SECRET_KEY" \
