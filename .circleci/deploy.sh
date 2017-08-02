@@ -10,7 +10,7 @@ ssh -o "StrictHostKeyChecking no" ubuntu@$AWS_IP env \
   RDS_PORT=$RDS_PORT \
   DEVISE_SECRET_KEY=$DEVISE_SECRET_KEY \
   SECRET_KEY_BASE=$SECRET_KEY_BASE \
-  'bash -s' <<'ENDSSH'
+  'bash -s' <<ENDSSH
     docker login -u $DOCKER_USER -p $DOCKER_PASS
     docker stop excella-feedback
     docker rm excella-feedback
@@ -24,5 +24,4 @@ ssh -o "StrictHostKeyChecking no" ubuntu@$AWS_IP env \
       -e "RDS_PORT=$RDS_PORT" \
       -e "SECRET_KEY_BASE=$SECRET_KEY_BASE" \
       taejunyun/excella-fb:$TAG
-
   ENDSSH
