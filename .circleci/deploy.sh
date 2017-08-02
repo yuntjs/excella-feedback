@@ -12,7 +12,11 @@ DEVISE_SECRET_KEY=$DEVISE_SECRET_KEY \
 SECRET_KEY_BASE=$SECRET_KEY_BASE \
 'bash -s' <<ENDSSH
 docker login -u $DOCKER_USER -p $DOCKER_PASS
-docker rm -f $(docker ps -qa)
+if [docker ps -a | wc | awk '{ print $1 }' > 1]
+then
+  docker stop excella-feedback
+  docker rm excella-feedback
+fi
 docker run -d -p 3000:3000 --name excella-feedback \
 -e "RAILS_ENV=production" \
 -e "DEVISE_SECRET_KEY=$DEVISE_SECRET_KEY" \
