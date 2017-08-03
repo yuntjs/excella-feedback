@@ -67,7 +67,9 @@ jobs:
             heroku restart
 
   deploy-to-prod:
-    # working_directory: ~/excella-feedback
+    docker:
+      - image: circleci/classic:latest
+    working_directory: ~/excella-feedback
     steps:
       - checkout
       - run:
