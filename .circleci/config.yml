@@ -58,22 +58,22 @@ jobs:
             heroku restart
 
 workflows:
-  version: 2
-    build-and-deploy:
-      jobs:
-        - build
-            filters:
-              branches:
-                only: workflow
-        - rake_test:
-            requires:
-              - build
-            filters:
-              branches:
-                only: workflow
-        - deploy:
-            requires:
-              - rake_test
-            filters:
-              branches:
-                only: workflow
+version: 2
+  build-and-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: workflow
+      - rake_test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: workflow
+      - deploy:
+          requires:
+            - rake_test
+          filters:
+            branches:
+              only: workflow
