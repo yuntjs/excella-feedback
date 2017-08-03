@@ -85,7 +85,6 @@ jobs:
           name: Build and push new image
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
-            sudo usermod -aG docker $USER
             docker build -t taejunyun/excella-fb:$TAG .
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push taejunyun/excella-fb:$TAG
