@@ -67,9 +67,7 @@ jobs:
             heroku restart
 
   deploy-to-prod:
-    machine:
-      enabled: true
-    working_directory: ~/excella-feedback
+    # working_directory: ~/excella-feedback
     steps:
       - checkout
       - run:
