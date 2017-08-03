@@ -67,12 +67,12 @@ jobs:
             heroku restart
 
   deploy-to-prod:
+    docker:
+      image: circleci/classic:latest
     machine:
       enabled: true
     working_directory: ~/excella-feedback
     steps:
-      - docker:
-          image: circleci/ruby:2.4.1-node-browsers
       - working_directory: ~/excella-feedback
       - checkout
       # - run:
