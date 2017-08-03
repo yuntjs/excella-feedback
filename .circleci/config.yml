@@ -21,17 +21,19 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: vendor/bundle
-          
+
   rake_test:
     docker:
       - image: circleci/ruby:2.4.1-node-browsers
-        - PG: localhost
-        - POSTGRES: postgres
-        - RAILS_ENV: test
-        - RACK_ENV: test
+        environment:
+          - PG: localhost
+          - POSTGRES: postgres
+          - RAILS_ENV: test
+          - RACK_ENV: test
       - image: circleci/postgres:9.6
-        - POSTGRES_USER: postgres
-        - POSTGRES_DB: feedback_app_test
+        environment:
+          - POSTGRES_USER: postgres
+          - POSTGRES_DB: feedback_app_test
     working_directory: ~/excella-feedback
     steps:
       - checkout
