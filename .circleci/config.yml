@@ -68,7 +68,7 @@ jobs:
 
   deploy-to-prod:
     docker:
-      - image: docker/dind
+      - image: docker
     working_directory: ~/excella-feedback
     steps:
       - checkout
