@@ -69,8 +69,8 @@ jobs:
   deploy-to-prod:
     docker:
       image: circleci/classic:latest
-    machine:
-      enabled: true
+    # machine:
+    #   enabled: true
     working_directory: ~/excella-feedback
     steps:
       - working_directory: ~/excella-feedback
