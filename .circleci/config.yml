@@ -58,7 +58,7 @@ jobs:
             heroku restart
 
 workflows:
-version: 2
+  version: 2
   build-and-deploy:
     jobs:
       - build:
