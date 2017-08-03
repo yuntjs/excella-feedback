@@ -67,9 +67,8 @@ jobs:
             heroku restart
 
   deploy-to-prod:
-    # docker:
-    #   - image: circleci/classic:latest
-    setup_remote_docker
+    machine:
+      - image: circleci/classic:latest
     working_directory: ~/excella-feedback
     steps:
       - checkout
