@@ -69,9 +69,7 @@ jobs:
   deploy-to-prod:
     machine:
       enabled: true
-    working_directory: ~/excella-feedback
     steps:
-      - working_directory: ~/excella-feedback
       - checkout
       - run:
           name: Install Docker client
