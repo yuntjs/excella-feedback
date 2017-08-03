@@ -71,17 +71,19 @@ jobs:
       enabled: true
     working_directory: ~/excella-feedback
     steps:
+      - docker:
+          image: circleci/ruby:2.4.1-node-browsers
+      - working_directory: ~/excella-feedback
       - checkout
-      - setup_remote_docker   # (2)
-      - run:
-          name: Install Docker client
-          command: |
-            set -x
-            VER="17.03.0-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            sudo rm -rf /usr/bin/completion
-            sudo mv -f /tmp/docker/* /usr/bin
+      # - run:
+      #     name: Install Docker client
+      #     command: |
+      #       set -x
+      #       VER="17.03.0-ce"
+      #       curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+      #       tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+      #       sudo rm -rf /usr/bin/completion
+      #       sudo mv -f /tmp/docker/* /usr/bin
       - run:
           name: Build and push new image
           command: |
