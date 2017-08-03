@@ -1,106 +1,69 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
-version: 2
-general:
-  branches:
-    only:
-      - development
-      - production
+version: 2.0
+
 jobs:
-  build:
+  bundle_dependencies:
     docker:
       - image: circleci/ruby:2.4.1-node-browsers
-        environment:
-          - PG: localhost
-          - POSTGRES: postgres
-          - RAILS_ENV: test
-          - RACK_ENV: test
-      - image: postgres:9.6
-        environment:
-          - POSTGRES_USER: postgres
-          - POSTGRES_DB: feedback_app_test
-
-    working_directory: ~/repo
-
+      - image: circleci/postgres:9.6
+    working_directory: ~/excella-feedback
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/excella-feedback
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          - v1-dependencies-
-      - run:
-          name: install dependencies
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "development" ]; then
-              bundle install --jobs=4 --retry=3 --path vendor/bundle
-            fi
-      - save_cache:
+            - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run: bundle install --path vendor/bundle
+      - save cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - ~/excella-feedback/vendor/bundle
+      - persist_to_workspace:
+          root: .
+          paths: vendor/bundle
+  rake_test:
+    docker:
+      - image: circleci/ruby:2.4.1-node-browsers
+      - image: circleci/postgres:9.6
+    working_directory: ~/excella-feedback
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/excella-feedback
+      - run: bundle --path vendor/bundle
+      - run: bundle exec rake db:create db:schema:load
       - run:
-          name: Set up DB
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "development" ]; then
-              bundle exec rake db:create db:schema:load --trace
-              bundle exec rake db:migrate
-            fi
-          environment:
-            DATABASE_URL: "postgres://postgres@localhost:5432/feedback_app_test"
+          name: Run tests
+          command: rake test
+  deploy:
+    machine:
+      enabled: true
+    working_directory: ~/excella-feedback
+    environment:
+      - HEROKU_APP: ancient-sea-94054
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/excella-feedback
       - run:
-          name: Run test
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "development" ]; then
-              rake test
-            fi
-
-      - setup_remote_docker   # (2)
-
+          name: Setup heroku
+          command: bash .circleci/setup-heroku-wf.sh
       - run:
-          name: Install Docker client
+          name: Deploy to heroku
           command: |
-            if [ "${CIRCLE_BRANCH}" == "production" ]; then
-              set -x
-              VER="17.03.0-ce"
-              curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-              tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-              sudo rm -rf /usr/bin/completion
-              sudo mv -f /tmp/docker/* /usr/bin
-            fi
+            git push heroku workflow:master
+            heroku run rake db:migrate
+            sleep 5 # sleep to wait for dynos
+            heroku restart
 
-      - run:
-          name: Build and push new image
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "production" ]; then
-              TAG=0.1.$CIRCLE_BUILD_NUM
-              docker build -t taejunyun/excella-fb:$TAG .
-              docker login -u $DOCKER_USER -p $DOCKER_PASS
-              docker push taejunyun/excella-fb:$TAG
-            fi
-
-      - run:
-          name: run heroku script for deployment preparation
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "development" ]; then
-              bash .circleci/setup-heroku.sh
-            fi
-
-      - add_ssh_keys:
-          fingerprints:
-            - "48:a0:87:54:ca:75:32:12:c6:9e:a2:77:a4:7a:08:a4"
-
-      - deploy:
-          name: Deploy development to Heroku
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "development" ]; then
-              git push heroku master
-            fi
-
-      - deploy:
-          name: Deploy development to AWS
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "production" ]; then
-              .circleci/deploy.sh
-            fi
+workflows:
+  version: 2
+    build-and-deploy:
+      jobs:
+        - build
+        - deploy:
+            requires:
+              - build
+            filters:
+              branches:
+                only: workflow            
