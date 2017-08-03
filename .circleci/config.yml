@@ -67,8 +67,8 @@ jobs:
             heroku restart
 
   deploy-to-prod:
-    docker:
-      - image: ubuntu:16.04
+    machine:
+      image: circleci/classic:latest
     working_directory: ~/excella-feedback
     steps:
       - checkout
