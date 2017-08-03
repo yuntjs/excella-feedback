@@ -68,7 +68,7 @@ jobs:
 
   deploy-to-prod:
     docker:
-      - image: docker
+      - image: docker:17.06.1-ce-git
     working_directory: ~/excella-feedback
     steps:
       - checkout
