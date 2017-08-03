@@ -68,19 +68,19 @@ jobs:
 
   deploy-to-prod:
     docker:
-      - image: docker:17.03.0-ce
+      - image: ubuntu:16.04
     working_directory: ~/excella-feedback
     steps:
       - checkout
-      # - run:
-      #     name: Install Docker client
-      #     command: |
-      #       set -x
-      #       VER="17.03.0-ce"
-      #       curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-      #       tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-      #       sudo rm -rf /usr/bin/completion
-      #       sudo mv -f /tmp/docker/* /usr/bin
+      - run:
+          name: Install Docker client
+          command: |
+            set -x
+            VER="17.03.0-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            sudo rm -rf /usr/bin/completion
+            sudo mv -f /tmp/docker/* /usr/bin
       - run:
           name: Build and push new image
           command: |
