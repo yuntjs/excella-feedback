@@ -3,10 +3,11 @@ dist: trusty
 branches:
   only:
     - travis-build
+cache: bundler
 
 jobs:
   include:
-    - stage: Setup database
-      script: bundle exec rake db:create db:schema:load
-    - stage: test
-      script: bundle exec rake test
+    - stage: Setup and Test application
+      script: |
+        bundle exec rake db:create db:schema:load
+        bundle exec rake test
