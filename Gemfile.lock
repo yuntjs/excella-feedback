@@ -1,4 +1,8 @@
 GEM
+  remote: https://api.rubygems.org/
+  specs:
+
+GEM
   remote: https://rubygems.org/
   specs:
     actioncable (5.0.1)
@@ -298,9 +302,3 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   web-console (>= 3.3.0)
-
-RUBY VERSION
-   ruby 2.4.1p111
-
-BUNDLED WITH
-   1.15.3
