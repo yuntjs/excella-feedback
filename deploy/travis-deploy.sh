@@ -1,5 +1,7 @@
 #!/bin/bash
-ssh -i ../tjy-west-1.pem -o "StrictHostKeyChecking no" ubuntu@$AWS_IP env \
+echo "****************************************"
+pwd
+ssh -i ~/tjy-west-1.pem -o "StrictHostKeyChecking no" ubuntu@$AWS_IP env \
 TAG=0.1.$TRAVIS_BUILD_NUMBER \
 DOCKER_USER=$DOCKER_USER \
 DOCKER_PASS=$DOCKER_PASS \
