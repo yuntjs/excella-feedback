@@ -24,20 +24,20 @@ env:
   - secure: BUf0PpJ2I/760v42llJmeN1cEzpn+mL1DhCK4rNTc/63+h8Q6BP2B1XvTCLNXey4V//h0p/xlsLH0LBJHn/fhZ7Xf2qyBzffHtZuCruLsoFjPfrODmvrBSCxWLqDM6dXxQo45lecIgFqVhEH9Y6Kzd24B2p2wcXn13EY8fuo7N8Nsy8woEabVjY5bbbo7w+Y0qKK7AuNi+i13Jdqdi2hIX0TESC0wQn48rgvo0tJ5zciUQvA+4UVEUky4MJ0E6/YEVbsMXtjBcrABnmVUxpgzSAuhIcuSxioX0xsJEXXDoM4pBPTSVRg8SsIpg8pFztH4UI2BBN4gPopdyNBijC35M+9TXUomt8htWRZRoljJl7BqiFXWHcU1iviPo2//R4BdoF5iBsp7Thi8K/ZuAoIx6flOtIe1kCYV4BEwd3Kz7W7LTtp0b8uzO5hqhrPMPtz/jwYDNJyrU+OD3LLPBOV5UDMfXtSFthMPRUiNlsRo4n4cd1Or8Y3sntuWcKF/pMY+4cz7+sDSab0v+Z2MihZq75f4xh/st9upMcUaPiTKfn/R4IUjKh2cFUoODknHXXcWExezQiDywOgyVYE+QuBx0RS0/YqtlekZHM8/RNGwERgdzhckGOz38Wkd4bMZLw9alW5t1jCH8rA3M92PzKiVulofeAsFObfDilq4ZCPQuc=
 jobs:
   include:
-  # - stage: Setup and Test application
-  #   script: |
-  #     bundle exec rake db:create db:schema:load
-  #     bundle exec rake test
-  # - stage: deploy to staging
-  #   script: skip
-  #   deploy: heroku
-  #     provider: heroku
-  #     app: ancient-sea-94054
-  #     api_key: $HEROKU_AUTH_TOKEN
-  # - stage: Build docker image
-  #   script: |
-  #     docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
-  #     docker build -t taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER .
-  #     docker push taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER
+  - stage: Setup and Test application
+    script: |
+      bundle exec rake db:create db:schema:load
+      bundle exec rake test
+  - stage: deploy to staging
+    script: skip
+    deploy: heroku
+      provider: heroku
+      app: ancient-sea-94054
+      api_key: $HEROKU_AUTH_TOKEN
+  - stage: Build docker image
+    script: |
+      docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+      docker build -t taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER-travis .
+      docker push taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER-travis
   - stage: deploy to ec2
     script: deploy/travis-deploy.sh
