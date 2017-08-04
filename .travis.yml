@@ -1,0 +1,16 @@
+branches:
+  only:
+  - travis-build
+sudo: true
+dist: trusty
+
+jobs:
+  include:
+    - stage: build file
+    - stage: build docker image
+      script: |
+      # - docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+        docker-compose up
+    - stage: test
+      script: |
+        docker-compose run web rake test
