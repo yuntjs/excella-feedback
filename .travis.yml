@@ -2,12 +2,24 @@ sudo: true
 dist: trusty
 branches:
   only:
-    - travis-build
+  - travis-build
 cache: bundler
+before_install:
+- openssl aes-256-cbc -in tjy-west-1.pem.enc -out tjy-west-1.pem -d
+
+env:
+  global:
+    - secure: vjfr7AFXjrQiwq5zDvbdxe5Scq8pKa9vnY0VKuOFBPiuTuLNJ3KjR42US544WHBQJEHw9PL2QfUfFB1BWJNBEInbDQzRYMvZ/NAsKm/N8MmUlTjNh1IS4IMLbRuTTC+awqTql1WuJSffsgA6XKSnJShFOZGsNfm2JJmcp5kzunkZgugaV4Zjuvcglwrb/0cQ+h5bSw2GSrhV04JbCQ7KwN864Nk2qlLqyR6+jM6Sb6USgiEsoUveyz/H4IX4QQEQzdg0DE1xH+yq2JLtayhTVXXHwWZLq83XScSQ8R/UEN6u788lY/WdCoNDnfBNEFmLRIZVphw8cBTPQm5pRpqNmIlCcoUm9Q4ZiPEeN8A4Z0uPjqm/El6aGCJDlhtnuUSNwibtsS618EyaUNEwXiexHgCQt3ORys3t7spt+x5QzPk5McGBr4QLzUZNIfvHNT10sPe/8UxL6cZhRjjIgNgbsLaTSQe4bRwuIgihmhzbXVrfw0bRDaUi1Yd0wJBqXJJe6psgERyExHsQiUZhfz4Gap5dU6c9qiNn1TX8l6aIDZB8cmh8AJkEghzjskoPwcT6GPAMLOwOmtKhUVFRS6eDAT7IMjYilOsM08yjTAwunv9d5KSwN9hVEcirKGBnRCE6ji6cfTwfLZ6ReyUH00Eusf/ugBjkCr8vRmAcsAYmF8o=
+    - secure: c+MKTI4I7J9v7pcubGn5wvGuMg5Sz+MPJJVh2A0qzUkaAPbfNK20MWBmpOpa9uH/WDRMCLNUSrg7k+SypQD+XdyvZAo75eTstNwTpTyYIP8qH8QA0V4Z6N8xTSwbtgkH/LE1nwh5v9wZTlWQoX6cxdQPqGvwSQ9/k6TH+GZ5HT7gP8/shm/YCKQ/O/zhSD4zP+JNSDokVh7vWKxRDv6ULyILMAbjLtu5f89dpUfcSAXw3VB3tpNIkzQW86uQiLGrpb9+HG0TreIg/Wd+n6l3H+5RjdCI+dzaZDsB2uNh41nUpYyrB40I+T4z19YsXPVIoErssGhQ+ZMAJpir7GbMIsiL7yZVYrvFzSk5w/Su2lbhcnayfpvgtvdaLOmcwwRXdDHQUL9rbt0BNROwLvZMiKfB4YOCpHjp/V1XAuk6iaGrtMj2X4zqRWYRQHLtHHISNCqGyk+Ax8tHS3WidrL/NZsjW9WL8nwHmQcqH/5ddr3yY3KYi0kCTpv137DC9tE0bXQqHF0A4nLYUvQVarm74gKSTcdelXQh2IJbZH9MQf6N7r7tQLkwa7XOKg+se5P/G8X6rBepaW/Is7QuslpF44C0k6Qwhoj+r+3n38C9RHnLyvcusTcxQF8s4di0zoAj+d3QhIIyxnpv8emwjcUXAspYWKw4HCz0SXaQYx8kqr4=
 
 jobs:
   include:
-    - stage: Setup and Test application
-      script: |
-        bundle exec rake db:create db:schema:load
-        bundle exec rake test
+  - stage: Setup and Test application
+    script: |
+      bundle exec rake db:create db:schema:load
+      bundle exec rake test
+  - stage: Build docker image
+    script: |
+      docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+      docker build -t taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER
+      docker push taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER
