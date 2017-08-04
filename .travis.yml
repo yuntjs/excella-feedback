@@ -6,5 +6,7 @@ branches:
 
 jobs:
   include:
+    - stage: Setup database
+      script: bundle exec rake db:create db:schema:load
     - stage: test
-      script: rake test
+      script: bundle exec rake test
