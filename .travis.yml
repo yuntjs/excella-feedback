@@ -39,5 +39,4 @@ jobs:
   #     docker build -t taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER .
   #     docker push taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER
   - stage: deploy to ec2
-    script: |
-      /home/travis/deploy/travis-deploy.sh
+    script: deploy/travis-deploy.sh
