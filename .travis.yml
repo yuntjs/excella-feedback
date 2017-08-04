@@ -28,16 +28,19 @@ jobs:
     script: |
       bundle exec rake db:create db:schema:load
       bundle exec rake test
+
   - stage: deploy to staging
     script: skip
     deploy: heroku
       provider: heroku
       app: ancient-sea-94054
       api_key: $HEROKU_AUTH_TOKEN
+
   - stage: Build docker image
     script: |
       docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
       docker build -t taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER-travis .
       docker push taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER-travis
+
   - stage: deploy to ec2
     script: deploy/travis-deploy.sh
