@@ -7,6 +7,9 @@ cache: bundler
 before_install:
 - openssl aes-256-cbc -K $encrypted_c39b1f424b91_key -iv $encrypted_c39b1f424b91_iv
   -in tjy-west-1.pem.enc -out tjy-west-1.pem -d
+- gem update --system
+- gem --version
+
 env:
   global:
   - secure: vjfr7AFXjrQiwq5zDvbdxe5Scq8pKa9vnY0VKuOFBPiuTuLNJ3KjR42US544WHBQJEHw9PL2QfUfFB1BWJNBEInbDQzRYMvZ/NAsKm/N8MmUlTjNh1IS4IMLbRuTTC+awqTql1WuJSffsgA6XKSnJShFOZGsNfm2JJmcp5kzunkZgugaV4Zjuvcglwrb/0cQ+h5bSw2GSrhV04JbCQ7KwN864Nk2qlLqyR6+jM6Sb6USgiEsoUveyz/H4IX4QQEQzdg0DE1xH+yq2JLtayhTVXXHwWZLq83XScSQ8R/UEN6u788lY/WdCoNDnfBNEFmLRIZVphw8cBTPQm5pRpqNmIlCcoUm9Q4ZiPEeN8A4Z0uPjqm/El6aGCJDlhtnuUSNwibtsS618EyaUNEwXiexHgCQt3ORys3t7spt+x5QzPk5McGBr4QLzUZNIfvHNT10sPe/8UxL6cZhRjjIgNgbsLaTSQe4bRwuIgihmhzbXVrfw0bRDaUi1Yd0wJBqXJJe6psgERyExHsQiUZhfz4Gap5dU6c9qiNn1TX8l6aIDZB8cmh8AJkEghzjskoPwcT6GPAMLOwOmtKhUVFRS6eDAT7IMjYilOsM08yjTAwunv9d5KSwN9hVEcirKGBnRCE6ji6cfTwfLZ6ReyUH00Eusf/ugBjkCr8vRmAcsAYmF8o=
@@ -20,15 +23,21 @@ env:
   - secure: BUf0PpJ2I/760v42llJmeN1cEzpn+mL1DhCK4rNTc/63+h8Q6BP2B1XvTCLNXey4V//h0p/xlsLH0LBJHn/fhZ7Xf2qyBzffHtZuCruLsoFjPfrODmvrBSCxWLqDM6dXxQo45lecIgFqVhEH9Y6Kzd24B2p2wcXn13EY8fuo7N8Nsy8woEabVjY5bbbo7w+Y0qKK7AuNi+i13Jdqdi2hIX0TESC0wQn48rgvo0tJ5zciUQvA+4UVEUky4MJ0E6/YEVbsMXtjBcrABnmVUxpgzSAuhIcuSxioX0xsJEXXDoM4pBPTSVRg8SsIpg8pFztH4UI2BBN4gPopdyNBijC35M+9TXUomt8htWRZRoljJl7BqiFXWHcU1iviPo2//R4BdoF5iBsp7Thi8K/ZuAoIx6flOtIe1kCYV4BEwd3Kz7W7LTtp0b8uzO5hqhrPMPtz/jwYDNJyrU+OD3LLPBOV5UDMfXtSFthMPRUiNlsRo4n4cd1Or8Y3sntuWcKF/pMY+4cz7+sDSab0v+Z2MihZq75f4xh/st9upMcUaPiTKfn/R4IUjKh2cFUoODknHXXcWExezQiDywOgyVYE+QuBx0RS0/YqtlekZHM8/RNGwERgdzhckGOz38Wkd4bMZLw9alW5t1jCH8rA3M92PzKiVulofeAsFObfDilq4ZCPQuc=
 jobs:
   include:
-  - stage: Setup and Test application
-    script: |
-      bundle exec rake db:create db:schema:load
-      bundle exec rake test
-  - stage: Build docker image
-    script: |
-      docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
-      docker build -t taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER .
-      docker push taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER
+  # - stage: Setup and Test application
+  #   script: |
+  #     bundle exec rake db:create db:schema:load
+  #     bundle exec rake test
+  # - stage: deploy to staging
+  #   script: skip
+  #   deploy: heroku
+  #     provider: heroku
+  #     app: ancient-sea-94054
+  #     api_key: $HEROKU_AUTH_TOKEN
+  # - stage: Build docker image
+  #   script: |
+  #     docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+  #     docker build -t taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER .
+  #     docker push taejunyun/excella-fb:0.1.$TRAVIS_BUILD_NUMBER
   - stage: deploy to ec2
     script: |
-      ./deploy/travis-deploy.sh
+      /home/travis/deploy/travis-deploy.sh
