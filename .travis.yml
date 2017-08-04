@@ -6,7 +6,5 @@ branches:
 
 jobs:
   include:
-    - stage: docker compose up
-      script: docker-compose up
-    - stage: docker test
-      script: docker-compose run web rake test
+    - stage: test
+      script: rake test
